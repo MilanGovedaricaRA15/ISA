@@ -1,0 +1,127 @@
+package com.izdajMe.izdajMe.model;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+
+@Entity
+public class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    protected long id;
+    protected String firstName;
+    protected String lastName;
+    protected String mobileNumber;
+    protected String address;
+    protected String contry;
+    protected String city;
+    public enum Role {
+        cottageAdvertiser,
+        boatAdvertiser,
+        instructor,
+        administrator
+    }
+    protected Role role;
+    protected String password;
+    protected String reason;
+
+    public User(long id, String firstName, String lastName, String mobileNumber, String address, String contry, String city, Role role, String password, String reason) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.mobileNumber = mobileNumber;
+        this.address = address;
+        this.contry = contry;
+        this.city = city;
+        this.role = role;
+        this.password = password;
+        this.reason = reason;
+    }
+
+    public User(){
+
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getMobileNumber() {
+        return mobileNumber;
+    }
+
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getContry() {
+        return contry;
+    }
+
+    public void setContry(String contry) {
+        this.contry = contry;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+}

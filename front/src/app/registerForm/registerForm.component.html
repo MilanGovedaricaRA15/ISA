@@ -1,0 +1,91 @@
+<div class="container mt-5">
+    <form class="content" [formGroup]="registerForm" (ngSubmit)="submitData()">
+        <h3 class="text-center"> Register Form</h3>
+        <div class="row">
+            <div class="mt-2 mb-2 col-lg-6 col-6">
+                <input type="text" formControlName="firstName" [(ngModel)]="user.firstName"  class="form-control" placeholder="First Name"/>
+                <div *ngIf="firstName.invalid && (firstName.touched || firstName.dirty)">
+                    <span class="error" *ngIf="firstName.errors?.required">First Name is required</span>
+                    <span class="error" *ngIf="firstName.errors?.pattern">Only letters allowed</span>
+                </div>
+            </div>
+            <div class="mt-2 mb-2 col-lg-6 col-6">
+                <input type="text" formControlName="lastName" [(ngModel)]="user.lastName"  class="form-control" placeholder="Last Name"/>
+                <div *ngIf="lastName.invalid && (lastName.touched || lastName.dirty)">
+                    <span class="error" *ngIf="lastName.errors?.required">Last Name is required</span>
+                    <span class="error" *ngIf="lastName.errors?.pattern">Only letters allowed</span>
+                </div>
+            </div>
+            <div class="mt-2 mb-2 col-lg-12 col-12">
+                <input type="text" formControlName="email" [(ngModel)]="user.email"  class="form-control" placeholder="E-mail"/>
+                <div *ngIf="email.invalid && (email.touched || email.dirty)">
+                    <span class="error" *ngIf="email.errors?.required">E-mail is required</span>
+                    <span class="error" *ngIf="email.errors?.email">Enter valid e-mail address</span>
+                </div>
+            </div>
+            <div class="mt-2 mb-2 col-lg-12 col-12">
+                <input type="text" formControlName="mobileNumber" [(ngModel)]="user.mobileNumber"  class="form-control" placeholder="Mobile number"/>
+                <div *ngIf="mobileNumber.invalid && (mobileNumber.touched || mobileNumber.dirty)">
+                    <span class="error" *ngIf="mobileNumber.errors?.required">Mobile number is required</span>
+                    <span class="error" *ngIf="mobileNumber.errors?.pattern">Only numbers allowed</span>
+                </div>
+            </div>
+            <div class="mt-2 mb-2 col-lg-12 col-12">
+                <input type="text" formControlName="address" [(ngModel)]="user.address"  class="form-control" placeholder="Address"/>
+                <div *ngIf="address.invalid && (address.touched || address.dirty)">
+                    <span class="error" *ngIf="address.errors?.required">Address is required</span>
+                    <span class="error" *ngIf="address.errors?.pattern">Enter valid address </span>
+                </div>
+            </div>
+            <div class="mt-2 mb-2 col-lg-12 col-12">
+                <input type="text" formControlName="country" [(ngModel)]="user.country"  class="form-control" placeholder="Country"/>
+                <div *ngIf="country.invalid && (country.touched || country.dirty)">
+                    <span class="error" *ngIf="country.errors?.required">Country is required</span>
+                    <span class="error" *ngIf="country.errors?.pattern">Only letters allowed</span>
+                </div>
+            </div>
+            <div class="mt-2 mb-2 col-lg-12 col-12">
+                <input type="text" formControlName="city" [(ngModel)]="user.city"  class="form-control" placeholder="City"/>
+                <div *ngIf="city.invalid && (city.touched || city.dirty)">
+                    <span class="error" *ngIf="city.errors?.required">City is required</span>
+                    <span class="error" *ngIf="city.errors?.pattern">Only letters allowed</span>
+                </div>
+            </div>
+            <div class="mt-2 mb-2 col-lg-12 col-12">
+                <select class="form-select" formControlName="role" [(ngModel)]="user.role"  aria-label="Default select example">
+                    <option value="1">Cottage advertiser</option>
+                    <option value="2">Boat advertiser</option>
+                    <option value="3">Instructor</option>
+                </select>
+                <div *ngIf="role.invalid && (role.touched || role.dirty)">
+                    <span class="error" *ngIf="role.errors?.required">Required</span>
+                </div>
+            </div>
+            <div class="mt-2 mb-2 col-lg-12 col-12">
+                <input type="password" formControlName="password" [(ngModel)]="user.password"  class="form-control" placeholder="Password"/>
+                <div *ngIf="password.invalid && (password.touched || password.dirty)">
+                    <span class="error" *ngIf="password.errors?.required">Password is required</span>
+                    <span class="error" *ngIf="password.errors?.pattern">Only letters allowed</span>
+                </div>
+            </div>
+            <div class="mt-2 mb-2 col-lg-12 col-12">
+                <input type="password" formControlName="password2" class="form-control" placeholder="Repeat password"/>
+                <div *ngIf="password2.invalid && (password2.touched || password2.dirty)">
+                    <span class="error" *ngIf="password2.errors?.required">Password is required</span>
+                    <span class="error" *ngIf="password2.errors?.pattern">Only letters allowed</span>
+                </div>
+            </div>
+            <div class="mt-2 mb-2 col-lg-12 col-12">
+                <input type="text" formControlName="reason" [(ngModel)]="user.reason"  class="form-control" placeholder="Reason of registration"/>
+                <div *ngIf="reason.invalid && (reason.touched || reason.dirty)">
+                    <span class="error" *ngIf="reason.errors?.required">Reason is required</span>
+                    <span class="error" *ngIf="reason.errors?.pattern">Only letters allowed</span>
+                </div>
+            </div>
+            <div class="mt-2 mb-2 col-lg-12 col-12">
+               <button class="btn" [disabled]="registerForm.invalid">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>
+
