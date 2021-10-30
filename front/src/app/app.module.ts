@@ -3,13 +3,13 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { RegisterFormComponent } from './registerForm/registerForm.component';
+import { RegisterFormComponent } from './components/registerForm/registerForm.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CottageProfileComponent } from './cottage-profile/cottage-profile.component';
-import { CottageOwnerProfileComponent } from './cottage-owner-profile/cottage-owner-profile.component';
-import { UserListComponent } from './user-list/user-list.component';
+import { CottageProfileComponent } from './components/cottage-profile/cottage-profile.component';
+import { CottageOwnerProfileComponent } from './components/cottage-owner-profile/cottage-owner-profile.component';
 import { HttpClientModule } from '@angular/common/http';
 import { UserService } from './service/user-service.service';
+import { LoginFormComponent } from './components/login-form/login-form.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +17,7 @@ import { UserService } from './service/user-service.service';
     RegisterFormComponent,
     CottageProfileComponent,
     CottageOwnerProfileComponent,
-    UserListComponent
+    LoginFormComponent
   ],
   imports: [
     BrowserModule,

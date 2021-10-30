@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserService } from '../service/user-service.service';
-import { User } from '../model/user';
+import { UserService } from '../../service/user-service.service'
+import { User } from '../../model/user';
+
 
 
 
@@ -14,11 +15,11 @@ import { User } from '../model/user';
 export class RegisterFormComponent implements OnInit {
 
   user: User;
+  passwordTheSame: boolean = false;
+  userExists: boolean = false;
+  @Output() register = new EventEmitter<string>();
 
-  constructor(
-    private route: ActivatedRoute, 
-      private router: Router, 
-        private userService: UserService) {
+  constructor(private userService: UserService) {
     this.user = new User();
   }
 
@@ -27,12 +28,12 @@ export class RegisterFormComponent implements OnInit {
   
   ngOnInit(): void {
     this.registerForm = new FormGroup({
-      "firstName": new FormControl(null,[Validators.required,Validators.pattern('[a-zA-Z ]*')]),
-      "lastName": new FormControl(null,[Validators.required,Validators.pattern('[a-zA-Z ]*')]),
+      "firstName": new FormControl(null,[Validators.required,Validators.pattern('[A-Z]{1}[a-z]+')]),
+      "lastName": new FormControl(null,[Validators.required,Validators.pattern('[A-Z]{1}[a-z]+')]),
       "email": new FormControl(null,[Validators.required,Validators.email]),
       "mobileNumber": new FormControl(null,[Validators.required,Validators.pattern('[0-9]{9}')]),
-      "country": new FormControl(null,[Validators.required,Validators.pattern('[a-zA-Z ]*')]),
-      "city": new FormControl(null,[Validators.required,Validators.pattern('[a-zA-Z ]*')]),
+      "country": new FormControl(null,[Validators.required,Validators.pattern('[A-Z]{1}[a-z]+')]),
+      "city": new FormControl(null,[Validators.required,Validators.pattern('[A-Z]{1}[a-z]+')]),
       "address": new FormControl(null,[Validators.required,Validators.pattern('([A-ZŠĐČĆŽ]{1}[a-zšđčćž]+ )+[0-9]+')]),
       "role": new FormControl(null,[Validators.required]),
       "password": new FormControl(null,[Validators.required,Validators.pattern('[a-zA-Z ]*')]),
@@ -44,16 +45,29 @@ export class RegisterFormComponent implements OnInit {
    
   }
 
-  
+  validatePass(){
+    if(this.registerForm.get('password').value === this.registerForm.get('password2').value) {
+       this.passwordTheSame = true;
+    }
+    else{
+      this.passwordTheSame = false;
+    }
+  }
   
 
   submitData()
   {
-    this.userService.save(this.user).subscribe(result => this.gotoUserList());
-  }
-
-  gotoUserList() {
-    this.router.navigate(['/users']);
+    if(this.passwordTheSame){
+      this.userService.register(this.user).subscribe(result => {
+        if(result === 'user_already_registered'){
+          this.userExists = true;
+        }
+        else if(result === 'user_registered'){
+          this.userExists = false;
+          this.register.emit('user_registered');
+        }
+      });
+   }
   }
 
   get firstName() {

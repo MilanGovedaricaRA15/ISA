@@ -18,6 +18,7 @@ public class User {
     protected String address;
     protected String contry;
     protected String city;
+    protected String email;
     public enum Role {
         cottageAdvertiser,
         boatAdvertiser,
@@ -27,8 +28,9 @@ public class User {
     protected Role role;
     protected String password;
     protected String reason;
+    protected boolean verified;
 
-    public User(long id, String firstName, String lastName, String mobileNumber, String address, String contry, String city, Role role, String password, String reason) {
+    public User(long id,String email, String firstName, String lastName, String mobileNumber, String address, String contry, String city, Role role, String password, String reason) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -39,6 +41,8 @@ public class User {
         this.role = role;
         this.password = password;
         this.reason = reason;
+        this.email = email;
+        this.verified = false;
     }
 
     public User(){
@@ -123,5 +127,21 @@ public class User {
 
     public void setReason(String reason) {
         this.reason = reason;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public boolean isVerified() {
+        return verified;
+    }
+
+    public void setVerified(boolean verified) {
+        this.verified = verified;
     }
 }
