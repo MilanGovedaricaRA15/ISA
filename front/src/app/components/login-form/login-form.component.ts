@@ -36,6 +36,7 @@ export class LoginFormComponent implements OnInit {
           }
           else if(result === 'user_found'){
             this.userDoesntExists = false;
+            this.userService.authenticate(this.user.email);
           }
         });
     }

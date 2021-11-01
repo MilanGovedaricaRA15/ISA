@@ -56,5 +56,25 @@ public class UserController {
 
     }
 
+    @GetMapping("/users/getUserByEmail")
+    public User getUserByEmail(@RequestBody String email) {
+        Iterable<User> allUsers = userRepository.findAll();
+        List<User> allUsersList = new ArrayList<User>();
+        allUsers.forEach(allUsersList::add);
+        for(User user1 : allUsersList) {
+            if(user1.getEmail().equals(email)){
+                if(user1.isVerified()) {
+                    return user1;
+                }
+                else{
+                    return null;
+                }
+            }
+        }
+        return null;
+    }
+
+
+
 
 }
