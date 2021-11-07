@@ -56,9 +56,9 @@
             </div>
             <div class="mt-2 mb-2 col-lg-12 col-12">
                 <select class="form-select" formControlName="role" [(ngModel)]="user.role"  aria-label="Default select example">
-                    <option value="1">Cottage advertiser</option>
-                    <option value="2">Boat advertiser</option>
-                    <option value="3">Instructor</option>
+                    <option value="0">Cottage advertiser</option>
+                    <option value="1">Boat advertiser</option>
+                    <option value="2">Instructor</option>
                 </select>
                 <div *ngIf="role.invalid && (role.touched || role.dirty)">
                     <span class="error" *ngIf="role.errors?.required">Required</span>

@@ -1,12 +1,10 @@
 package com.izdajMe.izdajMe.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 
 @Entity
+@Table(name="users")
 public class User {
 
     @Id
@@ -16,7 +14,7 @@ public class User {
     protected String lastName;
     protected String mobileNumber;
     protected String address;
-    protected String contry;
+    protected String country;
     protected String city;
     protected String email;
     public enum Role {
@@ -30,13 +28,13 @@ public class User {
     protected String reason;
     protected boolean verified;
 
-    public User(long id,String email, String firstName, String lastName, String mobileNumber, String address, String contry, String city, Role role, String password, String reason) {
+    public User(long id,String email, String firstName, String lastName, String mobileNumber, String address, String country, String city, Role role, String password, String reason) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.mobileNumber = mobileNumber;
         this.address = address;
-        this.contry = contry;
+        this.country = country;
         this.city = city;
         this.role = role;
         this.password = password;
@@ -90,11 +88,11 @@ public class User {
     }
 
     public String getContry() {
-        return contry;
+        return country;
     }
 
     public void setContry(String contry) {
-        this.contry = contry;
+        this.country = contry;
     }
 
     public String getCity() {

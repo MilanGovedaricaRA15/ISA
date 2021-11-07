@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Role, User } from '../model/user';
+import { User } from '../model/user';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -32,34 +32,39 @@ export class UserService {
       sessionStorage.setItem('email', email); 
     } 
 
-  public getUserByEmail(email: string): User {
+  public getUserByEmail(email: string): Observable<User> {
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
     let params = new HttpParams().set("email",email);
-    let userObject : User;
-    this.http.get<User>(this.usersUrlGetUserByEmail, {params: params}).subscribe(res => userObject = res);
-    return userObject;
+    return this.http.get<User>(this.usersUrlGetUserByEmail, {headers: headers, params: params});
   }
-  public getLoggedUser(): User {
+ public getLoggedUser(): Observable<User> {
     let user = sessionStorage.getItem('email');
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
     let params = new HttpParams().set("email",user);
-    let userObject: User;
-    this.http.get<User>(this.usersUrlGetLoggedUser, {params: params}).subscribe(res => userObject = res);
-    return userObject;
+    return this.http.get<User>(this.usersUrlGetLoggedUser, {headers: headers, params: params});
   }
-  public isBoatAdvertiserLoggedIn(): boolean {
-      if(this.getLoggedUser().role === Role.boatAdvertiser){
+ public isBoatAdvertiserLoggedIn(): Observable<boolean> {
+      return this.getLoggedUser().pipe(map(res => {
+      if(res.role.toString() === 'boatAdvertiser'){
+          return true;
+        }
+        else{
+          return false;
+        }
+      }));
+  }
+ public isCottageAdvertiserLoggedIn(): Observable<boolean> {
+    return this.getLoggedUser().pipe(map(res => {
+      if(res.role.toString() === 'cottageAdvertiser'){
         return true;
       }
       else{
         return false;
       }
-  }
-  public isCottageAdvertiserLoggedIn(): boolean {
-    if(this.getLoggedUser().role === Role.cottageAdvertiser){
-      return true;
-    }
-    else{
-      return false;
-    }
+    }));
+   
 }
 
 

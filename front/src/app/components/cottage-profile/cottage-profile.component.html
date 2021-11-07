@@ -1,1 +1,125 @@
-<p>cottage-profile works!</p>
+
+<section class="mb-5">
+  <form class="content" [formGroup]="changeForm" (ngSubmit)="submitData()">
+    <div class="row">
+      <div class="col-md-6 mb-4 mb-md-0">
+  
+        <div id="mdb-lightbox-ui"></div>
+  
+        <div class="mdb-lightbox">
+  
+          <div class="row mx-1">
+  
+            <div class="col-12 mb-0">
+              <figure class="view overlay rounded z-depth-1 main-img">
+                
+                  <img style="width:600px;height:485px;" [src]="('../../assets/images/' + cottageImg +'.jpg')"
+                    class="img-fluid z-depth-1"/>
+                
+              </figure>
+            </div>
+            <div class="col-12">
+              <div class="row">
+                <div *ngFor='let image of cottageChange?.images| slice:1' class="col-3">
+                  <div  class="view overlay rounded z-depth-1 gallery-item">     
+                    <img *ngIf='image !== undefined' (click)="select(image)" style="width:130px;height:150px;" [src]="('../../assets/images/' + image +'.jpg')"
+                        class="img-fluid">     
+                  </div>
+                </div>  
+              </div>
+            </div>
+            <div class="d-flex justify-content-around pt-3">
+            <button type="button" class="btn btn-primary btn-md mr-1 mb-2">Add picture</button>
+            <button (click)="removeImg()" type="button" class="btn btn-primary btn-md mr-1 mb-2">Remove picture</button>
+            </div>
+          </div>
+  
+        </div>
+  
+      </div>
+      <div class="col-md-6">
+  
+        <div class="container"><div class="row align-items-start align-items-center"><h5 class="col">{{cottageChange?.name}}</h5><div class="col"><input [(ngModel)]="cottage.name" formControlName="name" class="form-control col" type="text"/>
+        <div *ngIf="name.invalid && (name.touched || name.dirty)">
+          <span class="error" *ngIf="name.errors?.required">Name is required</span>
+          <span class="error" *ngIf="name.errors?.pattern">Only letters allowed.First letter must be capital</span>
+      </div></div></div></div>
+        <p class="mb-2 text-muted text-uppercase small">Rooms</p>
+        <div class="container"><div class="row align-items-start align-items-center"><p class="pt-1 col-6">Number of rooms: {{cottageChange?.numOfRooms}}</p><div class="col"><input [(ngModel)]="cottage.numOfRooms" formControlName="numOfRooms" class="form-control"  type="number"/>
+        <div *ngIf="numOfRooms.invalid && (numOfRooms.touched || numOfRooms.dirty)">
+          <span class="error" *ngIf="numOfRooms.errors?.required">Number of rooms is required</span>
+          <span class="error" *ngIf="numOfRooms.errors?.pattern">Only numbers allowed</span>
+      </div></div></div></div>
+        <div class="container"><div class="row align-items-start align-items-center"><p class="pt-1 col-6">Beds per room: {{cottageChange?.numOfBeds}}</p><div class="col"><input [(ngModel)]="cottage.numOfBeds" formControlName="numOfBeds" class="form-control"  type="number"/>
+        <div *ngIf="numOfBeds.invalid && (numOfBeds.touched || numOfBeds.dirty)">
+          <span class="error" *ngIf="numOfBeds.errors?.required">Number of beds is required</span>
+          <span class="error" *ngIf="numOfBeds.errors?.pattern">Only numbers allowed</span>
+      </div></div></div></div>
+        <p class="mb-2 text-muted text-uppercase small">Services</p>
+        <div class="container"><div class="row align-items-start align-items-center"> <ul class='col'>
+          <li *ngFor="let item of cottageChange?.services">
+            {{item}}
+          </li>
+        </ul>
+        <div class="col">
+          <div class="row">
+            <div *ngFor="let service of services;let i = index" class="form-check col">
+              <input [checked]="isChecked(service.toString())" class="form-check-input" type="checkbox" [value]="i" [id]="service">
+              <label class="form-check-label">
+                {{service.toString()}}
+              </label>
+            </div>
+        </div>
+      </div>
+      </div></div>
+        
+        <p class="mb-2 text-muted text-uppercase small">Cost per night</p>
+        <div class="container"><div class="row align-items-start align-items-center"><p class="col"><span class="mr-1"><strong>{{cottageChange?.costPerNight}}</strong></span></p><div class="col"><input [(ngModel)]="cottage.costPerNight" formControlName="costPerNight" class="form-control" type="number"/>
+        <div *ngIf="costPerNight.invalid && (costPerNight.touched || costPerNight.dirty)">
+          <span class="error" *ngIf="costPerNight.errors?.required">Cost per night is required</span>
+          <span class="error" *ngIf="costPerNight.errors?.pattern">Only numbers allowed</span>
+      </div></div></div></div>
+        <p class="mb-2 text-muted text-uppercase small">Address</p>
+        <div class="container"><div class="row align-items-start align-items-center"><p class="pt-1 col-6">{{cottageChange?.address}}</p><div class="col"><input [(ngModel)]="cottage.address" formControlName="address" class="form-control" type="text"/>
+        <div *ngIf="address.invalid && (address.touched || address.dirty)">
+          <span class="error" *ngIf="address.errors?.required">Address is required</span>
+          <span class="error" *ngIf="address.errors?.pattern">Enter valid address</span>
+      </div></div></div></div>
+        <p class="mb-2 text-muted text-uppercase small">Description</p>
+        <div class="container "><div class="row align-items-start align-items-center"><p class="pt-1 col-6">{{cottageChange?.description}}</p><div class="col"><input [(ngModel)]="cottage.description" formControlName="description" class="form-control" type="text"/>
+        <div *ngIf="description.invalid && (description.touched || description.dirty)">
+          <span class="error" *ngIf="description.errors?.required">Description is required</span>
+          <span class="error" *ngIf="description.errors?.pattern">Only letters allowed</span>
+      </div></div></div></div>
+        <p class="mb-2 text-muted text-uppercase small">Rules</p>
+        <div class="container"><div class="row align-items-start align-items-center"><p class="pt-1 col-6">{{cottageChange?.rules}}</p><div class="col"><input [(ngModel)]="cottage.rules" formControlName="rules" class="form-control" type="text"/><div *ngIf="rules.invalid && (rules.touched || rules.dirty)">
+          <span class="error" *ngIf="rules.errors?.required">Rules is required</span>
+          <span class="error" *ngIf="rules.errors?.pattern">Only letters allowed</span>
+      </div></div></div>
+        </div>
+        <p class="mb-2 text-muted text-uppercase small">Available</p>
+        <div class="container"><div class="row align-items-start align-items-center">
+          <div class="col-6 row "><div class="d-flex justify-content-between" >From: <input style="width: 80%;" [value]="cottageChange?.availableFrom" type="datetime-local" disabled></div><div class="d-flex justify-content-between">To: <input [value]="cottageChange?.availableTill" style="width: 80%;" type="datetime-local" disabled></div></div>
+          <div class="col row"><div class="d-flex justify-content-between" >From: <input [(ngModel)]="cottage.availableFrom" formControlName="availableFrom" class="form-control" style="width: 70%;" type="datetime-local" id="availableFrom" ></div>
+          <div *ngIf="availableFrom.invalid && (availableFrom.touched || availableFrom.dirty)">
+            <span class="error" *ngIf="availableFrom.errors?.required">From is required</span>
+          </div>
+          <div class="d-flex justify-content-between">To: <input [(ngModel)]="cottage.availableTill" formControlName="availableTill" class="form-control" style="width: 70%;" type="datetime-local" id="availableTo"></div>
+          <div *ngIf="availableTill.invalid && (availableTill.touched || availableTill.dirty)">
+            <span class="error" *ngIf="availableTill.errors?.required">To is required</span>
+        </div></div>
+        </div></div>
+        
+        
+        
+        <div class="d-flex justify-content-center">
+          
+          <button [disabled]="changeForm.invalid" class="btn btn-primary btn-md mr-1 mb-2">Change</button>
+          
+        </div>
+        
+      </div>
+    </div>
+  </form>
+  </section>
+  

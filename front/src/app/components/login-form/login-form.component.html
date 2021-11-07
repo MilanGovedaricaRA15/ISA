@@ -15,6 +15,9 @@
                 <div *ngIf="password.invalid && (password.touched || password.dirty)">
                     <span class="error" *ngIf="password.errors?.required">Password is required</span>
                     <span class="error" *ngIf="password.errors?.pattern">Only letters allowed</span>
+                    
+                </div>
+                <div *ngIf="userDoesntExists">
                     <span class="error" *ngIf="userDoesntExists">User not found</span>
                 </div>
             </div>

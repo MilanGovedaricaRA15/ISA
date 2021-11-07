@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { RegisterFormComponent } from './components/registerForm/registerForm.component';
@@ -10,6 +11,7 @@ import { CottageOwnerProfileComponent } from './components/cottage-owner-profile
 import { HttpClientModule } from '@angular/common/http';
 import { UserService } from './service/user-service.service';
 import { LoginFormComponent } from './components/login-form/login-form.component';
+import { HotOfferComponent } from './components/hot-offer/hot-offer.component';
 
 @NgModule({
   declarations: [
@@ -17,14 +19,16 @@ import { LoginFormComponent } from './components/login-form/login-form.component
     RegisterFormComponent,
     CottageProfileComponent,
     CottageOwnerProfileComponent,
-    LoginFormComponent
+    LoginFormComponent,
+    HotOfferComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    
   ],
   providers: [UserService],
   bootstrap: [AppComponent]

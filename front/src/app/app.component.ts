@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Cottage } from './model/cottage';
 import { UserService } from './service/user-service.service';
 
 @Component({
@@ -8,12 +9,25 @@ import { UserService } from './service/user-service.service';
 })
 export class AppComponent {
   title = 'IzdajMe';
+  cottageForHotOffers: Cottage;
 
   /**
    *
    */
-  showCompNumber: number = 0;
+  showCompNumber: number = 2;
   constructor(private userService: UserService) {
+
+  }
+
+  public ngOnInit() {
+    this.userService.isCottageAdvertiserLoggedIn().subscribe(res =>{
+      if(res){this.changeNumber(3);}
+    });
+    this.userService.isBoatAdvertiserLoggedIn().subscribe(res => {
+      if(res){
+        this.changeNumber(4);
+      }
+    });
 
   }
   onRegister(message: string) {
@@ -21,12 +35,21 @@ export class AppComponent {
        this.changeNumber(2);
      }
     }
-  changeNumber(index: number) {
-    // this.userService.findAll().subscribe(result => {
+  onLogin(message: string){
+    if(message === 'cottageAdvertiser'){
+      this.changeNumber(3);
+    }
+    else if(message === 'boatAdvertiser'){
+      this.changeNumber(4);
+    }
 
-    // });
+  }
+  changeNumber(index: number) {
     this.showCompNumber = index;
   }
 
+  updateHotOffers(fromCottageComponent: Cottage){
+    this.cottageForHotOffers = fromCottageComponent;
+  }
   
 }

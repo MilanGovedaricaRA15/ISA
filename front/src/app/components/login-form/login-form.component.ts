@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/model/user';
 import { UserService } from 'src/app/service/user-service.service';
@@ -12,6 +12,7 @@ export class LoginFormComponent implements OnInit {
 
   user: User;
   userDoesntExists: boolean = false;
+  @Output() login = new EventEmitter<string>();
 
   constructor(private userService: UserService) {
     this.user = new User();
@@ -30,13 +31,24 @@ export class LoginFormComponent implements OnInit {
 
   submitData()
     {
-        this.userService.login(this.user).subscribe(result => {
+        this.userService.login(this.user).subscribe( result =>  {
           if(result === 'user_not_found'){
             this.userDoesntExists = true;
           }
           else if(result === 'user_found'){
             this.userDoesntExists = false;
             this.userService.authenticate(this.user.email);
+            this.userService.isCottageAdvertiserLoggedIn().subscribe(res =>{
+              if(res){
+                this.login.emit('cottageAdvertiser');
+              }
+            });
+            
+              
+            
+      //      this.userService.isBoatAdvertiserLoggedIn()
+      //       this.login.emit('boatAdvertiser');
+            
           }
         });
     }

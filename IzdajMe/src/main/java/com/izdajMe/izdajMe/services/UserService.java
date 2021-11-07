@@ -1,24 +1,10 @@
 package com.izdajMe.izdajMe.services;
 
 import com.izdajMe.izdajMe.model.User;
-import com.izdajMe.izdajMe.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import java.util.*;
-import java.util.stream.*;
+import org.springframework.http.ResponseEntity;
 
-public class UserService {
-    @Autowired
-    private UserRepository userRepository;
-
-    public String saveUser(User user) {
-
-        return "";
-
-    }
-
-    public String LoginUser(User user) {
-
-        return "";
-
-    }
+public interface UserService {
+    public ResponseEntity<String> loginUser(User user);
+    public ResponseEntity<String> saveUser(User user);
+    public ResponseEntity<User> getUserByEmail(String email);
 }

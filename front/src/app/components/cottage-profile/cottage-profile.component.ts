@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { map } from 'rxjs/operators';
+import { Cottage, Services } from 'src/app/model/cottage';
+import { HotOffer } from 'src/app/model/hot-offer';
+import { CottageService } from 'src/app/service/cottage-service.service';
 
 @Component({
   selector: 'app-cottage-profile',
@@ -7,9 +12,125 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CottageProfileComponent implements OnInit {
 
-  constructor() { }
+  cottage: Cottage;
+  cottageChange: Cottage;
+  cottageImg: String;
+  changeForm:any;
+  @Output() cottageHotOffersForHotOffer = new EventEmitter<Cottage>();
 
-  ngOnInit(): void {
+  services = [
+   'WiFi','Parking','Pool'
+  ];
+
+  constructor(private cottageService: CottageService) { }
+
+  public ngOnInit() {
+    this.onIni();
+    
+    this.changeForm = new FormGroup({
+      "name": new FormControl(null,[Validators.required,Validators.pattern('[A-Z]{1}[a-z]+')]),
+      "numOfBeds": new FormControl(null,[Validators.required,Validators.pattern('[1-9][0-9]*')]),
+      "numOfRooms": new FormControl(null,[Validators.required,Validators.pattern('[1-9][0-9]*')]),
+      "availableFrom": new FormControl(null,[Validators.required]),
+      "availableTill": new FormControl(null,[Validators.required]),
+      "costPerNight": new FormControl(null,[Validators.required,Validators.pattern('[1-9][0-9]*')]),
+      "description": new FormControl(null,[Validators.required,Validators.pattern('[a-zA-Z ]*')]),
+      "rules": new FormControl(null,[Validators.required,Validators.pattern('[a-zA-Z ]*')]),
+      "address": new FormControl(null,[Validators.required,Validators.pattern('([A-ZŠĐČĆŽ]{1}[a-zšđčćž]+ )+[0-9]+')])
+      
+    });
+
+
   }
 
+  public onIni(){
+     this.cottage = new Cottage();
+    this.cottageService.getAllCottages().subscribe(res => {
+      this.cottageChange = JSON.parse(JSON.stringify(res[0]));
+      this.cottage = res[0];
+      this.cottageImg = this.cottageChange.images[0];
+      this.cottageHotOffersForHotOffer.emit(this.cottageChange);
+    });
+  }
+
+  public select(image: String) {
+    this.cottageImg = image;
+    this.cottageChange.images.forEach((element, index) => {
+      if (element === image) this.cottageChange.images.splice(index, 1);
+    });
+    this.cottageChange.images.unshift(image);
+
+  }
+
+  public removeImg() {
+    this.cottageChange.images.forEach((element, index) => {
+      if (element === this.cottageImg) {
+        this.cottageChange.images.splice(index, 1);
+        this.cottageImg = this.cottageChange.images[0];
+      }
+    });
+    this.cottageService.removeCottageImg(this.cottageChange).subscribe(() => {});
+  }
+
+  public isChecked(stri:string): boolean{
+    if(this?.cottageChange !== undefined){
+      for (let x of this.cottageChange.services){
+        if(x.toString() === stri){
+          return true;
+        }
+      }
+      return false;
+    }
+    return false
+  }
+  submitData(){
+    this.cottage.services = new Array<Services>();
+    for(let x of this.services){
+      let element = <HTMLInputElement> document.getElementById(x);
+      if(element.checked){
+        if(x === 'WiFi'){
+          this.cottage.services.push(Services.WiFi);
+        }
+        else if(x === 'Parking'){
+          this.cottage.services.push(Services.Parking);
+        }
+        else if(x === 'Pool'){
+          this.cottage.services.push(Services.Pool);
+        }
+      }
+
+    }
+    this.cottageService.changeCottage(this.cottage).subscribe(() => {
+      this.onIni();
+    });
+    
+
+  }
+  get name() {
+    return this.changeForm.get('name');
+  }
+  get numOfBeds() {
+    return this.changeForm.get('numOfBeds');
+  }
+  get numOfRooms(){
+    return this.changeForm.get('numOfRooms');
+  }
+  get availableFrom(){
+    return this.changeForm.get('availableFrom');
+  }
+  get availableTill() {
+    return this.changeForm.get('availableTill');
+  }
+  get costPerNight() {
+    return this.changeForm.get('costPerNight');
+  }
+  get description() {
+    return this.changeForm.get('description');
+  }
+  get rules() {
+    return this.changeForm.get('rules');
+  }
+  get address() {
+    return this.changeForm.get('address');
+  }
 }
