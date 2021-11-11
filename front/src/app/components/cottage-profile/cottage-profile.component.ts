@@ -106,7 +106,7 @@ export class CottageProfileComponent implements OnInit {
 
   public isChecked(stri:string): boolean{
     if(this?.cottageChange !== undefined){
-      for (let x of this.cottageChange.services){
+      for (let x of this.cottageChange?.services){
         if(x.toString() === stri){
           return true;
         }

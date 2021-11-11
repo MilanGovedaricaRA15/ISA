@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
+
 import java.util.ArrayList;
 
 @Service
@@ -19,5 +20,9 @@ public class HotOfferServiceImpl implements HotOfferService {
     public ResponseEntity<Void> saveHotOffer(HotOffer hotOffer){
         hotOfferRepository.save(hotOffer);
         return ResponseEntity.ok(null);
+    }
+    public ResponseEntity<Boolean> removeHotOffer( Long id){
+        hotOfferRepository.deleteById(id);
+        return new ResponseEntity<Boolean>(true, HttpStatus.OK);
     }
 }

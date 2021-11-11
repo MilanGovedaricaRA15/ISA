@@ -8,12 +8,17 @@ import { HotOffer } from '../model/hot-offer';
 })
 export class HotOfferService {
   private addHotOfferUrl: string;
+  private removeHotOfferUrl: string;
 
   constructor(private http: HttpClient) { 
     this.addHotOfferUrl = "http://localhost:8080/hotOffers/saveHotOffer";
+    this.removeHotOfferUrl = "http://localhost:8080/hotOffers/removeHotOffer";
   }
 
   public saveHotOffer(hotOffer:HotOffer ): Observable<any>{
     return this.http.post(this.addHotOfferUrl,hotOffer);
+  }
+  public removeHotOffer(id:number ): Observable<boolean>{
+    return this.http.post<boolean>(this.removeHotOfferUrl,id);
   }
 }

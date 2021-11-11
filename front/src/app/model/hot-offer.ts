@@ -1,4 +1,4 @@
-import { Services } from "./cottage";
+import { Cottage, Services } from "./cottage";
 
 export class HotOffer {
     id:number;
@@ -6,6 +6,6 @@ export class HotOffer {
     availableTill:Date;
     numOfPeople:number;
     services:Array<Services> ;
-    costPerNight:number;
+    cost:number;
     free:boolean;
 }

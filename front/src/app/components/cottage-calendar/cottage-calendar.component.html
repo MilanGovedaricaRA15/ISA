@@ -1,0 +1,567 @@
+<div class="container-fluid">
+    <header>
+      <div class="year-header"> 
+          <span class="left-button" id="prev" (click)="prev()"> &lang; </span> 
+          <span class="year" >{{monthYear}}</span> 
+          <span class="right-button" id="next" (click)="next()"> &rang; </span>
+        </div>
+      <div class="row d-none d-sm-flex p-1 bg-dark text-white">
+        <h5 class="col-sm p-1 text-center">Sunday</h5>
+        <h5 class="col-sm p-1 text-center">Monday</h5>
+        <h5 class="col-sm p-1 text-center">Tuesday</h5>
+        <h5 class="col-sm p-1 text-center">Wednesday</h5>
+        <h5 class="col-sm p-1 text-center">Thursday</h5>
+        <h5 class="col-sm p-1 text-center">Friday</h5>
+        <h5 class="col-sm p-1 text-center">Saturday</h5>
+      </div>
+    </header>
+    <div class="row border border-right-0 border-bottom-0">
+        <ng-container *ngFor="let day of daysOfMonth;let index = index">
+            <div *ngIf="index==0 && firstDayOfMonth =='Saturday' && daysOfMonthBeforeNumber!==31" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">25</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <a *ngIf="isItTakenPrevMonth(25)=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(25)}}</a>
+
+                <a *ngIf="isItTakenPrevMonth(25)!='Reserved' && isItTakenPrevMonth(25)!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(25)}}</a>
+            </div>
+            <div *ngIf="index==0 && firstDayOfMonth =='Saturday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">26</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <a *ngIf="isItTakenPrevMonth(26)=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(26)}}</a>
+
+                <a *ngIf="isItTakenPrevMonth(26)!='Reserved' && isItTakenPrevMonth(26)!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(26)}}</a>
+            </div> 
+            <div *ngIf="index==0 && firstDayOfMonth =='Saturday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">27</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <a *ngIf="isItTakenPrevMonth(27)=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(27)}}</a>
+
+                <a *ngIf="isItTakenPrevMonth(27)!='Reserved' && isItTakenPrevMonth(27)!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(27)}}</a>
+            </div>
+            <div *ngIf="index==0 && firstDayOfMonth =='Saturday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">28</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <a *ngIf="isItTakenPrevMonth(28)=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(28)}}</a>
+
+                <a *ngIf="isItTakenPrevMonth(28)!='Reserved' && isItTakenPrevMonth(28)!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(28)}}</a>
+            </div>
+
+            <div *ngIf="index==0 && firstDayOfMonth =='Saturday' && daysOfMonthBeforeNumber!=28" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">29</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <a *ngIf="isItTakenPrevMonth(29)=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(29)}}</a>
+
+                <a *ngIf="isItTakenPrevMonth(29)!='Reserved' && isItTakenPrevMonth(29)!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(29)}}</a>
+            </div>
+            <div *ngIf="index==0 && firstDayOfMonth =='Saturday' && daysOfMonthBeforeNumber!=28" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">30</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <a *ngIf="isItTakenPrevMonth(30)=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(30)}}</a>
+
+                <a *ngIf="isItTakenPrevMonth(30)!='Reserved' && isItTakenPrevMonth(30)!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(30)}}</a>
+            </div>
+            <div *ngIf="index==0 && firstDayOfMonth =='Saturday' && daysOfMonthBeforeNumber==31" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">31</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <a *ngIf="isItTakenPrevMonth(31)=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(31)}}</a>
+
+                <a *ngIf="isItTakenPrevMonth(31)!='Reserved' && isItTakenPrevMonth(31)!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(31)}}</a>
+            </div>
+            <div *ngIf="index==0 && firstDayOfMonth =='Friday' && daysOfMonthBeforeNumber!==31" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">26</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <a *ngIf="isItTakenPrevMonth(26)=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(26)}}</a>
+
+                <a *ngIf="isItTakenPrevMonth(26)!='Reserved' && isItTakenPrevMonth(26)!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(26)}}</a>
+            </div> 
+            <div *ngIf="index==0 && firstDayOfMonth =='Friday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">27</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <a *ngIf="isItTakenPrevMonth(27)=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(27)}}</a>
+
+                <a *ngIf="isItTakenPrevMonth(27)!='Reserved' && isItTakenPrevMonth(27)!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(27)}}</a>
+            </div>
+            <div *ngIf="index==0 && firstDayOfMonth =='Friday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">28</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <a *ngIf="isItTakenPrevMonth(28)=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(28)}}</a>
+
+                <a *ngIf="isItTakenPrevMonth(28)!='Reserved' && isItTakenPrevMonth(28)!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(28)}}</a>
+            </div>
+
+            <div *ngIf="index==0 && firstDayOfMonth =='Friday' && daysOfMonthBeforeNumber!=28" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">29</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <a *ngIf="isItTakenPrevMonth(29)=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(29)}}</a>
+
+                <a *ngIf="isItTakenPrevMonth(29)!='Reserved' && isItTakenPrevMonth(29)!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(29)}}</a>
+            </div>
+            <div *ngIf="index==0 && firstDayOfMonth =='Friday' && daysOfMonthBeforeNumber!=28" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">30</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <a *ngIf="isItTakenPrevMonth(30)=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(30)}}</a>
+
+                <a *ngIf="isItTakenPrevMonth(30)!='Reserved' && isItTakenPrevMonth(30)!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(30)}}</a>
+            </div>
+
+            <div *ngIf="index==0 && firstDayOfMonth =='Friday' && daysOfMonthBeforeNumber==31" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">31</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <a *ngIf="isItTakenPrevMonth(31)=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(31)}}</a>
+
+                <a *ngIf="isItTakenPrevMonth(31)!='Reserved' && isItTakenPrevMonth(31)!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(31)}}</a>
+            </div>
+            <div *ngIf="index==0 && firstDayOfMonth =='Thursday' && daysOfMonthBeforeNumber!==31" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">27</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <a *ngIf="isItTakenPrevMonth(27)=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(27)}}</a>
+
+                <a *ngIf="isItTakenPrevMonth(27)!='Reserved' && isItTakenPrevMonth(27)!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(27)}}</a>
+            </div>
+            <div *ngIf="index==0 && firstDayOfMonth =='Thursday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">28</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <a *ngIf="isItTakenPrevMonth(28)=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(28)}}</a>
+
+                <a *ngIf="isItTakenPrevMonth(28)!='Reserved' && isItTakenPrevMonth(28)!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(28)}}</a>
+            </div>
+
+            <div *ngIf="index==0 && firstDayOfMonth =='Thursday' && daysOfMonthBeforeNumber!=28" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">29</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <a *ngIf="isItTakenPrevMonth(29)=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(29)}}</a>
+
+                <a *ngIf="isItTakenPrevMonth(29)!='Reserved' && isItTakenPrevMonth(29)!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(29)}}</a>
+            </div>
+            <div *ngIf="index==0 && firstDayOfMonth =='Thursday' && daysOfMonthBeforeNumber!=28" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">30</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <a *ngIf="isItTakenPrevMonth(30)=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(30)}}</a>
+
+                <a *ngIf="isItTakenPrevMonth(30)!='Reserved' && isItTakenPrevMonth(30)!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(30)}}</a>
+            </div>
+
+            <div *ngIf="index==0 && firstDayOfMonth =='Thursday' && daysOfMonthBeforeNumber==31" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">31</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <a *ngIf="isItTakenPrevMonth(31)=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(31)}}</a>
+
+                <a *ngIf="isItTakenPrevMonth(31)!='Reserved' && isItTakenPrevMonth(31)!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(31)}}</a>
+            </div>
+
+            <div *ngIf="index==0 && firstDayOfMonth =='Wednesday' && daysOfMonthBeforeNumber!==31" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">28</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <a *ngIf="isItTakenPrevMonth(28)=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(28)}}</a>
+
+                <a *ngIf="isItTakenPrevMonth(28)!='Reserved' && isItTakenPrevMonth(28)!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(28)}}</a>
+            </div>
+
+            <div *ngIf="index==0 && firstDayOfMonth =='Wednesday' && daysOfMonthBeforeNumber!=28" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">29</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <a *ngIf="isItTakenPrevMonth(29)=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(29)}}</a>
+
+                <a *ngIf="isItTakenPrevMonth(29)!='Reserved' && isItTakenPrevMonth(29)!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(29)}}</a>
+            </div>
+            <div *ngIf="index==0 && firstDayOfMonth =='Wednesday' && daysOfMonthBeforeNumber!=28" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">30</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <a *ngIf="isItTakenPrevMonth(30)=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(30)}}</a>
+
+                <a *ngIf="isItTakenPrevMonth(30)!='Reserved' && isItTakenPrevMonth(30)!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(30)}}</a>
+            </div>
+
+            <div *ngIf="index==0 && firstDayOfMonth =='Wednesday' && daysOfMonthBeforeNumber==31" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">31</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <a *ngIf="isItTakenPrevMonth(31)=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(31)}}</a>
+
+                <a *ngIf="isItTakenPrevMonth(31)!='Reserved' && isItTakenPrevMonth(31)!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(31)}}</a>
+            </div>
+
+            <div *ngIf="index==0 && firstDayOfMonth =='Tuesday' && daysOfMonthBeforeNumber==28 " class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">27</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <a *ngIf="isItTakenPrevMonth(27)=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(27)}}</a>
+
+                <a *ngIf="isItTakenPrevMonth(27)!='Reserved' && isItTakenPrevMonth(27)!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(27)}}</a>
+            </div>
+
+            <div *ngIf="index==0 && firstDayOfMonth =='Tuesday' && daysOfMonthBeforeNumber==28 " class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">28</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <a *ngIf="isItTakenPrevMonth(28)=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(28)}}</a>
+
+                <a *ngIf="isItTakenPrevMonth(28)!='Reserved' && isItTakenPrevMonth(28)!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(28)}}</a>
+            </div>
+
+            <div *ngIf="index==0 && firstDayOfMonth =='Tuesday' && daysOfMonthBeforeNumber!=28 && daysOfMonthBeforeNumber!==31" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">29</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <a *ngIf="isItTakenPrevMonth(29)=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(29)}}</a>
+
+                <a *ngIf="isItTakenPrevMonth(29)!='Reserved' && isItTakenPrevMonth(29)!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(29)}}</a>
+            </div>
+            <div *ngIf="index==0 && firstDayOfMonth =='Tuesday' && daysOfMonthBeforeNumber!=28" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">30</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <a *ngIf="isItTakenPrevMonth(30)=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(30)}}</a>
+
+                <a *ngIf="isItTakenPrevMonth(30)!='Reserved' && isItTakenPrevMonth(30)!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(30)}}</a>
+            </div>
+
+            <div *ngIf="index==0 && firstDayOfMonth =='Tuesday' && daysOfMonthBeforeNumber==31" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">31</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <a *ngIf="isItTakenPrevMonth(31)=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(31)}}</a>
+
+                <a *ngIf="isItTakenPrevMonth(31)!='Reserved' && isItTakenPrevMonth(31)!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(31)}}</a>
+            </div>
+
+            <div *ngIf="index==0 && firstDayOfMonth =='Monday' && daysOfMonthBeforeNumber==28 " class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">28</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <a *ngIf="isItTakenPrevMonth(28)=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(28)}}</a>
+
+                <a *ngIf="isItTakenPrevMonth(28)!='Reserved' && isItTakenPrevMonth(28)!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(28)}}</a>
+            </div>
+            
+            <div *ngIf="index==0 && firstDayOfMonth =='Monday' && daysOfMonthBeforeNumber!=28 && daysOfMonthBeforeNumber!==31" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">30</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <a *ngIf="isItTakenPrevMonth(30)=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(30)}}</a>
+
+                <a *ngIf="isItTakenPrevMonth(30)!='Reserved' && isItTakenPrevMonth(30)!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(30)}}</a>
+            </div>
+
+            <div *ngIf="index==0 && firstDayOfMonth =='Monday' && daysOfMonthBeforeNumber===31" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">31</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <a *ngIf="isItTakenPrevMonth(31)=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(31)}}</a>
+
+                <a *ngIf="isItTakenPrevMonth(31)!='Reserved' && isItTakenPrevMonth(31)!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" [title]="isItTaken(index+1)">{{isItTakenPrevMonth(31)}}</a>
+            </div>
+
+            <div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate ">
+                <h5 class="row align-items-center">
+                <span class="date col-1">{{index+1}}</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <a *ngIf="isItTaken(index+1)=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" [title]="isItTaken(index+1)">{{isItTaken(index+1)}}</a>
+
+                <a *ngIf="isItTaken(index+1)!='Reserved' && isItTaken(index+1)!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" [title]="isItTaken(index+1)">{{isItTaken(index+1)}}</a>
+            </div>
+
+            <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Sunday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">1</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <a *ngIf="isItTakenNextMonth(1)=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" [title]="isItTaken(index+1)">{{isItTakenNextMonth(1)}}</a>
+
+                <a *ngIf="isItTakenNextMonth(1)!='Reserved' && isItTakenNextMonth(1)!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" [title]="isItTaken(index+1)">{{isItTakenNextMonth(1)}}</a>
+            </div>
+            <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Sunday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">2</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <a *ngIf="isItTakenNextMonth(2)=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" [title]="isItTaken(index+1)">{{isItTakenNextMonth(2)}}</a>
+
+                <a *ngIf="isItTakenNextMonth(2)!='Reserved' && isItTakenNextMonth(2)!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" [title]="isItTaken(index+1)">{{isItTakenNextMonth(2)}}</a>
+            </div> 
+            <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Sunday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">3</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <a *ngIf="isItTakenNextMonth(3)=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" [title]="isItTaken(index+1)">{{isItTakenNextMonth(3)}}</a>
+
+                <a *ngIf="isItTakenNextMonth(3)!='Reserved' && isItTakenNextMonth(3)!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" [title]="isItTaken(index+1)">{{isItTakenNextMonth(3)}}</a>
+            </div>
+            <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Sunday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">4</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <a *ngIf="isItTakenNextMonth(4)=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" [title]="isItTaken(index+1)">{{isItTakenNextMonth(4)}}</a>
+
+                <a *ngIf="isItTakenNextMonth(4)!='Reserved' && isItTakenNextMonth(4)!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" [title]="isItTaken(index+1)">{{isItTakenNextMonth(4)}}</a>
+            </div>
+
+            <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Sunday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">5</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <a *ngIf="isItTakenNextMonth(5)=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" [title]="isItTaken(index+1)">{{isItTakenNextMonth(5)}}</a>
+
+                <a *ngIf="isItTakenNextMonth(5)!='Reserved' && isItTakenNextMonth(5)!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" [title]="isItTaken(index+1)">{{isItTakenNextMonth(5)}}</a>
+            </div>
+            <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Sunday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">6</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <a *ngIf="isItTakenNextMonth(6)=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" [title]="isItTaken(index+1)">{{isItTakenNextMonth(6)}}</a>
+
+                <a *ngIf="isItTakenNextMonth(6)!='Reserved' && isItTakenNextMonth(6)!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" [title]="isItTaken(index+1)">{{isItTakenNextMonth(6)}}</a>
+            </div>
+            <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Monday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">1</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <a *ngIf="isItTakenNextMonth(1)=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" [title]="isItTaken(index+1)">{{isItTakenNextMonth(1)}}</a>
+
+                <a *ngIf="isItTakenNextMonth(1)!='Reserved' && isItTakenNextMonth(1)!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" [title]="isItTaken(index+1)">{{isItTakenNextMonth(1)}}</a>
+            </div> 
+            <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Monday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">2</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <a *ngIf="isItTakenNextMonth(2)=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" [title]="isItTaken(index+1)">{{isItTakenNextMonth(2)}}</a>
+
+                <a *ngIf="isItTakenNextMonth(2)!='Reserved' && isItTakenNextMonth(2)!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" [title]="isItTaken(index+1)">{{isItTakenNextMonth(2)}}</a>
+            </div>
+            <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Monday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">3</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <a *ngIf="isItTakenNextMonth(3)=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" [title]="isItTaken(index+1)">{{isItTakenNextMonth(3)}}</a>
+
+                <a *ngIf="isItTakenNextMonth(3)!='Reserved' && isItTakenNextMonth(3)!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" [title]="isItTaken(index+1)">{{isItTakenNextMonth(3)}}</a>
+            </div>
+
+            <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Monday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">4</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <a *ngIf="isItTakenNextMonth(4)=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" [title]="isItTaken(index+1)">{{isItTakenNextMonth(4)}}</a>
+
+                <a *ngIf="isItTakenNextMonth(4)!='Reserved' && isItTakenNextMonth(4)!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" [title]="isItTaken(index+1)">{{isItTakenNextMonth(4)}}</a>
+            </div>
+            <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Monday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">5</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <a *ngIf="isItTakenNextMonth(5)=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" [title]="isItTaken(index+1)">{{isItTakenNextMonth(5)}}</a>
+
+                <a *ngIf="isItTakenNextMonth(5)!='Reserved' && isItTakenNextMonth(5)!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" [title]="isItTaken(index+1)">{{isItTakenNextMonth(5)}}</a>
+            </div>
+            <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Tuesday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">1</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <a *ngIf="isItTakenNextMonth(1)=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" [title]="isItTaken(index+1)">{{isItTakenNextMonth(1)}}</a>
+
+                <a *ngIf="isItTakenNextMonth(1)!='Reserved' && isItTakenNextMonth(1)!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" [title]="isItTaken(index+1)">{{isItTakenNextMonth(1)}}</a>
+            </div>
+            <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Tuesday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">2</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <a *ngIf="isItTakenNextMonth(2)=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" [title]="isItTaken(index+1)">{{isItTakenNextMonth(2)}}</a>
+
+                <a *ngIf="isItTakenNextMonth(2)!='Reserved' && isItTakenNextMonth(2)!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" [title]="isItTaken(index+1)">{{isItTakenNextMonth(2)}}</a>
+            </div>
+
+            <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Tuesday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">3</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <a *ngIf="isItTakenNextMonth(3)=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" [title]="isItTaken(index+1)">{{isItTakenNextMonth(3)}}</a>
+
+                <a *ngIf="isItTakenNextMonth(3)!='Reserved' && isItTakenNextMonth(3)!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" [title]="isItTaken(index+1)">{{isItTakenNextMonth(3)}}</a>
+            </div>
+            <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Tuesday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">4</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <a *ngIf="isItTakenNextMonth(4)=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" [title]="isItTaken(index+1)">{{isItTakenNextMonth(4)}}</a>
+
+                <a *ngIf="isItTakenNextMonth(4)!='Reserved' && isItTakenNextMonth(4)!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" [title]="isItTaken(index+1)">{{isItTakenNextMonth(4)}}</a>
+            </div>
+
+            <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Wednesday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">1</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <a *ngIf="isItTakenNextMonth(1)=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" [title]="isItTaken(index+1)">{{isItTakenNextMonth(1)}}</a>
+
+                <a *ngIf="isItTakenNextMonth(1)!='Reserved' && isItTakenNextMonth(1)!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" [title]="isItTaken(index+1)">{{isItTakenNextMonth(1)}}</a>
+            </div>
+
+            <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Wednesday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">2</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <a *ngIf="isItTakenNextMonth(2)=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" [title]="isItTaken(index+1)">{{isItTakenNextMonth(2)}}</a>
+
+                <a *ngIf="isItTakenNextMonth(2)!='Reserved' && isItTakenNextMonth(2)!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" [title]="isItTaken(index+1)">{{isItTakenNextMonth(2)}}</a>
+            </div>
+            <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Wednesday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">3</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <a *ngIf="isItTakenNextMonth(3)=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" [title]="isItTaken(index+1)">{{isItTakenNextMonth(3)}}</a>
+
+                <a *ngIf="isItTakenNextMonth(3)!='Reserved' && isItTakenNextMonth(3)!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" [title]="isItTaken(index+1)">{{isItTakenNextMonth(3)}}</a>
+            </div>
+
+            <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Thursday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">1</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <a *ngIf="isItTakenNextMonth(1)=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" [title]="isItTaken(index+1)">{{isItTakenNextMonth(1)}}</a>
+                <a *ngIf="isItTakenNextMonth(1)!='Reserved' && isItTakenNextMonth(1)!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" [title]="isItTaken(index+1)">{{isItTakenNextMonth(1)}}</a>
+            </div>
+            <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Thursday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">2</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <a *ngIf="isItTakenNextMonth(2)=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" [title]="isItTaken(index+1)">{{isItTakenNextMonth(2)}}</a>
+                <a *ngIf="isItTakenNextMonth(2)!='Reserved' && isItTakenNextMonth(2)!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" [title]="isItTaken(index+1)">{{isItTakenNextMonth(2)}}</a>
+            </div>
+            
+            <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Friday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">1</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <a *ngIf="isItTakenNextMonth(1)=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" [title]="isItTaken(index+1)">{{isItTakenNextMonth(1)}}</a>
+                <a *ngIf="isItTakenNextMonth(1)!='Reserved' && isItTakenNextMonth(1)!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" [title]="isItTaken(index+1)">{{isItTakenNextMonth(1)}}</a>
+            </div>
+            
+            <div *ngIf="((index+1)-saturday===0) || ((index+1)-saturday-7===0) || ((index+1)-saturday-14===0) || ((index+1)-saturday-21===0) || ((index+1)-saturday-28===0)" class="w-100"></div>
+        </ng-container>
+      
+     
+    </div>
+  </div>

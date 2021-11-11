@@ -19,4 +19,8 @@ public class HotOfferController {
     public ResponseEntity<Void> saveHotOffer(@RequestBody HotOffer hotOffer){
         return hotOfferService.saveHotOffer(hotOffer);
     }
+    @PostMapping("/hotOffers/removeHotOffer")
+    public ResponseEntity<Boolean> removeHotOffer(@RequestBody Long id){
+        return hotOfferService.removeHotOffer(id);
+    }
 }

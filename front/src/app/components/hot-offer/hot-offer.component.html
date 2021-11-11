@@ -19,16 +19,17 @@
                             </tr>
                         </thead>
                         <tbody *ngFor="let item of cottageForApp?.hotOffers;">
-                            <tr *ngIf="item.free">
+                            <tr [id]="[item.id]" *ngIf="item.free">
                                 <td scope="col">{{item.availableFrom}}</td>
                                 <td scope="col">{{item.availableTill}}</td>
                                 <td scope="col-6">{{item.numOfPeople}}</td>
                                 <td scope="col"><i *ngFor="let service of item.services;">{{service}}&nbsp;</i></td>
-                                <td scope="col-6">{{item.costPerNight}}</td>
+                                <td scope="col-6">{{item.cost}}</td>
+                                <td scope="col-6"> <button (click)="removeHotOffer(item.id)"  class="btn btn-danger btn-md mr-1 mb-2">remove</button></td>
                             </tr>
                         </tbody>
                         <tbody>
-                            <tr>
+                            <tr >
                                 <td><input [(ngModel)]="newHotOffer.availableFrom" formControlName="availableFrom" class="form-control"  type="datetime-local" id="availableFrom" >
                                     <div *ngIf="availableFrom.invalid && (availableFrom.touched || availableFrom.dirty)">
                                       <span class="error" *ngIf="availableFrom.errors?.required">From is required</span>
@@ -56,10 +57,10 @@
                                   </div>
                                   </div>
                                 </td>
-                                <td><input style="width: 60%;" [(ngModel)]="newHotOffer.costPerNight" formControlName="costPerNight" class="form-control" type="number"/>
-                                    <div *ngIf="costPerNight.invalid && (costPerNight.touched || costPerNight.dirty)">
-                                      <span class="error" *ngIf="costPerNight.errors?.required">Cost per night is required</span>
-                                      <span class="error" *ngIf="costPerNight.errors?.pattern">Only numbers allowed</span>
+                                <td><input style="width: 60%;" [(ngModel)]="newHotOffer.cost" formControlName="cost" class="form-control" type="number"/>
+                                    <div *ngIf="cost.invalid && (cost.touched || cost.dirty)">
+                                      <span class="error" *ngIf="cost.errors?.required">Cost per night is required</span>
+                                      <span class="error" *ngIf="cost.errors?.pattern">Only numbers allowed</span>
                                   </div>
                                 </td>
                                 <td>

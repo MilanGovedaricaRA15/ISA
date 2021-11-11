@@ -12,6 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { UserService } from './service/user-service.service';
 import { LoginFormComponent } from './components/login-form/login-form.component';
 import { HotOfferComponent } from './components/hot-offer/hot-offer.component';
+import { CottageCalendarComponent } from './components/cottage-calendar/cottage-calendar.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { HotOfferComponent } from './components/hot-offer/hot-offer.component';
     CottageProfileComponent,
     CottageOwnerProfileComponent,
     LoginFormComponent,
-    HotOfferComponent
+    HotOfferComponent,
+    CottageCalendarComponent
   ],
   imports: [
     BrowserModule,

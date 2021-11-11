@@ -16,6 +16,7 @@
           <app-login-form (login)="onLogin($event)" *ngIf="showCompNumber === 2"></app-login-form>
           <app-cottage-profile (cottageHotOffersForHotOffer)="updateHotOffers($event)" *ngIf="showCompNumber === 3"></app-cottage-profile>
           <app-hot-offer [cottageForApp]="cottageForHotOffers"  *ngIf="showCompNumber === 3"></app-hot-offer>
+          <app-cottage-calendar  [cottageForApp]="cottageForHotOffers" *ngIf="showCompNumber === 3"></app-cottage-calendar>
         </div>
       </div>
     </div>

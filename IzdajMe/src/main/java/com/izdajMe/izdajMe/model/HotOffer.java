@@ -15,16 +15,16 @@ public class HotOffer {
     private LocalDateTime availableTill;
     private int numOfPeople;
     private ArrayList<Cottage.Services> services;
-    private float costPerNight;
+    private float cost;
     private Boolean free;
 
-    public HotOffer(long id, LocalDateTime availableFrom, LocalDateTime availableTill, int numOfPeople, ArrayList<Cottage.Services> services, float costPerNight) {
+    public HotOffer(long id, LocalDateTime availableFrom, LocalDateTime availableTill, int numOfPeople, ArrayList<Cottage.Services> services, float cost) {
         this.id = id;
         this.availableFrom = availableFrom;
         this.availableTill = availableTill;
         this.numOfPeople = numOfPeople;
         this.services = services;
-        this.costPerNight = costPerNight;
+        this.cost = cost;
         this.free = true;
     }
 
@@ -70,12 +70,12 @@ public class HotOffer {
         this.services = services;
     }
 
-    public float getCostPerNight() {
-        return costPerNight;
+    public float getCost() {
+        return cost;
     }
 
-    public void setCostPerNight(float costPerNight) {
-        this.costPerNight = costPerNight;
+    public void setCost(float cost) {
+        this.cost = cost;
     }
 
     public Boolean getFree() {

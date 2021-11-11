@@ -28,7 +28,7 @@ export class HotOfferComponent implements OnInit {
       "numOfPeople": new FormControl(null,[Validators.required,Validators.pattern('[1-9][0-9]*')]),
       "availableFrom": new FormControl(null,[Validators.required]),
       "availableTill": new FormControl(null,[Validators.required]),
-      "costPerNight": new FormControl(null,[Validators.required,Validators.pattern('[1-9][0-9]*')])
+      "cost": new FormControl(null,[Validators.required,Validators.pattern('[1-9][0-9]*')])
     });
     
   }
@@ -44,8 +44,8 @@ export class HotOfferComponent implements OnInit {
   get availableTill() {
     return this.addForm.get('availableTill');
   }
-  get costPerNight() {
-    return this.addForm.get('costPerNight');
+  get cost() {
+    return this.addForm.get('cost');
   }
 
   submitData(){
@@ -72,6 +72,22 @@ export class HotOfferComponent implements OnInit {
       });
     
     
+    
+  }
+
+  removeHotOffer(id:number){
+    for(let hotOffer of this.cottageForApp.hotOffers){
+      if (hotOffer.id == id){
+        const index = this.cottageForApp.hotOffers.indexOf(hotOffer);
+        if (index > -1) {
+          this.cottageForApp.hotOffers.splice(index, 1);
+        }
+      }
+    }
+    
+    this.cottageService.changeCottage(this.cottageForApp).subscribe(() => {
+      
+      });
     
   }
   
