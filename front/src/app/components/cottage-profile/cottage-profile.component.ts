@@ -17,6 +17,8 @@ export class CottageProfileComponent implements OnInit {
   cottageImg: String;
   changeForm:any;
   @Output() cottageHotOffersForHotOffer = new EventEmitter<Cottage>();
+  file: File = null;
+  invalidFile:boolean = false;
 
   services = [
    'WiFi','Parking','Pool'
@@ -26,6 +28,7 @@ export class CottageProfileComponent implements OnInit {
 
   public ngOnInit() {
     this.onIni();
+
     
     this.changeForm = new FormGroup({
       "name": new FormControl(null,[Validators.required,Validators.pattern('[A-Z]{1}[a-z]+')]),
@@ -69,8 +72,37 @@ export class CottageProfileComponent implements OnInit {
         this.cottageImg = this.cottageChange.images[0];
       }
     });
-    this.cottageService.removeCottageImg(this.cottageChange).subscribe(() => {});
+    this.cottageService.removeCottageImg(this.cottageChange).subscribe(() => {
+      this.onIni();
+    });
   }
+
+  public saveImg(){
+    if(this.file?.name.match(/.(jpg)$/i)){
+      this.invalidFile = false;
+      this.cottageService.upload(this.file).subscribe(ret=>{
+        if(ret){
+          this.cottageChange.images.push(this.file.name);
+          this.cottageService.changeCottage(this.cottageChange).subscribe(()=>{
+            this.onIni();
+          }
+          )
+          
+        }
+        else {
+          this.invalidFile = true;
+        }
+      });
+    }
+    else {
+      this.invalidFile = true;
+    }
+
+  }
+
+  onChange(event) {
+    this.file = event.target.files[0];
+}
 
   public isChecked(stri:string): boolean{
     if(this?.cottageChange !== undefined){

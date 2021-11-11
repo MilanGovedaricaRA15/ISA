@@ -5,9 +5,13 @@ import com.izdajMe.izdajMe.model.User;
 import com.izdajMe.izdajMe.services.CottageService;
 import com.izdajMe.izdajMe.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +36,11 @@ public class CottageController {
     public ResponseEntity<Void> removeCottageImg(@RequestBody Cottage cottage){
        return cottageService.removeCottageImg(cottage);
     }
+    @PostMapping("/cottages/uploadImg")
+    public ResponseEntity<Boolean> uploadImg(@RequestPart("file") MultipartFile file){
+        return cottageService.uploadImg(file);
+    }
+
     @PutMapping("/cottages/changeCottage")
     public ResponseEntity<Void> changeCottage(@RequestBody Cottage cottage){
        return cottageService.changeCottage(cottage);

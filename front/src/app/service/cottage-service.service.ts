@@ -12,6 +12,7 @@ export class CottageService {
   private removeCottageImgUrl: string;
   private getAllCottagesOfOwnerUrl: string;
   private changeCottageUrl: string;
+  private uploadImgUrl: string;
 
   
 
@@ -20,6 +21,7 @@ export class CottageService {
     this.getAllCottagesOfOwnerUrl="http://localhost:8080/cottages/getAllCottagesOfOwner";
     this.removeCottageImgUrl="http://localhost:8080/cottages/removeCottageImg";
     this.changeCottageUrl='http://localhost:8080/cottages/changeCottage';
+    this.uploadImgUrl='http://localhost:8080/cottages/uploadImg';
   }
 
   public getAllCottages(): Observable<Array<Cottage>> {
@@ -28,6 +30,14 @@ export class CottageService {
   
     return this.http.get<Array<Cottage>>(this.getAllCottagesUrl, {headers: headers});
   }
+
+  public upload(file:File):Observable<boolean> {
+    const formData:FormData = new FormData();
+
+     formData.append('file', file);
+
+    return this.http.post<boolean>(this.uploadImgUrl, formData);
+    } 
 
   public getAllCottagesOfOwner(): Observable<Array<Cottage>> {
     let user = sessionStorage.getItem('email');

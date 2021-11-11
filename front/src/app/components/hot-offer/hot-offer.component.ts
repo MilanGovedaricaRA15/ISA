@@ -51,7 +51,7 @@ export class HotOfferComponent implements OnInit {
   submitData(){
     this.newHotOffer.services = new Array<Services>();
     for(let x of this.services){
-      let element = <HTMLInputElement> document.getElementById(x);
+      let element = <HTMLInputElement> document.getElementsByName(x)[0];
       if(element.checked){
         if(x === 'WiFi'){
           this.newHotOffer.services.push(Services.WiFi);
@@ -65,10 +65,13 @@ export class HotOfferComponent implements OnInit {
       }
 
     }
+    this.newHotOffer.free = true;
     this.cottageForApp.hotOffers.push(this.newHotOffer);
-    this.hotOfferService.saveHotOffer(this.newHotOffer).subscribe(() => {});
+    
     this.cottageService.changeCottage(this.cottageForApp).subscribe(() => {
-    });
+      });
+    
+    
     
   }
   

@@ -29,7 +29,15 @@
               </div>
             </div>
             <div class="d-flex justify-content-around pt-3">
-            <button type="button" class="btn btn-primary btn-md mr-1 mb-2">Add picture</button>
+            <div>
+              <input type="file" 
+              (change)="onChange($event)">
+              <button (click)="saveImg()" type="button" class="btn btn-primary btn-md mr-1 mb-2">Add picture</button>
+              <div style="color:red;" *ngIf="invalidFile">
+                Upload jpg file
+
+              </div>
+            </div>
             <button (click)="removeImg()" type="button" class="btn btn-primary btn-md mr-1 mb-2">Remove picture</button>
             </div>
           </div>

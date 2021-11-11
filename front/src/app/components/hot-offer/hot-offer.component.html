@@ -18,16 +18,16 @@
                                 <th scope="col"></th>
                             </tr>
                         </thead>
-                        <tbody class="customtable">
-                            <div *ngFor="let item of cottageForApp.hotOffers;">
+                        <tbody *ngFor="let item of cottageForApp?.hotOffers;">
                             <tr *ngIf="item.free">
-                                <td>{{item.availableFrom}}</td>
-                                <td>{{item.availableTill}}</td>
-                                <td>{{item.numOfPeople}}</td>
-                                <td><i *ngFor="let service of item.services;">{{service}}&nbsp</i></td>
-                                <td>{{item.costPerNight}}</td>
+                                <td scope="col">{{item.availableFrom}}</td>
+                                <td scope="col">{{item.availableTill}}</td>
+                                <td scope="col-6">{{item.numOfPeople}}</td>
+                                <td scope="col"><i *ngFor="let service of item.services;">{{service}}&nbsp;</i></td>
+                                <td scope="col-6">{{item.costPerNight}}</td>
                             </tr>
-                            </div>
+                        </tbody>
+                        <tbody>
                             <tr>
                                 <td><input [(ngModel)]="newHotOffer.availableFrom" formControlName="availableFrom" class="form-control"  type="datetime-local" id="availableFrom" >
                                     <div *ngIf="availableFrom.invalid && (availableFrom.touched || availableFrom.dirty)">
@@ -48,7 +48,7 @@
                                 <td><div class="col">
                                     <div class="row">
                                       <div *ngFor="let service of services;let i = index" class="form-check col">
-                                        <input class="form-check-input" type="checkbox" [value]="i" [id]="service">
+                                        <input class="form-check-input" type="checkbox" [value]="i" [name]="service">
                                         <label class="form-check-label">
                                           {{service.toString()}}
                                         </label>
