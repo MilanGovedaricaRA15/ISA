@@ -13,6 +13,7 @@ import { UserService } from './service/user-service.service';
 import { LoginFormComponent } from './components/login-form/login-form.component';
 import { HotOfferComponent } from './components/hot-offer/hot-offer.component';
 import { CottageCalendarComponent } from './components/cottage-calendar/cottage-calendar.component';
+import { AddNewCottageComponent } from './components/add-new-cottage/add-new-cottage.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { CottageCalendarComponent } from './components/cottage-calendar/cottage-
     CottageOwnerProfileComponent,
     LoginFormComponent,
     HotOfferComponent,
-    CottageCalendarComponent
+    CottageCalendarComponent,
+    AddNewCottageComponent
   ],
   imports: [
     BrowserModule,

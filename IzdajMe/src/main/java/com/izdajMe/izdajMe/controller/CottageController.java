@@ -27,6 +27,13 @@ public class CottageController {
 
         return cottageService.getAllCottagesOfOwner(email);
     }
+
+    @GetMapping("/cottages/getCottageById")
+    public ResponseEntity<Cottage> getCottageById(@RequestParam("cottage") Long id) {
+
+        return cottageService.getCottageById(id);
+    }
+
     @GetMapping("/cottages/getAllCottages")
     public ResponseEntity<List<Cottage>> getAllCottages(){
 
@@ -36,9 +43,18 @@ public class CottageController {
     public ResponseEntity<Void> removeCottageImg(@RequestBody Cottage cottage){
        return cottageService.removeCottageImg(cottage);
     }
+    @PostMapping("/cottages/removeCottage")
+    public ResponseEntity<Void> removeCottage(@RequestBody Long id){
+        return cottageService.removeCottage(id);
+    }
     @PostMapping("/cottages/uploadImg")
     public ResponseEntity<Boolean> uploadImg(@RequestPart("file") MultipartFile file){
         return cottageService.uploadImg(file);
+    }
+
+    @PostMapping("/cottages/addCottage")
+    public ResponseEntity<Cottage> addCottage(@RequestBody Cottage cottage){
+        return cottageService.addCottage(cottage);
     }
 
     @PutMapping("/cottages/changeCottage")

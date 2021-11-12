@@ -11,12 +11,16 @@ export class UserService {
   private usersUrlRegister: string;
   private usersUrlGetUserByEmail: string;
   private usersUrlGetLoggedUser: string;
+  private usersUrlChangeUser: string;
+  private usersUrlChangePasswordUser: string;
 
   constructor(private http: HttpClient) {
     this.usersUrlLogin = 'http://localhost:8080/users/login';
     this.usersUrlRegister = 'http://localhost:8080/users/register';
-    this.usersUrlGetLoggedUser = 'http://localhost:8080/users/getUserByEmail'
-    this.usersUrlGetUserByEmail = 'http://localhost:8080/users/getUserByEmail'
+    this.usersUrlGetLoggedUser = 'http://localhost:8080/users/getUserByEmail';
+    this.usersUrlGetUserByEmail = 'http://localhost:8080/users/getUserByEmail';
+    this.usersUrlChangeUser = 'http://localhost:8080/users/changeUser';
+    this.usersUrlChangePasswordUser = 'http://localhost:8080/users/changePasswordUser';
   }
 
   public register(user: User): Observable<string> {
@@ -25,6 +29,16 @@ export class UserService {
 
   public login(user: User): Observable<string> {
     return this.http.post<string>(this.usersUrlLogin, user,{responseType: 'text' as 'json'});
+  }
+
+  public change(user: User): Observable<boolean> {
+    return this.http.put<boolean>(this.usersUrlChangeUser, user);
+  }
+
+  
+  
+  public changePassword(user: User): Observable<boolean> {
+    return this.http.put<boolean>(this.usersUrlChangePasswordUser, user);
   }
   
 

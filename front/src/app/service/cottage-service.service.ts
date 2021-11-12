@@ -9,10 +9,13 @@ import { Cottage } from '../model/cottage';
 })
 export class CottageService {
   private getAllCottagesUrl: string;
+  private getCottageByIdUrl: string;
   private removeCottageImgUrl: string;
   private getAllCottagesOfOwnerUrl: string;
   private changeCottageUrl: string;
   private uploadImgUrl: string;
+  private removeCottageUrl: string;
+  private addCottageUrl: string;
 
   
 
@@ -20,8 +23,11 @@ export class CottageService {
     this.getAllCottagesUrl="http://localhost:8080/cottages/getAllCottages";
     this.getAllCottagesOfOwnerUrl="http://localhost:8080/cottages/getAllCottagesOfOwner";
     this.removeCottageImgUrl="http://localhost:8080/cottages/removeCottageImg";
+    this.removeCottageUrl="http://localhost:8080/cottages/removeCottage";
     this.changeCottageUrl='http://localhost:8080/cottages/changeCottage';
     this.uploadImgUrl='http://localhost:8080/cottages/uploadImg';
+    this.getCottageByIdUrl = 'http://localhost:8080/cottages/getCottageById';
+    this.addCottageUrl = 'http://localhost:8080/cottages/addCottage';
   }
 
   public getAllCottages(): Observable<Array<Cottage>> {
@@ -29,6 +35,10 @@ export class CottageService {
     headers.append('Content-Type', 'application/json');
   
     return this.http.get<Array<Cottage>>(this.getAllCottagesUrl, {headers: headers});
+  }
+
+  public addCottage(cottage: Cottage):Observable<Cottage>{
+    return this.http.post<Cottage>(this.addCottageUrl,cottage);
   }
 
   public upload(file:File):Observable<boolean> {
@@ -47,9 +57,22 @@ export class CottageService {
   
     return this.http.get<Array<Cottage>>(this.getAllCottagesOfOwnerUrl, {headers: headers,params: params});
   }
+
+  public getCottageById(id:number): Observable<Cottage> {
+    let cottage = id;
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+    let params = new HttpParams().set("cottage",cottage);
+  
+    return this.http.get<Cottage>(this.getCottageByIdUrl, {headers: headers,params: params});
+  }
   
   public removeCottageImg(cottageToRemove:Cottage ): Observable<any>{
     return this.http.put(this.removeCottageImgUrl,cottageToRemove);
+  }
+
+  public removeCottage(cottageToRemove:number ): Observable<any>{
+    return this.http.post(this.removeCottageUrl,cottageToRemove);
   }
 
   public changeCottage(cottageToChange:Cottage): Observable<any>{

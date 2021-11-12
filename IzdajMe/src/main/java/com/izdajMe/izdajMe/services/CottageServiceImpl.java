@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
@@ -50,6 +51,17 @@ public class CottageServiceImpl implements CottageService {
         return new ResponseEntity<List<Cottage>>(ownerCottagesList,HttpStatus.OK);
     }
 
+    public ResponseEntity<Cottage> getCottageById(Long id) {
+        if (cottageRepository.existsById(id)){
+            return new ResponseEntity<Cottage>(cottageRepository.findById(id).get(),HttpStatus.OK);
+
+        }
+        else{
+            return new ResponseEntity<Cottage>(new Cottage(),HttpStatus.NOT_FOUND);
+        }
+
+    }
+
     public ResponseEntity<List<Cottage>> getAllCottages(){
         Iterable<Cottage> allCottages = cottageRepository.findAll();
         ArrayList<Cottage> allCottagesList = new ArrayList<Cottage>();
@@ -63,10 +75,20 @@ public class CottageServiceImpl implements CottageService {
         cottageRepository.save(cottage);
         return ResponseEntity.ok(null);
     }
+
+    public ResponseEntity<Void> removeCottage(Long id){
+        cottageRepository.deleteById(id);
+        return ResponseEntity.ok(null);
+    }
+
     public ResponseEntity<Void> changeCottage(Cottage cottage){
-        cottageRepository.deleteById(cottage.getId());
         cottageRepository.save(cottage);
         return ResponseEntity.ok(null);
+    }
+
+    public ResponseEntity<Cottage> addCottage(Cottage cottage){
+        cottageRepository.save(cottage);
+        return  new ResponseEntity<Cottage>(cottage,HttpStatus.OK);
     }
 
     public ResponseEntity<Boolean> uploadImg(MultipartFile file){

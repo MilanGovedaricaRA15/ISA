@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { map } from 'rxjs/operators';
 import { Cottage, Services } from 'src/app/model/cottage';
@@ -12,13 +12,13 @@ import { CottageService } from 'src/app/service/cottage-service.service';
 })
 export class CottageProfileComponent implements OnInit {
 
-  cottage: Cottage;
   cottageChange: Cottage;
   cottageImg: String;
   changeForm:any;
   @Output() cottageHotOffersForHotOffer = new EventEmitter<Cottage>();
   file: File = null;
   invalidFile:boolean = false;
+  @Input() cottage: Cottage;
 
   services = [
    'WiFi','Parking','Pool'
@@ -47,13 +47,12 @@ export class CottageProfileComponent implements OnInit {
   }
 
   public onIni(){
-     this.cottage = new Cottage();
-    this.cottageService.getAllCottages().subscribe(res => {
-      this.cottageChange = JSON.parse(JSON.stringify(res[0]));
-      this.cottage = res[0];
-      this.cottageImg = this.cottageChange.images[0];
+      this.cottageChange = JSON.parse(JSON.stringify(this.cottage));
+      if(this?.cottageChange?.images != null){
+        this.cottageImg = this?.cottageChange?.images[0];
+      }
       this.cottageHotOffersForHotOffer.emit(this.cottageChange);
-    });
+    
   }
 
   public select(image: String) {
@@ -82,6 +81,9 @@ export class CottageProfileComponent implements OnInit {
       this.invalidFile = false;
       this.cottageService.upload(this.file).subscribe(ret=>{
         if(ret){
+          if(this?.cottageChange?.images == null){
+            this.cottageChange.images = new Array<String>();
+          }
           this.cottageChange.images.push(this.file.name);
           this.cottageService.changeCottage(this.cottageChange).subscribe(()=>{
             this.onIni();
@@ -106,12 +108,17 @@ export class CottageProfileComponent implements OnInit {
 
   public isChecked(stri:string): boolean{
     if(this?.cottageChange !== undefined){
-      for (let x of this.cottageChange?.services){
-        if(x.toString() === stri){
-          return true;
+      if(this?.cottageChange?.services != null){
+        for (let x of this.cottageChange?.services){
+          if(x.toString() === stri){
+            return true;
+          }
         }
+        return false;
       }
-      return false;
+      else {
+        return false;
+      }
     }
     return false
   }

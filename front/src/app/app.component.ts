@@ -10,6 +10,7 @@ import { UserService } from './service/user-service.service';
 export class AppComponent {
   title = 'IzdajMe';
   cottageForHotOffers: Cottage;
+  cottageToShow: Cottage;
 
   /**
    *
@@ -44,6 +45,15 @@ export class AppComponent {
     }
 
   }
+  addNewCottage(b:Boolean){
+    this.changeNumber(6);
+  }
+
+  onCottageClick(cottage: Cottage){
+    this.cottageToShow = cottage;
+    this.changeNumber(5);
+  }
+
   changeNumber(index: number) {
     this.showCompNumber = index;
   }

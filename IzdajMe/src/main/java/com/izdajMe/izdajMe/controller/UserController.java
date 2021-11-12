@@ -25,6 +25,15 @@ public class UserController {
 
     }
 
+    @PutMapping("/users/changeUser")
+    public ResponseEntity<Boolean> changeUser(@RequestBody User user) {
+        return userService.changeUser(user);
+    }
+    @PutMapping("/users/changePasswordUser")
+    public ResponseEntity<Boolean> changePasswordUser(@RequestBody User user) {
+        return userService.changePasswordUser(user);
+    }
+
     @GetMapping("/users/getUserByEmail")
     public ResponseEntity<User> getUserByEmail(@RequestParam("email") String email) {
 

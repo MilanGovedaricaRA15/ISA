@@ -43,14 +43,16 @@ export class LoginFormComponent implements OnInit {
                 this.login.emit('cottageAdvertiser');
               }
             });
-            
+          
               
             
       //      this.userService.isBoatAdvertiserLoggedIn()
       //       this.login.emit('boatAdvertiser');
             
           }
+        
         });
+        this.userDoesntExists = true;
     }
 
   get password() {
