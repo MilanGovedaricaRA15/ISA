@@ -58,6 +58,8 @@ export class CottageService {
     return this.http.get<Array<Cottage>>(this.getAllCottagesOfOwnerUrl, {headers: headers,params: params});
   }
 
+  
+
   public getCottageById(id:number): Observable<Cottage> {
     let cottage = id;
     let headers = new HttpHeaders();

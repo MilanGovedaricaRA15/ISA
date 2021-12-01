@@ -21,41 +21,56 @@ export class AppComponent {
   }
 
   public ngOnInit() {
-    this.userService.isCottageAdvertiserLoggedIn().subscribe(res =>{
-      if(res){this.changeNumber(3);}
-    });
-    this.userService.isBoatAdvertiserLoggedIn().subscribe(res => {
-      if(res){
-        this.changeNumber(4);
-      }
-    });
+    if(sessionStorage.getItem("page") != null){
+      this.changeNumber(Number(sessionStorage.getItem("page")));
+    }
+
 
   }
   onRegister(message: string) {
      if(message === 'user_registered'){
        this.changeNumber(2);
+       sessionStorage.setItem("page",'2');
      }
     }
   onLogin(message: string){
     if(message === 'cottageAdvertiser'){
       this.changeNumber(3);
+      sessionStorage.setItem("page",'3');
     }
     else if(message === 'boatAdvertiser'){
       this.changeNumber(4);
+      sessionStorage.setItem("page",'4');
     }
 
   }
   addNewCottage(b:Boolean){
     this.changeNumber(6);
+    sessionStorage.setItem("page",'6');
   }
 
   onCottageClick(cottage: Cottage){
     this.cottageToShow = cottage;
     this.changeNumber(5);
+    
+  }
+
+  goToProfile(){
+    this.userService.isCottageAdvertiserLoggedIn().subscribe(res =>{
+      if(res){this.changeNumber(3);
+        sessionStorage.setItem("page",'3');}
+    });
+    this.userService.isBoatAdvertiserLoggedIn().subscribe(res => {
+      if(res){
+        this.changeNumber(4);
+        sessionStorage.setItem("page",'4');
+      }
+    });
   }
 
   changeNumber(index: number) {
     this.showCompNumber = index;
+    
   }
 
   updateHotOffers(fromCottageComponent: Cottage){

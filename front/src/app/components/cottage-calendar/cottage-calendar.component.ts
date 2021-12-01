@@ -101,167 +101,199 @@ export class CottageCalendarComponent implements OnInit {
     return new Date(year, month, 0).getDate();
   }
 
-  isItTaken(day:number) : string {
+  isItTaken(day:number) : Array<string> {
     
-    
-    for (let hotOffer of this.cottageForApp.hotOffers){
-      let availableFrom = new Date(hotOffer.availableFrom);
-      let availableTill = new Date(hotOffer.availableTill);
-      if(availableFrom.getFullYear()==availableTill.getFullYear()){
-        if(availableFrom.getMonth()==this.today.getMonth() && availableFrom.getDate() == day){
-          return 'Check in: '+availableFrom.getHours().toString()+':'+availableFrom.getMinutes().toString();
+    let response = new Array<string>()
+    if(this.cottageForApp?.hotOffers != null){
+      for (let hotOffer of this.cottageForApp?.hotOffers){
+        let availableFrom = new Date(hotOffer.availableFrom);
+        let availableTill = new Date(hotOffer.availableTill);
+        if(availableFrom.getFullYear()<this.today.getFullYear() && availableTill.getFullYear()<this.today.getFullYear()){
+          response.push('free');
         }
-        
-        else if(availableFrom.getMonth()<this.today.getMonth() && availableTill.getMonth()>this.today.getMonth()){
-          return 'Reserved';
+        else if(availableFrom.getFullYear()==availableTill.getFullYear()){
+          if(availableFrom.getMonth()==this.today.getMonth() && availableFrom.getDate() == day){
+            response.push('Start of Hot Offer: '+availableFrom.getHours().toString()+':'+availableFrom.getMinutes().toString());
+          }
+          
+          else if(availableFrom.getMonth()<this.today.getMonth() && availableTill.getMonth()>this.today.getMonth()){
+            response.push('Hot');
+          }
+          else if(availableFrom.getMonth()<this.today.getMonth() && availableTill.getMonth()==this.today.getMonth() && availableTill.getDate() > day){
+            response.push('Hot');
+          }
+          else if(availableFrom.getMonth()==this.today.getMonth() && availableFrom.getDate() < day && (availableTill.getDate() > day || availableTill.getMonth()>availableFrom.getMonth())){
+            response.push('Hot');
+          }
+          else if(availableTill.getDate() == day && availableTill.getMonth()==this.today.getMonth()){
+            response.push('End of Hot Offer: '+availableFrom.getHours().toString()+':'+availableFrom.getMinutes().toString());
+          }
+          else {
+            response.push('free');
+          }
         }
-        else if(availableFrom.getMonth()<this.today.getMonth() && availableTill.getMonth()==this.today.getMonth() && availableTill.getDate() > day){
-          return 'Reserved';
-        }
-        else if(availableFrom.getMonth()==this.today.getMonth() && availableFrom.getDate() < day && (availableTill.getDate() > day || availableTill.getMonth()>availableFrom.getMonth())){
-          return 'Reserved';
-        }
-        else if(availableTill.getDate() == day && availableTill.getMonth()==this.today.getMonth()){
-          return 'Check out: '+availableFrom.getHours().toString()+':'+availableFrom.getMinutes().toString();
-        }
-      }
-      else{
-        if(availableFrom.getMonth()==this.today.getMonth() && availableFrom.getDate() == day){
-          return 'Check in: '+availableFrom.getHours().toString()+':'+availableFrom.getMinutes().toString();
-        }
-        
-        else if((availableFrom.getMonth()<this.today.getMonth() || availableFrom.getFullYear()<this.today.getFullYear()) && availableTill.getMonth()>this.today.getMonth()){
-          return 'Reserved';
-        }
-        else if((availableFrom.getMonth()<this.today.getMonth() || availableFrom.getFullYear()<this.today.getFullYear()) && availableTill.getMonth()==this.today.getMonth() && availableTill.getDate() > day){
-          return 'Reserved';
-        }
-        else if(availableFrom.getMonth()==this.today.getMonth() && availableFrom.getDate() < day && (availableTill.getDate() > day || availableTill.getMonth()>availableFrom.getMonth() || availableTill.getFullYear()>availableFrom.getFullYear())){
-          return 'Reserved';
-        }
-        else if(availableTill.getDate() == day && availableTill.getMonth()==this.today.getMonth()){
-          return 'Check out: '+availableFrom.getHours().toString()+':'+availableFrom.getMinutes().toString();
-        }
+        else{
+          if(availableFrom.getMonth()==this.today.getMonth() && availableFrom.getDate() == day){
+            response.push('Start of Hot Offer: '+availableFrom.getHours().toString()+':'+availableFrom.getMinutes().toString());
+          }
+          
+          else if((availableFrom.getMonth()<this.today.getMonth() || availableFrom.getFullYear()<this.today.getFullYear()) && availableTill.getMonth()>this.today.getMonth()){
+            response.push('Hot');
+          }
+          else if((availableFrom.getMonth()<this.today.getMonth() || availableFrom.getFullYear()<this.today.getFullYear()) && availableTill.getMonth()==this.today.getMonth() && availableTill.getDate() > day){
+            response.push('Hot');
+          }
+          else if(availableFrom.getMonth()==this.today.getMonth() && availableFrom.getDate() < day && (availableTill.getDate() > day || availableTill.getMonth()>availableFrom.getMonth() || availableTill.getFullYear()>availableFrom.getFullYear())){
+            response.push('Hot');
+          }
+          else if(availableTill.getDate() == day && availableTill.getMonth()==this.today.getMonth()){
+            response.push('End of Hot Offer: '+availableFrom.getHours().toString()+':'+availableFrom.getMinutes().toString());
+          }
+          else {
+            response.push('free');
+          }
 
+        }
+        
       }
     }
-    return 'free';
+    return response;
+    
   }
 
-  isItTakenNextMonth(day:number) : string {
+  isItTakenNextMonth(day:number) : Array<string> {
     
-    
-    for (let hotOffer of this.cottageForApp.hotOffers){
-      let availableFrom = new Date(hotOffer.availableFrom);
-      let availableTill = new Date(hotOffer.availableTill);
+    let response = new Array<string>();
+    if(this.cottageForApp?.hotOffers != null){
+      for (let hotOffer of this.cottageForApp?.hotOffers){
+        let availableFrom = new Date(hotOffer.availableFrom);
+        let availableTill = new Date(hotOffer.availableTill);
 
-      if(availableFrom.getFullYear()==availableTill.getFullYear() && availableFrom.getFullYear()==this.today.getFullYear()){
+        if(availableFrom.getFullYear()==availableTill.getFullYear() && availableFrom.getFullYear()==this.today.getFullYear()){
 
-        if(availableFrom.getMonth()==(this.today.getMonth()+1) && availableFrom.getDate() == day){
-          return 'Check in: '+availableFrom.getHours().toString()+':'+availableFrom.getMinutes().toString();
+          if(availableFrom.getMonth()==(this.today.getMonth()+1) && availableFrom.getDate() == day){
+            response.push('Start of Hot Offer: '+availableFrom.getHours().toString()+':'+availableFrom.getMinutes().toString());
+          }
+          
+          else if(availableFrom.getMonth()<(this.today.getMonth()+1) && availableTill.getMonth()>(this.today.getMonth()+1)){
+            response.push( 'Hot');
+          }
+          else if(availableFrom.getMonth()<(this.today.getMonth()+1) && availableTill.getMonth()==(this.today.getMonth()+1) && availableTill.getDate() > day){
+            response.push( 'Hot');
+          }
+          else if(availableFrom.getMonth()==(this.today.getMonth()+1) && availableFrom.getDate() < day && (availableTill.getDate() > day || availableTill.getMonth()>availableFrom.getMonth())){
+            response.push( 'Hot');
+          }
+          else if(availableTill.getDate() == day && availableTill.getMonth()==(this.today.getMonth()+1)){
+            response.push( 'End of Hot Offer: '+availableFrom.getHours().toString()+':'+availableFrom.getMinutes().toString());
+          }
+          else{
+            response.push('free');
+          }
         }
-        
-        else if(availableFrom.getMonth()<(this.today.getMonth()+1) && availableTill.getMonth()>(this.today.getMonth()+1)){
-          return 'Reserved';
-        }
-        else if(availableFrom.getMonth()<(this.today.getMonth()+1) && availableTill.getMonth()==(this.today.getMonth()+1) && availableTill.getDate() > day){
-          return 'Reserved';
-        }
-        else if(availableFrom.getMonth()==(this.today.getMonth()+1) && availableFrom.getDate() < day && (availableTill.getDate() > day || availableTill.getMonth()>availableFrom.getMonth())){
-          return 'Reserved';
-        }
-        else if(availableTill.getDate() == day && availableTill.getMonth()==(this.today.getMonth()+1)){
-          return 'Check out: '+availableFrom.getHours().toString()+':'+availableFrom.getMinutes().toString();
-        }
-      }
-      else{
+        else{
 
-        let month;
-        let year;
-        if(this.today.getMonth()==11){
-          month = 0;
-          year = this.today.getFullYear()+1;
-        }
-        else {
-          month = this.today.getMonth()+1;
-          year = this.today.getFullYear();
-        }
-        if(availableFrom.getMonth()==month && availableFrom.getDate() == day){
-          return 'Check in: '+availableFrom.getHours().toString()+':'+availableFrom.getMinutes().toString();
-        }
-        
-        else if((availableFrom.getMonth()<month || availableFrom.getFullYear()<year) && availableTill.getMonth()>month && availableTill.getFullYear()==year){
-          return 'Reserved';
-        }
-        else if((availableFrom.getMonth()<month || availableFrom.getFullYear()<year) && availableTill.getMonth()==month && availableTill.getDate() > day && availableTill.getFullYear()==year){
-          return 'Reserved';
-        }
-        else if(availableFrom.getMonth()==month && availableFrom.getDate() < day && (availableTill.getDate() > day || availableTill.getMonth()>availableFrom.getMonth() || availableTill.getFullYear()>availableFrom.getFullYear())){
-          return 'Reserved';
-        }
-        else if(availableTill.getDate() == day && availableTill.getMonth()==month){
-          return 'Check out: '+availableFrom.getHours().toString()+':'+availableFrom.getMinutes().toString();
+          let month;
+          let year;
+          if(this.today.getMonth()==11){
+            month = 0;
+            year = this.today.getFullYear()+1;
+          }
+          else {
+            month = this.today.getMonth()+1;
+            year = this.today.getFullYear();
+          }
+          if(availableFrom.getMonth()==month && availableFrom.getDate() == day){
+            response.push( 'Start of Hot Offer: '+availableFrom.getHours().toString()+':'+availableFrom.getMinutes().toString());
+          }
+          
+          else if((availableFrom.getMonth()<month || availableFrom.getFullYear()<year) && availableTill.getMonth()>month && availableTill.getFullYear()==year){
+            response.push( 'Hot');
+          }
+          else if((availableFrom.getMonth()<month || availableFrom.getFullYear()<year) && availableTill.getMonth()==month && availableTill.getDate() > day && availableTill.getFullYear()==year){
+            response.push( 'Hot');
+          }
+          else if(availableFrom.getMonth()==month && availableFrom.getDate() < day && (availableTill.getDate() > day || availableTill.getMonth()>availableFrom.getMonth() || availableTill.getFullYear()>availableFrom.getFullYear())){
+            response.push( 'Hot');
+          }
+          else if(availableTill.getDate() == day && availableTill.getMonth()==month){
+            response.push( 'End of Hot Offer: '+availableFrom.getHours().toString()+':'+availableFrom.getMinutes().toString());
+          }
+          else{
+            response.push('free');
+          }
         }
       }
     }
-    return 'free';
+    return response;
   }
 
-  isItTakenPrevMonth(day:number) : string {
+  isItTakenPrevMonth(day:number) : Array<string> {
     
-    
-    for (let hotOffer of this.cottageForApp?.hotOffers){
-      let availableFrom = new Date(hotOffer.availableFrom);
-      let availableTill = new Date(hotOffer.availableTill);
-      if(availableFrom.getFullYear()==availableTill.getFullYear() && availableFrom.getFullYear()==this.today.getFullYear()){
-        if(availableFrom.getMonth()==(this.today.getMonth()-1) && availableFrom.getDate() == day){
-          return 'Check in: '+availableFrom.getHours().toString()+':'+availableFrom.getMinutes().toString();
+    let response = new Array<string>();
+    if(this.cottageForApp?.hotOffers != null){
+      for (let hotOffer of this.cottageForApp?.hotOffers){
+        let availableFrom = new Date(hotOffer.availableFrom);
+        let availableTill = new Date(hotOffer.availableTill);
+        if(availableFrom.getFullYear()<this.today.getFullYear() && availableTill.getFullYear()<this.today.getFullYear()){
+          response.push('free');
         }
-        
-        else if(availableFrom.getMonth()<(this.today.getMonth()-1) && availableTill.getMonth()>(this.today.getMonth()-1)){
-          return 'Reserved';
+        else if(availableFrom.getFullYear()==availableTill.getFullYear() && availableFrom.getFullYear()==this.today.getFullYear()){
+          if(availableFrom.getMonth()==(this.today.getMonth()-1) && availableFrom.getDate() == day){
+            response.push( 'Start of Hot Offer: '+availableFrom.getHours().toString()+':'+availableFrom.getMinutes().toString());
+          }
+          
+          else if(availableFrom.getMonth()<(this.today.getMonth()-1) && availableTill.getMonth()>(this.today.getMonth()-1)){
+            response.push( 'Hot');
+          }
+          else if(availableFrom.getMonth()<(this.today.getMonth()-1) && availableTill.getMonth()==(this.today.getMonth()-1) && availableTill.getDate() > day){
+            response.push( 'Hot');
+          }
+          else if(availableFrom.getMonth()==(this.today.getMonth()-1) && availableFrom.getDate() < day && (availableTill.getDate() > day || availableTill.getMonth()>availableFrom.getMonth())){
+            response.push( 'Hot');
+          }
+          else if(availableTill.getDate() == day && availableTill.getMonth()==(this.today.getMonth()-1)){
+            response.push( 'End of Hot Offer: '+availableFrom.getHours().toString()+':'+availableFrom.getMinutes().toString());
+          }
+          else{
+            response.push('free');
+          }
         }
-        else if(availableFrom.getMonth()<(this.today.getMonth()-1) && availableTill.getMonth()==(this.today.getMonth()-1) && availableTill.getDate() > day){
-          return 'Reserved';
-        }
-        else if(availableFrom.getMonth()==(this.today.getMonth()-1) && availableFrom.getDate() < day && (availableTill.getDate() > day || availableTill.getMonth()>availableFrom.getMonth())){
-          return 'Reserved';
-        }
-        else if(availableTill.getDate() == day && availableTill.getMonth()==(this.today.getMonth()-1)){
-          return 'Check out: '+availableFrom.getHours().toString()+':'+availableFrom.getMinutes().toString();
-        }
-      }
-      else{
-        let month;
-        let year;
-        if(this.today.getMonth()==0){
-          month = 11;
-          year = this.today.getFullYear()-1;
-        }
-        else {
-          month = this.today.getMonth()-1;
-          year = this.today.getFullYear();
-        }
-        if(availableFrom.getMonth()==month && availableFrom.getDate() == day){
-          return 'Check in: '+availableFrom.getHours().toString()+':'+availableFrom.getMinutes().toString();
-        }
-        
-        else if((availableFrom.getMonth()<month || availableFrom.getFullYear()<year) && availableTill.getMonth()>month && availableTill.getFullYear()==year){
-          return 'Reserved';
-        }
-        else if((availableFrom.getMonth()<month || availableFrom.getFullYear()<year) && availableTill.getMonth()==month && availableTill.getDate() > day && availableTill.getFullYear()==year){
-          return 'Reserved';
-        }
-        else if(availableFrom.getMonth()==month && availableFrom.getDate() < day && (availableTill.getDate() > day || availableTill.getMonth()>availableFrom.getMonth() || availableTill.getFullYear()>availableFrom.getFullYear())){
-          return 'Reserved';
-        }
-        else if(availableTill.getDate() == day && availableTill.getMonth()==month){
-          return 'Check out: '+availableFrom.getHours().toString()+':'+availableFrom.getMinutes().toString();
-        }
+        else{
+          let month;
+          let year;
+          if(this.today.getMonth()==0){
+            month = 11;
+            year = this.today.getFullYear()-1;
+          }
+          else {
+            month = this.today.getMonth()-1;
+            year = this.today.getFullYear();
+          }
+          if(availableFrom.getMonth()==month && availableFrom.getDate() == day){
+            response.push( 'Start of Hot Offer: '+availableFrom.getHours().toString()+':'+availableFrom.getMinutes().toString());
+          }
+          
+          else if((availableFrom.getMonth()<month || availableFrom.getFullYear()<year) && availableTill.getMonth()>month && availableTill.getFullYear()==year){
+            response.push( 'Hot');
+          }
+          else if((availableFrom.getMonth()<month || availableFrom.getFullYear()<year) && availableTill.getMonth()==month && availableTill.getDate() > day && availableTill.getFullYear()==year){
+            response.push( 'Hot');
+          }
+          else if(availableFrom.getMonth()==month && availableFrom.getDate() < day && (availableTill.getDate() > day || availableTill.getMonth()>availableFrom.getMonth() || availableTill.getFullYear()>availableFrom.getFullYear())){
+            response.push( 'Hot');
+          }
+          else if(availableTill.getDate() == day && availableTill.getMonth()==month){
+            response.push( 'End of Hot Offer: '+availableFrom.getHours().toString()+':'+availableFrom.getMinutes().toString());
+          }
+          else{
+            response.push('free');
+          }
 
+        }
       }
     }
-    return 'free';
+    return response;
   }
 
 }

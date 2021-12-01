@@ -22,11 +22,17 @@ export class CottageOwnerProfileComponent implements OnInit {
   wrongPassword1: Boolean;
   wrongPassword2: Boolean;
   wrongPassword: Boolean;
+  nameForSearch: String;
   cottages: Array<Cottage>;
   @Output() cottageToShow = new EventEmitter<Cottage>();
   @Output() addNewCottageEmiter = new EventEmitter<boolean>();
 
   ngOnInit(): void {
+    this.init();
+   
+  }
+
+  init(){
     this.userService.getLoggedUser().subscribe(ret => {
       this.owner = ret;
       this.ownerChange = JSON.parse(JSON.stringify(this.owner));
@@ -56,7 +62,7 @@ export class CottageOwnerProfileComponent implements OnInit {
       "newPassword": new FormControl(null,[Validators.required,Validators.pattern('[a-zA-Z ]*')]),
       "newPassword1": new FormControl(null,[Validators.required,Validators.pattern('[a-zA-Z ]*')])
     });
-   
+
   }
 
   submitData(){
@@ -64,6 +70,7 @@ export class CottageOwnerProfileComponent implements OnInit {
     this.userService.change(this.ownerChange).subscribe(ret =>{
       if(ret){
         this.wrongPassword1 = false;
+        
       }
       else{
         
@@ -73,10 +80,18 @@ export class CottageOwnerProfileComponent implements OnInit {
   }
 
   submitPassword(){
+    this.wrongPassword = true;
     if(this.owner.password == this.editPasswordForm.get('currentPassword').value){
-      this.userService.changePassword(this.passwordChange).subscribe(ret =>{
+      this.userService.changePassword(this.passwordChange,this.editPasswordForm.get('currentPassword').value).subscribe(ret =>{
         if(ret){
-
+          this.wrongPassword = false;
+          this.passwordChange.password = "";
+          this.wrongPassword2 = false;
+          this.editPasswordForm = new FormGroup({
+            "currentPassword": new FormControl(null,[Validators.required,Validators.pattern('[a-zA-Z ]*')]),
+            "newPassword": new FormControl(null,[Validators.required,Validators.pattern('[a-zA-Z ]*')]),
+            "newPassword1": new FormControl(null,[Validators.required,Validators.pattern('[a-zA-Z ]*')])
+          });
         }
       })
     }
@@ -87,7 +102,10 @@ export class CottageOwnerProfileComponent implements OnInit {
 
   deleteCottage(id:number){
     this.cottageService.removeCottage(id).subscribe(() => {
-
+      this.cottageService.getAllCottagesOfOwner().subscribe(ret => {
+        this.cottages = ret;
+        
+      })
     })
   }
 
@@ -109,6 +127,11 @@ export class CottageOwnerProfileComponent implements OnInit {
 
   addNewCottage(){
     this.addNewCottageEmiter.emit(true);
+  }
+
+  searchCottages(){
+    let nesto = this.nameForSearch;
+    let a = 0;
   }
 
  

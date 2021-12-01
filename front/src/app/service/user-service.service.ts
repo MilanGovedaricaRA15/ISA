@@ -37,8 +37,13 @@ export class UserService {
 
   
   
-  public changePassword(user: User): Observable<boolean> {
-    return this.http.put<boolean>(this.usersUrlChangePasswordUser, user);
+  public changePassword(user: User,password:string): Observable<boolean> {
+    let users = new Array<User>()
+    users.push(user)
+    let user1 = JSON.parse(JSON.stringify(user));
+    user1.password = password;
+    users.push(user1)
+    return this.http.put<boolean>(this.usersUrlChangePasswordUser, users);
   }
   
 

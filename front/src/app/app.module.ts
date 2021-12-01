@@ -14,6 +14,7 @@ import { LoginFormComponent } from './components/login-form/login-form.component
 import { HotOfferComponent } from './components/hot-offer/hot-offer.component';
 import { CottageCalendarComponent } from './components/cottage-calendar/cottage-calendar.component';
 import { AddNewCottageComponent } from './components/add-new-cottage/add-new-cottage.component';
+import { OwnerNavbarComponent } from './components/owner-navbar/owner-navbar.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { AddNewCottageComponent } from './components/add-new-cottage/add-new-cot
     LoginFormComponent,
     HotOfferComponent,
     CottageCalendarComponent,
-    AddNewCottageComponent
+    AddNewCottageComponent,
+    OwnerNavbarComponent
   ],
   imports: [
     BrowserModule,

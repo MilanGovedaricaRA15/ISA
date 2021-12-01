@@ -2,7 +2,7 @@
     <div class="row">
     
         <div class="col-md-5 border-right">
-            <div class="p-3 py-5">
+            <div class="p-1 py-4">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h4 class="text-right">Edit Profile</h4>
                 </div>
@@ -103,15 +103,16 @@
     
 
 
-        <div class="col border-left">
-            <div class="p-3 py-5">
+        <div class="col">
+            <div class="p-1 pt-5 mt-5 py-5 row">
 
-                <div class="page-content page-container" id="page-content">
-                    <div class="padding">
+                <div class="page-content page-container col" id="page-content">
                         <div class="row">
+                            
                             <div class="col">
                                 <div class="container-fluid d-flex justify-content-center">
                                     <div class="list list-row card" >
+                                        
                                         <div *ngFor="let cottage of cottages" class="list-item">
                                             <div (click)="goToCottageProfile(cottage?.id)"><span class="w-80 avatar gd-info"><img *ngIf="cottage?.images != null" style="width:120px;height:80px;"  [src]="('../../assets/images/' + cottage?.images[0] +'.jpg')" alt="."><img *ngIf="cottage?.images == null" style="width:120px;height:80px;"  src="../../assets/images/undefined.jpg" alt="."></span></div>
                                             <div class="flex">{{cottage?.name}}
@@ -131,10 +132,9 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
                     </div>
                 </div>
-                
+               
             </div>
             
         </div>

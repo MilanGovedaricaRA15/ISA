@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
@@ -30,8 +32,8 @@ public class UserController {
         return userService.changeUser(user);
     }
     @PutMapping("/users/changePasswordUser")
-    public ResponseEntity<Boolean> changePasswordUser(@RequestBody User user) {
-        return userService.changePasswordUser(user);
+    public ResponseEntity<Boolean> changePasswordUser(@RequestBody List<User> users) {
+        return userService.changePasswordUser(users);
     }
 
     @GetMapping("/users/getUserByEmail")

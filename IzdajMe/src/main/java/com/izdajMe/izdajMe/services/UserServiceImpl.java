@@ -84,9 +84,9 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    public ResponseEntity<Boolean> changePasswordUser(User user) {
-        if (userRepository.findById(user.getId()).get().getEmail().equals(user.getEmail())){
-            userRepository.save(user);
+    public ResponseEntity<Boolean> changePasswordUser(List<User> users) {
+        if (userRepository.findById(users.get(0).getId()).get().getPassword().equals(users.get(1).getPassword())){
+            userRepository.save(users.get(0));
             return new ResponseEntity<Boolean>(true, HttpStatus.OK);
         }
         else {
