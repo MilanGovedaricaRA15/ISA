@@ -22,10 +22,12 @@ export class HotOfferComponent implements OnInit {
     'WiFi','Parking','Pool'
    ];
   availableTillError:boolean;
+  alreadyExistsHotOffer:boolean;
 
   ngOnInit(): void {
     this.newHotOffer = new HotOffer();
     this.availableTillError = false;
+    this.alreadyExistsHotOffer = false;
     this.addForm = new FormGroup({
       "numOfPeople": new FormControl(null,[Validators.required,Validators.pattern('[1-9][0-9]*')]),
       "availableFrom": new FormControl(null,[Validators.required]),
@@ -73,9 +75,16 @@ export class HotOfferComponent implements OnInit {
     }
     else {
       this.availableTillError = false;
-      this.cottageForApp.hotOffers.push(JSON.parse(JSON.stringify(this.newHotOffer)));
-    
-      this.cottageService.changeCottage(this.cottageForApp).subscribe(() => {
+      let changeWithThisCottage = JSON.parse(JSON.stringify(this.cottageForApp))
+      changeWithThisCottage.hotOffers.push(JSON.parse(JSON.stringify(this.newHotOffer)));
+      this.cottageService.addHotOfferToCottage(changeWithThisCottage).subscribe(ret => {
+          if(ret){
+            this.alreadyExistsHotOffer = false;
+            this.cottageForApp.hotOffers.push(JSON.parse(JSON.stringify(this.newHotOffer)));
+          }
+          else{
+            this.alreadyExistsHotOffer = true;
+          }
         });
     }
 

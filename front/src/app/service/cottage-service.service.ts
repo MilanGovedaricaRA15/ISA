@@ -16,6 +16,7 @@ export class CottageService {
   private uploadImgUrl: string;
   private removeCottageUrl: string;
   private addCottageUrl: string;
+  private addHotOfferToCottageUrl: string;
 
   
 
@@ -28,6 +29,7 @@ export class CottageService {
     this.uploadImgUrl='http://localhost:8080/cottages/uploadImg';
     this.getCottageByIdUrl = 'http://localhost:8080/cottages/getCottageById';
     this.addCottageUrl = 'http://localhost:8080/cottages/addCottage';
+    this.addHotOfferToCottageUrl = 'http://localhost:8080/cottages/addHotOfferToCottage';
   }
 
   public getAllCottages(): Observable<Array<Cottage>> {
@@ -80,6 +82,10 @@ export class CottageService {
   public changeCottage(cottageToChange:Cottage): Observable<any>{
    return this.http.put(this.changeCottageUrl,cottageToChange);
   }
+
+  public addHotOfferToCottage(cottageToChange:Cottage): Observable<boolean>{
+    return this.http.put<boolean>(this.addHotOfferToCottageUrl,cottageToChange);
+   }
 
 
 }

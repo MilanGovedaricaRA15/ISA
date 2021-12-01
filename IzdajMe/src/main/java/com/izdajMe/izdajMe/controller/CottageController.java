@@ -61,4 +61,9 @@ public class CottageController {
     public ResponseEntity<Void> changeCottage(@RequestBody Cottage cottage){
        return cottageService.changeCottage(cottage);
     }
+
+    @PutMapping("/cottages/addHotOfferToCottage")
+    public ResponseEntity<Boolean> addHotOfferToCottage(@RequestBody Cottage cottage){
+        return cottageService.addHotOfferToCottage(cottage);
+    }
 }

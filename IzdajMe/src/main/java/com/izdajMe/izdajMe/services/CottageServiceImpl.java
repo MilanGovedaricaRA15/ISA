@@ -107,6 +107,62 @@ public class CottageServiceImpl implements CottageService {
         }
     }
 
+    public ResponseEntity<Boolean> addHotOfferToCottage(Cottage cottage){
+        List<HotOffer> hotOffers = cottage.getHotOffers();
+        Cottage cottage1 = cottageRepository.findById(cottage.getId()).get();
+        HotOffer addedHotOffer = new HotOffer();
+        boolean postoji = false;
+        for (HotOffer offer : hotOffers){
+            postoji = false;
+            for(HotOffer offer1 : cottage1.getHotOffers()){
+                if (offer1.getId() == offer.getId()){
+                    postoji = true;
+                    break;
+                }
+            }
+            if(!postoji){
+                addedHotOffer = offer;
+                break;
+            }
+        }
+
+        boolean slobodno = true;
+        for(HotOffer hotOffer1 : cottage1.getHotOffers()) {
+            if(addedHotOffer.getAvailableFrom().isBefore(hotOffer1.getAvailableFrom()) && addedHotOffer.getAvailableTill().isAfter(hotOffer1.getAvailableFrom())){
+                slobodno = false;
+                break;
+            }
+            if(addedHotOffer.getAvailableFrom().isBefore(hotOffer1.getAvailableTill()) && addedHotOffer.getAvailableTill().isAfter(hotOffer1.getAvailableTill())){
+                slobodno = false;
+                break;
+            }
+            if(hotOffer1.getAvailableFrom().isBefore(addedHotOffer.getAvailableFrom()) && hotOffer1.getAvailableTill().isAfter(addedHotOffer.getAvailableTill())){
+                slobodno = false;
+                break;
+            }
+            if(hotOffer1.getAvailableFrom().isEqual(addedHotOffer.getAvailableFrom()) || hotOffer1.getAvailableTill().isEqual(addedHotOffer.getAvailableTill()) || hotOffer1.getAvailableTill().isEqual(addedHotOffer.getAvailableFrom()) || hotOffer1.getAvailableFrom().isEqual(addedHotOffer.getAvailableTill())){
+                slobodno = false;
+                break;
+            }
+        }
+        if(addedHotOffer.getAvailableFrom().equals(addedHotOffer.getAvailableTill())){
+            slobodno = false;
+        }
+        if(addedHotOffer.getAvailableFrom().isAfter(addedHotOffer.getAvailableTill())){
+            slobodno = false;
+        }
+        if(slobodno) {
+            cottageRepository.save(cottage);
+            return new ResponseEntity<Boolean>(true,HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<Boolean>(false,HttpStatus.OK);
+        }
+
+    }
+
+
+
     public ResponseEntity<Cottage> addCottage(Cottage cottage){
         cottageRepository.save(cottage);
         return  new ResponseEntity<Cottage>(cottage,HttpStatus.OK);
