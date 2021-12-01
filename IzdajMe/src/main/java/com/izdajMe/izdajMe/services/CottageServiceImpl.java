@@ -1,9 +1,11 @@
 package com.izdajMe.izdajMe.services;
 
 import com.izdajMe.izdajMe.model.Cottage;
+import com.izdajMe.izdajMe.model.CottageReservation;
 import com.izdajMe.izdajMe.model.HotOffer;
 import com.izdajMe.izdajMe.model.User;
 import com.izdajMe.izdajMe.repository.CottageRepository;
+import com.izdajMe.izdajMe.repository.CottageReservationRepository;
 import com.izdajMe.izdajMe.repository.HotOfferRepository;
 import com.izdajMe.izdajMe.repository.UserRepository;
 import com.sun.deploy.net.HttpResponse;
@@ -20,12 +22,14 @@ import java.awt.image.BufferedImage;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class CottageServiceImpl implements CottageService {
@@ -35,6 +39,8 @@ public class CottageServiceImpl implements CottageService {
     private UserRepository userRepository;
     @Autowired
     private HotOfferRepository hotOfferRepository;
+    @Autowired
+    private CottageReservationRepository cottageReservationRepository;
 
 
     public ResponseEntity<List<Cottage>> getAllCottagesOfOwner(String email){
@@ -71,19 +77,34 @@ public class CottageServiceImpl implements CottageService {
     }
 
     public ResponseEntity<Void> removeCottageImg(Cottage cottage){
-        cottageRepository.deleteById(cottage.getId());
-        cottageRepository.save(cottage);
-        return ResponseEntity.ok(null);
+        if(!isReserved(cottage.getId())) {
+            cottageRepository.deleteById(cottage.getId());
+            cottageRepository.save(cottage);
+            return ResponseEntity.ok(null);
+        }
+        else{
+            return new ResponseEntity<>(null,HttpStatus.NOT_ACCEPTABLE);
+        }
     }
 
     public ResponseEntity<Void> removeCottage(Long id){
-        cottageRepository.deleteById(id);
-        return ResponseEntity.ok(null);
+        if(!isReserved(id)) {
+            cottageRepository.deleteById(id);
+            return ResponseEntity.ok(null);
+        }
+        else{
+            return new ResponseEntity<>(null,HttpStatus.NOT_ACCEPTABLE);
+        }
     }
 
     public ResponseEntity<Void> changeCottage(Cottage cottage){
-        cottageRepository.save(cottage);
-        return ResponseEntity.ok(null);
+        if(!isReserved(cottage.getId())) {
+            cottageRepository.save(cottage);
+            return ResponseEntity.ok(null);
+        }
+        else{
+            return new ResponseEntity<>(null,HttpStatus.NOT_ACCEPTABLE);
+        }
     }
 
     public ResponseEntity<Cottage> addCottage(Cottage cottage){
@@ -112,5 +133,19 @@ public class CottageServiceImpl implements CottageService {
             }
 
 
+    }
+
+    public boolean isReserved(Long id){
+        Iterable<CottageReservation> allCottageReservations = cottageReservationRepository.findAll();
+        ArrayList<CottageReservation> allCottageReservationsList = new ArrayList<CottageReservation>();
+        allCottageReservations.forEach(allCottageReservationsList::add);
+        for(CottageReservation cottageReservation : allCottageReservationsList){
+            if(cottageReservation.getCottage().getId() == id){
+                if(LocalDateTime.now().isBefore(cottageReservation.getAvailableTill())){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

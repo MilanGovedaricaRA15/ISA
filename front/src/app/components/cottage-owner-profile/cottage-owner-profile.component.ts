@@ -1,7 +1,9 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AccountDeleteRequest } from 'src/app/model/account-delete-request';
 import { Cottage } from 'src/app/model/cottage';
 import { User } from 'src/app/model/user';
+import { AccountDeleteRequestService } from 'src/app/service/account-delete-request-service.service';
 import { CottageService } from 'src/app/service/cottage-service.service';
 import { UserService } from 'src/app/service/user-service.service';
 
@@ -12,7 +14,7 @@ import { UserService } from 'src/app/service/user-service.service';
 })
 export class CottageOwnerProfileComponent implements OnInit {
 
-  constructor(private userService: UserService,private cottageService: CottageService) { }
+  constructor(private userService: UserService,private cottageService: CottageService, private accountDeleteRequestService:AccountDeleteRequestService) { }
 
   owner: User;
   ownerChange: User;
@@ -22,6 +24,7 @@ export class CottageOwnerProfileComponent implements OnInit {
   wrongPassword1: Boolean;
   wrongPassword2: Boolean;
   wrongPassword: Boolean;
+  alreadySent: Boolean;
   nameForSearch: String;
   cottages: Array<Cottage>;
   @Output() cottageToShow = new EventEmitter<Cottage>();
@@ -42,6 +45,7 @@ export class CottageOwnerProfileComponent implements OnInit {
       this.wrongPassword1 = false;
       this.wrongPassword2 = false;
       this.wrongPassword = false;
+      this.alreadySent = false;
       this.cottageService.getAllCottagesOfOwner().subscribe(ret => {
         this.cottages = ret;
         
@@ -132,6 +136,20 @@ export class CottageOwnerProfileComponent implements OnInit {
   searchCottages(){
     let nesto = this.nameForSearch;
     let a = 0;
+  }
+
+  requestDelete(){
+    let accountDelete = new AccountDeleteRequest();
+    accountDelete.seen = false;
+    accountDelete.user = JSON.parse(JSON.stringify(this.owner));
+    this.accountDeleteRequestService.addAccountDeleteRequest(accountDelete).subscribe(ret => {
+      if(ret){
+        this.alreadySent = false;
+      }
+      else{
+        this.alreadySent = true;
+      }
+    })
   }
 
  

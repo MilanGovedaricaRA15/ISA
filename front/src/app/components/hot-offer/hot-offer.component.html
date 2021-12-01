@@ -39,6 +39,9 @@
                                     <div *ngIf="availableTill.invalid && (availableTill.touched || availableTill.dirty)">
                                       <span class="error" *ngIf="availableTill.errors?.required">To is required</span>
                                   </div>
+                                  <div *ngIf="availableTillError">
+                                    <span class="error">Till must me greater than from</span>
+                                </div>
                                 </td>
                                 <td><input style="width: 60%;" [(ngModel)]="newHotOffer.numOfPeople" formControlName="numOfPeople" class="form-control"  type="number"/>
                                     <div *ngIf="numOfPeople.invalid && (numOfPeople.touched || numOfPeople.dirty)">

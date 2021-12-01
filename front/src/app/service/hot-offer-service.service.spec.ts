@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { HotOfferService } from './hot-offer-service.service';
 
-describe('HotOfferServiceService', () => {
+describe('HotOfferService', () => {
   let service: HotOfferService;
 
   beforeEach(() => {

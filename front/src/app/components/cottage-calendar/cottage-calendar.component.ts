@@ -1,7 +1,9 @@
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, Input, OnInit } from '@angular/core';
 import { Cottage } from 'src/app/model/cottage';
+import { CottageReservation } from 'src/app/model/cottage-reservation';
 import { HotOffer } from 'src/app/model/hot-offer';
+import { CottageReservationService } from 'src/app/service/cottage-reservation-service.service';
 
 @Component({
   selector: 'app-cottage-calendar',
@@ -10,7 +12,8 @@ import { HotOffer } from 'src/app/model/hot-offer';
 })
 export class CottageCalendarComponent implements OnInit {
 
-  constructor() { }
+  constructor(private cottageReservationService: CottageReservationService) { }
+
   @Input() cottageForApp: Cottage;
   todayTruly: Date;
   today: Date;
@@ -25,6 +28,7 @@ export class CottageCalendarComponent implements OnInit {
   saturday: number;
   daysOfMonthBeforeNumber: number;
   hotOffers: Array<HotOffer>;
+  cottageReservations: Array<CottageReservation>;
 
   ngOnInit(): void {
     this.today = new Date();
@@ -33,6 +37,11 @@ export class CottageCalendarComponent implements OnInit {
   }
 
   init(){
+    if(this?.cottageForApp != null){
+      this.cottageReservationService.getAllReservationsOfCottage(this.cottageForApp).subscribe(ret => {
+        this.cottageReservations = ret;
+      })
+    }
     this.weekday = new Array<String>()
     this.daysOfMonth = new Array<number>()
     this.weekday[0] = "Sunday";
@@ -285,6 +294,205 @@ export class CottageCalendarComponent implements OnInit {
           }
           else if(availableTill.getDate() == day && availableTill.getMonth()==month){
             response.push( 'End of Hot Offer: '+availableFrom.getHours().toString()+':'+availableFrom.getMinutes().toString());
+          }
+          else{
+            response.push('free');
+          }
+
+        }
+      }
+    }
+    return response;
+  }
+
+
+  isItTakenReservation(day:number) : Array<string> {
+    
+    let response = new Array<string>()
+    if(this?.cottageReservations != null){
+
+      for (let cottageReservation of this.cottageReservations){
+        let availableFrom = new Date(cottageReservation.availableFrom);
+        let availableTill = new Date(cottageReservation.availableTill);
+        if(availableFrom.getFullYear()<this.today.getFullYear() && availableTill.getFullYear()<this.today.getFullYear()){
+          response.push('free');
+        }
+        else if(availableFrom.getFullYear()==availableTill.getFullYear()){
+          if(availableFrom.getMonth()==this.today.getMonth() && availableFrom.getDate() == day){
+            response.push('Start of Reservation: '+availableFrom.getHours().toString()+':'+availableFrom.getMinutes().toString());
+          }
+          
+          else if(availableFrom.getMonth()<this.today.getMonth() && availableTill.getMonth()>this.today.getMonth()){
+            response.push('Reserved');
+          }
+          else if(availableFrom.getMonth()<this.today.getMonth() && availableTill.getMonth()==this.today.getMonth() && availableTill.getDate() > day){
+            response.push('Reserved');
+          }
+          else if(availableFrom.getMonth()==this.today.getMonth() && availableFrom.getDate() < day && (availableTill.getDate() > day || availableTill.getMonth()>availableFrom.getMonth())){
+            response.push('Reserved');
+          }
+          else if(availableTill.getDate() == day && availableTill.getMonth()==this.today.getMonth()){
+            response.push('End of Reservation: '+availableFrom.getHours().toString()+':'+availableFrom.getMinutes().toString());
+          }
+          else {
+            response.push('free');
+          }
+        }
+        else{
+          if(availableFrom.getMonth()==this.today.getMonth() && availableFrom.getDate() == day){
+            response.push('Start of Reservation: '+availableFrom.getHours().toString()+':'+availableFrom.getMinutes().toString());
+          }
+          
+          else if((availableFrom.getMonth()<this.today.getMonth() || availableFrom.getFullYear()<this.today.getFullYear()) && availableTill.getMonth()>this.today.getMonth()){
+            response.push('Reserved');
+          }
+          else if((availableFrom.getMonth()<this.today.getMonth() || availableFrom.getFullYear()<this.today.getFullYear()) && availableTill.getMonth()==this.today.getMonth() && availableTill.getDate() > day){
+            response.push('Reserved');
+          }
+          else if(availableFrom.getMonth()==this.today.getMonth() && availableFrom.getDate() < day && (availableTill.getDate() > day || availableTill.getMonth()>availableFrom.getMonth() || availableTill.getFullYear()>availableFrom.getFullYear())){
+            response.push('Reserved');
+          }
+          else if(availableTill.getDate() == day && availableTill.getMonth()==this.today.getMonth()){
+            response.push('End of Reservation: '+availableFrom.getHours().toString()+':'+availableFrom.getMinutes().toString());
+          }
+          else {
+            response.push('free');
+          }
+
+        }
+        
+      }
+    }
+    return response;
+    
+  }
+
+  isItTakenNextMonthReservation(day:number) : Array<string> {
+    
+    let response = new Array<string>();
+    if(this?.cottageReservations != null){
+
+      for (let cottageReservation of this.cottageReservations){
+        let availableFrom = new Date(cottageReservation.availableFrom);
+        let availableTill = new Date(cottageReservation.availableTill);
+
+        if(availableFrom.getFullYear()==availableTill.getFullYear() && availableFrom.getFullYear()==this.today.getFullYear()){
+
+          if(availableFrom.getMonth()==(this.today.getMonth()+1) && availableFrom.getDate() == day){
+            response.push('Start of Reservation: '+availableFrom.getHours().toString()+':'+availableFrom.getMinutes().toString());
+          }
+          
+          else if(availableFrom.getMonth()<(this.today.getMonth()+1) && availableTill.getMonth()>(this.today.getMonth()+1)){
+            response.push( 'Reserved');
+          }
+          else if(availableFrom.getMonth()<(this.today.getMonth()+1) && availableTill.getMonth()==(this.today.getMonth()+1) && availableTill.getDate() > day){
+            response.push( 'Reserved');
+          }
+          else if(availableFrom.getMonth()==(this.today.getMonth()+1) && availableFrom.getDate() < day && (availableTill.getDate() > day || availableTill.getMonth()>availableFrom.getMonth())){
+            response.push( 'Reserved');
+          }
+          else if(availableTill.getDate() == day && availableTill.getMonth()==(this.today.getMonth()+1)){
+            response.push( 'End of Reservation: '+availableFrom.getHours().toString()+':'+availableFrom.getMinutes().toString());
+          }
+          else{
+            response.push('free');
+          }
+        }
+        else{
+
+          let month;
+          let year;
+          if(this.today.getMonth()==11){
+            month = 0;
+            year = this.today.getFullYear()+1;
+          }
+          else {
+            month = this.today.getMonth()+1;
+            year = this.today.getFullYear();
+          }
+          if(availableFrom.getMonth()==month && availableFrom.getDate() == day){
+            response.push( 'Start of Reservation: '+availableFrom.getHours().toString()+':'+availableFrom.getMinutes().toString());
+          }
+          
+          else if((availableFrom.getMonth()<month || availableFrom.getFullYear()<year) && availableTill.getMonth()>month && availableTill.getFullYear()==year){
+            response.push( 'Reserved');
+          }
+          else if((availableFrom.getMonth()<month || availableFrom.getFullYear()<year) && availableTill.getMonth()==month && availableTill.getDate() > day && availableTill.getFullYear()==year){
+            response.push( 'Reserved');
+          }
+          else if(availableFrom.getMonth()==month && availableFrom.getDate() < day && (availableTill.getDate() > day || availableTill.getMonth()>availableFrom.getMonth() || availableTill.getFullYear()>availableFrom.getFullYear())){
+            response.push( 'Reserved');
+          }
+          else if(availableTill.getDate() == day && availableTill.getMonth()==month){
+            response.push( 'End of Reservation: '+availableFrom.getHours().toString()+':'+availableFrom.getMinutes().toString());
+          }
+          else{
+            response.push('free');
+          }
+        }
+      }
+    }
+    return response;
+  }
+
+  isItTakenPrevMonthReservation(day:number) : Array<string> {
+    
+    let response = new Array<string>();
+    if(this?.cottageReservations != null){
+
+      for (let cottageReservation of this.cottageReservations){
+        let availableFrom = new Date(cottageReservation.availableFrom);
+        let availableTill = new Date(cottageReservation.availableTill);
+        if(availableFrom.getFullYear()<this.today.getFullYear() && availableTill.getFullYear()<this.today.getFullYear()){
+          response.push('free');
+        }
+        else if(availableFrom.getFullYear()==availableTill.getFullYear() && availableFrom.getFullYear()==this.today.getFullYear()){
+          if(availableFrom.getMonth()==(this.today.getMonth()-1) && availableFrom.getDate() == day){
+            response.push( 'Start of Reservation: '+availableFrom.getHours().toString()+':'+availableFrom.getMinutes().toString());
+          }
+          
+          else if(availableFrom.getMonth()<(this.today.getMonth()-1) && availableTill.getMonth()>(this.today.getMonth()-1)){
+            response.push( 'Reserved');
+          }
+          else if(availableFrom.getMonth()<(this.today.getMonth()-1) && availableTill.getMonth()==(this.today.getMonth()-1) && availableTill.getDate() > day){
+            response.push( 'Reserved');
+          }
+          else if(availableFrom.getMonth()==(this.today.getMonth()-1) && availableFrom.getDate() < day && (availableTill.getDate() > day || availableTill.getMonth()>availableFrom.getMonth())){
+            response.push( 'Reserved');
+          }
+          else if(availableTill.getDate() == day && availableTill.getMonth()==(this.today.getMonth()-1)){
+            response.push( 'End of Reservation: '+availableFrom.getHours().toString()+':'+availableFrom.getMinutes().toString());
+          }
+          else{
+            response.push('free');
+          }
+        }
+        else{
+          let month;
+          let year;
+          if(this.today.getMonth()==0){
+            month = 11;
+            year = this.today.getFullYear()-1;
+          }
+          else {
+            month = this.today.getMonth()-1;
+            year = this.today.getFullYear();
+          }
+          if(availableFrom.getMonth()==month && availableFrom.getDate() == day){
+            response.push( 'Start of Reservation: '+availableFrom.getHours().toString()+':'+availableFrom.getMinutes().toString());
+          }
+          
+          else if((availableFrom.getMonth()<month || availableFrom.getFullYear()<year) && availableTill.getMonth()>month && availableTill.getFullYear()==year){
+            response.push( 'Reserved');
+          }
+          else if((availableFrom.getMonth()<month || availableFrom.getFullYear()<year) && availableTill.getMonth()==month && availableTill.getDate() > day && availableTill.getFullYear()==year){
+            response.push( 'Reserved');
+          }
+          else if(availableFrom.getMonth()==month && availableFrom.getDate() < day && (availableTill.getDate() > day || availableTill.getMonth()>availableFrom.getMonth() || availableTill.getFullYear()>availableFrom.getFullYear())){
+            response.push( 'Reserved');
+          }
+          else if(availableTill.getDate() == day && availableTill.getMonth()==month){
+            response.push( 'End of Reservation: '+availableFrom.getHours().toString()+':'+availableFrom.getMinutes().toString());
           }
           else{
             response.push('free');

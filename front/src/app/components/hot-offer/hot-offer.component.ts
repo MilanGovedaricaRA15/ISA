@@ -21,9 +21,11 @@ export class HotOfferComponent implements OnInit {
   services = [
     'WiFi','Parking','Pool'
    ];
+  availableTillError:boolean;
 
   ngOnInit(): void {
     this.newHotOffer = new HotOffer();
+    this.availableTillError = false;
     this.addForm = new FormGroup({
       "numOfPeople": new FormControl(null,[Validators.required,Validators.pattern('[1-9][0-9]*')]),
       "availableFrom": new FormControl(null,[Validators.required]),
@@ -66,10 +68,18 @@ export class HotOfferComponent implements OnInit {
 
     }
     this.newHotOffer.free = true;
-    this.cottageForApp.hotOffers.push(this.newHotOffer);
+    if(this.newHotOffer.availableTill < this.newHotOffer.availableFrom){
+      this.availableTillError = true;
+    }
+    else {
+      this.availableTillError = false;
+      this.cottageForApp.hotOffers.push(JSON.parse(JSON.stringify(this.newHotOffer)));
     
-    this.cottageService.changeCottage(this.cottageForApp).subscribe(() => {
-      });
+      this.cottageService.changeCottage(this.cottageForApp).subscribe(() => {
+        });
+    }
+
+   
     
     
     

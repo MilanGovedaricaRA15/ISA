@@ -22,4 +22,5 @@ public interface CottageService {
     public ResponseEntity<Boolean> uploadImg( MultipartFile file);
     public ResponseEntity<Cottage> getCottageById(Long id);
     public ResponseEntity<Cottage> addCottage(Cottage cottage);
+    public boolean isReserved(Long id);
 }

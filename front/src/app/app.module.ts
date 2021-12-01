@@ -15,6 +15,8 @@ import { HotOfferComponent } from './components/hot-offer/hot-offer.component';
 import { CottageCalendarComponent } from './components/cottage-calendar/cottage-calendar.component';
 import { AddNewCottageComponent } from './components/add-new-cottage/add-new-cottage.component';
 import { OwnerNavbarComponent } from './components/owner-navbar/owner-navbar.component';
+import { OwnerReservationsComponent } from './components/owner-reservations/owner-reservations.component';
+import { CottageReservationsComponent } from './components/cottage-reservations/cottage-reservations.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { OwnerNavbarComponent } from './components/owner-navbar/owner-navbar.com
     HotOfferComponent,
     CottageCalendarComponent,
     AddNewCottageComponent,
-    OwnerNavbarComponent
+    OwnerNavbarComponent,
+    OwnerReservationsComponent,
+    CottageReservationsComponent
   ],
   imports: [
     BrowserModule,

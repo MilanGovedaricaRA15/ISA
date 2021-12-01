@@ -18,8 +18,14 @@ public class HotOfferServiceImpl implements HotOfferService {
     @Autowired
     private HotOfferRepository hotOfferRepository;
     public ResponseEntity<Void> saveHotOffer(HotOffer hotOffer){
-        hotOfferRepository.save(hotOffer);
-        return ResponseEntity.ok(null);
+        if(hotOffer.getAvailableFrom().isBefore(hotOffer.getAvailableTill()) || hotOffer.getAvailableFrom().isEqual(hotOffer.getAvailableTill())){
+            hotOfferRepository.save(hotOffer);
+            return ResponseEntity.ok(null);
+        }
+        else {
+            return new ResponseEntity<>(null, HttpStatus.NOT_ACCEPTABLE);
+        }
+
     }
     public ResponseEntity<Boolean> removeHotOffer( Long id){
         hotOfferRepository.deleteById(id);

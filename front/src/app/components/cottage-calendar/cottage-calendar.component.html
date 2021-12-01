@@ -28,6 +28,11 @@
 
                 <a *ngIf="item!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
                 </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(25)">
+                    <a *ngIf="item=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item!='Reserved' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
             </div>
             <div *ngIf="index==0 && firstDayOfMonth =='Saturday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
                 <h5 class="row align-items-center">
@@ -39,6 +44,11 @@
                 <a *ngIf="item=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
 
                 <a *ngIf="item!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(26)">
+                    <a *ngIf="item=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item!='Reserved' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
                 </div>
             </div> 
             <div *ngIf="index==0 && firstDayOfMonth =='Saturday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
@@ -52,6 +62,11 @@
 
                 <a *ngIf="item!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
                 </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(27)">
+                    <a *ngIf="item=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item!='Reserved' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
             </div>
             <div *ngIf="index==0 && firstDayOfMonth =='Saturday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
                 <h5 class="row align-items-center">
@@ -63,6 +78,11 @@
                 <a *ngIf="item=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
 
                 <a *ngIf="item!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(28)">
+                    <a *ngIf="item=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item!='Reserved' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
                 </div>
             </div>
 
@@ -77,6 +97,11 @@
 
                 <a *ngIf="item!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
                 </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(29)">
+                    <a *ngIf="item=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item!='Reserved' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
             </div>
             <div *ngIf="index==0 && firstDayOfMonth =='Saturday' && daysOfMonthBeforeNumber!=28" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
                 <h5 class="row align-items-center">
@@ -88,6 +113,11 @@
                 <a *ngIf="item=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
 
                 <a *ngIf="item!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(30)">
+                    <a *ngIf="item=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item!='Reserved' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
                 </div>
             </div>
             <div *ngIf="index==0 && firstDayOfMonth =='Saturday' && daysOfMonthBeforeNumber==31" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
@@ -101,6 +131,11 @@
 
                 <a *ngIf="item!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
                 </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(31)">
+                    <a *ngIf="item=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item!='Reserved' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
             </div>
             <div *ngIf="index==0 && firstDayOfMonth =='Friday' && daysOfMonthBeforeNumber!==31" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
                 <h5 class="row align-items-center">
@@ -112,6 +147,11 @@
                 <a *ngIf="item=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
 
                 <a *ngIf="item!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(26)">
+                    <a *ngIf="item=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item!='Reserved' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
                 </div>
             </div> 
             <div *ngIf="index==0 && firstDayOfMonth =='Friday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
@@ -125,6 +165,11 @@
 
                 <a *ngIf="item!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
                 </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(27)">
+                    <a *ngIf="item=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item!='Reserved' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
             </div>
             <div *ngIf="index==0 && firstDayOfMonth =='Friday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
                 <h5 class="row align-items-center">
@@ -136,6 +181,11 @@
                 <a *ngIf="item=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
 
                 <a *ngIf="item!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(28)">
+                    <a *ngIf="item=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item!='Reserved' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
                 </div>
             </div>
 
@@ -150,6 +200,11 @@
 
                 <a *ngIf="item!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
                 </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(29)">
+                    <a *ngIf="item=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item!='Reserved' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
             </div>
             <div *ngIf="index==0 && firstDayOfMonth =='Friday' && daysOfMonthBeforeNumber!=28" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
                 <h5 class="row align-items-center">
@@ -161,6 +216,11 @@
                 <a *ngIf="item=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
 
                 <a *ngIf="item!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(30)">
+                    <a *ngIf="item=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item!='Reserved' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
                 </div>
             </div>
 
@@ -175,6 +235,11 @@
 
                 <a *ngIf="item!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
                 </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(31)">
+                    <a *ngIf="item=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item!='Reserved' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
             </div>
             <div *ngIf="index==0 && firstDayOfMonth =='Thursday' && daysOfMonthBeforeNumber!==31" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
                 <h5 class="row align-items-center">
@@ -187,6 +252,11 @@
 
                 <a *ngIf="item!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
                 </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(27)">
+                    <a *ngIf="item=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item!='Reserved' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
             </div>
             <div *ngIf="index==0 && firstDayOfMonth =='Thursday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
                 <h5 class="row align-items-center">
@@ -198,6 +268,11 @@
                 <a *ngIf="item=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
 
                 <a *ngIf="item!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(28)">
+                    <a *ngIf="item=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item!='Reserved' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
                 </div>
             </div>
 
@@ -212,6 +287,11 @@
 
                 <a *ngIf="item!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
                 </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(29)">
+                    <a *ngIf="item=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item!='Reserved' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
             </div>
             <div *ngIf="index==0 && firstDayOfMonth =='Thursday' && daysOfMonthBeforeNumber!=28" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
                 <h5 class="row align-items-center">
@@ -223,6 +303,11 @@
                 <a *ngIf="item=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
 
                 <a *ngIf="item!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(30)">
+                    <a *ngIf="item=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item!='Reserved' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
                 </div>
             </div>
 
@@ -237,6 +322,11 @@
 
                 <a *ngIf="item!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
                 </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(31)">
+                    <a *ngIf="item=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item!='Reserved' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
             </div>
 
             <div *ngIf="index==0 && firstDayOfMonth =='Wednesday' && daysOfMonthBeforeNumber!==31" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
@@ -249,6 +339,11 @@
                 <a *ngIf="item=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
 
                 <a *ngIf="item!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(28)">
+                    <a *ngIf="item=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item!='Reserved' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
                 </div>
             </div>
 
@@ -263,6 +358,11 @@
 
                 <a *ngIf="item!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
                 </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(29)">
+                    <a *ngIf="item=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item!='Reserved' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
             </div>
             <div *ngIf="index==0 && firstDayOfMonth =='Wednesday' && daysOfMonthBeforeNumber!=28" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
                 <h5 class="row align-items-center">
@@ -274,6 +374,11 @@
                 <a *ngIf="item=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
 
                 <a *ngIf="item!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(30)">
+                    <a *ngIf="item=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item!='Reserved' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
                 </div>
             </div>
 
@@ -288,6 +393,11 @@
 
                 <a *ngIf="item!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
                 </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(31)">
+                    <a *ngIf="item=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item!='Reserved' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
             </div>
 
             <div *ngIf="index==0 && firstDayOfMonth =='Tuesday' && daysOfMonthBeforeNumber==28 " class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
@@ -301,6 +411,11 @@
 
                 <a *ngIf="item!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
                 </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(27)">
+                    <a *ngIf="item=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item!='Reserved' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
             </div>
 
             <div *ngIf="index==0 && firstDayOfMonth =='Tuesday' && daysOfMonthBeforeNumber==28 " class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
@@ -313,6 +428,11 @@
                 <a *ngIf="item=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
 
                 <a *ngIf="item!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(28)">
+                    <a *ngIf="item=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item!='Reserved' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
                 </div>
             </div>
 
@@ -327,6 +447,11 @@
 
                 <a *ngIf="item!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
                 </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(29)">
+                    <a *ngIf="item=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item!='Reserved' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
             </div>
             <div *ngIf="index==0 && firstDayOfMonth =='Tuesday' && daysOfMonthBeforeNumber!=28" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
                 <h5 class="row align-items-center">
@@ -338,6 +463,11 @@
                 <a *ngIf="item=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
 
                 <a *ngIf="item!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(30)">
+                    <a *ngIf="item=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item!='Reserved' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
                 </div>
             </div>
 
@@ -352,6 +482,11 @@
 
                 <a *ngIf="item!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
                 </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(31)">
+                    <a *ngIf="item=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item!='Reserved' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
             </div>
 
             <div *ngIf="index==0 && firstDayOfMonth =='Monday' && daysOfMonthBeforeNumber==28 " class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
@@ -364,6 +499,11 @@
                 <a *ngIf="item=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
 
                 <a *ngIf="item!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(28)">
+                    <a *ngIf="item=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item!='Reserved' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
                 </div>
             </div>
             
@@ -378,6 +518,11 @@
 
                 <a *ngIf="item!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
                 </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(30)">
+                    <a *ngIf="item=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item!='Reserved' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
             </div>
 
             <div *ngIf="index==0 && firstDayOfMonth =='Monday' && daysOfMonthBeforeNumber===31" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
@@ -390,6 +535,11 @@
                 <a *ngIf="item=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
 
                 <a *ngIf="item!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(31)">
+                    <a *ngIf="item=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item!='Reserved' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
                 </div>
             </div>
 
@@ -404,6 +554,11 @@
 
                 <a *ngIf="item!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
                 </div>
+                <div *ngFor="let item of isItTakenReservation(index+1)">
+                    <a *ngIf="item=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item!='Reserved' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
             </div>
 
             <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Sunday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
@@ -417,6 +572,11 @@
 
                 <a *ngIf="item!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
                 </div>
+                <div *ngFor="let item of isItTakenNextMonthReservation(1)">
+                    <a *ngIf="item=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item!='Reserved' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
             </div>
             <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Sunday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
                 <h5 class="row align-items-center">
@@ -428,6 +588,11 @@
                 <a *ngIf="item=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
 
                 <a *ngIf="item!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenNextMonthReservation(2)">
+                    <a *ngIf="item=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item!='Reserved' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
                 </div>
             </div> 
             <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Sunday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
@@ -441,6 +606,11 @@
 
                 <a *ngIf="item!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
                 </div>
+                <div *ngFor="let item of isItTakenNextMonthReservation(3)">
+                    <a *ngIf="item=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item!='Reserved' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
             </div>
             <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Sunday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
                 <h5 class="row align-items-center">
@@ -452,6 +622,11 @@
                 <a *ngIf="item=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
 
                 <a *ngIf="item!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenNextMonthReservation(4)">
+                    <a *ngIf="item=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item!='Reserved' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
                 </div>
             </div>
 
@@ -465,6 +640,11 @@
                 <a *ngIf="item=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
 
                 <a *ngIf="item!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenNextMonthReservation(5)">
+                    <a *ngIf="item=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item!='Reserved' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
                 </div>
             </div>
             <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Sunday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
@@ -478,6 +658,11 @@
 
                 <a *ngIf="item!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
                 </div>
+                <div *ngFor="let item of isItTakenNextMonthReservation(6)">
+                    <a *ngIf="item=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item!='Reserved' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
             </div>
             <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Monday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
                 <h5 class="row align-items-center">
@@ -489,6 +674,11 @@
                 <a *ngIf="item=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
 
                 <a *ngIf="item!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenNextMonthReservation(1)">
+                    <a *ngIf="item=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item!='Reserved' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
                 </div>
             </div> 
             <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Monday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
@@ -502,6 +692,11 @@
 
                 <a *ngIf="item!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
                 </div>
+                <div *ngFor="let item of isItTakenNextMonthReservation(2)">
+                    <a *ngIf="item=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item!='Reserved' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
             </div>
             <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Monday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
                 <h5 class="row align-items-center">
@@ -513,6 +708,11 @@
                 <a *ngIf="item=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white">{{item}}</a>
 
                 <a *ngIf="item!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white">{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenNextMonthReservation(3)">
+                    <a *ngIf="item=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item!='Reserved' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
                 </div>
             </div>
 
@@ -526,6 +726,11 @@
                 <a *ngIf="item=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
 
                 <a *ngIf="item!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white">{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenNextMonthReservation(4)">
+                    <a *ngIf="item=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item!='Reserved' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
                 </div>
             </div>
             <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Monday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
@@ -539,6 +744,11 @@
 
                 <a *ngIf="item!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
                 </div>
+                <div *ngFor="let item of isItTakenNextMonthReservation(5)">
+                    <a *ngIf="item=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item!='Reserved' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
             </div>
             <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Tuesday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
                 <h5 class="row align-items-center">
@@ -550,6 +760,11 @@
                 <a *ngIf="item=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white">{{item}}</a>
 
                 <a *ngIf="item!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white">{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenNextMonthReservation(1)">
+                    <a *ngIf="item=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item!='Reserved' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
                 </div>
             </div>
             <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Tuesday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
@@ -563,6 +778,11 @@
 
                 <a *ngIf="item!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white">{{item}}</a>
                 </div>
+                <div *ngFor="let item of isItTakenNextMonthReservation(2)">
+                    <a *ngIf="item=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item!='Reserved' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
             </div>
 
             <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Tuesday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
@@ -575,6 +795,11 @@
                 <a *ngIf="item=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white">{{item}}</a>
 
                 <a *ngIf="item!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white">{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenNextMonthReservation(3)">
+                    <a *ngIf="item=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item!='Reserved' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
                 </div>
             </div>
             <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Tuesday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
@@ -588,6 +813,11 @@
 
                 <a *ngIf="item!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white">{{item}}</a>
                 </div>
+                <div *ngFor="let item of isItTakenNextMonthReservation(4)">
+                    <a *ngIf="item=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item!='Reserved' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
             </div>
 
             <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Wednesday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
@@ -601,6 +831,11 @@
 
                 <a *ngIf="item!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white">{{item}}</a>
                 </div>
+                <div *ngFor="let item of isItTakenNextMonthReservation(1)">
+                    <a *ngIf="item=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item!='Reserved' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
             </div>
 
             <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Wednesday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
@@ -613,6 +848,11 @@
                 <a *ngIf="item=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
 
                 <a *ngIf="item!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenNextMonthReservation(2)">
+                    <a *ngIf="item=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item!='Reserved' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
                 </div>
             </div>
             <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Wednesday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
@@ -626,6 +866,11 @@
 
                 <a *ngIf="item!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
                 </div>
+                <div *ngFor="let item of isItTakenNextMonthReservation(3)">
+                    <a *ngIf="item=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item!='Reserved' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
             </div>
 
             <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Thursday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
@@ -638,6 +883,11 @@
                 <a *ngIf="item=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white">{{item}}</a>
                 <a *ngIf="item!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white">{{item}}</a>
                 </div>
+                <div *ngFor="let item of isItTakenNextMonthReservation(1)">
+                    <a *ngIf="item=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item!='Reserved' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
             </div>
             <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Thursday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
                 <h5 class="row align-items-center">
@@ -648,6 +898,11 @@
                 <div *ngFor="let item of isItTakenNextMonth(2)">
                 <a *ngIf="item=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
                 <a *ngIf="item!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenNextMonthReservation(2)">
+                    <a *ngIf="item=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item!='Reserved' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
                 </div>
             </div>
             
@@ -660,6 +915,11 @@
                 <div *ngFor="let item of isItTakenNextMonth(1)">
                 <a *ngIf="item=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
                 <a *ngIf="item!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenNextMonthReservation(1)">
+                    <a *ngIf="item=='Reserved'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item!='Reserved' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
                 </div>
             </div>
             
