@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 
 public interface UserService {
-    public ResponseEntity<String> loginUser(User user);
-    public ResponseEntity<String> saveUser(User user);
-    public ResponseEntity<User> getUserByEmail(String email);
-    public ResponseEntity<Boolean> changeUser(User user);
-    public ResponseEntity<Boolean> changePasswordUser(List<User> users);
+    public Boolean loginUser(User user);
+    public Boolean saveUser(User user);
+    public User getUserByEmail(String email);
+    public Boolean changeUser(User user);
+    public Boolean changePasswordUser(List<User> users);
 
 }

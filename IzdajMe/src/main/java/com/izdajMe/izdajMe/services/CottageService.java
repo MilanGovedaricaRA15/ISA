@@ -14,14 +14,14 @@ import java.util.List;
 
 
 public interface CottageService {
-    public ResponseEntity<List<Cottage>> getAllCottagesOfOwner(String email);
-    public ResponseEntity<List<Cottage>> getAllCottages();
-    public ResponseEntity<Void> removeCottageImg(Cottage cottage);
-    public ResponseEntity<Void> removeCottage(Long id);
-    public ResponseEntity<Void> changeCottage(Cottage cottage);
-    public ResponseEntity<Boolean> addHotOfferToCottage(Cottage cottage);
-    public ResponseEntity<Boolean> uploadImg( MultipartFile file);
-    public ResponseEntity<Cottage> getCottageById(Long id);
-    public ResponseEntity<Cottage> addCottage(Cottage cottage);
+    public List<Cottage> getAllCottagesOfOwner(String email);
+    public List<Cottage> getAllCottages();
+    public Boolean removeCottageImg(Cottage cottage);
+    public Boolean removeCottage(Long id);
+    public Boolean changeCottage(Cottage cottage);
+    public Boolean addHotOfferToCottage(Cottage cottage);
+    public Boolean uploadImg( MultipartFile file);
+    public Cottage getCottageById(Long id);
+    public Cottage addCottage(Cottage cottage);
     public boolean isReserved(Long id);
 }

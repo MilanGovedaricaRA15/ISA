@@ -52,6 +52,8 @@ export class AppComponent {
   onCottageClick(cottage: Cottage){
     this.cottageToShow = cottage;
     this.changeNumber(5);
+    sessionStorage.setItem("page",'5');
+    sessionStorage.setItem("cottageToShow",this.cottageToShow.id.toString());
     
   }
 

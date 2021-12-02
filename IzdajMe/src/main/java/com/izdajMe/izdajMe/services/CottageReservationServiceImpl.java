@@ -27,57 +27,27 @@ public class CottageReservationServiceImpl implements CottageReservationService{
     @Autowired
     private EmailService emailService;
 
-    public ResponseEntity<List<CottageReservation>> getAllReservationsOfCottage(Long id) {
-
-        Iterable<CottageReservation> allCottageReservations = cottageReservationRepository.findAll();
-        ArrayList<CottageReservation> allCottageReservationsList = new ArrayList<CottageReservation>();
-        ArrayList<CottageReservation> allThisCottageReservations = new ArrayList<CottageReservation>();
-        allCottageReservations.forEach(allCottageReservationsList::add);
-        for(CottageReservation cottageReservation : allCottageReservationsList){
-            if(cottageReservation.getCottage().getId() == id){
-                allThisCottageReservations.add(cottageReservation);
-            }
-        }
-        return new ResponseEntity<List<CottageReservation>>(allThisCottageReservations, HttpStatus.OK);
+    public List<CottageReservation> getAllReservationsOfCottage(Long id) {
+        List<CottageReservation> allThisCottageReservations = cottageReservationRepository.findAllByCottageId(id);
+        return allThisCottageReservations;
     }
 
-    public ResponseEntity<List<CottageReservation>> getAllReservationsOfOwner(String email) {
-
-        Iterable<Cottage> allCottages = cottageRepository.findAll();
-        ArrayList<Cottage> allCottagesList = new ArrayList<Cottage>();
-        ArrayList<Cottage> ownerCottagesList = new ArrayList<Cottage>();
-        allCottages.forEach(allCottagesList::add);
-        for(Cottage cottage : allCottagesList){
-            if(cottage.getOwner().getEmail().equals(email)){
-                ownerCottagesList.add(cottage);
-            }
-        }
-
-        Iterable<CottageReservation> allCottageReservations = cottageReservationRepository.findAll();
-        ArrayList<CottageReservation> allCottageReservationsList = new ArrayList<CottageReservation>();
+    public List<CottageReservation> getAllReservationsOfOwner(String email) {
+        List<Cottage> ownerCottagesList = cottageRepository.findAllByCottageEmail(email);
         ArrayList<CottageReservation> allOwnerCottageReservations = new ArrayList<CottageReservation>();
-        allCottageReservations.forEach(allCottageReservationsList::add);
-        for(CottageReservation cottageReservation : allCottageReservationsList){
-            for(Cottage cottageOfOwner: ownerCottagesList){
-                if(cottageReservation.getCottage().getId() == cottageOfOwner.getId()){
-                    allOwnerCottageReservations.add(cottageReservation);
+        for(Cottage cottageOfOwner: ownerCottagesList){
+            List<CottageReservation> list = cottageReservationRepository.findAllByCottageId(cottageOfOwner.getId());
+                for (CottageReservation res : list){
+                    allOwnerCottageReservations.add(res);
                 }
-            }
-
         }
-        return new ResponseEntity<List<CottageReservation>>(allOwnerCottageReservations, HttpStatus.OK);
+        return allOwnerCottageReservations;
     }
 
-    public ResponseEntity<Boolean> addReservationByOwner(CottageReservation cottageReservation){
-        Iterable<CottageReservation> allCottageReservations = cottageReservationRepository.findAll();
-        ArrayList<CottageReservation> allCottageReservationsList = new ArrayList<CottageReservation>();
-        ArrayList<CottageReservation> allThisCottageReservations = new ArrayList<CottageReservation>();
-        allCottageReservations.forEach(allCottageReservationsList::add);
-        for(CottageReservation cottageReservation1 : allCottageReservationsList){
-                if(cottageReservation1.getCottage().getId() == cottageReservation.getCottage().getId()) {
-                    allThisCottageReservations.add(cottageReservation1);
-                }
-        }
+    public Boolean addReservationByOwner(CottageReservation cottageReservation){
+
+        List<CottageReservation> allThisCottageReservations = cottageReservationRepository.findAllByCottageId(cottageReservation.getCottage().getId());
+
         boolean slobodno = true;
         for(CottageReservation cottageReservation1 : allThisCottageReservations) {
             if(cottageReservation.getAvailableFrom().isBefore(cottageReservation1.getAvailableFrom()) && cottageReservation.getAvailableTill().isAfter(cottageReservation1.getAvailableFrom())){
@@ -104,15 +74,13 @@ public class CottageReservationServiceImpl implements CottageReservationService{
             slobodno = false;
         }
 
-
-
         if(slobodno) {
             cottageReservationRepository.save(cottageReservation);
             sendNotificationForReservation(cottageReservation);
-            return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+            return true;
         }
         else{
-            return new ResponseEntity<Boolean>(false, HttpStatus.OK);
+            return false;
         }
     }
 

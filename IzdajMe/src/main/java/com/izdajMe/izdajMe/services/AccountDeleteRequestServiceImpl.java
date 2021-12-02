@@ -10,30 +10,27 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class AccountDeleteRequestServiceImpl implements AccountDeleteRequestService {
     @Autowired
     private AccountDeleteRequestRepository accountDeleteRequestRepository;
 
-    public ResponseEntity<Boolean> addAccountDeleteRequest(AccountDeleteRequest accountDeleteRequest){
-        Iterable<AccountDeleteRequest> allAccountDeleteRequest = accountDeleteRequestRepository.findAll();
-        ArrayList<AccountDeleteRequest> allAccountDeleteRequestList = new ArrayList<AccountDeleteRequest>();
-        allAccountDeleteRequest.forEach(allAccountDeleteRequestList::add);
+    public Boolean addAccountDeleteRequest(AccountDeleteRequest accountDeleteRequest){
+        List<AccountDeleteRequest> allUserAccountDeleteRequestList = accountDeleteRequestRepository.findAllByUserId(accountDeleteRequest.getUser().getId());
         boolean postoji = false;
-        for(AccountDeleteRequest request : allAccountDeleteRequestList){
-            if (request.getUser().getId() == accountDeleteRequest.getUser().getId()){
+        for(AccountDeleteRequest request : allUserAccountDeleteRequestList){
                 if(!request.isSeen()){
                     postoji = true;
                 }
-            }
         }
         if(!postoji){
             accountDeleteRequestRepository.save(accountDeleteRequest);
-            return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+            return true;
         }
         else {
-            return new ResponseEntity<Boolean>(false, HttpStatus.OK);
+            return false;
         }
     }
 }

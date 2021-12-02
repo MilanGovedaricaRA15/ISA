@@ -47,12 +47,26 @@ export class CottageProfileComponent implements OnInit {
   }
 
   public onIni(){
+    if(this.cottage == undefined){
+      this.cottageService.getCottageById(Number(sessionStorage.getItem("cottageToShow"))).subscribe(ret =>{
+        this.cottage = ret;
+        this.cottageChange = JSON.parse(JSON.stringify(this.cottage));
+        if(this?.cottageChange?.images != null){
+          this.cottageImg = this?.cottageChange?.images[0];
+        }
+        this.cottageHotOffersForHotOffer.emit(this.cottageChange);
+      })
+
+    }
+    else{
       this.cottageChange = JSON.parse(JSON.stringify(this.cottage));
+    
+      
       if(this?.cottageChange?.images != null){
         this.cottageImg = this?.cottageChange?.images[0];
       }
       this.cottageHotOffersForHotOffer.emit(this.cottageChange);
-    
+    }
   }
 
   public select(image: String) {
@@ -68,10 +82,15 @@ export class CottageProfileComponent implements OnInit {
     this.cottageChange.images.forEach((element, index) => {
       if (element === this.cottageImg) {
         this.cottageChange.images.splice(index, 1);
-        this.cottageImg = this.cottageChange.images[0];
       }
     });
     this.cottageService.removeCottageImg(this.cottageChange).subscribe(() => {
+      this.cottage.images.forEach((element, index) => {
+        if (element === this.cottageImg) {
+          this.cottage.images.splice(index, 1);
+        }
+      });
+      this.cottageImg = this.cottageChange.images[0];
       this.onIni();
     });
   }

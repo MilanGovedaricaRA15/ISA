@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 public interface CottageReservationService {
-    public ResponseEntity<List<CottageReservation>> getAllReservationsOfCottage(Long id);
-    public ResponseEntity<List<CottageReservation>> getAllReservationsOfOwner(String email);
-    public ResponseEntity<Boolean> addReservationByOwner(CottageReservation cottageReservation);
+    public List<CottageReservation> getAllReservationsOfCottage(Long id);
+    public List<CottageReservation> getAllReservationsOfOwner(String email);
+    public Boolean addReservationByOwner(CottageReservation cottageReservation);
 }

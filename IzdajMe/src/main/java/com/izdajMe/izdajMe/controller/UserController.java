@@ -3,6 +3,7 @@ package com.izdajMe.izdajMe.controller;
 import com.izdajMe.izdajMe.model.User;
 import com.izdajMe.izdajMe.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,29 +18,55 @@ public class UserController {
 
     @PostMapping("/users/login")
     public ResponseEntity<String> loginUser(@RequestBody User user) {
-        return userService.loginUser(user);
+
+        if (userService.loginUser(user)){
+           return new ResponseEntity<String>("user_found", HttpStatus.OK);
+        }
+        else {
+           return new ResponseEntity<String>("user_not_found",HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping("/users/register")
     public ResponseEntity<String> saveUser(@RequestBody User user) {
 
-        return userService.saveUser(user);
+        if(userService.saveUser(user)){
+           return new ResponseEntity<String>("user_already_registered",HttpStatus.NOT_ACCEPTABLE);
+        }
+        else{
+           return new ResponseEntity<String>("user_registered",HttpStatus.CREATED);
+        }
 
     }
 
     @PutMapping("/users/changeUser")
     public ResponseEntity<Boolean> changeUser(@RequestBody User user) {
-        return userService.changeUser(user);
+        if (userService.changeUser(user)){
+           return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+        }
+        else{
+           return new ResponseEntity<Boolean>(false, HttpStatus.NOT_ACCEPTABLE);
+        }
     }
     @PutMapping("/users/changePasswordUser")
     public ResponseEntity<Boolean> changePasswordUser(@RequestBody List<User> users) {
-        return userService.changePasswordUser(users);
+        if(userService.changePasswordUser(users)){
+           return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+        }
+        else{
+           return new ResponseEntity<Boolean>(false, HttpStatus.NOT_ACCEPTABLE);
+        }
     }
 
     @GetMapping("/users/getUserByEmail")
     public ResponseEntity<User> getUserByEmail(@RequestParam("email") String email) {
-
-        return userService.getUserByEmail(email);
+        User user = userService.getUserByEmail(email);
+        if(user != null){
+           return new ResponseEntity<User>(user, HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<User>((User) null, HttpStatus.NOT_FOUND);
+        }
     }
 
 

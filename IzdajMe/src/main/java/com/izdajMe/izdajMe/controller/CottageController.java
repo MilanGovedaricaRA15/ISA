@@ -5,6 +5,7 @@ import com.izdajMe.izdajMe.model.User;
 import com.izdajMe.izdajMe.services.CottageService;
 import com.izdajMe.izdajMe.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,46 +25,69 @@ public class CottageController {
 
     @GetMapping("/cottages/getAllCottagesOfOwner")
     public ResponseEntity<List<Cottage>> getAllCottagesOfOwner(@RequestParam("email") String email) {
-
-        return cottageService.getAllCottagesOfOwner(email);
+        return new ResponseEntity<List<Cottage>>(cottageService.getAllCottagesOfOwner(email), HttpStatus.OK);
     }
 
     @GetMapping("/cottages/getCottageById")
     public ResponseEntity<Cottage> getCottageById(@RequestParam("cottage") Long id) {
-
-        return cottageService.getCottageById(id);
+        Cottage cottage = cottageService.getCottageById(id);
+        if (cottage != null) {
+            return new ResponseEntity<Cottage>(cottage, HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<Cottage>(cottage, HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/cottages/getAllCottages")
     public ResponseEntity<List<Cottage>> getAllCottages(){
-
-        return  cottageService.getAllCottages();
+        return new ResponseEntity<List<Cottage>>(cottageService.getAllCottages(),HttpStatus.OK);
     }
     @PutMapping("/cottages/removeCottageImg")
     public ResponseEntity<Void> removeCottageImg(@RequestBody Cottage cottage){
-       return cottageService.removeCottageImg(cottage);
+       if(cottageService.removeCottageImg(cottage)){
+           return ResponseEntity.ok(null);
+        }
+        else{
+           return new ResponseEntity<>(null,HttpStatus.NOT_ACCEPTABLE);
+        }
     }
     @PostMapping("/cottages/removeCottage")
     public ResponseEntity<Void> removeCottage(@RequestBody Long id){
-        return cottageService.removeCottage(id);
+        if(cottageService.removeCottage(id)){
+           return ResponseEntity.ok(null);
+        }
+        else{
+           return new ResponseEntity<>(null,HttpStatus.NOT_ACCEPTABLE);
+        }
     }
     @PostMapping("/cottages/uploadImg")
     public ResponseEntity<Boolean> uploadImg(@RequestPart("file") MultipartFile file){
-        return cottageService.uploadImg(file);
+        if(cottageService.uploadImg(file)){
+           return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+        }
+        else{
+           return new ResponseEntity<Boolean>(false, HttpStatus.NOT_ACCEPTABLE);
+        }
     }
 
     @PostMapping("/cottages/addCottage")
     public ResponseEntity<Cottage> addCottage(@RequestBody Cottage cottage){
-        return cottageService.addCottage(cottage);
+        return new ResponseEntity<Cottage>(cottageService.addCottage(cottage),HttpStatus.OK);
     }
 
     @PutMapping("/cottages/changeCottage")
     public ResponseEntity<Void> changeCottage(@RequestBody Cottage cottage){
-       return cottageService.changeCottage(cottage);
+       if(cottageService.changeCottage(cottage)){
+          return ResponseEntity.ok(null);
+       }
+       else{
+          return new ResponseEntity<>(null,HttpStatus.NOT_ACCEPTABLE);
+       }
     }
 
     @PutMapping("/cottages/addHotOfferToCottage")
     public ResponseEntity<Boolean> addHotOfferToCottage(@RequestBody Cottage cottage){
-        return cottageService.addHotOfferToCottage(cottage);
+        return new ResponseEntity<Boolean>(cottageService.addHotOfferToCottage(cottage),HttpStatus.OK);
     }
 }

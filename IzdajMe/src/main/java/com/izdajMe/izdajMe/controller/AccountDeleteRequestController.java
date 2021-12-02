@@ -5,6 +5,7 @@ import com.izdajMe.izdajMe.model.AccountDeleteRequest;
 import com.izdajMe.izdajMe.services.AccountDeleteRequestService;
 import com.izdajMe.izdajMe.services.CottageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +20,6 @@ public class AccountDeleteRequestController {
 
     @PostMapping("/accountDeleteRequest/addAccountDeleteRequest")
     public ResponseEntity<Boolean> addAccountDeleteRequest(@RequestBody AccountDeleteRequest accountDeleteRequest){
-        return accountDeleteRequestService.addAccountDeleteRequest(accountDeleteRequest);
+        return new ResponseEntity<Boolean>(accountDeleteRequestService.addAccountDeleteRequest(accountDeleteRequest), HttpStatus.OK);
     }
 }

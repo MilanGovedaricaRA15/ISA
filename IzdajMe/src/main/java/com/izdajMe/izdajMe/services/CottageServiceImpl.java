@@ -43,71 +43,53 @@ public class CottageServiceImpl implements CottageService {
     private CottageReservationRepository cottageReservationRepository;
 
 
-    public ResponseEntity<List<Cottage>> getAllCottagesOfOwner(String email){
-        Iterable<Cottage> allCottages = cottageRepository.findAll();
-        ArrayList<Cottage> allCottagesList = new ArrayList<Cottage>();
-        ArrayList<Cottage> ownerCottagesList = new ArrayList<Cottage>();
-        allCottages.forEach(allCottagesList::add);
-        for(Cottage cottage : allCottagesList){
-            if(cottage.getOwner().getEmail().equals(email)){
-                ownerCottagesList.add(cottage);
-            }
-        }
-
-        return new ResponseEntity<List<Cottage>>(ownerCottagesList,HttpStatus.OK);
+    public List<Cottage> getAllCottagesOfOwner(String email){
+        List<Cottage> ownerCottagesList = cottageRepository.findAllByCottageEmail(email);
+        return ownerCottagesList;
     }
 
-    public ResponseEntity<Cottage> getCottageById(Long id) {
-        if (cottageRepository.existsById(id)){
-            return new ResponseEntity<Cottage>(cottageRepository.findById(id).get(),HttpStatus.OK);
-
-        }
-        else{
-            return new ResponseEntity<Cottage>(new Cottage(),HttpStatus.NOT_FOUND);
-        }
-
+    public Cottage getCottageById(Long id) {
+      return cottageRepository.findById(id).get();
     }
 
-    public ResponseEntity<List<Cottage>> getAllCottages(){
+    public List<Cottage> getAllCottages(){
         Iterable<Cottage> allCottages = cottageRepository.findAll();
         ArrayList<Cottage> allCottagesList = new ArrayList<Cottage>();
         allCottages.forEach(allCottagesList::add);
-
-        return new ResponseEntity<List<Cottage>>(allCottagesList,HttpStatus.OK);
+        return allCottagesList;
     }
 
-    public ResponseEntity<Void> removeCottageImg(Cottage cottage){
+    public Boolean removeCottageImg(Cottage cottage){
         if(!isReserved(cottage.getId())) {
-            cottageRepository.deleteById(cottage.getId());
             cottageRepository.save(cottage);
-            return ResponseEntity.ok(null);
+            return true;
         }
         else{
-            return new ResponseEntity<>(null,HttpStatus.NOT_ACCEPTABLE);
+            return false;
         }
     }
 
-    public ResponseEntity<Void> removeCottage(Long id){
+    public Boolean removeCottage(Long id){
         if(!isReserved(id)) {
             cottageRepository.deleteById(id);
-            return ResponseEntity.ok(null);
+            return true;
         }
         else{
-            return new ResponseEntity<>(null,HttpStatus.NOT_ACCEPTABLE);
+            return false;
         }
     }
 
-    public ResponseEntity<Void> changeCottage(Cottage cottage){
+    public Boolean changeCottage(Cottage cottage){
         if(!isReserved(cottage.getId())) {
             cottageRepository.save(cottage);
-            return ResponseEntity.ok(null);
+            return true;
         }
         else{
-            return new ResponseEntity<>(null,HttpStatus.NOT_ACCEPTABLE);
+            return false;
         }
     }
 
-    public ResponseEntity<Boolean> addHotOfferToCottage(Cottage cottage){
+    public Boolean addHotOfferToCottage(Cottage cottage){
         List<HotOffer> hotOffers = cottage.getHotOffers();
         Cottage cottage1 = cottageRepository.findById(cottage.getId()).get();
         HotOffer addedHotOffer = new HotOffer();
@@ -151,24 +133,20 @@ public class CottageServiceImpl implements CottageService {
         if(addedHotOffer.getAvailableFrom().isAfter(addedHotOffer.getAvailableTill())){
             slobodno = false;
         }
-        if(slobodno) {
+        if(slobodno){
             cottageRepository.save(cottage);
-            return new ResponseEntity<Boolean>(true,HttpStatus.OK);
         }
-        else{
-            return new ResponseEntity<Boolean>(false,HttpStatus.OK);
-        }
-
+        return slobodno;
     }
 
 
 
-    public ResponseEntity<Cottage> addCottage(Cottage cottage){
+    public Cottage addCottage(Cottage cottage){
         cottageRepository.save(cottage);
-        return  new ResponseEntity<Cottage>(cottage,HttpStatus.OK);
+        return cottage;
     }
 
-    public ResponseEntity<Boolean> uploadImg(MultipartFile file){
+    public Boolean uploadImg(MultipartFile file){
 
             String orgName = file.getOriginalFilename();
 
@@ -180,26 +158,20 @@ public class CottageServiceImpl implements CottageService {
             }
             try {
                 file.transferTo(Paths.get(filePath));
-                return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+                return true;
             }
             catch (IllegalStateException | IOException e)
             {
                 e.printStackTrace();
-                return new ResponseEntity<Boolean>(false, HttpStatus.NOT_ACCEPTABLE);
+                return false;
             }
-
-
     }
 
     public boolean isReserved(Long id){
-        Iterable<CottageReservation> allCottageReservations = cottageReservationRepository.findAll();
-        ArrayList<CottageReservation> allCottageReservationsList = new ArrayList<CottageReservation>();
-        allCottageReservations.forEach(allCottageReservationsList::add);
+        List<CottageReservation> allCottageReservationsList = cottageReservationRepository.findAllByCottageId(id);
         for(CottageReservation cottageReservation : allCottageReservationsList){
-            if(cottageReservation.getCottage().getId() == id){
-                if(LocalDateTime.now().isBefore(cottageReservation.getAvailableTill())){
-                    return true;
-                }
+            if(LocalDateTime.now().isBefore(cottageReservation.getAvailableTill())){
+                return true;
             }
         }
         return false;

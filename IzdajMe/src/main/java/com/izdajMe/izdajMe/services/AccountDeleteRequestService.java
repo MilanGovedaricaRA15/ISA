@@ -5,5 +5,5 @@ import com.izdajMe.izdajMe.model.CottageReservation;
 import org.springframework.http.ResponseEntity;
 
 public interface AccountDeleteRequestService {
-    public ResponseEntity<Boolean> addAccountDeleteRequest(AccountDeleteRequest accountDeleteRequest);
+    public Boolean addAccountDeleteRequest(AccountDeleteRequest accountDeleteRequest);
 }

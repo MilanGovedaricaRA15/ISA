@@ -17,18 +17,18 @@ import java.util.ArrayList;
 public class HotOfferServiceImpl implements HotOfferService {
     @Autowired
     private HotOfferRepository hotOfferRepository;
-    public ResponseEntity<Void> saveHotOffer(HotOffer hotOffer){
+    public Boolean saveHotOffer(HotOffer hotOffer){
         if(hotOffer.getAvailableFrom().isBefore(hotOffer.getAvailableTill()) || hotOffer.getAvailableFrom().isEqual(hotOffer.getAvailableTill())){
             hotOfferRepository.save(hotOffer);
-            return ResponseEntity.ok(null);
+            return true;
         }
         else {
-            return new ResponseEntity<>(null, HttpStatus.NOT_ACCEPTABLE);
+            return false;
         }
 
     }
-    public ResponseEntity<Boolean> removeHotOffer( Long id){
+    public Boolean removeHotOffer( Long id){
         hotOfferRepository.deleteById(id);
-        return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+        return true;
     }
 }

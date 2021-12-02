@@ -17,80 +17,64 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public ResponseEntity<String> loginUser(User user) {
-        Iterable<User> allUsers = userRepository.findAll();
-
-        ArrayList<User> allUsersList = new ArrayList<User>();
-        allUsers.forEach(allUsersList::add);
-
-        for(User user1 : allUsersList) {
-            if(user1.getEmail().equals(user.getEmail())){
-                if(user1.getPassword().equals(user.getPassword())) {
-                    if(user1.isVerified()) {
-                        return new ResponseEntity<String>("user_found",HttpStatus.OK);
-                    }
-                    else {
-                        return new ResponseEntity<String>("user_not_found",HttpStatus.NOT_FOUND);
-                    }
-                }
-                else{
-                    return new ResponseEntity<String>("user_not_found",HttpStatus.NOT_FOUND);
-                }
+    public Boolean loginUser(User user) {
+        User foundUser = userRepository.findByEmailAndPassword(user.getEmail(),user.getPassword());
+        if (foundUser != null){
+            if(foundUser.isVerified()) {
+                return true;
+            }
+            else {
+                return false;
             }
         }
-        return new ResponseEntity<String>("user_not_found",HttpStatus.NOT_FOUND);
+        else{
+            return false;
+        }
     }
 
-    public ResponseEntity<String> saveUser(User user) {
-        Iterable<User> allUsers = userRepository.findAll();
-        ArrayList<User> allUsersList = new ArrayList<User>();
-        allUsers.forEach(allUsersList::add);
-        for(User user1 : allUsersList) {
-            if(user1.getEmail().equals(user.getEmail())){
-                return new ResponseEntity<String>("user_already_registered",HttpStatus.NOT_ACCEPTABLE);
-            }
+    public Boolean saveUser(User user) {
+        User foundUser = userRepository.findByEmail(user.getEmail());
+
+        if(foundUser != null){
+            return true;
         }
 
         user.setVerified(true); //false
         userRepository.save(user);
-        return new ResponseEntity<String>("user_registered",HttpStatus.CREATED);
-
+        return false;
     }
 
-    public ResponseEntity<User> getUserByEmail(String email) {
-        Iterable<User> allUsers = userRepository.findAll();
-        ArrayList<User> allUsersList = new ArrayList<User>();
-        allUsers.forEach(allUsersList::add);
-        for(User user1 : allUsersList) {
-            if(user1.getEmail().equals(email)){
-                if(user1.isVerified()) {
-                    return new ResponseEntity<User>(user1,HttpStatus.OK);
-                }
-                else{
-                    return new ResponseEntity<User>((User) null,HttpStatus.NOT_FOUND);
-                }
+    public User getUserByEmail(String email) {
+        User foundUser = userRepository.findByEmail(email);
+        if(foundUser != null) {
+            if (foundUser.isVerified()) {
+                return foundUser;
+            } else {
+                return null;
             }
         }
-        return new ResponseEntity<User>((User)null,HttpStatus.NOT_FOUND);
+        else {
+            return null;
+        }
     }
 
-    public ResponseEntity<Boolean> changeUser(User user) {
+    public Boolean changeUser(User user) {
        if (userRepository.findById(user.getId()).get().getPassword().equals(user.getPassword())){
            userRepository.save(user);
-           return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+           return true;
         }
         else {
-            return new ResponseEntity<Boolean>(false, HttpStatus.NOT_ACCEPTABLE);
+            return false;
         }
     }
 
-    public ResponseEntity<Boolean> changePasswordUser(List<User> users) {
+    public Boolean changePasswordUser(List<User> users) {
         if (userRepository.findById(users.get(0).getId()).get().getPassword().equals(users.get(1).getPassword())){
             userRepository.save(users.get(0));
-            return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+            return true;
         }
         else {
-            return new ResponseEntity<Boolean>(false, HttpStatus.NOT_ACCEPTABLE);
+            return false;
         }
     }
 
