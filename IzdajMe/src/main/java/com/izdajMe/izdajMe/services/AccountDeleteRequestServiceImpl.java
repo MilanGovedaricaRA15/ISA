@@ -18,19 +18,13 @@ public class AccountDeleteRequestServiceImpl implements AccountDeleteRequestServ
     private AccountDeleteRequestRepository accountDeleteRequestRepository;
 
     public Boolean addAccountDeleteRequest(AccountDeleteRequest accountDeleteRequest){
-        List<AccountDeleteRequest> allUserAccountDeleteRequestList = accountDeleteRequestRepository.findAllByUserId(accountDeleteRequest.getUser().getId());
-        boolean postoji = false;
-        for(AccountDeleteRequest request : allUserAccountDeleteRequestList){
-                if(!request.isSeen()){
-                    postoji = true;
-                }
-        }
-        if(!postoji){
-            accountDeleteRequestRepository.save(accountDeleteRequest);
-            return true;
+        List<AccountDeleteRequest> allNotSeenUserAccountDeleteRequestList = accountDeleteRequestRepository.findAllNotSeenByUserId(accountDeleteRequest.getUser().getId());
+        if(allNotSeenUserAccountDeleteRequestList.size() != 0){
+            return false;
         }
         else {
-            return false;
+            accountDeleteRequestRepository.save(accountDeleteRequest);
+            return true;
         }
     }
 }

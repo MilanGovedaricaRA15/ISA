@@ -12,4 +12,7 @@ import java.util.List;
 public interface AccountDeleteRequestRepository extends JpaRepository<AccountDeleteRequest, Long> {
     @Query("Select a from AccountDeleteRequest a where a.user.id=?1")
     public List<AccountDeleteRequest> findAllByUserId(Long id);
+
+    @Query("Select a from AccountDeleteRequest a where a.user.id=?1 and a.seen = false")
+    public List<AccountDeleteRequest> findAllNotSeenByUserId(Long id);
 }

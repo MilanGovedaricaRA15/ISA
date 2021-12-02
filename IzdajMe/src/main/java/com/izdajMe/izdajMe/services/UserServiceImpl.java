@@ -18,14 +18,9 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     public Boolean loginUser(User user) {
-        User foundUser = userRepository.findByEmailAndPassword(user.getEmail(),user.getPassword());
+        User foundUser = userRepository.findByEmailAndPasswordVerified(user.getEmail(),user.getPassword());
         if (foundUser != null){
-            if(foundUser.isVerified()) {
-                return true;
-            }
-            else {
-                return false;
-            }
+            return true;
         }
         else{
             return false;
@@ -45,13 +40,9 @@ public class UserServiceImpl implements UserService {
     }
 
     public User getUserByEmail(String email) {
-        User foundUser = userRepository.findByEmail(email);
+        User foundUser = userRepository.findByEmailVerified(email);
         if(foundUser != null) {
-            if (foundUser.isVerified()) {
-                return foundUser;
-            } else {
-                return null;
-            }
+            return foundUser;
         }
         else {
             return null;
@@ -59,7 +50,8 @@ public class UserServiceImpl implements UserService {
     }
 
     public Boolean changeUser(User user) {
-       if (userRepository.findById(user.getId()).get().getPassword().equals(user.getPassword())){
+        User foundUser = userRepository.findByIdAndPassword(user.getId(),user.getPassword());
+       if (foundUser != null){
            userRepository.save(user);
            return true;
         }
@@ -69,7 +61,8 @@ public class UserServiceImpl implements UserService {
     }
 
     public Boolean changePasswordUser(List<User> users) {
-        if (userRepository.findById(users.get(0).getId()).get().getPassword().equals(users.get(1).getPassword())){
+        User foundUser = userRepository.findByIdAndPassword(users.get(0).getId(),users.get(1).getPassword());
+        if (foundUser != null){
             userRepository.save(users.get(0));
             return true;
         }
