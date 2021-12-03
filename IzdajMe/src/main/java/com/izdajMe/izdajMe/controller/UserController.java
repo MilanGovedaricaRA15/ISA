@@ -1,5 +1,6 @@
 package com.izdajMe.izdajMe.controller;
 
+import com.izdajMe.izdajMe.dto.UserDTO;
 import com.izdajMe.izdajMe.model.User;
 import com.izdajMe.izdajMe.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,13 +60,13 @@ public class UserController {
     }
 
     @GetMapping("/users/getUserByEmail")
-    public ResponseEntity<User> getUserByEmail(@RequestParam("email") String email) {
+    public ResponseEntity<UserDTO> getUserByEmail(@RequestParam("email") String email) {
         User user = userService.getUserByEmail(email);
         if(user != null){
-           return new ResponseEntity<User>(user, HttpStatus.OK);
+           return new ResponseEntity<UserDTO>(new UserDTO(user), HttpStatus.OK);
         }
         else{
-            return new ResponseEntity<User>((User) null, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<UserDTO>((UserDTO) null, HttpStatus.NOT_FOUND);
         }
     }
 

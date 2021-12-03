@@ -89,27 +89,9 @@ public class CottageServiceImpl implements CottageService {
         }
     }
 
-    public Boolean addHotOfferToCottage(Cottage cottage){
-        List<HotOffer> hotOffers = cottage.getHotOffers();
-        Cottage cottage1 = cottageRepository.findById(cottage.getId()).get();
-        HotOffer addedHotOffer = new HotOffer();
-        boolean postoji = false;
-        for (HotOffer offer : hotOffers){
-            postoji = false;
-            for(HotOffer offer1 : cottage1.getHotOffers()){
-                if (offer1.getId() == offer.getId()){
-                    postoji = true;
-                    break;
-                }
-            }
-            if(!postoji){
-                addedHotOffer = offer;
-                break;
-            }
-        }
-
+    public Boolean canAddHotOffer(List<HotOffer> hotOffers,HotOffer addedHotOffer, List<CottageReservation> cottageReservations){
         boolean slobodno = true;
-        for(HotOffer hotOffer1 : cottage1.getHotOffers()) {
+        for(HotOffer hotOffer1 : hotOffers) {
             if(addedHotOffer.getAvailableFrom().isBefore(hotOffer1.getAvailableFrom()) && addedHotOffer.getAvailableTill().isAfter(hotOffer1.getAvailableFrom())){
                 slobodno = false;
                 break;
@@ -133,6 +115,53 @@ public class CottageServiceImpl implements CottageService {
         if(addedHotOffer.getAvailableFrom().isAfter(addedHotOffer.getAvailableTill())){
             slobodno = false;
         }
+
+        for(CottageReservation cottageReservation : cottageReservations) {
+            if(addedHotOffer.getAvailableFrom().isBefore(cottageReservation.getAvailableFrom()) && addedHotOffer.getAvailableTill().isAfter(cottageReservation.getAvailableFrom())){
+                slobodno = false;
+                break;
+            }
+            if(addedHotOffer.getAvailableFrom().isBefore(cottageReservation.getAvailableTill()) && addedHotOffer.getAvailableTill().isAfter(cottageReservation.getAvailableTill())){
+                slobodno = false;
+                break;
+            }
+            if(cottageReservation.getAvailableFrom().isBefore(addedHotOffer.getAvailableFrom()) && cottageReservation.getAvailableTill().isAfter(addedHotOffer.getAvailableTill())){
+                slobodno = false;
+                break;
+            }
+            if(cottageReservation.getAvailableFrom().isEqual(addedHotOffer.getAvailableFrom()) || cottageReservation.getAvailableTill().isEqual(addedHotOffer.getAvailableTill()) || cottageReservation.getAvailableTill().isEqual(addedHotOffer.getAvailableFrom()) || cottageReservation.getAvailableFrom().isEqual(addedHotOffer.getAvailableTill())){
+                slobodno = false;
+                break;
+            }
+        }
+
+
+        return slobodno;
+    }
+
+    public Boolean addHotOfferToCottage(Cottage cottage){
+        List<HotOffer> hotOffers = cottage.getHotOffers();
+        Cottage cottage1 = cottageRepository.findById(cottage.getId()).get();
+        List<HotOffer> hotOffersWithout = cottage1.getHotOffers();
+        List<CottageReservation> allThisCottageReservations = cottageReservationRepository.findAllByCottageId(cottage.getId());
+
+        HotOffer addedHotOffer = new HotOffer();
+        boolean postoji = false;
+        for (HotOffer offer : hotOffers){
+            postoji = false;
+            for(HotOffer offer1 : cottage1.getHotOffers()){
+                if (offer1.getId() == offer.getId()){
+                    postoji = true;
+                    break;
+                }
+            }
+            if(!postoji){
+                addedHotOffer = offer;
+                break;
+            }
+        }
+        boolean slobodno = canAddHotOffer(hotOffersWithout,addedHotOffer,allThisCottageReservations);
+
         if(slobodno){
             cottageRepository.save(cottage);
         }

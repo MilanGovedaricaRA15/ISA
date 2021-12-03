@@ -23,10 +23,10 @@ insert into cottages (id, address, available_from, available_till, description, 
 values (2, 'Desivoje 2',DATE('2021-08-22'),DATE('2021-10-01'),'Blizu jezera',null, 'Popici', 3, 3, 'Nisu dozvoljene zivotinje', null, 1, 30);
 
 insert into hot_offers (id, available_from, available_till, cost, free, num_of_people, services)
-values (1,DATE('2021-12-01'),DATE('2021-12-15'),50,TRUE,3,null);
+values (1,DATE('2021-11-20'),DATE('2021-11-25'),50,TRUE,3,null);
 insert into cottages_hot_offers(cottage_id,hot_offers_id) values (1,1);
 insert into hot_offers (id, available_from, available_till, cost, free, num_of_people, services)
-values (2,DATE('2021-12-15'),DATE('2021-12-20'),28,TRUE,4,null);
+values (2,DATE('2021-12-16'),DATE('2021-12-19'),28,TRUE,4,null);
 insert into cottages_hot_offers(cottage_id,hot_offers_id) values (1,2);
 
 
@@ -39,4 +39,4 @@ values (2,DATE('2021-12-24'),DATE('2022-01-04'),150,3,1, null);
 insert into cottage_reservations (id, available_from, available_till, cost, client_id, cottage_id, services)
 values (3,DATE('2022-01-04'),DATE('2022-01-23'),500,2,1, null);
 insert into cottage_reservations (id, available_from, available_till, cost, client_id, cottage_id, services)
-values (4,DATE('2021-11-29'),DATE('2021-12-19'),500,2,1, null);
+values (4,DATE('2021-12-03'),DATE('2021-12-15'),500,2,1, null);

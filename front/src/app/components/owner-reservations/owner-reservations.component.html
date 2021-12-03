@@ -82,7 +82,7 @@
                                 <td>
                                     <button [disabled]="addReservationForm.invalid" class="btn btn-primary btn-md mr-1 mb-2">Add</button>
                                     <div *ngIf="isReserved">
-                                        <span class="error">Reservation already exists</span>
+                                        <span class="error">Term is busy</span>
                                     </div>
                                     <div *ngIf="pickedUserError">
                                         <span class="error">Pick a user</span>

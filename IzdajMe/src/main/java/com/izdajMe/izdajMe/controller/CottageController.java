@@ -1,5 +1,6 @@
 package com.izdajMe.izdajMe.controller;
 
+import com.izdajMe.izdajMe.dto.CottageDTO;
 import com.izdajMe.izdajMe.model.Cottage;
 import com.izdajMe.izdajMe.model.User;
 import com.izdajMe.izdajMe.services.CottageService;
@@ -29,19 +30,23 @@ public class CottageController {
     }
 
     @GetMapping("/cottages/getCottageById")
-    public ResponseEntity<Cottage> getCottageById(@RequestParam("cottage") Long id) {
+    public ResponseEntity<CottageDTO> getCottageById(@RequestParam("cottage") Long id) {
         Cottage cottage = cottageService.getCottageById(id);
         if (cottage != null) {
-            return new ResponseEntity<Cottage>(cottage, HttpStatus.OK);
+            return new ResponseEntity<CottageDTO>(new CottageDTO(cottage), HttpStatus.OK);
         }
         else {
-            return new ResponseEntity<Cottage>(cottage, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<CottageDTO>(new CottageDTO(cottage), HttpStatus.NOT_FOUND);
         }
     }
 
     @GetMapping("/cottages/getAllCottages")
-    public ResponseEntity<List<Cottage>> getAllCottages(){
-        return new ResponseEntity<List<Cottage>>(cottageService.getAllCottages(),HttpStatus.OK);
+    public ResponseEntity<List<CottageDTO>> getAllCottages(){
+        List<CottageDTO> list = new ArrayList<CottageDTO>();
+        for(Cottage c : cottageService.getAllCottages()){
+            list.add(new CottageDTO(c));
+        }
+        return new ResponseEntity<List<CottageDTO>>(list,HttpStatus.OK);
     }
     @PutMapping("/cottages/removeCottageImg")
     public ResponseEntity<Void> removeCottageImg(@RequestBody Cottage cottage){
@@ -72,8 +77,8 @@ public class CottageController {
     }
 
     @PostMapping("/cottages/addCottage")
-    public ResponseEntity<Cottage> addCottage(@RequestBody Cottage cottage){
-        return new ResponseEntity<Cottage>(cottageService.addCottage(cottage),HttpStatus.OK);
+    public ResponseEntity<CottageDTO> addCottage(@RequestBody Cottage cottage){
+        return new ResponseEntity<CottageDTO>(new CottageDTO(cottageService.addCottage(cottage)),HttpStatus.OK);
     }
 
     @PutMapping("/cottages/changeCottage")

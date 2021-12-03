@@ -2,6 +2,7 @@ package com.izdajMe.izdajMe.services;
 
 import com.izdajMe.izdajMe.model.Cottage;
 import com.izdajMe.izdajMe.model.CottageReservation;
+import com.izdajMe.izdajMe.model.HotOffer;
 import com.izdajMe.izdajMe.model.User;
 import com.izdajMe.izdajMe.repository.CottageRepository;
 import com.izdajMe.izdajMe.repository.CottageReservationRepository;
@@ -44,10 +45,7 @@ public class CottageReservationServiceImpl implements CottageReservationService{
         return allOwnerCottageReservations;
     }
 
-    public Boolean addReservationByOwner(CottageReservation cottageReservation){
-
-        List<CottageReservation> allThisCottageReservations = cottageReservationRepository.findAllByCottageId(cottageReservation.getCottage().getId());
-
+    public Boolean canAddReservation(List<CottageReservation> allThisCottageReservations, CottageReservation cottageReservation, List<HotOffer> hotOffers){
         boolean slobodno = true;
         for(CottageReservation cottageReservation1 : allThisCottageReservations) {
             if(cottageReservation.getAvailableFrom().isBefore(cottageReservation1.getAvailableFrom()) && cottageReservation.getAvailableTill().isAfter(cottageReservation1.getAvailableFrom())){
@@ -70,10 +68,39 @@ public class CottageReservationServiceImpl implements CottageReservationService{
         if(cottageReservation.getAvailableFrom().equals(cottageReservation.getAvailableTill())){
             slobodno = false;
         }
-        if(cottageReservation.getAvailableFrom().isAfter(cottageReservation.getAvailableTill())){
+        if(cottageReservation.getAvailableFrom().isAfter(cottageReservation.getAvailableTill())) {
             slobodno = false;
         }
 
+        for(HotOffer hotOffer : hotOffers) {
+            if(cottageReservation.getAvailableFrom().isBefore(hotOffer.getAvailableFrom()) && cottageReservation.getAvailableTill().isAfter(hotOffer.getAvailableFrom())){
+                slobodno = false;
+                break;
+            }
+            if(cottageReservation.getAvailableFrom().isBefore(hotOffer.getAvailableTill()) && cottageReservation.getAvailableTill().isAfter(hotOffer.getAvailableTill())){
+                slobodno = false;
+                break;
+            }
+            if(hotOffer.getAvailableFrom().isBefore(cottageReservation.getAvailableFrom()) && hotOffer.getAvailableTill().isAfter(cottageReservation.getAvailableTill())){
+                slobodno = false;
+                break;
+            }
+            if(hotOffer.getAvailableFrom().isEqual(cottageReservation.getAvailableFrom()) || hotOffer.getAvailableTill().isEqual(cottageReservation.getAvailableTill()) || hotOffer.getAvailableTill().isEqual(cottageReservation.getAvailableFrom()) || hotOffer.getAvailableFrom().isEqual(cottageReservation.getAvailableTill())){
+                slobodno = false;
+                break;
+            }
+        }
+
+        return  slobodno;
+    }
+
+    public Boolean addReservationByOwner(CottageReservation cottageReservation){
+
+        List<CottageReservation> allThisCottageReservations = cottageReservationRepository.findAllByCottageId(cottageReservation.getCottage().getId());
+        Cottage thisCottage = cottageRepository.getById(cottageReservation.getCottage().getId());
+        List<HotOffer> allThisCottageHotOffers = thisCottage.getHotOffers();
+
+        boolean slobodno = canAddReservation(allThisCottageReservations, cottageReservation, allThisCottageHotOffers);
         if(slobodno) {
             cottageReservationRepository.save(cottageReservation);
             sendNotificationForReservation(cottageReservation);
