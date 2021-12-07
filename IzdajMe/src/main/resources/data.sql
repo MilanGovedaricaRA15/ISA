@@ -3,7 +3,8 @@ delete from cottage_reservations where id!=0;
 delete from cottages_hot_offers where cottage_id!=0;
 delete from hot_offers where id!=0;
 delete from cottages where id!=0;
-
+delete from spring_session where primary_id!='0';
+delete from spring_session_attributes where session_primary_id!='0';
 
 delete from users where id!=0;
 

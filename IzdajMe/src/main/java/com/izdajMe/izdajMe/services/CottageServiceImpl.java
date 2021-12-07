@@ -79,8 +79,27 @@ public class CottageServiceImpl implements CottageService {
         }
     }
 
+    public Boolean checkIsReserved(Cottage cottage){
+        if(!isReserved(cottage.getId())) {
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
     public Boolean changeCottage(Cottage cottage){
         if(!isReserved(cottage.getId())) {
+            cottageRepository.save(cottage);
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public Boolean removeHotOffer(Cottage cottage){
+        if(cottageRepository.existsById(cottage.getId())) {
             cottageRepository.save(cottage);
             return true;
         }

@@ -24,7 +24,7 @@ export class CottageReservationService {
     headers.append('Content-Type', 'application/json');
     let params = new HttpParams().set("id",cottage.id);
   
-    return this.http.get<Array<CottageReservation>>(this.getAllReservationsOfCottageUrl, {headers: headers,params: params});
+    return this.http.get<Array<CottageReservation>>(this.getAllReservationsOfCottageUrl, {headers: headers,params: params,withCredentials: true});
   }
 
   public getAllReservationsOfOwner(): Observable<Array<CottageReservation>> {
@@ -33,10 +33,10 @@ export class CottageReservationService {
     headers.append('Content-Type', 'application/json');
     let params = new HttpParams().set("email",user);
   
-    return this.http.get<Array<CottageReservation>>(this.getAllReservationsOfOwnerUrl, {headers: headers,params: params});
+    return this.http.get<Array<CottageReservation>>(this.getAllReservationsOfOwnerUrl, {headers: headers,params: params,withCredentials: true});
   }
   public addReservationByOwner(cottageReservation: CottageReservation):Observable<boolean>{
-    return this.http.post<boolean>(this.addReservationByOwnerUrl,cottageReservation);
+    return this.http.post<boolean>(this.addReservationByOwnerUrl,cottageReservation,{withCredentials: true});
   }
 
 }

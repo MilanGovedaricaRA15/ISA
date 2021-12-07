@@ -24,15 +24,15 @@ export class UserService {
   }
 
   public register(user: User): Observable<string> {
-    return this.http.post<string>(this.usersUrlRegister, user,{responseType: 'text' as 'json'});
+    return this.http.post<string>(this.usersUrlRegister, user,{responseType: 'text' as 'json',withCredentials: true});
   }
 
   public login(user: User): Observable<string> {
-    return this.http.post<string>(this.usersUrlLogin, user,{responseType: 'text' as 'json'});
+    return this.http.post<string>(this.usersUrlLogin, user,{responseType: 'text' as 'json',withCredentials: true});
   }
 
   public change(user: User): Observable<boolean> {
-    return this.http.put<boolean>(this.usersUrlChangeUser, user);
+    return this.http.put<boolean>(this.usersUrlChangeUser, user,{withCredentials: true});
   }
 
   
@@ -43,7 +43,7 @@ export class UserService {
     let user1 = JSON.parse(JSON.stringify(user));
     user1.password = password;
     users.push(user1)
-    return this.http.put<boolean>(this.usersUrlChangePasswordUser, users);
+    return this.http.put<boolean>(this.usersUrlChangePasswordUser, users,{withCredentials: true});
   }
   
 
@@ -55,14 +55,14 @@ export class UserService {
     let headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json');
     let params = new HttpParams().set("email",email);
-    return this.http.get<User>(this.usersUrlGetUserByEmail, {headers: headers, params: params});
+    return this.http.get<User>(this.usersUrlGetUserByEmail, {headers: headers, params: params,withCredentials: true});
   }
  public getLoggedUser(): Observable<User> {
     let user = sessionStorage.getItem('email');
     let headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json');
     let params = new HttpParams().set("email",user);
-    return this.http.get<User>(this.usersUrlGetLoggedUser, {headers: headers, params: params});
+    return this.http.get<User>(this.usersUrlGetLoggedUser, {headers: headers, params: params,withCredentials: true});
   }
  public isBoatAdvertiserLoggedIn(): Observable<boolean> {
       return this.getLoggedUser().pipe(map(res => {

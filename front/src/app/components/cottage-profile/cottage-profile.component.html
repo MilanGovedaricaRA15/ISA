@@ -32,13 +32,23 @@
             <div>
               <input type="file" 
               (change)="onChange($event)">
+              <div>
               <button (click)="saveImg()" type="button" class="btn btn-primary btn-md mr-1 mb-2">Add picture</button>
+              <div *ngIf="cantAdd">
+                <span class="error">Cottage is reserved</span>
+              </div>
+              </div>
               <div style="color:red;" *ngIf="invalidFile">
                 Upload jpg file
 
               </div>
             </div>
+            <div>
             <button (click)="removeImg()" type="button" class="btn btn-primary btn-md mr-1 mb-2">Remove picture</button>
+            <div *ngIf="cantRemove">
+              <span class="error">Cottage is reserved</span>
+            </div>
+            </div>
             </div>
           </div>
   
@@ -123,6 +133,9 @@
         <div class="d-flex justify-content-center">
           
           <button [disabled]="changeForm.invalid" class="btn btn-primary btn-md mr-1 mb-2">Change</button>
+          <div *ngIf="cantChange">
+            <span class="error">Cottage is reserved</span>
+          </div>
           
         </div>
         

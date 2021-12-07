@@ -104,7 +104,7 @@ export class HotOfferComponent implements OnInit {
       }
     }
     
-    this.cottageService.changeCottage(this.cottageForApp).subscribe(() => {
+    this.cottageService.removeHotOffer(this.cottageForApp).subscribe(() => {
       
       });
     

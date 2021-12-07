@@ -14,7 +14,7 @@ export class AccountDeleteRequestService {
   }
 
   public addAccountDeleteRequest(accountDeleteRequest: AccountDeleteRequest):Observable<boolean>{
-    return this.http.post<boolean>(this.addAccountDeleteRequestUrl,accountDeleteRequest);
+    return this.http.post<boolean>(this.addAccountDeleteRequestUrl,accountDeleteRequest,{withCredentials: true});
   }
 
 

@@ -13,10 +13,12 @@ export class CottageService {
   private removeCottageImgUrl: string;
   private getAllCottagesOfOwnerUrl: string;
   private changeCottageUrl: string;
+  private removeHotOfferUrl: string;
   private uploadImgUrl: string;
   private removeCottageUrl: string;
   private addCottageUrl: string;
   private addHotOfferToCottageUrl: string;
+  private checkIsReservedUrl: string;
 
   
 
@@ -30,17 +32,19 @@ export class CottageService {
     this.getCottageByIdUrl = 'http://localhost:8080/cottages/getCottageById';
     this.addCottageUrl = 'http://localhost:8080/cottages/addCottage';
     this.addHotOfferToCottageUrl = 'http://localhost:8080/cottages/addHotOfferToCottage';
+    this.removeHotOfferUrl = 'http://localhost:8080/cottages/removeHotOffer';
+    this.checkIsReservedUrl = 'http://localhost:8080/cottages/checkIsReserved';
   }
 
   public getAllCottages(): Observable<Array<Cottage>> {
     let headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json');
   
-    return this.http.get<Array<Cottage>>(this.getAllCottagesUrl, {headers: headers});
+    return this.http.get<Array<Cottage>>(this.getAllCottagesUrl, {headers: headers,withCredentials: true});
   }
 
   public addCottage(cottage: Cottage):Observable<Cottage>{
-    return this.http.post<Cottage>(this.addCottageUrl,cottage);
+    return this.http.post<Cottage>(this.addCottageUrl,cottage,{withCredentials: true});
   }
 
   public upload(file:File):Observable<boolean> {
@@ -48,7 +52,7 @@ export class CottageService {
 
      formData.append('file', file);
 
-    return this.http.post<boolean>(this.uploadImgUrl, formData);
+    return this.http.post<boolean>(this.uploadImgUrl, formData,{withCredentials: true});
     } 
 
   public getAllCottagesOfOwner(): Observable<Array<Cottage>> {
@@ -57,7 +61,7 @@ export class CottageService {
     headers.append('Content-Type', 'application/json');
     let params = new HttpParams().set("email",user);
   
-    return this.http.get<Array<Cottage>>(this.getAllCottagesOfOwnerUrl, {headers: headers,params: params});
+    return this.http.get<Array<Cottage>>(this.getAllCottagesOfOwnerUrl, {headers: headers,params: params,withCredentials: true});
   }
 
   
@@ -68,24 +72,30 @@ export class CottageService {
     headers.append('Content-Type', 'application/json');
     let params = new HttpParams().set("cottage",cottage);
   
-    return this.http.get<Cottage>(this.getCottageByIdUrl, {headers: headers,params: params});
+    return this.http.get<Cottage>(this.getCottageByIdUrl, {headers: headers,params: params,withCredentials: true});
   }
   
   public removeCottageImg(cottageToRemove:Cottage ): Observable<any>{
-    return this.http.put(this.removeCottageImgUrl,cottageToRemove);
+    return this.http.put(this.removeCottageImgUrl,cottageToRemove,{withCredentials: true});
   }
 
   public removeCottage(cottageToRemove:number ): Observable<any>{
-    return this.http.post(this.removeCottageUrl,cottageToRemove);
+    return this.http.post(this.removeCottageUrl,cottageToRemove,{withCredentials: true});
   }
 
-  public changeCottage(cottageToChange:Cottage): Observable<any>{
-   return this.http.put(this.changeCottageUrl,cottageToChange);
+  public changeCottage(cottageToChange:Cottage): Observable<Boolean>{
+   return this.http.put<Boolean>(this.changeCottageUrl,cottageToChange,{withCredentials: true});
   }
 
-  public addHotOfferToCottage(cottageToChange:Cottage): Observable<boolean>{
-    return this.http.put<boolean>(this.addHotOfferToCottageUrl,cottageToChange);
+  public removeHotOffer(cottageToChange:Cottage): Observable<Boolean>{
+    return this.http.put<Boolean>(this.removeHotOfferUrl,cottageToChange,{withCredentials: true});
    }
 
+  public addHotOfferToCottage(cottageToChange:Cottage): Observable<boolean>{
+    return this.http.put<boolean>(this.addHotOfferToCottageUrl,cottageToChange,{withCredentials: true});
+   }
+  public checkIsReserved(cottageToChange:Cottage): Observable<boolean>{
+    return this.http.post<boolean>(this.checkIsReservedUrl,cottageToChange,{withCredentials: true});
+   }
 
 }

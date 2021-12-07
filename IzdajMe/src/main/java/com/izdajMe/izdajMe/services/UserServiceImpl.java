@@ -19,6 +19,7 @@ public class UserServiceImpl implements UserService {
 
     public Boolean loginUser(User user) {
         User foundUser = userRepository.findByEmailAndPasswordVerified(user.getEmail(),user.getPassword());
+
         if (foundUser != null){
             return true;
         }
