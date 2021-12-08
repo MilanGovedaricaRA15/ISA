@@ -191,4 +191,9 @@ public class CottageController {
             return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
         }
     }
+
+    @GetMapping("/cottages/searchCottagesByName")
+    public ResponseEntity<List<Cottage>> searchCottagesByName(@RequestParam("name") String name) {
+        return new ResponseEntity<List<Cottage>>(cottageService.searchCottagesByName(name), HttpStatus.OK);
+    }
 }

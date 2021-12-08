@@ -19,8 +19,7 @@ export class CottageService {
   private addCottageUrl: string;
   private addHotOfferToCottageUrl: string;
   private checkIsReservedUrl: string;
-
-  
+  private searchCottagesByNameUrl: string;
 
   constructor(private http: HttpClient) { 
     this.getAllCottagesUrl="http://localhost:8080/cottages/getAllCottages";
@@ -34,6 +33,7 @@ export class CottageService {
     this.addHotOfferToCottageUrl = 'http://localhost:8080/cottages/addHotOfferToCottage';
     this.removeHotOfferUrl = 'http://localhost:8080/cottages/removeHotOffer';
     this.checkIsReservedUrl = 'http://localhost:8080/cottages/checkIsReserved';
+    this.searchCottagesByNameUrl = 'http://localhost:8080/cottages/searchCottagesByName';
   }
 
   public getAllCottages(): Observable<Array<Cottage>> {
@@ -97,5 +97,14 @@ export class CottageService {
   public checkIsReserved(cottageToChange:Cottage): Observable<boolean>{
     return this.http.post<boolean>(this.checkIsReservedUrl,cottageToChange,{withCredentials: true});
    }
+
+   public searchCottagesByName(name: string): Observable<Array<Cottage>> {
+    let cottage = name;
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+    let params = new HttpParams().set("name", cottage);
+  
+    return this.http.get<Array<Cottage>>(this.searchCottagesByNameUrl, {headers: headers, params: params});
+  }
 
 }
