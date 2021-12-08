@@ -84,6 +84,9 @@
                                     <div *ngIf="isReserved">
                                         <span class="error">Term is busy</span>
                                     </div>
+                                    <div *ngIf="doesntHaveAllServices">
+                                        <span class="error">Cottage doesn't provide selected services</span>
+                                    </div>
                                     <div *ngIf="pickedUserError">
                                         <span class="error">Pick a user</span>
                                     </div>

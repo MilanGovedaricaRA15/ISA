@@ -24,8 +24,10 @@ export class OwnerReservationsComponent implements OnInit {
   pickedUser:boolean;
   pickedUserError:boolean;
   isReserved: boolean;
+  doesntHaveAllServices: boolean;
 
   ngOnInit(): void {
+    this.doesntHaveAllServices = false;
     this.cottageReservationsService.getAllReservationsOfOwner().subscribe(ret => {
       this.ownerReservations = ret;
       this.newReservation = new CottageReservation();
@@ -78,21 +80,35 @@ export class OwnerReservationsComponent implements OnInit {
     }
     else {
       if(this.pickedUser){
+          this.doesntHaveAllServices = false;
+          if (this.newReservation.cottage.services == null){
+            if(this.newReservation.services.length != 0){
+              this.doesntHaveAllServices = true;
+            }
+          }
+          else{
+            for(let ser of this.newReservation.cottage.services){
+              if(!this.newReservation.services.includes(ser)){
+                this.doesntHaveAllServices = true;
+              }
+            }
+          }
+          if(!this.doesntHaveAllServices){
           this.pickedUserError = false;
           this.availableTillError = false;
-          
-        
-          this.cottageReservationsService.addReservationByOwner(this.newReservation).subscribe(ret => {
-            if(ret){
-              this.ownerReservations.push(JSON.parse(JSON.stringify(this.newReservation)));
-              this.isReserved = false;
-            }
-            else{
-              this.isReserved = true;
-            }
-            });
-          } 
-        else {
+              this.cottageReservationsService.addReservationByOwner(this.newReservation).subscribe(ret => {
+                if(ret){
+                  this.ownerReservations.push(JSON.parse(JSON.stringify(this.newReservation)));
+                  this.isReserved = false;
+                }
+                else{
+                  this.isReserved = true;
+                }
+                });
+              } 
+            
+           }
+      else {
             this.pickedUserError = true;
         }
       }
