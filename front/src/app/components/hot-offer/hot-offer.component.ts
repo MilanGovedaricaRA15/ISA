@@ -25,6 +25,7 @@ export class HotOfferComponent implements OnInit {
   alreadyExistsHotOffer:boolean;
 
   ngOnInit(): void {
+    this.services = this.cottageForApp.services;
     this.newHotOffer = new HotOffer();
     this.availableTillError = false;
     this.alreadyExistsHotOffer = false;

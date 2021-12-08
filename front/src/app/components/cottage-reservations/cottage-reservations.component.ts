@@ -27,6 +27,7 @@ export class CottageReservationsComponent implements OnInit {
   ngOnInit(): void {
     if(this?.cottageForApp != null){
       this.cottageReservationService.getAllReservationsOfCottage(this.cottageForApp).subscribe(ret => {
+        this.services = this.cottageForApp.services;
         this.cottageReservations = ret;
         this.newReservation1 = new CottageReservation();
         this.availableTillError = false;
