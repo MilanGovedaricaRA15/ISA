@@ -90,6 +90,21 @@
         </div>
       </div>
       </div></div>
+
+      <p class="mb-2 text-muted text-uppercase small">Services price</p>
+        <div class="container"><div class="row align-items-start align-items-center"> <ul class='col'>
+          <li *ngFor="let item of servicesClass">
+            {{item.service}}
+          </li>
+        </ul>
+        <div class="col">
+          <div class="row">
+            <div *ngFor="let item of servicesClass" class="col">
+              <input  class="form-controll"  [value]="item.cost" [id]="item.service.toString()+'serviceKlasa'">
+            </div>
+        </div>
+      </div>
+      </div></div>
         
         <p class="mb-2 text-muted text-uppercase small">Cost per night</p>
         <div class="container"><div class="row align-items-start align-items-center"><p class="col"><span class="mr-1"><strong>{{cottageChange?.costPerNight}}</strong></span></p><div class="col"><input [(ngModel)]="cottage.costPerNight" formControlName="costPerNight" class="form-control" type="number"/>

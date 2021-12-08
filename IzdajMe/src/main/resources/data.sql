@@ -1,12 +1,15 @@
 delete from account_delete_requests where id!=0;
 delete from cottage_reservations where id!=0;
 delete from cottages_hot_offers where cottage_id!=0;
+delete from cottages_price_list where cottage_id!=0;
 delete from hot_offers where id!=0;
+delete from service_price where id!=0;
 delete from cottages where id!=0;
 delete from spring_session where primary_id!='0';
 delete from spring_session_attributes where session_primary_id!='0';
 delete from ships where id != 0;
 delete from users where id!=0;
+
 
 insert into users (id, address, city, country, email,first_name,last_name,mobile_number,password,reason,role,verified)
 values (1, 'Ilije 1', 'Beograd', 'Srbija', 'rajkorajkoza@gmail.com', 'Milan', 'Govedarica', 123123123, 'aaaa', 'Izdaja vikendice', 0, TRUE);
@@ -47,6 +50,34 @@ insert into hot_offers (id, available_from, available_till, cost, free, num_of_p
 values (2,DATE('2021-12-16'),DATE('2021-12-19'),28,TRUE,4,null);
 insert into cottages_hot_offers(cottage_id,hot_offers_id) values (1,2);
 
+insert into service_price (id, cost, service)
+values(1,100,0);
+insert into service_price (id, cost, service)
+values(2,150,1);
+insert into service_price (id, cost, service)
+values(3,200,2);
+
+insert into service_price (id, cost, service)
+values(4,60,0);
+insert into service_price (id, cost, service)
+values(5,120,1);
+insert into service_price (id, cost, service)
+values(6,140,2);
+
+insert into cottages_price_list (cottage_id,price_list_id)
+values(1,1);
+insert into cottages_price_list (cottage_id,price_list_id)
+values(1,2);
+insert into cottages_price_list (cottage_id,price_list_id)
+values(1,3);
+
+insert into cottages_price_list (cottage_id,price_list_id)
+values(2,4);
+insert into cottages_price_list (cottage_id,price_list_id)
+values(2,5);
+insert into cottages_price_list (cottage_id,price_list_id)
+values(2,6);
+
 
 insert into cottage_reservations (id, available_from, available_till, cost, client_id, cottage_id, services)
 values (1,DATE('2021-12-20'),DATE('2021-12-23'),233,2,1, null);
@@ -58,3 +89,4 @@ insert into cottage_reservations (id, available_from, available_till, cost, clie
 values (3,DATE('2022-01-04'),DATE('2022-01-23'),500,2,1, null);
 insert into cottage_reservations (id, available_from, available_till, cost, client_id, cottage_id, services)
 values (4,DATE('2021-12-03'),DATE('2021-12-15'),500,2,1, null);
+

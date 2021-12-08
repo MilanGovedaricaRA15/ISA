@@ -26,9 +26,11 @@ public class Cottage {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
     private List<HotOffer> hotOffers;
     private float costPerNight;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
+    private List<ServicePrice> priceList;
 
 
-    public Cottage(long id,User owner, String name, String address, String description, ArrayList<String> images, int numOfRooms, int numOfBeds, String rules, ArrayList<Services> services, LocalDateTime availableFrom, LocalDateTime availableTill, List<HotOffer> hotOffers, float costPerNight) {
+    public Cottage(long id,User owner, String name, String address, String description, ArrayList<String> images, int numOfRooms, int numOfBeds, String rules, ArrayList<Services> services, LocalDateTime availableFrom, LocalDateTime availableTill, List<HotOffer> hotOffers, float costPerNight, List<ServicePrice> priceList) {
         this.id = id;
         this.owner = owner;
         this.name = name;
@@ -43,6 +45,7 @@ public class Cottage {
         this.availableTill = availableTill;
         this.hotOffers = hotOffers;
         this.costPerNight = costPerNight;
+        this.priceList = priceList;
     }
 
     public Cottage(){}
@@ -157,6 +160,14 @@ public class Cottage {
 
     public void setCostPerNight(float costPerNight) {
         this.costPerNight = costPerNight;
+    }
+
+    public List<ServicePrice> getPriceList() {
+        return priceList;
+    }
+
+    public void setPriceList(List<ServicePrice> priceList) {
+        this.priceList = priceList;
     }
 
     public enum Services {

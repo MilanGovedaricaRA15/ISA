@@ -2,6 +2,7 @@ package com.izdajMe.izdajMe.dto;
 
 import com.izdajMe.izdajMe.model.Cottage;
 import com.izdajMe.izdajMe.model.HotOffer;
+import com.izdajMe.izdajMe.model.ServicePrice;
 import com.izdajMe.izdajMe.model.User;
 
 import javax.persistence.CascadeType;
@@ -27,6 +28,7 @@ public class CottageDTO {
     private LocalDateTime availableTill;
     private List<HotOffer> hotOffers;
     private float costPerNight;
+    private List<ServicePrice> priceList;
 
     public CottageDTO(){}
     public CottageDTO(Cottage cottage){
@@ -44,6 +46,7 @@ public class CottageDTO {
         this.availableTill = cottage.getAvailableTill();
         this.hotOffers = cottage.getHotOffers();
         this.costPerNight = cottage.getCostPerNight();
+        this.priceList = cottage.getPriceList();
     }
 
     public long getId() {
@@ -156,5 +159,13 @@ public class CottageDTO {
 
     public void setCostPerNight(float costPerNight) {
         this.costPerNight = costPerNight;
+    }
+
+    public List<ServicePrice> getPriceList() {
+        return priceList;
+    }
+
+    public void setPriceList(List<ServicePrice> priceList) {
+        this.priceList = priceList;
     }
 }

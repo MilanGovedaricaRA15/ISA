@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { map } from 'rxjs/operators';
 import { Cottage, Services } from 'src/app/model/cottage';
 import { HotOffer } from 'src/app/model/hot-offer';
+import { ServicePrice } from 'src/app/model/service-price';
 import { CottageService } from 'src/app/service/cottage-service.service';
 
 @Component({
@@ -26,10 +27,12 @@ export class CottageProfileComponent implements OnInit {
   services = [
    'WiFi','Parking','Pool'
   ];
+  servicesClass: Array<ServicePrice>;
 
   constructor(private cottageService: CottageService) { }
 
   public ngOnInit() {
+    
     this.onIni();
 
     
@@ -53,25 +56,40 @@ export class CottageProfileComponent implements OnInit {
     this.cantRemove = false;
     this.cantAdd = false;
     this.cantChange = false;
+    this.servicesClass = new Array<ServicePrice>();
     if(this.cottage == undefined){
       this.cottageService.getCottageById(Number(sessionStorage.getItem("cottageToShow"))).subscribe(ret =>{
         this.cottage = ret;
         this.cottageChange = JSON.parse(JSON.stringify(this.cottage));
+        this.servicesToShow();
         if(this?.cottageChange?.images != null){
           this.cottageImg = this?.cottageChange?.images[0];
         }
         this.cottageHotOffersForHotOffer.emit(this.cottageChange);
+        
       })
 
     }
     else{
       this.cottageChange = JSON.parse(JSON.stringify(this.cottage));
-    
+      this.servicesToShow();
       
       if(this?.cottageChange?.images != null){
         this.cottageImg = this?.cottageChange?.images[0];
       }
       this.cottageHotOffersForHotOffer.emit(this.cottageChange);
+    }
+  }
+
+  public servicesToShow(){
+    if(this.cottageChange.services!=undefined){
+      for (let s of this.cottageChange.services){
+        for (let ss of this.cottageChange.priceList){
+          if(s == ss.service){
+            this.servicesClass.push(ss)
+          }
+        }
+      }
     }
   }
 
@@ -184,6 +202,17 @@ export class CottageProfileComponent implements OnInit {
                 }
               }
 
+            }
+            for(let o of this.servicesClass){
+              let element1 = <HTMLInputElement> document.getElementById(o.service.toString()+"serviceKlasa");
+              for (let n of this.cottage.priceList){
+                if (o.service == n.service){
+                  let cost = Number(element1.value);
+                  if(cost > 0){
+                     n.cost = cost;
+                  }
+                }
+              }
             }
             this.cottageService.changeCottage(this.cottage).subscribe(() => {
               this.onIni();

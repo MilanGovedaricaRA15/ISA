@@ -1,5 +1,6 @@
 
 import { HotOffer } from './hot-offer';
+import { ServicePrice } from './service-price';
 import { User } from './user';
 
 export class Cottage {
@@ -17,6 +18,7 @@ export class Cottage {
     hotOffers:Array<HotOffer> ;
     costPerNight:number;
     owner:User;
+    priceList:Array<ServicePrice>;
 
     
 }
