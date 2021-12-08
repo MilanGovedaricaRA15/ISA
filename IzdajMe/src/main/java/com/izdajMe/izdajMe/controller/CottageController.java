@@ -95,4 +95,9 @@ public class CottageController {
     public ResponseEntity<Boolean> addHotOfferToCottage(@RequestBody Cottage cottage){
         return new ResponseEntity<Boolean>(cottageService.addHotOfferToCottage(cottage),HttpStatus.OK);
     }
+
+    @GetMapping("/cottages/searchCottagesByName")
+    public ResponseEntity<List<Cottage>> searchCottagesByName(@RequestParam("name") String name) {
+        return new ResponseEntity<List<Cottage>>(cottageService.searchCottagesByName(name), HttpStatus.OK);
+    }
 }

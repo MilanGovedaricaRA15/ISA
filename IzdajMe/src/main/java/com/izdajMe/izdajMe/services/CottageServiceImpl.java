@@ -205,4 +205,17 @@ public class CottageServiceImpl implements CottageService {
         }
         return false;
     }
+
+    public List<Cottage> searchCottagesByName(String name) {
+        List<Cottage> searchedCottages = new ArrayList<>();
+        
+        List<Cottage> cottages = cottageRepository.findAll();
+        for (Cottage c : cottages) {
+            if (c.getName().toLowerCase().contains(name.toLowerCase())){
+                searchedCottages.add(c);
+            }
+        }
+        
+        return searchedCottages;
+    }
 }

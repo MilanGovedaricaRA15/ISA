@@ -17,6 +17,13 @@ import { AddNewCottageComponent } from './components/add-new-cottage/add-new-cot
 import { OwnerNavbarComponent } from './components/owner-navbar/owner-navbar.component';
 import { OwnerReservationsComponent } from './components/owner-reservations/owner-reservations.component';
 import { CottageReservationsComponent } from './components/cottage-reservations/cottage-reservations.component';
+import { HomePageComponent } from './components/home-page/home-page.component';
+import { CottagesPageComponent } from './components/cottages-page/cottages-page.component';
+import { ShipsPageComponent } from './components/ships-page/ships-page.component';
+import { InstructorsPageComponent } from './components/instructors-page/instructors-page.component';
+import { CottageProfileUnauthenticatedUserComponent } from './components/cottage-profile-unauthenticated-user/cottage-profile-unauthenticated-user.component';
+import { ShipProfileUnauthenticatedUserComponent } from './components/ship-profile-unauthenticated-user/ship-profile-unauthenticated-user.component';
+import { HomePageNavbarComponent } from './components/home-page-navbar/home-page-navbar.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +37,14 @@ import { CottageReservationsComponent } from './components/cottage-reservations/
     AddNewCottageComponent,
     OwnerNavbarComponent,
     OwnerReservationsComponent,
-    CottageReservationsComponent
+    CottageReservationsComponent,
+    HomePageComponent,
+    CottagesPageComponent,
+    ShipsPageComponent,
+    InstructorsPageComponent,
+    CottageProfileUnauthenticatedUserComponent,
+    ShipProfileUnauthenticatedUserComponent,
+    HomePageNavbarComponent
   ],
   imports: [
     BrowserModule,

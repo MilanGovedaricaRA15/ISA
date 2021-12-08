@@ -17,7 +17,7 @@ export class CottageService {
   private removeCottageUrl: string;
   private addCottageUrl: string;
   private addHotOfferToCottageUrl: string;
-
+  private searchCottagesByNameUrl: string;
   
 
   constructor(private http: HttpClient) { 
@@ -30,6 +30,7 @@ export class CottageService {
     this.getCottageByIdUrl = 'http://localhost:8080/cottages/getCottageById';
     this.addCottageUrl = 'http://localhost:8080/cottages/addCottage';
     this.addHotOfferToCottageUrl = 'http://localhost:8080/cottages/addHotOfferToCottage';
+    this.searchCottagesByNameUrl = 'http://localhost:8080/cottages/searchCottagesByName';
   }
 
   public getAllCottages(): Observable<Array<Cottage>> {
@@ -87,5 +88,13 @@ export class CottageService {
     return this.http.put<boolean>(this.addHotOfferToCottageUrl,cottageToChange);
    }
 
+   public searchCottagesByName(name: string): Observable<Array<Cottage>> {
+    let cottage = name;
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+    let params = new HttpParams().set("name", cottage);
+  
+    return this.http.get<Array<Cottage>>(this.searchCottagesByNameUrl, {headers: headers, params: params});
+  }
 
 }

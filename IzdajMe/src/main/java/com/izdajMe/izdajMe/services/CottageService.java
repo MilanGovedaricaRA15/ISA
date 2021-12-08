@@ -24,4 +24,5 @@ public interface CottageService {
     public Cottage getCottageById(Long id);
     public Cottage addCottage(Cottage cottage);
     public boolean isReserved(Long id);
+    public List<Cottage> searchCottagesByName(String name);
 }
