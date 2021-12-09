@@ -61,8 +61,6 @@ insert into service_price (id, cost, service)
 values(4,60,0);
 insert into service_price (id, cost, service)
 values(5,120,1);
-insert into service_price (id, cost, service)
-values(6,140,2);
 
 insert into cottages_price_list (cottage_id,price_list_id)
 values(1,1);
@@ -75,8 +73,7 @@ insert into cottages_price_list (cottage_id,price_list_id)
 values(2,4);
 insert into cottages_price_list (cottage_id,price_list_id)
 values(2,5);
-insert into cottages_price_list (cottage_id,price_list_id)
-values(2,6);
+
 
 
 insert into cottage_reservations (id, available_from, available_till, cost, client_id, cottage_id, services)

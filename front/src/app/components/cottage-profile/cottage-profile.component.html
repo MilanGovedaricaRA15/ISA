@@ -100,7 +100,12 @@
         <div class="col">
           <div class="row">
             <div *ngFor="let item of servicesClass" class="col">
+              <div *ngIf="item.cost != undefined">
               <input  class="form-controll"  [value]="item.cost" [id]="item.service.toString()+'serviceKlasa'">
+              </div>
+              <div *ngIf="item.cost == undefined">
+                <input  class="form-controll"  [value]="0" [id]="item.service.toString()+'serviceKlasa'">
+                </div>
             </div>
         </div>
       </div>

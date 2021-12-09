@@ -24,9 +24,13 @@ export class CottageReservationsComponent implements OnInit {
   pickedUser:boolean;
   pickedUserError:boolean;
   isReserved1:boolean;
+  doesntHaveAllServices: boolean;
+  doesntExistService: boolean;
   ngOnInit(): void {
     if(this?.cottageForApp != null){
       this.cottageReservationService.getAllReservationsOfCottage(this.cottageForApp).subscribe(ret => {
+        this.doesntExistService = false;
+        this.doesntHaveAllServices = false;
         this.services = this.cottageForApp.services;
         this.cottageReservations = ret;
         this.newReservation1 = new CottageReservation();
@@ -60,9 +64,10 @@ export class CottageReservationsComponent implements OnInit {
 
   submitData(){
     this.newReservation1.services = new Array<Services>();
-    for(let x of this.services){
-      let element = <HTMLInputElement> document.getElementsByName(x)[0];
-      if(element.checked){
+    let element = <HTMLInputElement> document.getElementById("zaDobijanjeServisa");
+    let servic = element.value.split(",");
+    this.doesntExistService = false;
+    for(let x of servic){
         if(x === 'WiFi'){
           this.newReservation1.services.push(Services.WiFi);
         }
@@ -72,14 +77,32 @@ export class CottageReservationsComponent implements OnInit {
         else if(x === 'Pool'){
           this.newReservation1.services.push(Services.Pool);
         }
-      }
+        else{
+          this.doesntExistService = true;
+        }
+      
 
     }
+    if(!this.doesntExistService){
     if(this.newReservation1.availableTill < this.newReservation1.availableFrom){
       this.availableTillError = true;
     }
     else {
       if(this.pickedUser){
+        this.doesntHaveAllServices = false;
+        if (this.newReservation1.cottage.services == null){
+          if(this.newReservation1.services.length != 0){
+            this.doesntHaveAllServices = true;
+          }
+        }
+        else{
+          for(let ser of this.newReservation1.services){
+            if(!this.newReservation1.cottage.services.includes(ser)){
+              this.doesntHaveAllServices = true;
+            }
+          }
+        }
+        if(!this.doesntHaveAllServices){
         this.pickedUserError = false;
       this.availableTillError = false;
      
@@ -94,10 +117,12 @@ export class CottageReservationsComponent implements OnInit {
         }
         });
       }
+    }
       else{
         this.pickedUserError = true;
       }
     }
+  }
 
    
     

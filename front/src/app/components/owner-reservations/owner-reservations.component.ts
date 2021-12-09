@@ -25,9 +25,11 @@ export class OwnerReservationsComponent implements OnInit {
   pickedUserError:boolean;
   isReserved: boolean;
   doesntHaveAllServices: boolean;
+  doesntExistService: boolean;
 
   ngOnInit(): void {
     this.doesntHaveAllServices = false;
+    this.doesntExistService = false;
     this.cottageReservationsService.getAllReservationsOfOwner().subscribe(ret => {
       this.ownerReservations = ret;
       this.newReservation = new CottageReservation();
@@ -60,9 +62,10 @@ export class OwnerReservationsComponent implements OnInit {
 
   submitData(){
     this.newReservation.services = new Array<Services>();
-    for(let x of this.services){
-      let element = <HTMLInputElement> document.getElementsByName(x)[0];
-      if(element.checked){
+    let element = <HTMLInputElement> document.getElementById("zaDobijanjeServisa1");
+    let servic = element.value.split(",");
+    this.doesntExistService = false; 
+    for(let x of servic){
         if(x === 'WiFi'){
           this.newReservation.services.push(Services.WiFi);
         }
@@ -72,9 +75,13 @@ export class OwnerReservationsComponent implements OnInit {
         else if(x === 'Pool'){
           this.newReservation.services.push(Services.Pool);
         }
-      }
+        else{
+          this.doesntExistService = true;
+        }
+      
 
     }
+    if(!this.doesntExistService){
     if(this.newReservation.availableTill < this.newReservation.availableFrom){
       this.availableTillError = true;
     }
@@ -87,8 +94,8 @@ export class OwnerReservationsComponent implements OnInit {
             }
           }
           else{
-            for(let ser of this.newReservation.cottage.services){
-              if(!this.newReservation.services.includes(ser)){
+            for(let ser of this.newReservation.services){
+              if(!this.newReservation.cottage.services.includes(ser)){
                 this.doesntHaveAllServices = true;
               }
             }
@@ -112,6 +119,7 @@ export class OwnerReservationsComponent implements OnInit {
             this.pickedUserError = true;
         }
       }
+    }
      
   
   }

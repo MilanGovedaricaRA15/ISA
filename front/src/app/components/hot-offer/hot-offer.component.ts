@@ -23,12 +23,16 @@ export class HotOfferComponent implements OnInit {
    ];
   availableTillError:boolean;
   alreadyExistsHotOffer:boolean;
+  doesntExistService2:boolean;
+  doesntHaveAllServices2:boolean;
 
   ngOnInit(): void {
     this.services = this.cottageForApp.services;
     this.newHotOffer = new HotOffer();
     this.availableTillError = false;
     this.alreadyExistsHotOffer = false;
+    this.doesntExistService2 = false;
+    this.doesntHaveAllServices2 = false;
     this.addForm = new FormGroup({
       "numOfPeople": new FormControl(null,[Validators.required,Validators.pattern('[1-9][0-9]*')]),
       "availableFrom": new FormControl(null,[Validators.required]),
@@ -55,9 +59,10 @@ export class HotOfferComponent implements OnInit {
 
   submitData(){
     this.newHotOffer.services = new Array<Services>();
-    for(let x of this.services){
-      let element = <HTMLInputElement> document.getElementsByName(x)[0];
-      if(element.checked){
+    let element = <HTMLInputElement> document.getElementById("zaDobijanjeServisa2");
+    let servic = element.value.split(",");
+    this.doesntExistService2 = false;
+    for(let x of servic){
         if(x === 'WiFi'){
           this.newHotOffer.services.push(Services.WiFi);
         }
@@ -67,9 +72,27 @@ export class HotOfferComponent implements OnInit {
         else if(x === 'Pool'){
           this.newHotOffer.services.push(Services.Pool);
         }
-      }
+        else{
+          this.doesntExistService2 = true;
+        }
+      
 
     }
+    if(!this.doesntExistService2){
+      this.doesntHaveAllServices2 = false;
+        if (this.cottageForApp.services == null){
+          if(this.newHotOffer.services.length != 0){
+            this.doesntHaveAllServices2 = true;
+          }
+        }
+        else{
+          for(let ser of this.newHotOffer.services){
+            if(!this.cottageForApp.services.includes(ser)){
+              this.doesntHaveAllServices2 = true;
+            }
+          }
+        }
+        if(!this.doesntHaveAllServices2){
     this.newHotOffer.free = true;
     if(this.newHotOffer.availableTill < this.newHotOffer.availableFrom){
       this.availableTillError = true;
@@ -88,6 +111,8 @@ export class HotOfferComponent implements OnInit {
           }
         });
     }
+  }
+  }
 
    
     

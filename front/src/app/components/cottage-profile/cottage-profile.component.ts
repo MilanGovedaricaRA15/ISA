@@ -84,10 +84,25 @@ export class CottageProfileComponent implements OnInit {
   public servicesToShow(){
     if(this.cottageChange.services!=undefined){
       for (let s of this.cottageChange.services){
-        for (let ss of this.cottageChange.priceList){
+        let found = false;
+        for (let ss of this.cottageChange.priceList){      
           if(s == ss.service){
-            this.servicesClass.push(ss)
+            if(ss.cost != undefined || ss.cost != null){
+              this.servicesClass.push(ss);
+              found = true;
+            }
+            else{
+              ss.cost = 0;
+              this.servicesClass.push(ss);
+              found = true;
+            }
           }
+        }
+        if (!found){
+          let da = new ServicePrice();
+          da.cost = 0;
+          da.service = s;
+          this.servicesClass.push(da);
         }
       }
     }
@@ -205,13 +220,20 @@ export class CottageProfileComponent implements OnInit {
             }
             for(let o of this.servicesClass){
               let element1 = <HTMLInputElement> document.getElementById(o.service.toString()+"serviceKlasa");
+              let found = false;
               for (let n of this.cottage.priceList){
                 if (o.service == n.service){
                   let cost = Number(element1.value);
                   if(cost > 0){
                      n.cost = cost;
                   }
+                  found = true;
                 }
+              }
+              if(!found){
+                let cost = Number(element1.value);
+                o.cost = cost;
+                this.cottage.priceList.push(o);
               }
             }
             this.cottageService.changeCottage(this.cottage).subscribe(() => {

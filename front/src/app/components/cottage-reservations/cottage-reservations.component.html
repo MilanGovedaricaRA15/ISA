@@ -53,16 +53,8 @@
                                     <span class="error">Till must me greater than from</span>
                                 </div>
                                 </td>
-                                <td><div class="col">
-                                    <div class="row">
-                                      <div *ngFor="let service of services;let i = index" class="form-check col">
-                                        <input class="form-check-input" type="checkbox" [value]="i" [name]="service">
-                                        <label class="form-check-label">
-                                          {{service.toString()}}
-                                        </label>
-                                      </div>
-                                  </div>
-                                  </div>
+                                <td><input style="width: 115%;" class="form-control" id="zaDobijanjeServisa">
+                                    
                                 </td>
                                 <td><input style="width: 130%;" [(ngModel)]="newReservation1.cost" formControlName="cost1" class="form-control" type="number"/>
                                     <div *ngIf="cost1.invalid && (cost1.touched || cost1.dirty)">
@@ -83,6 +75,12 @@
                                     </div>
                                     <div *ngIf="isReserved1">
                                         <span class="error">Term is busy</span>
+                                    </div>
+                                    <div *ngIf="doesntHaveAllServices">
+                                        <span class="error">Cottage doesn't provide selected services</span>
+                                    </div>
+                                    <div *ngIf="doesntExistService">
+                                        <span class="error">Cottage service doesn't exist</span>
                                     </div>
                                 </td>
                             </tr>

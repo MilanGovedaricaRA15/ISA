@@ -56,16 +56,8 @@
                                     <span class="error">Till must me greater than from</span>
                                 </div>
                                 </td>
-                                <td><div class="col">
-                                    <div class="row">
-                                      <div *ngFor="let service of services;let i = index" class="form-check col">
-                                        <input class="form-check-input" type="checkbox" [value]="i" [name]="service">
-                                        <label class="form-check-label">
-                                          {{service.toString()}}
-                                        </label>
-                                      </div>
-                                  </div>
-                                  </div>
+                                <td><input style="width: 115%;" class="form-control" id="zaDobijanjeServisa1"/>
+                                    
                                 </td>
                                 <td><input style="width: 130%;" [(ngModel)]="newReservation.cost" formControlName="cost" class="form-control" type="number"/>
                                     <div *ngIf="cost.invalid && (cost.touched || cost.dirty)">
@@ -89,6 +81,9 @@
                                     </div>
                                     <div *ngIf="pickedUserError">
                                         <span class="error">Pick a user</span>
+                                    </div>
+                                    <div *ngIf="doesntExistService">
+                                        <span class="error">Cottage service doesn't exist</span>
                                     </div>
                                     
                                 </td>

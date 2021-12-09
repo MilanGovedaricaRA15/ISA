@@ -49,16 +49,8 @@
                                       <span class="error" *ngIf="numOfPeople.errors?.pattern">Only numbers allowed</span>
                                   </div>
                                 </td>
-                                <td><div class="col">
-                                    <div class="row">
-                                      <div *ngFor="let service of services;let i = index" class="form-check col">
-                                        <input class="form-check-input" type="checkbox" [value]="i" [name]="service">
-                                        <label class="form-check-label">
-                                          {{service.toString()}}
-                                        </label>
-                                      </div>
-                                  </div>
-                                  </div>
+                                <td><input style="width: 100%;" class="form-control" id="zaDobijanjeServisa2">
+                                    
                                 </td>
                                 <td><input style="width: 60%;" [(ngModel)]="newHotOffer.cost" formControlName="cost" class="form-control" type="number"/>
                                     <div *ngIf="cost.invalid && (cost.touched || cost.dirty)">
@@ -70,6 +62,12 @@
                                     <button [disabled]="addForm.invalid" class="btn btn-primary btn-md mr-1 mb-2">Add</button>
                                     <div *ngIf="alreadyExistsHotOffer">
                                         <span class="error">Term is busy</span>
+                                    </div>
+                                    <div *ngIf="doesntHaveAllServices2">
+                                        <span class="error">Cottage doesn't provide selected services</span>
+                                    </div>
+                                    <div *ngIf="doesntExistService2">
+                                        <span class="error">Cottage service doesn't exist</span>
                                     </div>
                                 </td>
                             </tr>
