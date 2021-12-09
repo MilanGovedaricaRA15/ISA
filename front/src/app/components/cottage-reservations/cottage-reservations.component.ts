@@ -68,6 +68,7 @@ export class CottageReservationsComponent implements OnInit {
     let servic = element.value.split(",");
     this.doesntExistService = false;
     for(let x of servic){
+      if(x != ""){
         if(x === 'WiFi'){
           this.newReservation1.services.push(Services.WiFi);
         }
@@ -80,6 +81,7 @@ export class CottageReservationsComponent implements OnInit {
         else{
           this.doesntExistService = true;
         }
+      }
       
 
     }

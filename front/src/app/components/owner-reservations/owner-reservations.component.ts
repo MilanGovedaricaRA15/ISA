@@ -66,6 +66,7 @@ export class OwnerReservationsComponent implements OnInit {
     let servic = element.value.split(",");
     this.doesntExistService = false; 
     for(let x of servic){
+      if(x != ""){
         if(x === 'WiFi'){
           this.newReservation.services.push(Services.WiFi);
         }
@@ -78,6 +79,7 @@ export class OwnerReservationsComponent implements OnInit {
         else{
           this.doesntExistService = true;
         }
+      }
       
 
     }
