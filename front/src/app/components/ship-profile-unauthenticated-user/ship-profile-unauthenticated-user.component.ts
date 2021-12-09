@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Ship } from 'src/app/model/ship';
+import { Grade } from 'src/app/model/grade';
 import { ShipService } from 'src/app/service/ship-service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-ship-profile-unauthenticated-user',
@@ -11,6 +13,7 @@ export class ShipProfileUnauthenticatedUserComponent implements OnInit {
   
   ship: Ship;
   shipImg: String;
+  averageGrade: number;
   @Input() shipUnauthenticated: Ship;
 
   constructor(private shipService : ShipService) { }
@@ -26,6 +29,9 @@ export class ShipProfileUnauthenticatedUserComponent implements OnInit {
     if(this.ship.images != null){
       this.shipImg = this.ship.images[0];
     }
+    this.shipService.getShipAverageGrade(this.ship.id).subscribe(ret =>{
+      this.averageGrade = ret;
+    });
   }
 
 }

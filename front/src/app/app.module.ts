@@ -24,6 +24,7 @@ import { InstructorsPageComponent } from './components/instructors-page/instruct
 import { CottageProfileUnauthenticatedUserComponent } from './components/cottage-profile-unauthenticated-user/cottage-profile-unauthenticated-user.component';
 import { ShipProfileUnauthenticatedUserComponent } from './components/ship-profile-unauthenticated-user/ship-profile-unauthenticated-user.component';
 import { HomePageNavbarComponent } from './components/home-page-navbar/home-page-navbar.component';
+import { InstructorProfileUnauthenticatedUserComponent } from './components/instructor-profile-unauthenticated-user/instructor-profile-unauthenticated-user.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { HomePageNavbarComponent } from './components/home-page-navbar/home-page
     InstructorsPageComponent,
     CottageProfileUnauthenticatedUserComponent,
     ShipProfileUnauthenticatedUserComponent,
-    HomePageNavbarComponent
+    HomePageNavbarComponent,
+    InstructorProfileUnauthenticatedUserComponent
   ],
   imports: [
     BrowserModule,

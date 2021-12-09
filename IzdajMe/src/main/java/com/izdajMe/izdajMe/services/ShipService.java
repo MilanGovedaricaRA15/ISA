@@ -8,4 +8,5 @@ public interface ShipService {
     public List<Ship> getAllShips();
     public Ship getShipById(Long id);
     public List<Ship> searchShipsByName(String name);
+    public float getShipAverageGrade(Long id);
 }

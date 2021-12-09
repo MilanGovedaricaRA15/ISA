@@ -41,4 +41,9 @@ public class ShipController {
     public ResponseEntity<List<Ship>> searchShipsByName(@RequestParam("name") String name) {
         return new ResponseEntity<List<Ship>>(shipService.searchShipsByName(name), HttpStatus.OK);
     }
+
+    @GetMapping("/ships/getShipAverageGrade")
+    public ResponseEntity<Float> getShipAverageGrade(@RequestParam("id") Long id) {
+        return new ResponseEntity<Float>(shipService.getShipAverageGrade(id), HttpStatus.OK);
+    }
 }

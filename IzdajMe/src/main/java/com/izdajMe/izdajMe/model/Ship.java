@@ -2,6 +2,7 @@ package com.izdajMe.izdajMe.model;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="ships")
@@ -24,8 +25,12 @@ public class Ship {
     private ArrayList<String> images;
     private int capacity;
     private ArrayList<String> rules;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
+    private List<Grade> grades;
 
-    public Ship(long id, User owner, String name, String type, float length, String engineNumber, float enginePower, float topSpeed, NavigationEquipment navigationEquipment, String address, String description, ArrayList<String> images, int capacity, ArrayList<String> rules) {
+    public Ship() {}
+
+    public Ship(long id, User owner, String name, String type, float length, String engineNumber, float enginePower, float topSpeed, NavigationEquipment navigationEquipment, String address, String description, ArrayList<String> images, int capacity, ArrayList<String> rules, List<Grade> grades) {
         this.id = id;
         this.owner = owner;
         this.name = name;
@@ -40,9 +45,8 @@ public class Ship {
         this.images = images;
         this.capacity = capacity;
         this.rules = rules;
+        this.grades = grades;
     }
-
-    public Ship() {}
 
     public long getId() {
         return id;
@@ -156,6 +160,14 @@ public class Ship {
         this.rules = rules;
     }
 
+    public List<Grade> getGrades() {
+        return grades;
+    }
+
+    public void setGrades(List<Grade> grades) {
+        this.grades = grades;
+    }
+
     @Override
     public String toString() {
         return "Ship{" +
@@ -170,8 +182,10 @@ public class Ship {
                 ", navigationEquipment=" + navigationEquipment +
                 ", address='" + address + '\'' +
                 ", description='" + description + '\'' +
+                ", images=" + images +
                 ", capacity=" + capacity +
                 ", rules=" + rules +
+                ", grades=" + grades +
                 '}';
     }
 }

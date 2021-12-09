@@ -9,8 +9,8 @@ import { ShipService } from 'src/app/service/ship-service';
 })
 export class ShipsPageComponent implements OnInit {
 
-  ships: Array<Ship>;
   @Output() shipToShowUnauthenticated = new EventEmitter<Ship>();
+  ships: Array<Ship>;
   searchText: string;
 
   constructor(private shipService: ShipService) { }
