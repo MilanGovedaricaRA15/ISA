@@ -1,5 +1,6 @@
 package com.izdajMe.izdajMe.services;
 
+import com.izdajMe.izdajMe.model.Ship;
 import com.izdajMe.izdajMe.model.User;
 import com.izdajMe.izdajMe.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,28 @@ import java.util.stream.*;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
+
+    @Override
+    public List<User> getAllUsers() {
+        Iterable<User> allUsers = userRepository.findAll();
+        ArrayList<User> allUsersList = new ArrayList<User>();
+        allUsers.forEach(allUsersList::add);
+
+        return allUsersList;
+    }
+
+    @Override
+    public List<User> getAllInstructors() {
+        Iterable<User> allUsers = userRepository.findAll();
+        ArrayList<User> allInstructorsList = new ArrayList<User>();
+        for (User user : allUsers) {
+            if (user.getRole().equals(User.Role.instructor)) {
+                allInstructorsList.add(user);
+            }
+        }
+
+        return allInstructorsList;
+    }
 
     public Boolean loginUser(User user) {
         User foundUser = userRepository.findByEmailAndPasswordVerified(user.getEmail(),user.getPassword());
@@ -70,6 +93,38 @@ public class UserServiceImpl implements UserService {
         else {
             return false;
         }
+    }
+
+    @Override
+    public List<User> searchUsersByName(String firstName, String lastName) {
+        List<User> searchedShips = new ArrayList<>();
+
+        List<User> users = userRepository.findAll();
+        for (User s : users) {
+            if (s.getFirstName().toLowerCase().contains(firstName.toLowerCase())
+            && s.getLastName().toLowerCase().contains(lastName.toLowerCase())){
+                searchedShips.add(s);
+            }
+        }
+
+        return searchedShips;
+    }
+
+    @Override
+    public List<User> searchInstructorsByName(String firstName, String lastName) {
+        List<User> searchedShips = new ArrayList<>();
+
+        List<User> users = userRepository.findAll();
+        for (User s : users) {
+            if (s.getRole().equals(User.Role.instructor)) {
+                if (s.getFirstName().toLowerCase().contains(firstName.toLowerCase())
+                        && s.getLastName().toLowerCase().contains(lastName.toLowerCase())){
+                    searchedShips.add(s);
+                }
+            }
+        }
+
+        return searchedShips;
     }
 
 }

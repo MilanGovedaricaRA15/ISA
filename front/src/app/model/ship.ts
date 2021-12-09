@@ -1,9 +1,10 @@
+import { Grade } from "./grade";
 import { User } from "./user";
 
 export class Ship {
     id: number;
-    owner:User;
-    name:String;
+    owner: User;
+    name: String;
     type: String;
     length: number;
     engineNumber: String;
@@ -15,6 +16,7 @@ export class Ship {
     images: Array<String>;
     capacity: number;
     rules: Array<String>;
+    grades: Array<Grade>;
 }
 
 export enum NavigationEquipment{

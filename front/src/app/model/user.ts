@@ -11,7 +11,6 @@ export class User {
     role: Role;
     password: string;
     reason: string;
-    
 
 }
 export enum Role {

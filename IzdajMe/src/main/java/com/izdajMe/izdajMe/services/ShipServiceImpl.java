@@ -1,5 +1,6 @@
 package com.izdajMe.izdajMe.services;
 
+import com.izdajMe.izdajMe.model.Grade;
 import com.izdajMe.izdajMe.model.Ship;
 import com.izdajMe.izdajMe.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,5 +40,21 @@ public class ShipServiceImpl implements  ShipService {
         }
 
         return searchedShips;
+    }
+
+    @Override
+    public float getShipAverageGrade(Long id){
+        float averageGrade = 0.0F;
+        int sum = 0;
+
+        List<Grade> grades = this.getShipById(id).getGrades();
+        for (Grade g : grades) {
+            sum += g.getValue();
+        }
+        if (grades.size() > 0) {
+            averageGrade = (float) sum / grades.size();
+        }
+
+        return averageGrade;
     }
 }

@@ -1,10 +1,10 @@
+<app-home-page-navbar (homePage)="goToHomePage()" (cottagesPage)="goToCottagesPage()" (shipsPage)="goToShipsPage()" (instructorsPage)="goToInstructorsPage()" (loginPage)="goToLoginPage()" 
+          *ngIf="showCompNumber === 0 || showCompNumber === 1 || showCompNumber === 2 || showCompNumber === 11 || showCompNumber === 12 || showCompNumber === 13 || showCompNumber === 15 || showCompNumber === 16 || showCompNumber === 17"></app-home-page-navbar>
 <div class="container">
   <div class="row">
     <div class="col-md-12">
       <div class="card my-5" style="background-image: url('../../assets/images/background4.jpg'); background-repeat: no-repeat; background-size: cover;">
         <div class="card-body">
-          <app-home-page-navbar (homePage)="goToHomePage()" (cottagesPage)="goToCottagesPage()" (shipsPage)="goToShipsPage()" (instructorsPage)="goToInstructorsPage()" (loginPage)="goToLoginPage()" 
-          *ngIf="showCompNumber === 0 || showCompNumber === 1 || showCompNumber === 2 || showCompNumber === 11 || showCompNumber === 12 || showCompNumber === 13 || showCompNumber === 15 || showCompNumber === 16 || showCompNumber === 17"></app-home-page-navbar>
           <ul *ngIf="showCompNumber === 1 || showCompNumber === 2" class="text-center list-inline py-3">
             <li class="list-inline-item">
               <a class="btn btn-info" (click)="changeNumber(1)">Register</a>
@@ -16,9 +16,10 @@
           <app-home-page *ngIf="showCompNumber === 0"></app-home-page>
           <app-cottages-page (cottageToShowUnauthenticated)="onCottageUnauthenticatedClick($event)" *ngIf="showCompNumber === 11"></app-cottages-page>
           <app-ships-page (shipToShowUnauthenticated)="onShipUnauthenticatedClick($event)" *ngIf="showCompNumber === 12"></app-ships-page>
-          <app-instructors-page *ngIf="showCompNumber === 13"></app-instructors-page>
+          <app-instructors-page (instructorToShowUnauthenticated)="onInstructorUnauthenticatedClick($event)" *ngIf="showCompNumber === 13"></app-instructors-page>
           <app-cottage-profile-unauthenticated-user [cottageUnauthenticated]="cottageToShowUnauthenticated" *ngIf="showCompNumber === 15"></app-cottage-profile-unauthenticated-user>
           <app-ship-profile-unauthenticated-user [shipUnauthenticated]="shipToShowUnauthenticated" *ngIf="showCompNumber === 16"></app-ship-profile-unauthenticated-user>
+          <app-instructor-profile-unauthenticated-user [instructorUnauthenticated]="instructorToShowUnauthenticated" *ngIf="showCompNumber === 17"></app-instructor-profile-unauthenticated-user>
           <app-owner-navbar (profile)="goToProfile()" *ngIf="showCompNumber === 3 || showCompNumber === 5 || showCompNumber === 6"></app-owner-navbar>
           <app-registerForm (register)="onRegister($event)" *ngIf="showCompNumber === 1"></app-registerForm>
           <app-login-form (login)="onLogin($event)" *ngIf="showCompNumber === 2"></app-login-form>

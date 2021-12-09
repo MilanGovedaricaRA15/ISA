@@ -10,11 +10,13 @@ export class ShipService {
     private getAllShipsUrl: string;
     private getShipByIdUrl: string;
     private searchShipsByNameUrl: string;
+    private getShipAverageGradeUrl: string;
 
     constructor(private http: HttpClient) { 
-        this.getAllShipsUrl="http://localhost:8080/ships/getAllShips";
+        this.getAllShipsUrl = "http://localhost:8080/ships/getAllShips";
         this.getShipByIdUrl = 'http://localhost:8080/ships/getShipById';
         this.searchShipsByNameUrl = 'http://localhost:8080/ships/searchShipsByName';
+        this.getShipAverageGradeUrl = 'http://localhost:8080/ships/getShipAverageGrade';
     }
 
     public getAllShips(): Observable<Array<Ship>> {
@@ -40,5 +42,13 @@ export class ShipService {
         let params = new HttpParams().set("name", ship);
   
         return this.http.get<Array<Ship>>(this.searchShipsByNameUrl, {headers: headers, params: params});
+    }
+
+    public getShipAverageGrade(id: number): Observable<number> {
+        let headers = new HttpHeaders();
+        headers.append('Content-Type', 'application/json');
+        let params = new HttpParams().set("id", id);
+
+        return this.http.get<number>(this.getShipAverageGradeUrl, {headers: headers, params: params});
     }
 }

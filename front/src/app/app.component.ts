@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Cottage } from './model/cottage';
 import { Ship } from './model/ship';
-import { CottageService } from './service/cottage-service.service';
+import { User } from './model/user';
 import { UserService } from './service/user-service.service';
 
 @Component({
@@ -15,6 +15,7 @@ export class AppComponent {
   cottageToShow: Cottage;
   cottageToShowUnauthenticated: Cottage;
   shipToShowUnauthenticated: Ship;
+  instructorToShowUnauthenticated: User;
 
   /**
    *
@@ -72,6 +73,13 @@ export class AppComponent {
     this.changeNumber(16);
     sessionStorage.setItem("page", '16');
     sessionStorage.setItem("shipToShowUnauthenticated", ship.id.toString());
+  }
+
+  onInstructorUnauthenticatedClick(instructor: User){
+    this.instructorToShowUnauthenticated = instructor;
+    this.changeNumber(17);
+    sessionStorage.setItem("page", '17');
+    sessionStorage.setItem("instructorToShowUnauthenticated", instructor.email);
   }
 
   goToProfile(){

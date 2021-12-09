@@ -1,6 +1,7 @@
 package com.izdajMe.izdajMe.controller;
 
 import com.izdajMe.izdajMe.dto.UserDTO;
+import com.izdajMe.izdajMe.model.Ship;
 import com.izdajMe.izdajMe.model.User;
 import com.izdajMe.izdajMe.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -19,6 +21,28 @@ public class UserController {
 
     @Autowired
     private UserService userService ;
+
+    @GetMapping("/users/getAllUsers")
+    public ResponseEntity<List<User>> getAllUsers(){
+        List<User> allUsers = new ArrayList<>();
+        for(User user : userService.getAllUsers()) {
+            allUsers.add(user);
+        }
+
+        return new ResponseEntity<List<User>>(allUsers, HttpStatus.OK);
+    }
+
+    @GetMapping("/users/getAllInstructors")
+    public ResponseEntity<List<User>> getAllInstructors(){
+        List<User> allInstructors = new ArrayList<>();
+        for(User user : userService.getAllUsers()) {
+            if (user.getRole().equals(User.Role.instructor)) {
+                allInstructors.add(user);
+            }
+        }
+
+        return new ResponseEntity<List<User>>(allInstructors, HttpStatus.OK);
+    }
 
     @PostMapping("/users/login")
     public ResponseEntity<String> loginUser(@RequestBody User user, HttpServletRequest request) {
@@ -104,7 +128,18 @@ public class UserController {
         }
     }
 
+    @GetMapping("/users/getInstructorByEmail")
+    public ResponseEntity<User> getInstructorByEmail(@RequestParam("email") String email) {
+        User user = userService.getUserByEmail(email);
+        if (user != null) {
+            return new ResponseEntity<User>(user, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<User>((User) null, HttpStatus.NOT_FOUND);
+        }
+    }
 
-
-
+    @GetMapping("/users/searchInstructorsByName")
+    public ResponseEntity<List<User>> searchInstructorsByName(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName) {
+        return new ResponseEntity<List<User>>(userService.searchInstructorsByName(firstName, lastName), HttpStatus.OK);
+    }
 }
