@@ -13,7 +13,7 @@
           </ul>
           <app-owner-navbar (profile)="goToProfile()" *ngIf="showCompNumber !== 1 && showCompNumber !== 2"></app-owner-navbar>
           <app-registerForm (register)="onRegister($event)" *ngIf="showCompNumber === 1"></app-registerForm>
-          <app-login-form (login)="onLogin($event)" *ngIf="showCompNumber === 2"></app-login-form>
+          <app-login-form (login)="onLogin($event)" (profileAdministrator)="showAdministratorProfile($event)" *ngIf="showCompNumber === 2"></app-login-form>
           <app-cottage-owner-profile (addNewCottageEmiter)="addNewCottage($event)" (cottageToShow)="onCottageClick($event)" *ngIf="showCompNumber === 3"></app-cottage-owner-profile>
           <app-cottage-profile [cottage]="cottageToShow" (cottageHotOffersForHotOffer)="updateHotOffers($event)" *ngIf="showCompNumber === 5"></app-cottage-profile>
           <app-hot-offer [cottageForApp]="cottageForHotOffers"  *ngIf="showCompNumber === 5"></app-hot-offer>
@@ -21,7 +21,9 @@
           <app-cottage-calendar  [cottageForApp]="cottageForHotOffers" *ngIf="showCompNumber === 5"></app-cottage-calendar>
           <app-cottage-reservations  [cottageForApp]="cottageForHotOffers" *ngIf="showCompNumber === 5"></app-cottage-reservations>
           <app-add-new-cottage (cottageToShow)="onCottageClick($event)" *ngIf="showCompNumber === 6"></app-add-new-cottage>
+          <app-administrator-profile *ngIf="showCompNumber === 7"></app-administrator-profile>
         </div>
       </div>
     </div>
   </div>
+</div>

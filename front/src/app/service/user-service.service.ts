@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators';
 @Injectable()
 export class UserService {
 
+  private allUsersUrl: string;
   private usersUrlLogin: string;
   private usersUrlRegister: string;
   private usersUrlGetUserByEmail: string;
@@ -15,6 +16,7 @@ export class UserService {
   private usersUrlChangePasswordUser: string;
 
   constructor(private http: HttpClient) {
+    this.allUsersUrl = 'http://localhost:8080/users/getAllUsers';
     this.usersUrlLogin = 'http://localhost:8080/users/login';
     this.usersUrlRegister = 'http://localhost:8080/users/register';
     this.usersUrlGetLoggedUser = 'http://localhost:8080/users/getUserByEmail';
@@ -35,7 +37,12 @@ export class UserService {
     return this.http.put<boolean>(this.usersUrlChangeUser, user);
   }
 
+  public getAllUsers(): Observable<Array<User>> {
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
   
+    return this.http.get<Array<User>>(this.allUsersUrl, {headers: headers});
+  }
   
   public changePassword(user: User,password:string): Observable<boolean> {
     let users = new Array<User>()
@@ -84,8 +91,37 @@ export class UserService {
       }
     }));
    
-}
-
+  }
+  public isAdministratorLoggedIn(): Observable<boolean> {
+    return this.getLoggedUser().pipe(map(res => {
+      if(res.role.toString() === 'administrator'){
+        return true;
+      }
+      else{
+        return false;
+      }
+    }));
+  }
+  public isSuperiorAdministratorLoggedIn(): Observable<boolean> {
+    return this.getLoggedUser().pipe(map(res => {
+      if(res.role.toString() === 'administratorSuperior'){
+        return true;
+      }
+      else{
+        return false;
+      }
+    }));
+  }
+  public isNewAdministratorLoggedIn(): Observable<boolean> {
+    return this.getLoggedUser().pipe(map(res => {
+      if(res.role.toString() === 'administratorFirstLogged'){
+        return true;
+      }
+      else{
+        return false;
+      }
+    }));
+  }
 
 
 }

@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -70,7 +71,14 @@ public class UserController {
         }
     }
 
-
+    @GetMapping("/users/getAllUsers")
+    public ResponseEntity<List<UserDTO>> getAllUsers() {
+        List<UserDTO> list = new ArrayList<UserDTO>();
+        for(User user : userService.getAllUsers()){
+            list.add(new UserDTO(user));
+        }
+        return new ResponseEntity<List<UserDTO>>(list, HttpStatus.OK);
+    }
 
 
 }

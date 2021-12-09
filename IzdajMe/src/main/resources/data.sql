@@ -8,13 +8,22 @@ delete from cottages where id!=0;
 delete from users where id!=0;
 
 insert into users (id, address, city, country, email,first_name,last_name,mobile_number,password,reason,role,verified)
-values (1, 'Ilije 1', 'Beograd', 'Srbija', 'rajkorajkoza@gmail.com', 'Milan', 'Govedarica', 123123123, 'aaaa', 'Izdaja vikendice', 0, TRUE);
+values (1, 'Ilije 1', 'Beograd', 'Srbija', 'rajkorajkoza@gmail.com', 'Milan', 'Govedarica', 123123123, 'aaaa', 'Izdaja vikendice', 0, FALSE);
 
 insert into users (id, address, city, country, email,first_name,last_name,mobile_number,password,reason,role,verified)
-values (2, 'Banjalucka 2', 'Banjaluka', 'Bosna', 'popaljubav@gmail.com', 'Miodrag', 'Prod', 111222333, 'aaaa', null, 0, TRUE);
+values (2, 'Banjalucka 2', 'Banjaluka', 'Bosna', 'popaljubav@gmail.com', 'Miodrag', 'Prod', 111222333, 'aaaa', null, 0, FALSE);
 
 insert into users (id, address, city, country, email,first_name,last_name,mobile_number,password,reason,role,verified)
 values (3, 'Focanska 2', 'Foca', 'Bosna', 'foca@gmail.com', 'Coa', 'Podunavac', 112123233, 'aaaa', null, 0, TRUE);
+
+insert into users (id, address, city, country, email,first_name,last_name,mobile_number,password,reason,role,verified)
+values (4, 'Njegoseva 1', 'Subotica', 'Srbija', 'vrbica.vlado11@gmail.com', 'Vladimir', 'Vrbica', '123123123123', 'vrba', '', 3, TRUE);
+
+insert into users (id, address, city, country, email,first_name,last_name,mobile_number,password,reason,role,verified)
+values (5, 'Nemanjina 2', 'Srbobran', 'Srbija', 'nikola.aleksic@gmail.com', 'Nikola', 'Aleksic', '22222222222', 'leksa', '', 4, TRUE);
+
+insert into users (id, address, city, country, email,first_name,last_name,mobile_number,password,reason,role,verified)
+values (6, 'Kralja Petra 12a', 'Becej', 'Srbija', 'milos.zivic@gmail.com', 'Milos', 'Zivic', '222222222222', 'zile', '', 5, TRUE);
 
 insert into cottages (id, address, available_from, available_till, description, images, name, num_of_beds, num_of_rooms, rules, services, owner_id, cost_per_night)
 values (1, 'Desivoje 1',DATE('2021-09-01'),DATE('2022-02-01'),'Na jezeru',null, 'Micova', 3, 3, 'Nisu dozvoljene zivotinje', null, 1, 50);

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Cottage } from './model/cottage';
+import { User } from './model/user';
 import { UserService } from './service/user-service.service';
 
 @Component({
@@ -41,6 +42,15 @@ export class AppComponent {
     else if(message === 'boatAdvertiser'){
       this.changeNumber(4);
       sessionStorage.setItem("page",'4');
+    } else if(message === 'administrator'){
+      this.changeNumber(7);
+      sessionStorage.setItem("page",'7');
+    } else if(message === 'administratorSuperior'){
+      this.changeNumber(8);
+      sessionStorage.setItem("page",'8');
+    } else if(message === 'administratorFirstLogged'){
+      this.changeNumber(9);
+      sessionStorage.setItem("page",'9');
     }
 
   }
@@ -55,6 +65,11 @@ export class AppComponent {
     sessionStorage.setItem("page",'5');
     sessionStorage.setItem("cottageToShow",this.cottageToShow.id.toString());
     
+  }
+
+  showAdministratorProfile(message: string) {
+    this.changeNumber(7);
+    sessionStorage.setItem("page",'7');
   }
 
   goToProfile(){

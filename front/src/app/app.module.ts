@@ -17,6 +17,7 @@ import { AddNewCottageComponent } from './components/add-new-cottage/add-new-cot
 import { OwnerNavbarComponent } from './components/owner-navbar/owner-navbar.component';
 import { OwnerReservationsComponent } from './components/owner-reservations/owner-reservations.component';
 import { CottageReservationsComponent } from './components/cottage-reservations/cottage-reservations.component';
+import { AdministratorProfileComponent } from './components/administrator-profile/administrator-profile/administrator-profile.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { CottageReservationsComponent } from './components/cottage-reservations/
     AddNewCottageComponent,
     OwnerNavbarComponent,
     OwnerReservationsComponent,
-    CottageReservationsComponent
+    CottageReservationsComponent,
+    AdministratorProfileComponent
   ],
   imports: [
     BrowserModule,

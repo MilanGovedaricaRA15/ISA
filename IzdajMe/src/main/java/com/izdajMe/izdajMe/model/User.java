@@ -21,6 +21,8 @@ public class User {
         cottageAdvertiser,
         boatAdvertiser,
         instructor,
+        administratorSuperior,
+        administratorFirstLogged,
         administrator
     }
     protected Role role;

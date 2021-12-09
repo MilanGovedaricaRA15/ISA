@@ -3,14 +3,10 @@ package com.izdajMe.izdajMe.services;
 import com.izdajMe.izdajMe.model.User;
 import com.izdajMe.izdajMe.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.*;
-import java.util.stream.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -47,6 +43,13 @@ public class UserServiceImpl implements UserService {
         else {
             return null;
         }
+    }
+
+    public List<User> getAllUsers(){
+        Iterable<User> allUsers = userRepository.findAll();
+        ArrayList<User> allUsersList = new ArrayList<User>();
+        allUsers.forEach(allUsersList::add);
+        return allUsersList;
     }
 
     public Boolean changeUser(User user) {
