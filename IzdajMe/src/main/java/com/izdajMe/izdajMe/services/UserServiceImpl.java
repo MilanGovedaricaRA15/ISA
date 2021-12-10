@@ -58,7 +58,7 @@ public class UserServiceImpl implements UserService {
             return true;
         }
 
-        user.setVerified(true); //false
+        user.setVerified(false); //false
         userRepository.save(user);
         return false;
     }

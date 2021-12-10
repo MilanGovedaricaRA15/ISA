@@ -27,6 +27,7 @@ import { HomePageNavbarComponent } from './components/home-page-navbar/home-page
 import { InstructorProfileUnauthenticatedUserComponent } from './components/instructor-profile-unauthenticated-user/instructor-profile-unauthenticated-user.component';
 import { RegisterFormClientComponent } from './components/register-form-client/register-form-client.component';
 import { ClientProfileComponent } from './components/client-profile/client-profile.component';
+import { ClientProfileForOwnerComponent } from './components/client-profile-for-owner/client-profile-for-owner.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { ClientProfileComponent } from './components/client-profile/client-profi
     HomePageNavbarComponent,
     InstructorProfileUnauthenticatedUserComponent,
     RegisterFormClientComponent,
-    ClientProfileComponent
+    ClientProfileComponent,
+    ClientProfileForOwnerComponent
   ],
   imports: [
     BrowserModule,

@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Cottage, Services } from 'src/app/model/cottage';
 import { CottageReservation } from 'src/app/model/cottage-reservation';
+import { User } from 'src/app/model/user';
 import { CottageReservationService } from 'src/app/service/cottage-reservation-service.service';
 import { UserService } from 'src/app/service/user-service.service';
 
@@ -17,6 +18,7 @@ export class OwnerReservationsComponent implements OnInit {
   ownerReservations: Array<CottageReservation>
   newReservation: CottageReservation
   addReservationForm:any;
+  @Output() seeUser = new EventEmitter<User>();
   services = [
     'WiFi','Parking','Pool'
    ];
@@ -124,6 +126,12 @@ export class OwnerReservationsComponent implements OnInit {
     }
      
   
+  }
+
+  seeUserProfile(email:string){
+    this.userService.getUserByEmail(email).subscribe(ret => {
+      this.seeUser.emit(ret);
+    })
   }
 
 

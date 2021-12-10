@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Cottage, Services } from 'src/app/model/cottage';
 import { CottageReservation } from 'src/app/model/cottage-reservation';
+import { User } from 'src/app/model/user';
 import { CottageReservationService } from 'src/app/service/cottage-reservation-service.service';
 import { UserService } from 'src/app/service/user-service.service';
 
@@ -26,6 +27,7 @@ export class CottageReservationsComponent implements OnInit {
   isReserved1:boolean;
   doesntHaveAllServices: boolean;
   doesntExistService: boolean;
+  @Output() seeUser = new EventEmitter<User>();
   ngOnInit(): void {
     if(this?.cottageForApp != null){
       this.cottageReservationService.getAllReservationsOfCottage(this.cottageForApp).subscribe(ret => {
@@ -130,6 +132,12 @@ export class CottageReservationsComponent implements OnInit {
     
     
     
+  }
+
+  seeUserProfile(email:string){
+    this.userService.getUserByEmail(email).subscribe(ret => {
+      this.seeUser.emit(ret);
+    })
   }
 
   get availableFrom1(){

@@ -36,6 +36,7 @@
                                 <td scope="col">{{item.client.address}}</td>
                                 <td scope="col">{{item.client.country}}</td>
                                 <td scope="col">{{item.client.city}}</td>
+                                <td scope="col"> <button type="button" (click)="seeUserProfile(item.client.email)" class="btn btn-primary btn-md mr-1 mb-2">See profile</button></td>
                             </tr>
                         </tbody>
                         <tbody>
@@ -68,6 +69,7 @@
                                 <td scope="col">{{newReservation1?.client?.mobileNumber}}</td>
                                 <td scope="col">{{newReservation1?.client?.address}}</td>
                                 <td scope="col">{{newReservation1?.client?.country}}</td>
+                                <td scope="col">{{newReservation1?.client?.city}}</td>
                                 <td>
                                     <button [disabled]="addReservationForm1.invalid" class="btn btn-primary btn-md mr-1 mb-2">Add</button>
                                     <div *ngIf="pickedUserError">

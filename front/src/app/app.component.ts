@@ -17,6 +17,7 @@ export class AppComponent {
   shipToShowUnauthenticated: Ship;
   instructorToShowUnauthenticated: User;
   clientToShowAuthenticated: User;
+  userForOwner: User;
 
   /**
    *
@@ -145,6 +146,13 @@ export class AppComponent {
   goToLoginPage(){
     this.changeNumber(2);
     sessionStorage.setItem("page", '2');
+  }
+
+  seeUserOwner(user: User){
+    this.userForOwner = user;
+    this.changeNumber(52);
+    sessionStorage.setItem("userForOwner", this.userForOwner.email.toString());
+    sessionStorage.setItem("page", '52');
   }
   
 }
