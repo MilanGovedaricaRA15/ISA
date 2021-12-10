@@ -26,7 +26,7 @@
           <app-owner-navbar (profile)="goToProfile()" *ngIf="showCompNumber === 3 || showCompNumber === 5 || showCompNumber === 6"></app-owner-navbar>
           <app-register-form-client (registerClient)="onRegisterClient($event)" *ngIf="showCompNumber === 21"></app-register-form-client>
           <app-registerForm (register)="onRegister($event)" *ngIf="showCompNumber === 1"></app-registerForm>
-          <app-login-form (login)="onLogin($event)" *ngIf="showCompNumber === 2"></app-login-form>
+          <app-login-form (login)="onLogin($event)" (clientToShowAuthenticated)="onClientLogin($event)" *ngIf="showCompNumber === 2"></app-login-form>
           <app-cottage-owner-profile (addNewCottageEmiter)="addNewCottage($event)" (cottageToShow)="onCottageClick($event)" *ngIf="showCompNumber === 3"></app-cottage-owner-profile>
           <app-cottage-profile [cottage]="cottageToShow" (cottageHotOffersForHotOffer)="updateHotOffers($event)" *ngIf="showCompNumber === 5"></app-cottage-profile>
           <app-hot-offer [cottageForApp]="cottageForHotOffers"  *ngIf="showCompNumber === 5"></app-hot-offer>
@@ -34,7 +34,7 @@
           <app-cottage-calendar [cottageForApp]="cottageForHotOffers" *ngIf="showCompNumber === 5"></app-cottage-calendar>
           <app-cottage-reservations [cottageForApp]="cottageForHotOffers" *ngIf="showCompNumber === 5"></app-cottage-reservations>
           <app-add-new-cottage (cottageToShow)="onCottageClick($event)" *ngIf="showCompNumber === 6"></app-add-new-cottage>
-          <app-client-profile *ngIf="showCompNumber === 31"></app-client-profile>
+          <app-client-profile [clientAuthenticated]="clientToShowAuthenticated" *ngIf="showCompNumber === 31"></app-client-profile>
         </div>
       </div>
     </div>

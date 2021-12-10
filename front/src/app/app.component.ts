@@ -16,6 +16,7 @@ export class AppComponent {
   cottageToShowUnauthenticated: Cottage;
   shipToShowUnauthenticated: Ship;
   instructorToShowUnauthenticated: User;
+  clientToShowAuthenticated: User;
 
   /**
    *
@@ -61,6 +62,12 @@ export class AppComponent {
     }
 
   }
+
+  onClientLogin(client: User) {
+    this.clientToShowAuthenticated = client;
+    sessionStorage.setItem("clientToShowAuthenticated", this.clientToShowAuthenticated.email);
+  }
+
   addNewCottage(b:Boolean){
     this.changeNumber(6);
     sessionStorage.setItem("page",'6');

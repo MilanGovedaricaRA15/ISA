@@ -13,6 +13,7 @@ export class LoginFormComponent implements OnInit {
   user: User;
   userDoesntExists: boolean = false;
   @Output() login = new EventEmitter<string>();
+  @Output() clientToShowAuthenticated = new EventEmitter<User>();
 
   constructor(private userService: UserService) {
     this.user = new User();
@@ -47,6 +48,7 @@ export class LoginFormComponent implements OnInit {
             this.userService.isClientLoggedIn().subscribe(res =>{
               if(res){
                 this.login.emit('client');
+                this.clientToShowAuthenticated.emit(this.user);
               }
             });
           
