@@ -17,5 +17,6 @@ export enum Role {
     cottageAdvertiser,
     boatAdvertiser,
     instructor,
-    administrator
+    administrator,
+    client
 }

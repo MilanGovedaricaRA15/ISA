@@ -24,7 +24,7 @@ export class LoginFormComponent implements OnInit {
   ngOnInit(): void {
     this.loginForm = new FormGroup({
       "email": new FormControl(null,[Validators.required,Validators.email]),
-      "password": new FormControl(null,[Validators.required,Validators.pattern('[a-zA-Z ]*')])
+      "password": new FormControl(null,[Validators.required,Validators.pattern('[a-zA-Z0-9]*')])
     });
   }
 
@@ -41,6 +41,12 @@ export class LoginFormComponent implements OnInit {
             this.userService.isCottageAdvertiserLoggedIn().subscribe(res =>{
               if(res){
                 this.login.emit('cottageAdvertiser');
+              }
+            });
+
+            this.userService.isClientLoggedIn().subscribe(res =>{
+              if(res){
+                this.login.emit('client');
               }
             });
           

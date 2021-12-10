@@ -117,6 +117,17 @@ export class UserService {
    
   }
 
+  public isClientLoggedIn(): Observable<boolean> {
+    return this.getLoggedUser().pipe(map(res => {
+      if(res.role.toString() === 'client'){
+        return true;
+      }
+      else{
+        return false;
+      }
+    }));
+  }
+
   public searchInstructorssByName(firstName: string, lastName: string): Observable<Array<User>> {
     if (!firstName) {
       firstName = "";

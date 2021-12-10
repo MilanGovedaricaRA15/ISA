@@ -112,7 +112,8 @@ public class UserController {
     @GetMapping("/users/getUserByEmail")
     public ResponseEntity<UserDTO> getUserByEmail(@RequestParam("email") String email, HttpServletRequest request) {
         if (request.getSession(false).getAttribute("role")!=null) {
-            if (request.getSession(false).getAttribute("role") == User.Role.cottageAdvertiser || request.getSession(false).getAttribute("role") == User.Role.boatAdvertiser) {
+            if (request.getSession(false).getAttribute("role") == User.Role.cottageAdvertiser || request.getSession(false).getAttribute("role") == User.Role.boatAdvertiser
+            || request.getSession(false).getAttribute("role") == User.Role.client) {
                 User user = userService.getUserByEmail(email);
                 if (user != null) {
                     return new ResponseEntity<UserDTO>(new UserDTO(user), HttpStatus.OK);

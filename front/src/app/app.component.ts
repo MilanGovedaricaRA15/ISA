@@ -38,6 +38,14 @@ export class AppComponent {
        sessionStorage.setItem("page",'2');
      }
     }
+
+    onRegisterClient(message: string) {
+      if(message === 'user_registered'){
+        this.changeNumber(2);
+        sessionStorage.setItem("page", '2');
+      }
+     }
+
   onLogin(message: string){
     if(message === 'cottageAdvertiser'){
       this.changeNumber(3);
@@ -46,6 +54,10 @@ export class AppComponent {
     else if(message === 'boatAdvertiser'){
       this.changeNumber(4);
       sessionStorage.setItem("page",'4');
+    }
+    else if (message === 'client') {
+      this.changeNumber(31);
+      sessionStorage.setItem("page", '31');
     }
 
   }
@@ -97,7 +109,6 @@ export class AppComponent {
 
   changeNumber(index: number) {
     this.showCompNumber = index;
-    
   }
 
   updateHotOffers(fromCottageComponent: Cottage){

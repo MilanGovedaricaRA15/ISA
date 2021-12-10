@@ -1,26 +1,26 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../service/user-service.service'
-import { User } from '../../model/user';
+import { Role, User } from '../../model/user';
 
 @Component({
-  selector: 'app-registerForm',
-  templateUrl: './registerForm.component.html',
-  styleUrls: ['./registerForm.component.css']
+  selector: 'app-register-form-client',
+  templateUrl: './register-form-client.component.html',
+  styleUrls: ['./register-form-client.component.css']
 })
-export class RegisterFormComponent implements OnInit {
+export class RegisterFormClientComponent implements OnInit {
 
+  registerForm:any;
   user: User;
   passwordTheSame: boolean = false;
   userExists: boolean = false;
-  @Output() register = new EventEmitter<string>();
+
+  @Output() registerClient = new EventEmitter<string>();
 
   constructor(private userService: UserService) {
     this.user = new User();
+    this.user.role = Role.client;
   }
-
-  registerForm:any;
-
   
   ngOnInit(): void {
     this.registerForm = new FormGroup({
@@ -31,18 +31,16 @@ export class RegisterFormComponent implements OnInit {
       "country": new FormControl(null, [Validators.required,Validators.pattern('[A-ZŠĐČĆŽ]{1}[a-zšđčćž]+( [A-ZŠĐČĆŽa-zšđčćž]{1}[a-zšđčćž]*)*')]),
       "city": new FormControl(null, [Validators.required,Validators.pattern('[A-ZŠĐČĆŽ]{1}[a-zšđčćž]+( [A-ZŠĐČĆŽa-zšđčćž]{1}[a-zšđčćž]*)*')]),
       "address": new FormControl(null, [Validators.required,Validators.pattern('([A-ZŠĐČĆŽ]{1}[a-zšđčćž]+ )+[0-9]+')]),
-      "role": new FormControl(null, [Validators.required]),
       "password": new FormControl(null, [Validators.required,Validators.pattern('[a-zA-Z0-9]*')]),
       "password2": new FormControl(null, [Validators.required,Validators.pattern('[a-zA-Z0-9]*')]),
-      "reason": new FormControl(null, [Validators.required,Validators.pattern('[a-zšđčćžA-ZŠĐČĆŽ ]*')])
     });
   }
 
   validatePass(){
-    if(this.registerForm.get('password').value === this.registerForm.get('password2').value) {
+    if (this.registerForm.get('password').value === this.registerForm.get('password2').value) {
        this.passwordTheSame = true;
     }
-    else{
+    else {
       this.passwordTheSame = false;
     }
   }
@@ -57,7 +55,7 @@ export class RegisterFormComponent implements OnInit {
         }
         else if(result === 'user_registered'){
           this.userExists = false;
-          this.register.emit('user_registered');
+          this.registerClient.emit('user_registered');
         }
       });
    }
@@ -83,9 +81,6 @@ export class RegisterFormComponent implements OnInit {
   }
   get address() {
     return this.registerForm.get('address');
-  }
-  get role() {
-    return this.registerForm.get('role');
   }
   get password() {
     return this.registerForm.get('password');

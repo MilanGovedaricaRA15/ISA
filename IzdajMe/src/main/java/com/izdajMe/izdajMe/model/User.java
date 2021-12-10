@@ -21,7 +21,8 @@ public class User {
         cottageAdvertiser,
         boatAdvertiser,
         instructor,
-        administrator
+        administrator,
+        client
     }
     protected Role role;
     protected String password;
