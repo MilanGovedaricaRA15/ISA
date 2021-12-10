@@ -1,0 +1,197 @@
+<div class="container rounded bg-white mt-5 mb-5">
+    <div class="row">
+    
+        <div class="col-md-5 border-right">
+            <div class="p-1 py-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="text-right">Edit Profile</h4>
+                </div>
+                <form class="content" [formGroup]="editAdministratorForm" (ngSubmit)="submitData()">
+                <div class="row mt-2">
+                    <div class="col-md-6"><label class="labels">First name:</label><input type="text" formControlName="firstName" [(ngModel)]="administratorChange.firstName"  class="form-control" placeholder="First Name"/>
+                        <div *ngIf="firstName.invalid && (firstName.touched || firstName.dirty)">
+                            <span class="error" *ngIf="firstName.errors?.required">First Name is required</span>
+                            <span class="error" *ngIf="firstName.errors?.pattern">Only letters allowed.First letter must be capital.</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6"><label class="labels">Last name:</label><input type="text" formControlName="lastName" [(ngModel)]="administratorChange.lastName"  class="form-control" placeholder="Last Name"/>
+                        <div *ngIf="lastName.invalid && (lastName.touched || lastName.dirty)">
+                            <span class="error" *ngIf="lastName.errors?.required">Last Name is required</span>
+                            <span class="error" *ngIf="lastName.errors?.pattern">Only letters allowed.First letter must be capital.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-12"><label class="labels">Mobile number:</label><input type="text" formControlName="mobileNumber" [(ngModel)]="administratorChange.mobileNumber"  class="form-control" placeholder="Mobile number"/>
+                        <div *ngIf="mobileNumber.invalid && (mobileNumber.touched || mobileNumber.dirty)">
+                            <span class="error" *ngIf="mobileNumber.errors?.required">Mobile number is required</span>
+                            <span class="error" *ngIf="mobileNumber.errors?.pattern">Only numbers allowed</span>
+                        </div>
+                    </div>
+                    <div class="col-md-12"><label class="labels">Address:</label> <input type="text" formControlName="address" [(ngModel)]="administratorChange.address"  class="form-control" placeholder="Address"/>
+                        <div *ngIf="address.invalid && (address.touched || address.dirty)">
+                            <span class="error" *ngIf="address.errors?.required">Address is required</span>
+                            <span class="error" *ngIf="address.errors?.pattern">Enter valid address </span>
+                        </div>
+                    </div>
+                    <div class="col-md-12"><label class="labels">Contry:</label><input type="text" formControlName="country" [(ngModel)]="administratorChange.country"  class="form-control" placeholder="Country"/>
+                        <div *ngIf="country.invalid && (country.touched || country.dirty)">
+                            <span class="error" *ngIf="country.errors?.required">Country is required</span>
+                            <span class="error" *ngIf="country.errors?.pattern">Only letters allowed.First letter must be capital.</span>
+                        </div>
+                    </div>
+                    <div class="col-md-12"><label class="labels">E-mail:</label><input type="text"  [value]="administratorChange.email" class="form-control" placeholder="E-mail" disabled/>
+                        
+                    </div>
+                    <div class="col-md-12"><label class="labels">City:</label><input type="text" formControlName="city" [(ngModel)]="administratorChange.city"  class="form-control" placeholder="City"/>
+                        <div *ngIf="city.invalid && (city.touched || city.dirty)">
+                            <span class="error" *ngIf="city.errors?.required">City is required</span>
+                            <span class="error" *ngIf="city.errors?.pattern">Only letters allowed.First letter must be capital.</span>
+                        </div>
+                    </div>
+                    <div class="col-md-12"><label class="labels">Reason:</label><input type="text" formControlName="reason" [(ngModel)]="administratorChange.reason"  class="form-control" placeholder="Reason of registration"/>
+                        <div *ngIf="reason.invalid && (reason.touched || reason.dirty)">
+                            <span class="error" *ngIf="reason.errors?.required">Reason is required</span>
+                            <span class="error" *ngIf="reason.errors?.pattern">Only letters allowed</span>
+                        </div>
+                    </div>
+                    <div class="col-md-12"><label class="labels">Current password</label><input type="password" formControlName="password" [(ngModel)]="administratorChange.password"  class="form-control" placeholder="Password"/>
+                        <div *ngIf="password.invalid && (password.touched || password.dirty)">
+                            <span class="error" *ngIf="password.errors?.required">Password is required</span>
+                            <span class="error" *ngIf="password.errors?.pattern">Only letters allowed</span>
+                        </div>
+                        <div *ngIf="wrongPassword1">
+                            <span class="error">Password is wrong</span>
+                        </div>
+                    </div>
+                    <div class="mt-5 text-center"><button class="btn btn-primary profile-button" [disabled]="editAdministratorForm.invalid">Edit Profile</button></div>
+                    
+                </div>
+                </form>
+                <form class="content" [formGroup]="editPasswordForm" (ngSubmit)="submitPassword()">
+                <div class="row mt-3">
+                    <div class="col-md-12"><label class="labels">Current password</label><input type="password" formControlName="currentPassword"  class="form-control" placeholder="Password"/>
+                        <div *ngIf="currentPassword.invalid && (currentPassword.touched || currentPassword.dirty)">
+                            <span class="error" *ngIf="currentPassword.errors?.required">Password is required</span>
+                            <span class="error" *ngIf="currentPassword.errors?.pattern">Only letters allowed</span>
+                        </div>
+                        <div *ngIf="wrongPassword">
+                            <span class="error">Password is wrong</span>
+                        </div>
+                    </div>
+                    <div class="col-md-12"><label class="labels">New password</label><input type="password" formControlName="newPassword" [(ngModel)]="passwordChange.password"  class="form-control" placeholder="Password"/>
+                        <div *ngIf="newPassword.invalid && (newPassword.touched || newPassword.dirty)">
+                            <span class="error" *ngIf="newPassword.errors?.required">Password is required</span>
+                            <span class="error" *ngIf="newPassword.errors?.pattern">Only letters allowed</span>
+                        </div>
+                    </div>
+                    <div class="col-md-12"><label class="labels">Repeat new password</label><input type="password" formControlName="newPassword1" (focusout)="validatePass()"  class="form-control" placeholder="Password"/>
+                        <div *ngIf="newPassword1.invalid && (newPassword1.touched || newPassword1.dirty)">
+                            <span class="error" *ngIf="newPassword1.errors?.required">Password is required</span>
+                            <span class="error" *ngIf="newPassword1.errors?.pattern">Only letters allowed</span>
+                        </div>
+                        <div *ngIf="wrongPassword2">
+                            <span class="error">Passwords are not the same</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-5 text-center"><button class="btn btn-primary profile-button" [disabled]="editPasswordForm.invalid">Edit Password</button></div>
+                </form>
+            </div>
+        </div>
+        <div class="col-2" style="margin-top: 250px; margin-left: 300px;">
+            <button class="btn btn-primary"> Add administrator </button>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title m-b-0">All users</h5>
+                </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="thead-light">
+                            <tr >
+                                <th scope="col">Name</th>
+                                <th scope="col">Surname</th>
+                                <th scope="col">E-mail</th>
+                                <th scope="col">Mobile number</th>
+                                <th scope="col">Address</th>
+                                <th scope="col">City</th>
+                                <th scope="col">Country</th>
+                                <th scope="col">Role</th>
+                                <th scope="col">Reason</th>
+                                <th scope="col">Verified</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngFor="let item of allUsers;">
+                            <tr *ngIf="item.role.toString() !== 'administratorSuperior'" >
+                                <td scope="col">{{item.firstName}}</td>
+                                <td scope="col">{{item.lastName}}</td>
+                                <td scope="col">{{item.email}}</td>
+                                <td scope="col">{{item.mobileNumber}}</td>
+                                <td scope="col">{{item.address}}</td>
+                                <td scope="col">{{item.city}}</td>
+                                <td scope="col">{{item.country}}</td>
+                                <td scope="col">{{item.role}}</td>
+                                <td scope="col">{{item.reason}}</td>
+                                <td scope="col">{{item.verified}}</td>
+                                <td scope="col" *ngIf="item.verified === false ">
+                                    <button class="btn btn-success" style="margin-bottom: 2px;"> Accept </button>
+                                    <button class="btn btn-danger"> Decline </button>
+                                </td>
+                                <td scope="col" *ngIf="item.verified">
+                                    <button class="btn btn-danger"> Delete user </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title m-b-0">All cottages</h5>
+                </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="thead-light">
+                            <tr >
+                                <th scope="col">Name</th>
+                                <th scope="col">Address</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Number of rooms</th>
+                                <th scope="col">Number of beds</th>
+                                <th scope="col">Rules</th>
+                                <th scope="col">Owner</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngFor="let item of allCottages;">
+                            <tr>
+                                <td scope="col">{{item.name}}</td>
+                                <td scope="col">{{item.address}}</td>
+                                <td scope="col">{{item.description}}</td>
+                                <td scope="col">{{item.numOfRooms}}</td>
+                                <td scope="col">{{item.numOfBeds}}</td>
+                                <td scope="col">{{item.rules}}</td>
+                                <td scope="col">{{item.owner.firstName}} {{item.owner.lastName}}</td>
+                                <td> <button class="btn btn-danger"> Delete cottage </button> </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -23,6 +23,7 @@
           <app-add-new-cottage (cottageToShow)="onCottageClick($event)" *ngIf="showCompNumber === 6"></app-add-new-cottage>
           <app-administrator-profile *ngIf="showCompNumber === 7"></app-administrator-profile>
           <app-change-administrators-password (nextProfile)="changeProfile($event)" *ngIf="showCompNumber === 9"></app-change-administrators-password>
+          <app-superior-administrator-profile *ngIf="showCompNumber === 8"></app-superior-administrator-profile>
         </div>
       </div>
     </div>

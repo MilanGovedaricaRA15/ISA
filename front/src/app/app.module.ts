@@ -19,6 +19,7 @@ import { OwnerReservationsComponent } from './components/owner-reservations/owne
 import { CottageReservationsComponent } from './components/cottage-reservations/cottage-reservations.component';
 import { AdministratorProfileComponent } from './components/administrator-profile/administrator-profile/administrator-profile.component';
 import { ChangeAdministratorsPasswordComponent } from './components/change-administrators-password/change-administrators-password/change-administrators-password.component';
+import { SuperiorAdministratorProfileComponent } from './components/superior-administrators-profile/superior-administrator-profile/superior-administrator-profile.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { ChangeAdministratorsPasswordComponent } from './components/change-admin
     OwnerReservationsComponent,
     CottageReservationsComponent,
     AdministratorProfileComponent,
-    ChangeAdministratorsPasswordComponent
+    ChangeAdministratorsPasswordComponent,
+    SuperiorAdministratorProfileComponent
   ],
   imports: [
     BrowserModule,
