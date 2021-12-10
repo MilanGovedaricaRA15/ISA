@@ -1,5 +1,10 @@
 <app-home-page-navbar (homePage)="goToHomePage()" (cottagesPage)="goToCottagesPage()" (shipsPage)="goToShipsPage()" (instructorsPage)="goToInstructorsPage()" (loginPage)="goToLoginPage()" 
           *ngIf="showCompNumber === 0 || showCompNumber === 1 || showCompNumber === 2 || showCompNumber === 11 || showCompNumber === 12 || showCompNumber === 13 || showCompNumber === 15 || showCompNumber === 16 || showCompNumber === 17 || showCompNumber === 21"></app-home-page-navbar>
+<app-client-navbar (clientProfile)="goToClientProfile()" (cottagesPageClient)="goToCottagesPageClient()" (shipsPageClient)="goToShipsPageClient()" (instructorsPageClient)="goToInstructorsPageClient()"
+          (cottagesReservationsPageClient)="goToCottagesReservationsPageClient()" (shipsReservationsPageClient)="goToShipsReservationsPageClient()" (instructorsReservationsPageClient)="goToInstructorsReservationsPageClient()"
+          *ngIf="showCompNumber === 31 || showCompNumber === 32 || showCompNumber === 33 || showCompNumber === 34
+          || showCompNumber === 35 || showCompNumber === 36 || showCompNumber === 37
+          || showCompNumber === 38 || showCompNumber === 39 || showCompNumber === 40"></app-client-navbar>
 <div class="container">
   <div class="row">
     <div class="col-md-12">
@@ -16,13 +21,29 @@
               <a class="btn btn-info" (click)="changeNumber(2)">Login</a>
             </li>
           </ul>
+
           <app-home-page *ngIf="showCompNumber === 0"></app-home-page>
+          
           <app-cottages-page (cottageToShowUnauthenticated)="onCottageUnauthenticatedClick($event)" *ngIf="showCompNumber === 11"></app-cottages-page>
           <app-ships-page (shipToShowUnauthenticated)="onShipUnauthenticatedClick($event)" *ngIf="showCompNumber === 12"></app-ships-page>
           <app-instructors-page (instructorToShowUnauthenticated)="onInstructorUnauthenticatedClick($event)" *ngIf="showCompNumber === 13"></app-instructors-page>
+          
           <app-cottage-profile-unauthenticated-user [cottageUnauthenticated]="cottageToShowUnauthenticated" *ngIf="showCompNumber === 15"></app-cottage-profile-unauthenticated-user>
           <app-ship-profile-unauthenticated-user [shipUnauthenticated]="shipToShowUnauthenticated" *ngIf="showCompNumber === 16"></app-ship-profile-unauthenticated-user>
           <app-instructor-profile-unauthenticated-user [instructorUnauthenticated]="instructorToShowUnauthenticated" *ngIf="showCompNumber === 17"></app-instructor-profile-unauthenticated-user>
+          
+          <app-cottages-page-client (cottageToShowClient)="onCottageClientClick($event)" *ngIf="showCompNumber === 32"></app-cottages-page-client>
+          <app-ships-page-client (shipToShowClient)="onShipClientClick($event)" *ngIf="showCompNumber === 33"></app-ships-page-client>
+          <app-instructors-page-client (instructorToShowClient)="onInstructorClientClick($event)" *ngIf="showCompNumber === 34"></app-instructors-page-client>
+          
+          <app-cottage-profile-client [cottageClient]="cottageToShowClient" *ngIf="showCompNumber === 35"></app-cottage-profile-client>
+          <app-ship-profile-client [shipClient]="shipToShowClient" *ngIf="showCompNumber === 36"></app-ship-profile-client>
+          <app-instructor-profile-client [instructorClient]="instructorToShowClient" *ngIf="showCompNumber === 37"></app-instructor-profile-client>
+
+          <app-cottages-reservations-page-client *ngIf="showCompNumber === 38"></app-cottages-reservations-page-client>
+          <app-ships-reservations-page-client *ngIf="showCompNumber === 39"></app-ships-reservations-page-client>
+          <app-instructors-reservations-page-client *ngIf="showCompNumber === 40"></app-instructors-reservations-page-client>
+          
           <app-owner-navbar (profile)="goToProfile()" *ngIf="showCompNumber === 3 || showCompNumber === 5 || showCompNumber === 6 || showCompNumber === 52"></app-owner-navbar>
           <app-register-form-client (registerClient)="onRegisterClient($event)" *ngIf="showCompNumber === 21"></app-register-form-client>
           <app-registerForm (register)="onRegister($event)" *ngIf="showCompNumber === 1"></app-registerForm>

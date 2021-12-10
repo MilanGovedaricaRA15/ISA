@@ -16,6 +16,9 @@ export class AppComponent {
   cottageToShowUnauthenticated: Cottage;
   shipToShowUnauthenticated: Ship;
   instructorToShowUnauthenticated: User;
+  cottageToShowClient: Cottage;
+  shipToShowClient: Ship;
+  instructorToShowClient: User;
   clientToShowAuthenticated: User;
   userForOwner: User;
 
@@ -79,6 +82,27 @@ export class AppComponent {
     this.changeNumber(5);
     sessionStorage.setItem("page", '5');
     sessionStorage.setItem("cottageToShow", this.cottageToShow.id.toString());
+  }
+
+  onCottageClientClick(cottage: Cottage){
+    this.cottageToShowClient = cottage;
+    this.changeNumber(35);
+    sessionStorage.setItem("page", '35');
+    sessionStorage.setItem("cottageToShowClient", cottage.id.toString());
+  }
+
+  onShipClientClick(ship: Ship){
+    this.shipToShowClient = ship;
+    this.changeNumber(36);
+    sessionStorage.setItem("page", '36');
+    sessionStorage.setItem("shipToShowClient", ship.id.toString());
+  }
+
+  onInstructorClientClick(instructor: User){
+    this.instructorToShowClient = instructor;
+    this.changeNumber(37);
+    sessionStorage.setItem("page", '37');
+    sessionStorage.setItem("instructorToShowClient", instructor.email);
   }
 
   onCottageUnauthenticatedClick(cottage: Cottage){
@@ -146,6 +170,41 @@ export class AppComponent {
   goToLoginPage(){
     this.changeNumber(2);
     sessionStorage.setItem("page", '2');
+  }
+
+  goToClientProfile(){
+    this.changeNumber(31);
+    sessionStorage.setItem("page", '31');
+  }
+
+  goToCottagesPageClient(){
+    this.changeNumber(32);
+    sessionStorage.setItem("page", '32');
+  }
+
+  goToShipsPageClient(){
+    this.changeNumber(33);
+    sessionStorage.setItem("page", '33');
+  }
+
+  goToInstructorsPageClient(){
+    this.changeNumber(34);
+    sessionStorage.setItem("page", '34');
+  }
+
+  goToCottagesReservationsPageClient(){
+    this.changeNumber(38);
+    sessionStorage.setItem("page", '38');
+  }
+
+  goToShipsReservationsPageClient(){
+    this.changeNumber(39);
+    sessionStorage.setItem("page", '39');
+  }
+
+  goToInstructorsReservationsPageClient(){
+    this.changeNumber(40);
+    sessionStorage.setItem("page", '40');
   }
 
   seeUserOwner(user: User){

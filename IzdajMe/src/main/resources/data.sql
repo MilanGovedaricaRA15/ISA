@@ -28,6 +28,8 @@ insert into users (id, address, city, country, email, first_name, last_name, mob
 values (7, 'Sarajevska 7', 'Sarajevo', 'FBiH', 'sar7@gmail.com', 'Marko', 'Vojinovic', 064456456, 'aaaa', null, 2, TRUE);
 insert into users (id, address, city, country, email, first_name, last_name, mobile_number, password, reason, role, verified)
 values (8, 'Focanska 8', 'Foca', 'RS', 'foca8@gmail.com', 'Darko', 'Bodiroga', 066589001, 'aaaa', null, 2, TRUE);
+insert into users (id, address, city, country, email, first_name, last_name, mobile_number, password, reason, role, verified)
+values (9, 'Focanska 9', 'Foca', 'RS', 'foca9@gmail.com', 'Luka', 'Lukovic', 058212546, 'aaaa', null, 4, TRUE);
 
 insert into cottages (id, address, available_from, available_till, description, images, name, num_of_beds, num_of_rooms, rules, services, owner_id, cost_per_night)
 values (1, 'Desivoje 1',DATE('2021-09-01'),DATE('2022-02-01'),'Na jezeru',null, 'Micova', 3, 3, 'Nisu dozvoljene zivotinje', null, 1, 50);

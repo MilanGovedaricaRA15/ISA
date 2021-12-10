@@ -3,16 +3,16 @@
     <div class="column" *ngIf="viewInformation">
         <h1>Client informations</h1>
         
-        <label style="width: 20%;">First name:</label>{{client.firstName}} <br>
-        <label style="width: 20%;">Last name:</label>{{client.lastName}} <br>
-        <label style="width: 20%;">Email:</label>{{client.email}} <br>
-        <label style="width: 20%;">Mobile number:</label>{{client.mobileNumber}} <br>
-        <label style="width: 20%;">Country:</label>{{client.country}} <br>
-        <label style="width: 20%;">City:</label>{{client.city}} <br>
-        <label style="width: 20%;">Address:</label>{{client.address}} <br>
-        <label style="width: 20%;">Points:</label>25 <br>
-        <label style="width: 20%;">Type:</label>Bronze <br>
-        <label style="width: 20%;">Loyalty:</label>20% off<br>
+        <label style="width: 40%;">First name:</label>{{client.firstName}} <br>
+        <label style="width: 40%;">Last name:</label>{{client.lastName}} <br>
+        <label style="width: 40%;">Email:</label>{{client.email}} <br>
+        <label style="width: 40%;">Mobile number:</label>{{client.mobileNumber}} <br>
+        <label style="width: 40%;">Country:</label>{{client.country}} <br>
+        <label style="width: 40%;">City:</label>{{client.city}} <br>
+        <label style="width: 40%;">Address:</label>{{client.address}} <br>
+        <label style="width: 40%;">Points:</label>25 <br>
+        <label style="width: 40%;">Type:</label>Bronze <br>
+        <label style="width: 40%;">Loyalty:</label>20% off<br>
 
         <a href="#" (click)="editInformations()">Edit informations</a> <br>
         <a href="#" (click)="editPassword()">Change password</a> <br>
@@ -24,43 +24,43 @@
 
       <form [formGroup]="registerForm" (ngSubmit)="changeInformations()">
       
-        <label style="width: 20%;">First name:</label>
+        <label style="width: 40%;">First name:</label>
         <input type="text" id="firstName" formControlName="firstName" [(ngModel)]="client.firstName"/>
         <div *ngIf="firstName.invalid && (firstName.touched || firstName.dirty)">
           <span class="error" *ngIf="firstName.errors?.required">First Name is required</span>
           <span class="error" *ngIf="firstName.errors?.pattern">Only letters allowed. First letter must be capital.</span>
         </div> <br>
 
-        <label style="width: 20%;">Last name:</label>
+        <label style="width: 40%;">Last name:</label>
         <input type="text" id="lastName" formControlName="lastName" [(ngModel)]="client.lastName"/>
         <div *ngIf="lastName.invalid && (lastName.touched || lastName.dirty)">
           <span class="error" *ngIf="lastName.errors?.required">Last Name is required</span>
           <span class="error" *ngIf="lastName.errors?.pattern">Only letters allowed. First letter must be capital.</span>
         </div> <br>
           
-        <label style="width: 20%;">Email:</label><input type="text" id="Email" value="{{client.email}}" disabled/> <br>
-        <label style="width: 20%;">Mobile number:
+        <label style="width: 40%;">Email:</label><input type="text" id="Email" value="{{client.email}}" disabled/> <br>
+        <label style="width: 40%;">Mobile number:
         </label><input type="text" id="mobileNumber" formControlName="mobileNumber" [(ngModel)]="client.mobileNumber"/>
         <div *ngIf="mobileNumber.invalid && (mobileNumber.touched || mobileNumber.dirty)">
           <span class="error" *ngIf="mobileNumber.errors?.required">Mobile number is required</span>
           <span class="error" *ngIf="mobileNumber.errors?.pattern">Only numbers allowed</span>
         </div> <br>
           
-        <label style="width: 20%;">Country:</label>
+        <label style="width: 40%;">Country:</label>
         <input type="text" id="country" formControlName="country" [(ngModel)]="client.country"/>
         <div *ngIf="country.invalid && (country.touched || country.dirty)">
           <span class="error" *ngIf="country.errors?.required">Country is required</span>
           <span class="error" *ngIf="country.errors?.pattern">Only letters allowed. First letter must be capital.</span>
         </div> <br>
         
-        <label style="width: 20%;">City:</label>
+        <label style="width: 40%;">City:</label>
         <input type="text" id="city" formControlName="city" [(ngModel)]="client.city"/>
         <div *ngIf="city.invalid && (city.touched || city.dirty)">
           <span class="error" *ngIf="city.errors?.required">City is required</span>
           <span class="error" *ngIf="city.errors?.pattern">Only letters allowed. First letter must be capital.</span>
         </div> <br>
         
-        <label style="width: 20%;">Address:</label>
+        <label style="width: 40%;">Address:</label>
         <input type="text" id="address" formControlName="address" [(ngModel)]="client.address"/>
         <div *ngIf="address.invalid && (address.touched || address.dirty)">
           <span class="error" *ngIf="address.errors?.required">Address is required</span>

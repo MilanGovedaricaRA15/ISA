@@ -28,6 +28,16 @@ import { InstructorProfileUnauthenticatedUserComponent } from './components/inst
 import { RegisterFormClientComponent } from './components/register-form-client/register-form-client.component';
 import { ClientProfileComponent } from './components/client-profile/client-profile.component';
 import { ClientProfileForOwnerComponent } from './components/client-profile-for-owner/client-profile-for-owner.component';
+import { ClientNavbarComponent } from './components/client-navbar/client-navbar.component';
+import { CottagesPageClientComponent } from './components/cottages-page-client/cottages-page-client.component';
+import { ShipsPageClientComponent } from './components/ships-page-client/ships-page-client.component';
+import { InstructorsPageClientComponent } from './components/instructors-page-client/instructors-page-client.component';
+import { CottageProfileClientComponent } from './components/cottage-profile-client/cottage-profile-client.component';
+import { ShipProfileClientComponent } from './components/ship-profile-client/ship-profile-client.component';
+import { InstructorProfileClientComponent } from './components/instructor-profile-client/instructor-profile-client.component';
+import { CottagesReservationsPageClientComponent } from './components/cottages-reservations-page-client/cottages-reservations-page-client.component';
+import { ShipsReservationsPageClientComponent } from './components/ships-reservations-page-client/ships-reservations-page-client.component';
+import { InstructorsReservationsPageClientComponent } from './components/instructors-reservations-page-client/instructors-reservations-page-client.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +62,17 @@ import { ClientProfileForOwnerComponent } from './components/client-profile-for-
     InstructorProfileUnauthenticatedUserComponent,
     RegisterFormClientComponent,
     ClientProfileComponent,
-    ClientProfileForOwnerComponent
+    ClientProfileForOwnerComponent,
+    ClientNavbarComponent,
+    CottagesPageClientComponent,
+    ShipsPageClientComponent,
+    InstructorsPageClientComponent,
+    CottageProfileClientComponent,
+    ShipProfileClientComponent,
+    InstructorProfileClientComponent,
+    CottagesReservationsPageClientComponent,
+    ShipsReservationsPageClientComponent,
+    InstructorsReservationsPageClientComponent
   ],
   imports: [
     BrowserModule,
