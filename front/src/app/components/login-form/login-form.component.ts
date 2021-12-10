@@ -58,7 +58,7 @@ export class LoginFormComponent implements OnInit {
             });
             this.userService.isNewAdministratorLoggedIn().subscribe(res =>{
               if(res){
-                //this.login.emit('administratorFirstLogged');
+                this.login.emit('administratorFirstLogged');
               }
             });
           

@@ -38,7 +38,6 @@ public class UserController {
         else{
            return new ResponseEntity<String>("user_registered",HttpStatus.CREATED);
         }
-
     }
 
     @PutMapping("/users/changeUser")
@@ -57,6 +56,16 @@ public class UserController {
         }
         else{
            return new ResponseEntity<Boolean>(false, HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
+
+    @PutMapping("/users/changeAdministratorsPassword")
+    public ResponseEntity<Boolean> changeAdministratorsPassword(@RequestBody User user) {
+        if(userService.changeAdministratorsPassword(user)){
+            return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<Boolean>(false, HttpStatus.NOT_ACCEPTABLE);
         }
     }
 

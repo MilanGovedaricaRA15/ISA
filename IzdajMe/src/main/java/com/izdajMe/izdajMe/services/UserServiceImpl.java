@@ -66,6 +66,8 @@ public class UserServiceImpl implements UserService {
     public Boolean changePasswordUser(List<User> users) {
         User foundUser = userRepository.findByIdAndPassword(users.get(0).getId(),users.get(1).getPassword());
         if (foundUser != null){
+            if(users.get(0).getRole().toString() == User.Role.administratorFirstLogged.toString())
+                users.get(0).setRole(User.Role.administrator);
             userRepository.save(users.get(0));
             return true;
         }
@@ -74,4 +76,15 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    public Boolean changeAdministratorsPassword(User user) {
+        User foundUser = userRepository.findByEmail(user.getEmail());
+        if (foundUser != null){
+            user.setRole(User.Role.administrator);
+            userRepository.save(user);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 }

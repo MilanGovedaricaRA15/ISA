@@ -93,5 +93,10 @@ export class AppComponent {
   updateHotOffers(fromCottageComponent: Cottage){
     this.cottageForHotOffers = fromCottageComponent;
   }
+
+  changeProfile(message: string){
+    this.changeNumber(7);
+    sessionStorage.setItem("page",'7');
+  }
   
 }

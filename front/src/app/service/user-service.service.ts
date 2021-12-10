@@ -14,6 +14,7 @@ export class UserService {
   private usersUrlGetLoggedUser: string;
   private usersUrlChangeUser: string;
   private usersUrlChangePasswordUser: string;
+  private changeAdministratorsPassword: string;
 
   constructor(private http: HttpClient) {
     this.allUsersUrl = 'http://localhost:8080/users/getAllUsers';
@@ -23,6 +24,7 @@ export class UserService {
     this.usersUrlGetUserByEmail = 'http://localhost:8080/users/getUserByEmail';
     this.usersUrlChangeUser = 'http://localhost:8080/users/changeUser';
     this.usersUrlChangePasswordUser = 'http://localhost:8080/users/changePasswordUser';
+    this.changeAdministratorsPassword = 'http://localhost:8080/users/changeAdministratorsPassword';
   }
 
   public register(user: User): Observable<string> {
@@ -51,6 +53,13 @@ export class UserService {
     user1.password = password;
     users.push(user1)
     return this.http.put<boolean>(this.usersUrlChangePasswordUser, users);
+  }
+
+  public changeAdminsPassword(user: User) {
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+  
+    return this.http.put<string>(this.changeAdministratorsPassword, user, {headers: headers});
   }
   
 

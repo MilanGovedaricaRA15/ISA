@@ -1,13 +1,15 @@
-<nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark p-3 mb-3">
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a (click)="goToProfile()" class="nav-link" href="#">
-          <i class="fa fa-home"></i>
-          Profile
-          <span class="sr-only">(current)</span>
-        </a>
-      </li>
-    </ul>
-  </div>
-</nav>
+<div *ngIf="user.role.toString() !== 'administratorFirstLogged'">
+  <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark p-3 mb-3">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a (click)="goToProfile()" class="nav-link" href="#">
+            <i class="fa fa-home"></i>
+            Profile
+            <span class="sr-only">(current)</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</div>

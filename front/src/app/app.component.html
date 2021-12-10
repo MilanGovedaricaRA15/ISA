@@ -22,6 +22,7 @@
           <app-cottage-reservations  [cottageForApp]="cottageForHotOffers" *ngIf="showCompNumber === 5"></app-cottage-reservations>
           <app-add-new-cottage (cottageToShow)="onCottageClick($event)" *ngIf="showCompNumber === 6"></app-add-new-cottage>
           <app-administrator-profile *ngIf="showCompNumber === 7"></app-administrator-profile>
+          <app-change-administrators-password (nextProfile)="changeProfile($event)" *ngIf="showCompNumber === 9"></app-change-administrators-password>
         </div>
       </div>
     </div>
