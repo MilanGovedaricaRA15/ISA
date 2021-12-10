@@ -49,7 +49,7 @@ export class RegisterFormClientComponent implements OnInit {
   submitData()
   {
     if(this.passwordTheSame){
-      this.userService.register(this.user).subscribe(result => {
+      this.userService.registerClient(this.user).subscribe(result => {
         if(result === 'user_already_registered'){
           this.userExists = true;
         }
@@ -87,9 +87,6 @@ export class RegisterFormClientComponent implements OnInit {
   }
   get password2() {
     return this.registerForm.get('password2');
-  }
-  get reason() {
-    return this.registerForm.get('reason');
   }
 
 }

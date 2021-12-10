@@ -6,6 +6,8 @@ import com.izdajMe.izdajMe.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailException;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,6 +19,8 @@ import java.util.stream.*;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private EmailService emailService;
 
     @Override
     public List<User> getAllUsers() {
@@ -125,6 +129,34 @@ public class UserServiceImpl implements UserService {
         }
 
         return searchedShips;
+    }
+
+    public Boolean saveClient(User user) {
+        User foundUser = userRepository.findByEmail(user.getEmail());
+
+        if(foundUser != null){
+            return true;
+        }
+
+        user.setVerified(false); //false
+        userRepository.save(user);
+        sendNotificationForReservation(user);
+        return false;
+    }
+
+    private void sendNotificationForReservation(User user) throws MailException {
+        SimpleMailMessage mail = new SimpleMailMessage();
+        mail.setTo(user.getEmail());
+        mail.setFrom("rajkorajkeza@gmail.com");
+        mail.setSubject("Activate your account");
+        mail.setText("To activate your account press this link: " + "http://localhost:8080/users/activate?id=" + user.getId());
+        emailService.sendSimpleMessage(mail);
+    }
+
+    public void activate(Long id){
+        User user = userRepository.findById(id).get();
+        user.setVerified(true);
+        userRepository.save(user);
     }
 
 }
