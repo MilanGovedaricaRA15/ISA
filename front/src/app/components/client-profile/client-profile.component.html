@@ -1,7 +1,5 @@
 <div class="row">
-    <div class="column">
-      <h1>Links</h1>
-    </div>
+    
     <div class="column" *ngIf="viewInformation">
         <h1>Client informations</h1>
         
@@ -12,23 +10,96 @@
         <label style="width: 20%;">Country:</label>{{client.country}} <br>
         <label style="width: 20%;">City:</label>{{client.city}} <br>
         <label style="width: 20%;">Address:</label>{{client.address}} <br>
+        <label style="width: 20%;">Points:</label>25 <br>
+        <label style="width: 20%;">Type:</label>Bronze <br>
+        <label style="width: 20%;">Loyalty:</label>20% off<br>
 
-        <a href="#" (click)="editInformations()">Edit informations</a>
+        <a href="#" (click)="editInformations()">Edit informations</a> <br>
+        <a href="#" (click)="editPassword()">Change password</a> <br>
+
+    </div>
+
+    <div class="column" *ngIf="editInformation">
+      <h1>Edit informations</h1>
+
+      <form [formGroup]="registerForm" (ngSubmit)="changeInformations()">
+      
+        <label style="width: 20%;">First name:</label>
+        <input type="text" id="firstName" formControlName="firstName" [(ngModel)]="client.firstName"/>
+        <div *ngIf="firstName.invalid && (firstName.touched || firstName.dirty)">
+          <span class="error" *ngIf="firstName.errors?.required">First Name is required</span>
+          <span class="error" *ngIf="firstName.errors?.pattern">Only letters allowed. First letter must be capital.</span>
+        </div> <br>
+
+        <label style="width: 20%;">Last name:</label>
+        <input type="text" id="lastName" formControlName="lastName" [(ngModel)]="client.lastName"/>
+        <div *ngIf="lastName.invalid && (lastName.touched || lastName.dirty)">
+          <span class="error" *ngIf="lastName.errors?.required">Last Name is required</span>
+          <span class="error" *ngIf="lastName.errors?.pattern">Only letters allowed. First letter must be capital.</span>
+        </div> <br>
+          
+        <label style="width: 20%;">Email:</label><input type="text" id="Email" value="{{client.email}}" disabled/> <br>
+        <label style="width: 20%;">Mobile number:
+        </label><input type="text" id="mobileNumber" formControlName="mobileNumber" [(ngModel)]="client.mobileNumber"/>
+        <div *ngIf="mobileNumber.invalid && (mobileNumber.touched || mobileNumber.dirty)">
+          <span class="error" *ngIf="mobileNumber.errors?.required">Mobile number is required</span>
+          <span class="error" *ngIf="mobileNumber.errors?.pattern">Only numbers allowed</span>
+        </div> <br>
+          
+        <label style="width: 20%;">Country:</label>
+        <input type="text" id="country" formControlName="country" [(ngModel)]="client.country"/>
+        <div *ngIf="country.invalid && (country.touched || country.dirty)">
+          <span class="error" *ngIf="country.errors?.required">Country is required</span>
+          <span class="error" *ngIf="country.errors?.pattern">Only letters allowed. First letter must be capital.</span>
+        </div> <br>
+        
+        <label style="width: 20%;">City:</label>
+        <input type="text" id="city" formControlName="city" [(ngModel)]="client.city"/>
+        <div *ngIf="city.invalid && (city.touched || city.dirty)">
+          <span class="error" *ngIf="city.errors?.required">City is required</span>
+          <span class="error" *ngIf="city.errors?.pattern">Only letters allowed. First letter must be capital.</span>
+        </div> <br>
+        
+        <label style="width: 20%;">Address:</label>
+        <input type="text" id="address" formControlName="address" [(ngModel)]="client.address"/>
+        <div *ngIf="address.invalid && (address.touched || address.dirty)">
+          <span class="error" *ngIf="address.errors?.required">Address is required</span>
+          <span class="error" *ngIf="address.errors?.pattern">Enter valid address </span>
+        </div> <br>
+        <div>
+          <label style="width: 40%;">Enter password to complete:</label>
+            <input type="password" id="password"/>
+        </div>
+          
+        <button type="submit" class="btn" [disabled]="registerForm.invalid">Change informations</button>
+      </form>
+      
+    </div>
+
+    <div class="column" *ngIf="passwordChange">
+      <h1>Password change</h1>
+
+      <form [formGroup]="changePasswordForm" (ngSubmit)="changePassword()">
+        <label style="width: 40%;">Enter old password:</label>
+        <input type="password" id="oldPassword" formControlName="oldPassword" placeholder="Old password" (focusout)="validateOldPassword()"/> <br>
+
+        <label style="width: 40%;">Enter new password:</label>
+        <input type="password" formControlName="newPassword" placeholder="New password"/>
+        <div *ngIf="newPassword.invalid && (newPassword.touched || newPassword.dirty)">
+            <span class="error" *ngIf="newPassword.errors?.required">Password is required</span>
+            <span class="error" *ngIf="newPassword.errors?.pattern">Only letters and numbers allowed</span>
+        </div>
+
+        <label style="width: 40%;">Repeat new password:</label>
+        <input type="password" (focusout)="validatePass()" formControlName="newPassword2" placeholder="Repeat new password"/>
+        <div *ngIf="newPassword2.invalid && (newPassword2.touched || newPassword2.dirty)">
+            <span class="error" *ngIf="newPassword2.errors?.required">Password is required</span>
+            <span class="error" *ngIf="newPassword2.errors?.pattern">Only letters and numbers allowed</span>
+        </div>
+        <br>
+       <button class="btn" [disabled]="changePasswordForm.invalid">Change password</button>
+      </form>
         
     </div>
-    <div class="column" *ngIf="!viewInformation">
-      <h1>Client informations</h1>
-
-      <form (ngSubmit)="changeInformations()">
-        <label style="width: 20%;">First name:</label><input type="text" value="{{client.firstName}}"/> <br>
-        <label style="width: 20%;">Last name:</label><input type="text" value="{{client.lastName}}"/> <br>
-        <label style="width: 20%;">Email:</label><input type="text" value="{{client.email}}" disabled/> <br>
-        <label style="width: 20%;">Mobile number:</label><input type="text" value="{{client.mobileNumber}}"/> <br>
-        <label style="width: 20%;">Country:</label><input type="text" value="{{client.country}}"/> <br>
-        <label style="width: 20%;">City:</label><input type="text" value="{{client.city}}"/> <br>
-        <label style="width: 20%;">Address:</label><input type="text" value="{{client.address}}"/> <br>
-
-        <button type="submit" name="changeClientInfo" id="changeClientInfo">Change informations</button>
-      </form>
-    </div>
+    
   </div> 

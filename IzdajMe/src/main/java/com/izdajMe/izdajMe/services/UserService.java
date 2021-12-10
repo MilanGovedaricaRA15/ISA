@@ -16,4 +16,6 @@ public interface UserService {
     public Boolean changePasswordUser(List<User> users);
     public List<User> searchUsersByName(String firstName, String lastName);
     List<User> searchInstructorsByName(String firstName, String lastName);
+    public Boolean saveClient(User user);
+    public void activate(Long id);
 }

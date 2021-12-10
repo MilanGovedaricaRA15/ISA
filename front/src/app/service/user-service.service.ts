@@ -11,6 +11,7 @@ export class UserService {
   private getAllInstructorsUrl: string;
   private usersUrlLogin: string;
   private usersUrlRegister: string;
+  private usersUrlRegisterClient: string;
   private usersUrlGetUserByEmail: string;
   private getInstructorByEmailUrl : string;
   private usersUrlGetLoggedUser: string;
@@ -23,6 +24,7 @@ export class UserService {
     this.getAllInstructorsUrl = 'http://localhost:8080/users/getAllInstructors';
     this.usersUrlLogin = 'http://localhost:8080/users/login';
     this.usersUrlRegister = 'http://localhost:8080/users/register';
+    this.usersUrlRegisterClient = 'http://localhost:8080/users/registerClient';
     this.usersUrlGetLoggedUser = 'http://localhost:8080/users/getUserByEmail';
     this.usersUrlGetUserByEmail = 'http://localhost:8080/users/getUserByEmail';
     this.getInstructorByEmailUrl = 'http://localhost:8080/users/getInstructorByEmail';
@@ -47,6 +49,10 @@ export class UserService {
 
   public register(user: User): Observable<string> {
     return this.http.post<string>(this.usersUrlRegister, user,{responseType: 'text' as 'json',withCredentials: true});
+  }
+
+  public registerClient(user: User): Observable<string> {
+    return this.http.post<string>(this.usersUrlRegisterClient, user,{responseType: 'text' as 'json',withCredentials: true});
   }
 
   public login(user: User): Observable<string> {

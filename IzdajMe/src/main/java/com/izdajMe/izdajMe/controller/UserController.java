@@ -74,10 +74,23 @@ public class UserController {
 
     }
 
+    @PostMapping("/users/registerClient")
+    public ResponseEntity<String> saveClient(@RequestBody User user) {
+
+        if(userService.saveClient(user)){
+            return new ResponseEntity<String>("user_already_registered",HttpStatus.NOT_ACCEPTABLE);
+        }
+        else{
+            return new ResponseEntity<String>("user_registered",HttpStatus.CREATED);
+        }
+
+    }
+
     @PutMapping("/users/changeUser")
     public ResponseEntity<Boolean> changeUser(@RequestBody User user, HttpServletRequest request) {
         if (request.getSession(false).getAttribute("role")!=null) {
-            if (request.getSession(false).getAttribute("role") == User.Role.cottageAdvertiser || request.getSession(false).getAttribute("role") == User.Role.boatAdvertiser) {
+            if (request.getSession(false).getAttribute("role") == User.Role.cottageAdvertiser || request.getSession(false).getAttribute("role") == User.Role.boatAdvertiser
+                    || request.getSession(false).getAttribute("role") == User.Role.client) {
                 if (userService.changeUser(user)) {
                     return new ResponseEntity<Boolean>(true, HttpStatus.OK);
                 } else {
@@ -91,10 +104,12 @@ public class UserController {
             return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
         }
     }
+
     @PutMapping("/users/changePasswordUser")
     public ResponseEntity<Boolean> changePasswordUser(@RequestBody List<User> users, HttpServletRequest request) {
         if (request.getSession(false).getAttribute("role")!=null) {
-            if (request.getSession(false).getAttribute("role") == User.Role.cottageAdvertiser || request.getSession(false).getAttribute("role") == User.Role.boatAdvertiser) {
+            if (request.getSession(false).getAttribute("role") == User.Role.cottageAdvertiser || request.getSession(false).getAttribute("role") == User.Role.boatAdvertiser
+                    || request.getSession(false).getAttribute("role") == User.Role.client) {
                 if (userService.changePasswordUser(users)) {
                     return new ResponseEntity<Boolean>(true, HttpStatus.OK);
                 } else {
@@ -142,5 +157,12 @@ public class UserController {
     @GetMapping("/users/searchInstructorsByName")
     public ResponseEntity<List<User>> searchInstructorsByName(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName) {
         return new ResponseEntity<List<User>>(userService.searchInstructorsByName(firstName, lastName), HttpStatus.OK);
+    }
+
+    @GetMapping("/users/activate")
+    @CrossOrigin(origins = "*")
+    public ResponseEntity<UserDTO> getUserByEmail(@RequestParam("id") Long id) {
+        userService.activate(id);
+        return new ResponseEntity<UserDTO>((UserDTO) null, HttpStatus.OK);
     }
 }
