@@ -119,6 +119,8 @@
                                 <div class="container-fluid d-flex justify-content-center">
                                     <div class="list list-row card" >
                                         
+                                        
+                                        
                                         <div *ngFor="let cottage of cottages" class="list-item">
                                             <div (click)="goToCottageProfile(cottage?.id)"><span class="w-80 avatar gd-info"><img *ngIf="cottage?.images != null" style="width:120px;height:80px;"  [src]="('../../assets/images/' + cottage?.images[0] +'.jpg')" alt="."><img *ngIf="cottage?.images == null" style="width:120px;height:80px;"  src="../../assets/images/undefined.jpg" alt="."></span></div>
                                             <div class="flex">{{cottage?.name}}
@@ -133,6 +135,39 @@
                                             <div>
                                                 
                                             </div>
+                                        </div>
+                                        <div class="list-item">
+                                            <input type="text" class="form-control" placeholder="Cottage Name" id="searchCottagesName"/>    
+                                           
+                                        </div>
+                                        <div class="list-item">
+                                            <input type="number" class="form-control" placeholder="Cottage Rooms" id="searchCottagesRooms"/>    
+                                           
+                                        </div>
+                                        <div class="list-item">
+                                            <input type="number" class="form-control" placeholder="Cottage Beds" id="searchCottagesBeds"/>    
+                                           
+                                        </div>
+                                        <div class="list-item">
+                                            <input type="text" class="form-control" placeholder="Cottage Address" id="searchCottagesAddress"/>    
+                                            
+                                        </div>
+                                        <div class="list-item">
+                                            <input type="number" class="form-control" placeholder="Cottage Cost" id="searchCottagesCost"/>    
+                                            <button (click)="SearchCottages()" class="list-item btn btn-primaty bg-success btn-lg text-white">Search cottage</button>
+                                        </div>
+                                        
+                                        <div class="list-item">
+                                            <input type="text" class="form-control" placeholder="Cottage Description" id="searchCottagesDescription"/>    
+                                           
+                                        </div>
+                                        <div class="list-item">
+                                            <input type="text" class="form-control" placeholder="Cottage Rules" id="searchCottagesRules"/>    
+                                           
+                                        </div>
+                                        <div class="list-item">
+                                            <input type="text" class="form-control" placeholder="Cottage Services" id="searchCottagesServices"/>    
+                                           
                                         </div>
                                         <button (click)="addNewCottage()" class="list-item btn btn-primaty bg-success btn-lg text-white">Add new cottage</button>
                                     </div>

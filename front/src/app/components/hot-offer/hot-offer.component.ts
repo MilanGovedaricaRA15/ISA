@@ -62,7 +62,9 @@ export class HotOfferComponent implements OnInit {
     let element = <HTMLInputElement> document.getElementById("zaDobijanjeServisa2");
     let servic = element.value.split(",");
     this.doesntExistService2 = false;
+    
     for(let x of servic){
+      if(x != ""){
         if(x === 'WiFi'){
           this.newHotOffer.services.push(Services.WiFi);
         }
@@ -75,6 +77,7 @@ export class HotOfferComponent implements OnInit {
         else{
           this.doesntExistService2 = true;
         }
+      }
       
 
     }
