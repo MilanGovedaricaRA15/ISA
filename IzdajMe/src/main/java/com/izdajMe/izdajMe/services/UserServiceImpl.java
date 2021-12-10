@@ -87,4 +87,18 @@ public class UserServiceImpl implements UserService {
             return false;
         }
     }
+
+    public Boolean saveAdmin(User user) {
+        User foundUser = userRepository.findByEmail(user.getEmail());
+
+        if(foundUser != null){
+            return false;
+        }
+
+        user.setRole(User.Role.administratorFirstLogged);
+        user.setVerified(true);
+        userRepository.save(user);
+        return true;
+
+    }
 }

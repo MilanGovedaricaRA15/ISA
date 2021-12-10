@@ -15,6 +15,7 @@ export class UserService {
   private usersUrlChangeUser: string;
   private usersUrlChangePasswordUser: string;
   private changeAdministratorsPassword: string;
+  private addNewAdmin: string;
 
   constructor(private http: HttpClient) {
     this.allUsersUrl = 'http://localhost:8080/users/getAllUsers';
@@ -25,6 +26,7 @@ export class UserService {
     this.usersUrlChangeUser = 'http://localhost:8080/users/changeUser';
     this.usersUrlChangePasswordUser = 'http://localhost:8080/users/changePasswordUser';
     this.changeAdministratorsPassword = 'http://localhost:8080/users/changeAdministratorsPassword';
+    this.addNewAdmin = 'http://localhost:8080/users/addAdmin';
   }
 
   public register(user: User): Observable<string> {
@@ -132,5 +134,8 @@ export class UserService {
     }));
   }
 
+  public adminRegistred(user: User): Observable<string> {
+    return this.http.post<string>(this.addNewAdmin, user,{responseType: 'text' as 'json'});
+  } 
 
 }

@@ -34,6 +34,14 @@ export class AppComponent {
        sessionStorage.setItem("page",'2');
      }
     }
+
+  adminAdded(message: string) {
+    if(message === 'user_registered'){
+      this.changeNumber(8);
+      sessionStorage.setItem("page",'8');
+    }
+  }
+
   onLogin(message: string){
     if(message === 'cottageAdvertiser'){
       this.changeNumber(3);
@@ -83,6 +91,18 @@ export class AppComponent {
         sessionStorage.setItem("page",'4');
       }
     });
+    this.userService.isAdministratorLoggedIn().subscribe(res => {
+      if(res){
+        this.changeNumber(7);
+        sessionStorage.setItem("page",'7');
+      }
+    });
+    this.userService.isSuperiorAdministratorLoggedIn().subscribe(res => {
+      if(res){
+        this.changeNumber(8);
+        sessionStorage.setItem("page",'8');
+      }
+    });
   }
 
   changeNumber(index: number) {
@@ -98,5 +118,10 @@ export class AppComponent {
     this.changeNumber(7);
     sessionStorage.setItem("page",'7');
   }
+
+  addAdministrator() {
+    this.changeNumber(50);
+    sessionStorage.setItem("page",'50');
+  } 
   
 }

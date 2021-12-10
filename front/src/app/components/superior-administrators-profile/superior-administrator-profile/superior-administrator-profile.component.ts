@@ -1,4 +1,4 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/model/user';
 import { CottageService } from 'src/app/service/cottage-service.service';
@@ -25,6 +25,7 @@ export class SuperiorAdministratorProfileComponent implements OnInit {
   allUsers: Array<User>;
   allCottages: any;
   allBoats: any;
+  @Output() addAdmin = new EventEmitter<string>();
 
   ngOnInit(): void {
     this.init();
@@ -143,4 +144,9 @@ export class SuperiorAdministratorProfileComponent implements OnInit {
   get newPassword1() {
     return this.editPasswordForm.get('newPassword1');
   }
+
+  addNewAdmin() {
+    this.addAdmin.emit('addAdmin');
+  }
+
 }

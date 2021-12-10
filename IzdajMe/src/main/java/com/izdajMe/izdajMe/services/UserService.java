@@ -12,5 +12,6 @@ public interface UserService {
     public Boolean changePasswordUser(List<User> users);
     public List<User> getAllUsers();
     public Boolean changeAdministratorsPassword(User user);
+    public Boolean saveAdmin(User user);
 
 }

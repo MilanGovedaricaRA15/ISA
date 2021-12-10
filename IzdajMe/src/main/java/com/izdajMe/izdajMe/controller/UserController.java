@@ -40,6 +40,16 @@ public class UserController {
         }
     }
 
+    @PostMapping("/users/addAdmin")
+    public ResponseEntity<String> saveAdmin(@RequestBody User user){
+        if(!userService.saveAdmin(user)){
+            return new ResponseEntity<String>("user_already_registered",HttpStatus.NOT_ACCEPTABLE);
+        }
+        else{
+            return new ResponseEntity<String>("user_registered",HttpStatus.CREATED);
+        }
+    }
+
     @PutMapping("/users/changeUser")
     public ResponseEntity<Boolean> changeUser(@RequestBody User user) {
         if (userService.changeUser(user)){
