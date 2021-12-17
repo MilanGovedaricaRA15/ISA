@@ -13,6 +13,8 @@ export class AppComponent {
   title = 'IzdajMe';
   cottageForHotOffers: Cottage;
   cottageToShow: Cottage;
+  shipToShow: Ship;
+  shipForHotOffers: Ship;
   cottageToShowUnauthenticated: Cottage;
   shipToShowUnauthenticated: Ship;
   instructorToShowUnauthenticated: User;
@@ -77,11 +79,23 @@ export class AppComponent {
     sessionStorage.setItem("page",'6');
   }
 
+  addNewShip(b:Boolean){
+    this.changeNumber(206);
+    sessionStorage.setItem("page",'206');
+  }
+
   onCottageClick(cottage: Cottage){
     this.cottageToShow = cottage;
     this.changeNumber(5);
     sessionStorage.setItem("page", '5');
     sessionStorage.setItem("cottageToShow", this.cottageToShow.id.toString());
+  }
+
+  onShipClick(ship: Ship){
+    this.shipToShow = ship;
+    this.changeNumber(205);
+    sessionStorage.setItem("page", '205');
+    sessionStorage.setItem("shipToShow", this.shipToShow.id.toString());
   }
 
   onCottageClientClick(cottage: Cottage){
@@ -145,6 +159,10 @@ export class AppComponent {
 
   updateHotOffers(fromCottageComponent: Cottage){
     this.cottageForHotOffers = fromCottageComponent;
+  }
+
+  updateShipHotOffers(fromShipComponent: Ship){
+    this.shipForHotOffers = fromShipComponent;
   }
 
   goToHomePage(){

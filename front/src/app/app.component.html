@@ -44,13 +44,16 @@
           <app-ships-reservations-page-client *ngIf="showCompNumber === 39"></app-ships-reservations-page-client>
           <app-instructors-reservations-page-client *ngIf="showCompNumber === 40"></app-instructors-reservations-page-client>
           
-          <app-owner-navbar (profile)="goToProfile()" *ngIf="showCompNumber === 3 || showCompNumber === 5 || showCompNumber === 6 || showCompNumber === 52"></app-owner-navbar>
+          <app-owner-navbar (profile)="goToProfile()" *ngIf="showCompNumber === 3 || showCompNumber === 4 || showCompNumber === 205 || showCompNumber === 5 || showCompNumber === 6 || showCompNumber === 52"></app-owner-navbar>
           <app-register-form-client (registerClient)="onRegisterClient($event)" *ngIf="showCompNumber === 21"></app-register-form-client>
           <app-registerForm (register)="onRegister($event)" *ngIf="showCompNumber === 1"></app-registerForm>
           <app-login-form (login)="onLogin($event)" (clientToShowAuthenticated)="onClientLogin($event)" *ngIf="showCompNumber === 2"></app-login-form>
           <app-cottage-owner-profile (addNewCottageEmiter)="addNewCottage($event)" (cottageToShow)="onCottageClick($event)" *ngIf="showCompNumber === 3"></app-cottage-owner-profile>
+          <app-ship-owner-profile (addNewShipEmiter)="addNewShip($event)" (shipToShow)="onShipClick($event)" *ngIf="showCompNumber === 4"></app-ship-owner-profile>
+          <app-ship-profile [ship]="shipToShow" (shipHotOffersForHotOffer)="updateShipHotOffers($event)" *ngIf="showCompNumber === 205"></app-ship-profile>
           <app-cottage-profile [cottage]="cottageToShow" (cottageHotOffersForHotOffer)="updateHotOffers($event)" *ngIf="showCompNumber === 5"></app-cottage-profile>
           <app-hot-offer [cottageForApp]="cottageForHotOffers"  *ngIf="showCompNumber === 5"></app-hot-offer>
+          <app-ship-hot-offer [shipForApp]="shipForHotOffers"  *ngIf="showCompNumber === 205"></app-ship-hot-offer>
           <app-owner-reservations (seeUser)="seeUserOwner($event)" *ngIf="showCompNumber === 3"></app-owner-reservations>
           <app-cottage-calendar [cottageForApp]="cottageForHotOffers" *ngIf="showCompNumber === 5"></app-cottage-calendar>
           <app-cottage-reservations (seeUser)="seeUserOwner($event)" [cottageForApp]="cottageForHotOffers" *ngIf="showCompNumber === 5"></app-cottage-reservations>

@@ -1,18 +1,14 @@
-package com.izdajMe.izdajMe.model;
+package com.izdajMe.izdajMe.dto;
+
+import com.izdajMe.izdajMe.model.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Table(name="ships")
-public class Ship {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class ShipDTO {
     private long id;
-    @ManyToOne
     private User owner;
     private String name;
     private String type;
@@ -28,50 +24,42 @@ public class Ship {
     private String rules;
     private ArrayList<FishingEquipment> fishingEquipment;
     private String cancelRequirements;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
     private List<ShipServicePrice> priceList;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
     private List<Grade> grades;
     private float costPerNight;
     private LocalDateTime availableFrom;
     private LocalDateTime availableTill;
-    private ArrayList<Services> services;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
+    private ArrayList<Ship.Services> services;
     private List<ShipHotOffer> hotOffers;
 
+    public ShipDTO(){
 
-    public Ship() {}
-
-    public enum Services {
-        PetFriendly,
-        Minibar,
-        HairDryer
     }
 
-    public Ship(long id,List<ShipHotOffer> hotOffers,ArrayList<Services> services, User owner, String name, String type, float length, String engineNumber, float enginePower, float topSpeed, ArrayList<NavigationEquipment> navigationEquipment, String address, String description, ArrayList<String> images, int capacity, String rules, ArrayList<FishingEquipment> fishingEquipment, String cancelRequirements, List<ShipServicePrice> priceList, List<Grade> grades, float costPerNight, LocalDateTime availableFrom, LocalDateTime availableTill) {
-        this.id = id;
-        this.owner = owner;
-        this.name = name;
-        this.type = type;
-        this.length = length;
-        this.engineNumber = engineNumber;
-        this.enginePower = enginePower;
-        this.topSpeed = topSpeed;
-        this.navigationEquipment = navigationEquipment;
-        this.address = address;
-        this.description = description;
-        this.images = images;
-        this.capacity = capacity;
-        this.rules = rules;
-        this.fishingEquipment = fishingEquipment;
-        this.cancelRequirements = cancelRequirements;
-        this.priceList = priceList;
-        this.grades = grades;
-        this.costPerNight = costPerNight;
-        this.availableFrom = availableFrom;
-        this.availableTill = availableTill;
-        this.services = services;
-        this.hotOffers = hotOffers;
+    public ShipDTO(Ship ship) {
+        this.id = ship.getId();
+        this.owner = ship.getOwner();
+        this.name = ship.getName();
+        this.type = ship.getType();
+        this.length = ship.getLength();
+        this.engineNumber = ship.getEngineNumber();
+        this.enginePower = ship.getEnginePower();
+        this.topSpeed = ship.getTopSpeed();
+        this.navigationEquipment = ship.getNavigationEquipment();
+        this.address = ship.getAddress();
+        this.description = ship.getDescription();
+        this.images = ship.getImages();
+        this.capacity = ship.getCapacity();
+        this.rules = ship.getRules();
+        this.fishingEquipment = ship.getFishingEquipment();
+        this.cancelRequirements = ship.getCancelRequirements();
+        this.priceList = ship.getPriceList();
+        this.grades = ship.getGrades();
+        this.costPerNight = ship.getCostPerNight();
+        this.availableFrom = ship.getAvailableFrom();
+        this.availableTill = ship.getAvailableTill();
+        this.services = ship.getServices();
+        this.hotOffers = ship.getHotOffers();
     }
 
     public List<ShipHotOffer> getHotOffers() {
@@ -82,11 +70,11 @@ public class Ship {
         this.hotOffers = hotOffers;
     }
 
-    public ArrayList<Services> getServices() {
+    public ArrayList<Ship.Services> getServices() {
         return services;
     }
 
-    public void setServices(ArrayList<Services> services) {
+    public void setServices(ArrayList<Ship.Services> services) {
         this.services = services;
     }
 

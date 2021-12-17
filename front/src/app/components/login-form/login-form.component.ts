@@ -44,6 +44,11 @@ export class LoginFormComponent implements OnInit {
                 this.login.emit('cottageAdvertiser');
               }
             });
+            this.userService.isBoatAdvertiserLoggedIn().subscribe(res =>{
+              if(res){
+                this.login.emit('boatAdvertiser');
+              }
+            });
 
             this.userService.isClientLoggedIn().subscribe(res =>{
               if(res){
@@ -51,11 +56,6 @@ export class LoginFormComponent implements OnInit {
                 this.clientToShowAuthenticated.emit(this.user);
               }
             });
-          
-              
-            
-      //      this.userService.isBoatAdvertiserLoggedIn()
-      //       this.login.emit('boatAdvertiser');
             
           }
         

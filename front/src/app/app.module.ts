@@ -38,6 +38,11 @@ import { InstructorProfileClientComponent } from './components/instructor-profil
 import { CottagesReservationsPageClientComponent } from './components/cottages-reservations-page-client/cottages-reservations-page-client.component';
 import { ShipsReservationsPageClientComponent } from './components/ships-reservations-page-client/ships-reservations-page-client.component';
 import { InstructorsReservationsPageClientComponent } from './components/instructors-reservations-page-client/instructors-reservations-page-client.component';
+import { ShipProfileComponent } from './components/ship-profile/ship-profile.component';
+import { ShipOwnerProfileComponent } from './components/ship-owner-profile/ship-owner-profile.component';
+import { ShipHotOfferComponent } from './components/ship-hot-offer/ship-hot-offer.component';
+import { ShipReservationsComponent } from './ship-reservations/ship-reservations.component';
+import { ShipOwnerReservationsComponent } from './ship-owner-reservations/ship-owner-reservations.component';
 
 @NgModule({
   declarations: [
@@ -72,7 +77,12 @@ import { InstructorsReservationsPageClientComponent } from './components/instruc
     InstructorProfileClientComponent,
     CottagesReservationsPageClientComponent,
     ShipsReservationsPageClientComponent,
-    InstructorsReservationsPageClientComponent
+    InstructorsReservationsPageClientComponent,
+    ShipProfileComponent,
+    ShipOwnerProfileComponent,
+    ShipHotOfferComponent,
+    ShipReservationsComponent,
+    ShipOwnerReservationsComponent
   ],
   imports: [
     BrowserModule,
