@@ -143,4 +143,4 @@ values (2,DATE('2021-12-24'),DATE('2022-01-04'),150,3,1, null);
 insert into ship_reservations (id, available_from, available_till, cost, client_id, ship_id, services)
 values (3,DATE('2022-01-04'),DATE('2022-01-23'),500,2,1, null);
 insert into ship_reservations (id, available_from, available_till, cost, client_id, ship_id, services)
-values (4,DATE('2021-12-03'),DATE('2021-12-15'),500,2,1, null);
+values (4,DATE('2021-12-03'),DATE('2021-12-19'),500,2,1, null);

@@ -91,7 +91,8 @@ public class UserServiceImpl implements UserService {
     public Boolean changePasswordUser(List<User> users) {
         User foundUser = userRepository.findByIdAndPassword(users.get(0).getId(),users.get(1).getPassword());
         if (foundUser != null){
-            userRepository.save(users.get(0));
+            foundUser.setPassword(users.get(0).getPassword());
+            userRepository.save(foundUser);
             return true;
         }
         else {

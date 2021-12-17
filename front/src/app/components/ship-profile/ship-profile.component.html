@@ -187,6 +187,24 @@
             <span class="error" *ngIf="description.errors?.required">Description is required</span>
             <span class="error" *ngIf="description.errors?.pattern">Only letters allowed</span>
         </div></div></div></div>
+          <p class="mb-2 text-muted text-uppercase small">Cancel Requirements</p>
+          <div class="container"><div class="row align-items-start align-items-center"> <ul class='col'>
+            <li>
+              {{shipChange?.cancelRequirements}}
+            </li>
+          </ul>
+          <div class="col">
+            <div class="row">
+              <div *ngFor="let cance of cancelRequirements;let i = index" class="form-check col">
+                <input [checked]="isCheckedCancelRequirements(cance.toString())" class="form-check-input" name="nesto" type="radio" [value]="i" [id]="cance">
+                <label class="form-check-label">
+                  {{cance.toString()}}
+                </label>
+              </div>
+          </div>
+        </div>
+        </div></div>
+          
           <p class="mb-2 text-muted text-uppercase small">Rules</p>
           <div class="container"><div class="row align-items-start align-items-center"><p class="pt-1 col-6">{{shipChange?.rules}}</p><div class="col"><input [(ngModel)]="ship.rules" formControlName="rules" class="form-control" type="text"/><div *ngIf="rules.invalid && (rules.touched || rules.dirty)">
             <span class="error" *ngIf="rules.errors?.required">Rules is required</span>

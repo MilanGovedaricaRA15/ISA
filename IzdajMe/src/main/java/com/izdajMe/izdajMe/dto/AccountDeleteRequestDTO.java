@@ -10,6 +10,7 @@ public class AccountDeleteRequestDTO {
     private long id;
     private User user;
     private boolean seen;
+    private String reason;
 
     public AccountDeleteRequestDTO(){}
 
@@ -17,6 +18,15 @@ public class AccountDeleteRequestDTO {
         this.id = accountDeleteRequest.getId();
         this.user = accountDeleteRequest.getUser();
         this.seen = accountDeleteRequest.isSeen();
+        this.reason = accountDeleteRequest.getReason();
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
     }
 
     public long getId() {

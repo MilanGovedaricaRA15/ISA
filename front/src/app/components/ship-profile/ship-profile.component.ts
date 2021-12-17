@@ -27,6 +27,10 @@ export class ShipProfileComponent implements OnInit {
    'PetFriendly','Minibar','HairDryer'
   ];
 
+  cancelRequirements = [
+    'free','20%'
+   ];
+
   fishingEquipment = [
     'Lures',
     'Nets',
@@ -216,6 +220,18 @@ public isCheckedFishingEquipment(stri:string): boolean{
   return false
 }
 
+public isCheckedCancelRequirements(stri:string): boolean{
+  if(this?.shipChange !== undefined){ 
+    if(this?.shipChange?.cancelRequirements === stri){
+          return true;
+    }
+    else {
+      return false;
+    }
+  }
+  return false
+}
+
 public isCheckedNavigationEquipment(stri:string): boolean{
   if(this?.shipChange !== undefined){
     if(this?.shipChange?.navigationEquipment != null){
@@ -256,6 +272,19 @@ public isCheckedNavigationEquipment(stri:string): boolean{
         this.ship.services = new Array<ShipServices>();
         this.ship.navigationEquipment = new Array<NavigationEquipment>();
         this.ship.fishingEquipment = new Array<FishingEquipment>();
+        for(let x of this.cancelRequirements){
+          let element = <HTMLInputElement> document.getElementById(x);
+          if(element.checked){
+            if(x === 'free'){
+              this.ship.cancelRequirements = 'free';
+            }
+            else if(x === '20%'){
+              this.ship.cancelRequirements = '20%';
+            }
+          }
+
+        }
+
             for(let x of this.services){
               let element = <HTMLInputElement> document.getElementById(x);
               if(element.checked){

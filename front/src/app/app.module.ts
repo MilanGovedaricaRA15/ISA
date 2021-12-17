@@ -41,8 +41,9 @@ import { InstructorsReservationsPageClientComponent } from './components/instruc
 import { ShipProfileComponent } from './components/ship-profile/ship-profile.component';
 import { ShipOwnerProfileComponent } from './components/ship-owner-profile/ship-owner-profile.component';
 import { ShipHotOfferComponent } from './components/ship-hot-offer/ship-hot-offer.component';
-import { ShipReservationsComponent } from './ship-reservations/ship-reservations.component';
-import { ShipOwnerReservationsComponent } from './ship-owner-reservations/ship-owner-reservations.component';
+import { ShipReservationsComponent } from './components/ship-reservations/ship-reservations.component';
+import { ShipOwnerReservationsComponent } from './components/ship-owner-reservations/ship-owner-reservations.component';
+import { ShipCalendarComponent } from './components/ship-calendar/ship-calendar.component';
 
 @NgModule({
   declarations: [
@@ -82,7 +83,8 @@ import { ShipOwnerReservationsComponent } from './ship-owner-reservations/ship-o
     ShipOwnerProfileComponent,
     ShipHotOfferComponent,
     ShipReservationsComponent,
-    ShipOwnerReservationsComponent
+    ShipOwnerReservationsComponent,
+    ShipCalendarComponent
   ],
   imports: [
     BrowserModule,

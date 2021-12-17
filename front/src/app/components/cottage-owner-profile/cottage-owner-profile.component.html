@@ -100,6 +100,8 @@
                 
                 
             </div>
+            <div class="col-md-12"><label class="labels">Reason:</label><input type="text" id="reasonOfDelete" class="form-control" placeholder="Reason of request"/>
+            </div>
             <button (click)="requestDelete()" class="list-item btn btn-primaty bg-danger btn-lg text-white">Request account delete</button>
             <div *ngIf="alreadySent">
                 <span class="error">Already sent</span>

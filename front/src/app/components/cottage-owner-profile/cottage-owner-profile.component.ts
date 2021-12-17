@@ -258,6 +258,8 @@ export class CottageOwnerProfileComponent implements OnInit {
     let accountDelete = new AccountDeleteRequest();
     accountDelete.seen = false;
     accountDelete.user = JSON.parse(JSON.stringify(this.owner));
+    let elementReasonOfDelete = <HTMLInputElement> document.getElementById("reasonOfDelete");
+    accountDelete.reason = elementReasonOfDelete.value;
     this.accountDeleteRequestService.addAccountDeleteRequest(accountDelete).subscribe(ret => {
       if(ret){
         this.alreadySent = false;

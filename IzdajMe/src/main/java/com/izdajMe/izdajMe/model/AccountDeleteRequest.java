@@ -10,15 +10,25 @@ public class AccountDeleteRequest {
     private long id;
     @ManyToOne
     private User user;
+    private String reason;
     private boolean seen;
 
-    public AccountDeleteRequest(long id, User user, boolean seen) {
+    public AccountDeleteRequest(long id, User user, boolean seen, String reason) {
         this.id = id;
         this.user = user;
         this.seen = seen;
+        this.reason = reason;
     }
 
     public AccountDeleteRequest(){
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
     }
 
     public long getId() {
