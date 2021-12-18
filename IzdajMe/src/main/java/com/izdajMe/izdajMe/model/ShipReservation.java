@@ -18,10 +18,15 @@ public class ShipReservation {
     private User client;
     @ManyToOne
     private Ship ship;
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval=true)
+    private Penalty penalty;
+
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval=true)
+    private Report report;
 
     public ShipReservation(){}
 
-    public ShipReservation(long id, LocalDateTime availableFrom, LocalDateTime availableTill, ArrayList<Ship.Services> services, float cost, User client, Ship ship) {
+    public ShipReservation(long id,Report report,Penalty penalty, LocalDateTime availableFrom, LocalDateTime availableTill, ArrayList<Ship.Services> services, float cost, User client, Ship ship) {
         this.id = id;
         this.availableFrom = availableFrom;
         this.availableTill = availableTill;
@@ -29,6 +34,24 @@ public class ShipReservation {
         this.cost = cost;
         this.client = client;
         this.ship = ship;
+        this.report = report;
+        this.penalty = penalty;
+    }
+
+    public Penalty getPenalty() {
+        return penalty;
+    }
+
+    public void setPenalty(Penalty penalty) {
+        this.penalty = penalty;
+    }
+
+    public Report getReport() {
+        return report;
+    }
+
+    public void setReport(Report report) {
+        this.report = report;
     }
 
     public long getId() {

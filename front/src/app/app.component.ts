@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
 import { Cottage } from './model/cottage';
+import { CottageReservation } from './model/cottage-reservation';
 import { Ship } from './model/ship';
+import { ShipReservation } from './model/ship-reservation';
 import { User } from './model/user';
+import { CottageReservationService } from './service/cottage-reservation-service.service';
 import { UserService } from './service/user-service.service';
 
 @Component({
@@ -23,6 +26,8 @@ export class AppComponent {
   instructorToShowClient: User;
   clientToShowAuthenticated: User;
   userForOwner: User;
+  cottageReservationReceive:CottageReservation;
+  shipReservationReceive:ShipReservation;
 
   /**
    *
@@ -68,6 +73,21 @@ export class AppComponent {
     }
 
   }
+
+  receiveCottageReservation(cottageReservation: CottageReservation){
+    this.cottageReservationReceive = cottageReservation;
+    this.changeNumber(210);
+    sessionStorage.setItem("page",'210');
+    sessionStorage.setItem('receiveCottageReservation',cottageReservation.id.toString());
+  }
+
+  receiveShipReservation(shipReservation: ShipReservation){
+    this.shipReservationReceive = shipReservation;
+    this.changeNumber(211);
+    sessionStorage.setItem("page",'211');
+    sessionStorage.setItem('receiveShipReservation',shipReservation.id.toString());
+  }
+
 
   onClientLogin(client: User) {
     this.clientToShowAuthenticated = client;

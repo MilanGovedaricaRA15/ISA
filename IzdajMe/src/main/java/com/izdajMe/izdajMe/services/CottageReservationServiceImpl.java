@@ -30,6 +30,9 @@ public class CottageReservationServiceImpl implements CottageReservationService{
         List<CottageReservation> allThisCottageReservations = cottageReservationRepository.findAllByCottageId(id);
         return allThisCottageReservations;
     }
+    public CottageReservation getById(Long id){
+        return cottageReservationRepository.findById(id).get();
+    }
 
     public List<CottageReservation> getAllReservationsOfCottageFromTill(Long id, String from,String to){
         Timestamp fromDateTs=new Timestamp(Long.parseLong(from));
@@ -119,7 +122,17 @@ public class CottageReservationServiceImpl implements CottageReservationService{
             return false;
         }
     }
-
+    public Boolean changeReservationByOwner(CottageReservation cottageReservation){
+        CottageReservation thisReservation = cottageReservationRepository.getById(cottageReservation.getId());
+        if (thisReservation.getAvailableTill().isBefore(LocalDateTime.now())&&thisReservation.getReport()==null&&thisReservation.getPenalty()==null)
+        {
+            cottageReservationRepository.save(cottageReservation);
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
     private void sendNotificationForReservation(CottageReservation cottageReservation) throws MailException{
         SimpleMailMessage mail = new SimpleMailMessage();
         mail.setTo(cottageReservation.getClient().getEmail());

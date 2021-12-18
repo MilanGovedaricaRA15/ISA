@@ -14,4 +14,7 @@ public interface CottageReservationService {
     public List<CottageReservation> getAllReservationsOfOwner(String email);
     public Boolean addReservationByOwner(CottageReservation cottageReservation);
     public List<CottageReservation> getAllReservationsOfCottageFromTill(Long id, String from,String to);
+    public CottageReservation getById(Long id);
+    public Boolean changeReservationByOwner(CottageReservation cottageReservation);
+
 }

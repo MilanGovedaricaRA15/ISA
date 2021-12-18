@@ -28,6 +28,7 @@ export class ShipOwnerReservationsComponent implements OnInit {
   isReserved: boolean;
   doesntHaveAllServices: boolean;
   doesntExistService: boolean;
+  @Output() sendShipReservation = new EventEmitter<ShipReservation>();
 
   ngOnInit(): void {
     this.doesntHaveAllServices = false;
@@ -132,6 +133,23 @@ export class ShipOwnerReservationsComponent implements OnInit {
     this.userService.getUserByEmail(email).subscribe(ret => {
       this.seeUser.emit(ret);
     })
+  }
+
+  addReport(shipReservationToSend: ShipReservation){
+    this.sendShipReservation.emit(shipReservationToSend);
+  }
+
+  isOwerAndWithoutReport(shipReservationForCheck: ShipReservation): boolean{
+    let datum = new Date();
+    if (new Date(Date.parse(shipReservationForCheck.availableTill.toString())).getTime() < datum.getTime()){
+      if(shipReservationForCheck.report == null || shipReservationForCheck.report == undefined){
+        return true;
+      }
+      else{
+        return false;
+      }
+    }
+    return false;
   }
 
 

@@ -23,6 +23,7 @@ export class CottageReservationsComponent implements OnInit {
    ];
   availableTillError:boolean;
   pickedUser:boolean;
+  @Output() sendCottageReservation = new EventEmitter<CottageReservation>();
   pickedUserError:boolean;
   isReserved1:boolean;
   doesntHaveAllServices: boolean;
@@ -138,6 +139,23 @@ export class CottageReservationsComponent implements OnInit {
     this.userService.getUserByEmail(email).subscribe(ret => {
       this.seeUser.emit(ret);
     })
+  }
+
+  addReport(cottageReservationToSend: CottageReservation){
+    this.sendCottageReservation.emit(cottageReservationToSend);
+  }
+
+  isOwerAndWithoutReport(cottageReservationForCheck: CottageReservation): boolean{
+    let datum = new Date();
+    if (new Date(Date.parse(cottageReservationForCheck.availableTill.toString())).getTime() < datum.getTime()){
+      if(cottageReservationForCheck.report == null || cottageReservationForCheck.report == undefined){
+        return true;
+      }
+      else{
+        return false;
+      }
+    }
+    return false;
   }
 
   get availableFrom1(){

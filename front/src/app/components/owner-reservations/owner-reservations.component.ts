@@ -19,6 +19,7 @@ export class OwnerReservationsComponent implements OnInit {
   newReservation: CottageReservation
   addReservationForm:any;
   @Output() seeUser = new EventEmitter<User>();
+  @Output() sendCottageReservation = new EventEmitter<CottageReservation>();
   services = [
     'WiFi','Parking','Pool'
    ];
@@ -132,6 +133,23 @@ export class OwnerReservationsComponent implements OnInit {
     this.userService.getUserByEmail(email).subscribe(ret => {
       this.seeUser.emit(ret);
     })
+  }
+
+  addReport(cottageReservationToSend: CottageReservation){
+    this.sendCottageReservation.emit(cottageReservationToSend);
+  }
+
+  isOwerAndWithoutReport(cottageReservationForCheck: CottageReservation): boolean{
+    let datum = new Date();
+    if (new Date(Date.parse(cottageReservationForCheck.availableTill.toString())).getTime() < datum.getTime()){
+      if(cottageReservationForCheck.report == null || cottageReservationForCheck.report == undefined){
+        return true;
+      }
+      else{
+        return false;
+      }
+    }
+    return false;
   }
 
 

@@ -13,12 +13,16 @@ export class CottageReservationService {
   private getAllReservationsOfCottageFromTillUrl: string;
   private getAllReservationsOfOwnerUrl: string;
   private addReservationByOwnerUrl: string;
+  private changeReservationByOwnerUrl: string;
+  private getByIdUrl: string;
 
   constructor(private http: HttpClient) {
     this.getAllReservationsOfCottageUrl="http://localhost:8080/cottageReservation/getAllReservationsOfCottage";
     this.getAllReservationsOfCottageFromTillUrl="http://localhost:8080/cottageReservation/getAllReservationsOfCottageFromTill";
     this.getAllReservationsOfOwnerUrl="http://localhost:8080/cottageReservation/getAllReservationsOfOwner";
     this.addReservationByOwnerUrl="http://localhost:8080/cottageReservation/addReservationByOwner";
+    this.changeReservationByOwnerUrl="http://localhost:8080/cottageReservation/changeReservationByOwner";
+    this.getByIdUrl="http://localhost:8080/cottageReservation/getById";
    }
 
    public getAllReservationsOfCottage(cottage: Cottage): Observable<Array<CottageReservation>> {
@@ -47,7 +51,18 @@ export class CottageReservationService {
     return this.http.get<Array<CottageReservation>>(this.getAllReservationsOfOwnerUrl, {headers: headers,params: params,withCredentials: true});
   }
   public addReservationByOwner(cottageReservation: CottageReservation):Observable<boolean>{
+    cottageReservation.penalty = null;
+    cottageReservation.report = null;
     return this.http.post<boolean>(this.addReservationByOwnerUrl,cottageReservation,{withCredentials: true});
+  }
+  public changeReservationByOwner(cottageReservation: CottageReservation):Observable<boolean>{
+    return this.http.put<boolean>(this.changeReservationByOwnerUrl,cottageReservation,{withCredentials: true});
+  }
+  public getById(id: Number):Observable<CottageReservation>{
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+    let params = new HttpParams().set("id",id.toString());
+    return this.http.get<CottageReservation>(this.getByIdUrl,{headers: headers,params: params,withCredentials: true});
   }
 
 }

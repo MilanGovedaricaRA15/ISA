@@ -1,0 +1,55 @@
+<div class="container mt-5">
+    <form class="content" [formGroup]="addNewReport" (ngSubmit)="submitData()">
+        <h3 class="text-center"> Add new report </h3>
+        
+        <div class="row">
+            <p class="mb-2 text-muted text-uppercase small">Report</p>
+            <div class="container"><div class="row align-items-start align-items-center"><div class="col"><input [(ngModel)]="reportToAdd.report" formControlName="report" class="form-control col" type="text"/>
+                <div *ngIf="report.invalid && (report.touched || report.dirty)">
+                  <span class="error" *ngIf="report.errors?.required">Report is required</span>
+                  <span class="error" *ngIf="report.errors?.pattern">Only letters allowed.First letter must be capital</span>
+              </div></div></div></div>
+            <p class="mb-2 text-muted text-uppercase small">Comment</p>
+              <div class="container"><div class="row align-items-start align-items-center"><div class="col"><input [(ngModel)]="reportToAdd.comment" formControlName="comment" class="form-control col" type="text"/>
+                  <div *ngIf="comment.invalid && (comment.touched || comment.dirty)">
+                    <span class="error" *ngIf="comment.errors?.required">Comment is required</span>
+                    <span class="error" *ngIf="comment.errors?.pattern">Only letters allowed.First letter must be capital</span>
+                </div></div></div></div>
+            <p class="mb-2 text-muted text-uppercase small">Praise</p>
+            <div class="container"><div class="row align-items-start align-items-center"><div class="col"><input [(ngModel)]="reportToAdd.praise" formControlName="praise" class="form-control col" type="text"/>
+                <div *ngIf="praise.invalid && (praise.touched || praise.dirty)">
+                    <span class="error" *ngIf="praise.errors?.required">Praise is required</span>
+                    <span class="error" *ngIf="praise.errors?.pattern">Only letters allowed.First letter must be capital</span>
+                </div></div></div></div>
+                <div class="container"><div class="row align-items-start align-items-center"> 
+                <div class="col">
+                  <div class="row">
+                    <div class="form-check col">
+                      <input class="form-check-input" type="checkbox" id="showedUp">
+                      <label class="form-check-label">
+                        Didn't show up
+                      </label>
+                    </div>
+                </div>
+              </div>
+              </div></div>
+              <div class="container"><div class="row align-items-start align-items-center"> 
+              <div class="col">
+                <div class="row">
+                  <div class="form-check col">
+                    <input class="form-check-input" type="checkbox" id="shouldGetPenalty">
+                    <label class="form-check-label">
+                      Should get penalty
+                    </label>
+                  </div>
+              </div>
+            </div>
+            </div></div>
+            <div class="mt-2 mb-2 col-lg-12 col-12 text-center">
+               <button class="btn" [disabled]="addNewReport.invalid">Add</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+

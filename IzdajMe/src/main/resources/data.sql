@@ -17,6 +17,8 @@ delete from spring_session where primary_id!='0';
 delete from spring_session_attributes where session_primary_id!='0';
 delete from ships where id!=0;
 delete from users where id!=0;
+delete from reports where id!=0;
+delete from penalties where id!=0;
 
 insert into users (id, address, city, country, email,first_name,last_name,mobile_number,password,reason,role,verified)
 values (1, 'Ilije 1', 'Beograd', 'Srbija', 'rajkorajkoza@gmail.com', 'Milan', 'Govedarica', 123123123, 'aaaa', 'Izdaja vikendice', 0, TRUE);
@@ -152,7 +154,7 @@ values (2,DATE('2021-12-24'),DATE('2022-01-04'),150,3,1, null);
 insert into cottage_reservations (id, available_from, available_till, cost, client_id, cottage_id, services)
 values (3,DATE('2022-01-04'),DATE('2022-01-23'),500,2,1, null);
 insert into cottage_reservations (id, available_from, available_till, cost, client_id, cottage_id, services)
-values (4,DATE('2021-12-03'),DATE('2021-12-15'),500,2,1, null);
+values (4,DATE('2021-12-03'),DATE('2021-12-19'),500,2,1, null);
 
 insert into ship_reservations (id, available_from, available_till, cost, client_id, ship_id, services)
 values (1,DATE('2021-12-20'),DATE('2021-12-23'),233,2,1, null);

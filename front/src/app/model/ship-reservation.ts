@@ -1,4 +1,6 @@
 
+import { Penalty } from "./penalty";
+import { Report } from "./report";
 import { Ship, ShipServices } from "./ship";
 import { User } from "./user";
 
@@ -9,5 +11,7 @@ export class ShipReservation {
     cost:number;
     client:User;
     ship:Ship;
-    services:Array<ShipServices> ;
+    services:Array<ShipServices>;
+    report:Report;
+    penalty:Penalty;
 }

@@ -37,6 +37,7 @@
                                 <td scope="col">{{item.client.country}}</td>
                                 <td scope="col">{{item.client.city}}</td>
                                 <td scope="col"> <button type="button" (click)="seeUserProfile(item.client.email)" class="btn btn-primary btn-md mr-1 mb-2">See profile</button></td>
+                                <td scope="col" *ngIf="isOwerAndWithoutReport(item)"> <button type="button" (click)="addReport(item)" class="btn btn-primary btn-md mr-1 mb-2">Add report</button></td>
                             </tr>
                         </tbody>
                         <tbody>

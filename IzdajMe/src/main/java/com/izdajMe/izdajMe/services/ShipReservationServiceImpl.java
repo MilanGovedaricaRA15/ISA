@@ -32,6 +32,22 @@ public class ShipReservationServiceImpl implements ShipReservationService {
         return allThisShipReservations;
     }
 
+    public ShipReservation getById(Long id){
+        return shipReservationRepository.findById(id).get();
+    }
+
+    public Boolean changeReservationByOwner(ShipReservation shipReservation){
+        ShipReservation thisReservation = shipReservationRepository.getById(shipReservation.getId());
+        if (thisReservation.getAvailableTill().isBefore(LocalDateTime.now())&&thisReservation.getReport()==null&&thisReservation.getPenalty()==null)
+        {
+            shipReservationRepository.save(shipReservation);
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
     public List<ShipReservation> getAllReservationsOfShipFromTill(Long id,String from,String to){
         Timestamp fromDateTs=new Timestamp(Long.parseLong(from));
         Timestamp toDateTs=new Timestamp(Long.parseLong(to));

@@ -1,8 +1,6 @@
 package com.izdajMe.izdajMe.dto;
 
-import com.izdajMe.izdajMe.model.Ship;
-import com.izdajMe.izdajMe.model.ShipReservation;
-import com.izdajMe.izdajMe.model.User;
+import com.izdajMe.izdajMe.model.*;
 
 import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
@@ -16,6 +14,8 @@ public class ShipReservationDTO {
     private float cost;
     private User client;
     private Ship ship;
+    private Report report;
+    private Penalty penalty;
 
     public ShipReservationDTO(ShipReservation shipReservation) {
         this.id = shipReservation.getId();
@@ -25,6 +25,24 @@ public class ShipReservationDTO {
         this.cost = shipReservation.getCost();
         this.client = shipReservation.getClient();
         this.ship = shipReservation.getShip();
+        this.report = shipReservation.getReport();
+        this.penalty = shipReservation.getPenalty();
+    }
+
+    public Report getReport() {
+        return report;
+    }
+
+    public void setReport(Report report) {
+        this.report = report;
+    }
+
+    public Penalty getPenalty() {
+        return penalty;
+    }
+
+    public void setPenalty(Penalty penalty) {
+        this.penalty = penalty;
     }
 
     public  ShipReservationDTO(){
