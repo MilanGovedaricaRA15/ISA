@@ -28,9 +28,10 @@ public class Cottage {
     private float costPerNight;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
     private List<ServicePrice> priceList;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
+    private List<Grade> grades;
 
-
-    public Cottage(long id,User owner, String name, String address, String description, ArrayList<String> images, int numOfRooms, int numOfBeds, String rules, ArrayList<Services> services, LocalDateTime availableFrom, LocalDateTime availableTill, List<HotOffer> hotOffers, float costPerNight, List<ServicePrice> priceList) {
+    public Cottage(long id,List<Grade> grades,User owner, String name, String address, String description, ArrayList<String> images, int numOfRooms, int numOfBeds, String rules, ArrayList<Services> services, LocalDateTime availableFrom, LocalDateTime availableTill, List<HotOffer> hotOffers, float costPerNight, List<ServicePrice> priceList) {
         this.id = id;
         this.owner = owner;
         this.name = name;
@@ -46,6 +47,15 @@ public class Cottage {
         this.hotOffers = hotOffers;
         this.costPerNight = costPerNight;
         this.priceList = priceList;
+        this.grades = grades;
+    }
+
+    public List<Grade> getGrades() {
+        return grades;
+    }
+
+    public void setGrades(List<Grade> grades) {
+        this.grades = grades;
     }
 
     public Cottage(){}

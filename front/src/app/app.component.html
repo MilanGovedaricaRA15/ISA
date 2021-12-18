@@ -55,7 +55,9 @@
           <app-hot-offer [cottageForApp]="cottageForHotOffers"  *ngIf="showCompNumber === 5"></app-hot-offer>
           <app-ship-hot-offer [shipForApp]="shipForHotOffers"  *ngIf="showCompNumber === 205"></app-ship-hot-offer>
           <app-owner-reservations (seeUser)="seeUserOwner($event)" *ngIf="showCompNumber === 3"></app-owner-reservations>
+          <app-cottage-owner-report *ngIf="showCompNumber === 3"></app-cottage-owner-report>
           <app-ship-owner-reservations (seeUser)="seeUserOwner($event)" *ngIf="showCompNumber === 4"></app-ship-owner-reservations>
+          <app-ship-owner-report *ngIf="showCompNumber === 4"></app-ship-owner-report>
           <app-cottage-calendar [cottageForApp]="cottageForHotOffers" *ngIf="showCompNumber === 5"></app-cottage-calendar>
           <app-ship-calendar [shipForApp]="shipForHotOffers" *ngIf="showCompNumber === 205"></app-ship-calendar>
           <app-cottage-reservations (seeUser)="seeUserOwner($event)" [cottageForApp]="cottageForHotOffers" *ngIf="showCompNumber === 5"></app-cottage-reservations>

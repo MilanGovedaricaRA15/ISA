@@ -32,6 +32,16 @@ public class ShipReservationController {
         return new ResponseEntity<List<ShipReservationDTO>>(list, HttpStatus.OK);
     }
 
+    @GetMapping("/shipReservation/getAllReservationsOfShipFromTill")
+    public ResponseEntity<List<ShipReservationDTO>> getAllReservationsOfShipFromTill(@RequestParam("id") Long id,@RequestParam("from") String from,@RequestParam("to") String to) {
+
+        List<ShipReservationDTO> list = new ArrayList<ShipReservationDTO>();
+        for (ShipReservation c : shipReservationService.getAllReservationsOfShipFromTill(id,from,to)){
+            list.add(new ShipReservationDTO(c));
+        }
+        return new ResponseEntity<List<ShipReservationDTO>>(list, HttpStatus.OK);
+    }
+
     @GetMapping("/shipReservation/getAllReservationsOfOwner")
     public ResponseEntity<List<ShipReservationDTO>> getAllReservationsOfOwner(@RequestParam("email") String email, HttpServletRequest request) {
         if (request.getSession(false).getAttribute("role")!=null) {

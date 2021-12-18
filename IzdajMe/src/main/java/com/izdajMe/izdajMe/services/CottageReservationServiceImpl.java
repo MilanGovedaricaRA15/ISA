@@ -1,9 +1,6 @@
 package com.izdajMe.izdajMe.services;
 
-import com.izdajMe.izdajMe.model.Cottage;
-import com.izdajMe.izdajMe.model.CottageReservation;
-import com.izdajMe.izdajMe.model.HotOffer;
-import com.izdajMe.izdajMe.model.User;
+import com.izdajMe.izdajMe.model.*;
 import com.izdajMe.izdajMe.repository.CottageRepository;
 import com.izdajMe.izdajMe.repository.CottageReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +12,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +28,17 @@ public class CottageReservationServiceImpl implements CottageReservationService{
 
     public List<CottageReservation> getAllReservationsOfCottage(Long id) {
         List<CottageReservation> allThisCottageReservations = cottageReservationRepository.findAllByCottageId(id);
+        return allThisCottageReservations;
+    }
+
+    public List<CottageReservation> getAllReservationsOfCottageFromTill(Long id, String from,String to){
+        Timestamp fromDateTs=new Timestamp(Long.parseLong(from));
+        Timestamp toDateTs=new Timestamp(Long.parseLong(to));
+        LocalDateTime fromDate = fromDateTs.toLocalDateTime();
+        LocalDateTime toDate = toDateTs.toLocalDateTime();
+
+
+        List<CottageReservation> allThisCottageReservations = cottageReservationRepository.findAllByCottageIdFromTill(id,fromDate,toDate);
         return allThisCottageReservations;
     }
 

@@ -37,6 +37,7 @@ export class AddNewCottageComponent implements OnInit {
     this.cottage.images = null;
     this.cottage.services = null;
     this.cottage.priceList = null;
+    this.cottage.grades = null;
     this.userService.getLoggedUser().subscribe(rer => {
       this.cottage.owner = rer;
       this.cottageService.addCottage(this.cottage).subscribe(ret=>{

@@ -10,6 +10,11 @@ import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
+
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +29,17 @@ public class ShipReservationServiceImpl implements ShipReservationService {
 
     public List<ShipReservation> getAllReservationsOfShip(Long id) {
         List<ShipReservation> allThisShipReservations = shipReservationRepository.findAllByShipId(id);
+        return allThisShipReservations;
+    }
+
+    public List<ShipReservation> getAllReservationsOfShipFromTill(Long id,String from,String to){
+        Timestamp fromDateTs=new Timestamp(Long.parseLong(from));
+        Timestamp toDateTs=new Timestamp(Long.parseLong(to));
+        LocalDateTime fromDate = fromDateTs.toLocalDateTime();
+        LocalDateTime toDate = toDateTs.toLocalDateTime();
+
+
+        List<ShipReservation> allThisShipReservations = shipReservationRepository.findAllByShipIdFromTill(id,fromDate,toDate);
         return allThisShipReservations;
     }
 

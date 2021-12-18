@@ -1,8 +1,10 @@
 package com.izdajMe.izdajMe.controller;
 
 import com.izdajMe.izdajMe.dto.CottageReservationDTO;
+import com.izdajMe.izdajMe.dto.ShipReservationDTO;
 import com.izdajMe.izdajMe.model.Cottage;
 import com.izdajMe.izdajMe.model.CottageReservation;
+import com.izdajMe.izdajMe.model.ShipReservation;
 import com.izdajMe.izdajMe.model.User;
 import com.izdajMe.izdajMe.services.CottageReservationService;
 import com.izdajMe.izdajMe.services.CottageService;
@@ -26,6 +28,16 @@ public class CottageReservationController {
 
         List<CottageReservationDTO> list = new ArrayList<CottageReservationDTO>();
         for (CottageReservation c : cottageReservationService.getAllReservationsOfCottage(id)){
+            list.add(new CottageReservationDTO(c));
+        }
+        return new ResponseEntity<List<CottageReservationDTO>>(list, HttpStatus.OK);
+    }
+
+    @GetMapping("/cottageReservation/getAllReservationsOfCottageFromTill")
+    public ResponseEntity<List<CottageReservationDTO>> getAllReservationsOfCottageFromTill(@RequestParam("id") Long id, @RequestParam("from") String from, @RequestParam("to") String to) {
+
+        List<CottageReservationDTO> list = new ArrayList<CottageReservationDTO>();
+        for (CottageReservation c : cottageReservationService.getAllReservationsOfCottageFromTill(id,from,to)){
             list.add(new CottageReservationDTO(c));
         }
         return new ResponseEntity<List<CottageReservationDTO>>(list, HttpStatus.OK);

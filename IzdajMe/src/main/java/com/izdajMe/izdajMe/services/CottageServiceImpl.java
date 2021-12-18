@@ -192,6 +192,7 @@ public class CottageServiceImpl implements CottageService {
         cottage.setImages(new ArrayList<String>());
         cottage.setPriceList(new ArrayList<ServicePrice>());
         cottage.setServices(new ArrayList<Cottage.Services>());
+        cottage.setGrades(new ArrayList<Grade>());
         return cottage;
     }
 

@@ -1,4 +1,5 @@
 
+import { Grade } from './grade';
 import { HotOffer } from './hot-offer';
 import { ServicePrice } from './service-price';
 import { User } from './user';
@@ -15,6 +16,7 @@ export class Cottage {
     services:Array<Services>;
     availableFrom:Date;
     availableTill:Date;
+    grades: Array<Grade>;
     hotOffers:Array<HotOffer> ;
     costPerNight:number;
     owner:User;

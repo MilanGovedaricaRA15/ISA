@@ -10,6 +10,7 @@ delete from ship_hot_offers where id!=0;
 delete from service_price where id!=0;
 delete from ship_service_price where id!=0;
 delete from ships_grades where ship_id!=0;
+delete from cottages_grades where cottage_id!=0;
 delete from grades where id!=0;
 delete from cottages where id!=0;
 delete from spring_session where primary_id!='0';
@@ -63,11 +64,28 @@ values (4, 3, 9, 'Very good');
 insert into grades(id, user_id, value, comment)
 values (5, 3, 8, 'Good');
 
+insert into grades(id, user_id, value, comment)
+values (6, 3, 7 , 'Not too bad');
+insert into grades(id, user_id, value, comment)
+values (7, 3, 7, 'Not too baaad');
+insert into grades(id, user_id, value, comment)
+values (8, 3, 6, 'Bad');
+insert into grades(id, user_id, value, comment)
+values (9, 3, 9, 'Very good');
+insert into grades(id, user_id, value, comment)
+values (10, 3, 8, 'Good');
+
 insert into ships_grades(ship_id, grades_id) values (1, 1);
 insert into ships_grades(ship_id, grades_id) values (1, 2);
 insert into ships_grades(ship_id, grades_id) values (1, 3);
 insert into ships_grades(ship_id, grades_id) values (1, 4);
 insert into ships_grades(ship_id, grades_id) values (1, 5);
+
+insert into cottages_grades(cottage_id, grades_id) values (1, 6);
+insert into cottages_grades(cottage_id, grades_id) values (1, 7);
+insert into cottages_grades(cottage_id, grades_id) values (1, 8);
+insert into cottages_grades(cottage_id, grades_id) values (1, 9);
+insert into cottages_grades(cottage_id, grades_id) values (1, 10);
 
 insert into hot_offers (id, available_from, available_till, cost, free, num_of_people, services)
 values (1,DATE('2021-11-20'),DATE('2021-11-25'),50,TRUE,3,null);
