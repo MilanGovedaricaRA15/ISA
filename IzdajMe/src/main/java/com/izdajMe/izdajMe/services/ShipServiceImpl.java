@@ -205,6 +205,9 @@ public class ShipServiceImpl implements  ShipService {
         ship.setImages(new ArrayList<String>());
         ship.setPriceList(new ArrayList<ShipServicePrice>());
         ship.setServices(new ArrayList<Ship.Services>());
+        ship.setGrades(new ArrayList<Grade>());
+        ship.setFishingEquipment(new ArrayList<FishingEquipment>());
+        ship.setNavigationEquipment(new ArrayList<NavigationEquipment>());
         return ship;
     }
 

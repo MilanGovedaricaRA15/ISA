@@ -64,6 +64,7 @@
           <app-ship-reservations (seeUser)="seeUserOwner($event)" [shipForApp]="shipForHotOffers" *ngIf="showCompNumber === 205"></app-ship-reservations>
           <app-client-profile-for-owner [seeUser]="userForOwner" *ngIf="showCompNumber === 52"></app-client-profile-for-owner>
           <app-add-new-cottage (cottageToShow)="onCottageClick($event)" *ngIf="showCompNumber === 6"></app-add-new-cottage>
+          <app-add-new-ship (shipToShow)="onShipClick($event)" *ngIf="showCompNumber === 206"></app-add-new-ship>
           <app-client-profile [clientAuthenticated]="clientToShowAuthenticated" *ngIf="showCompNumber === 31"></app-client-profile>
         </div>
       </div>

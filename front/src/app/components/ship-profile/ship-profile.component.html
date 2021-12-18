@@ -68,6 +68,7 @@
             <span class="error" *ngIf="type.errors?.required">Type is required</span>
             <span class="error" *ngIf="type.errors?.pattern">Only letters allowed</span>
         </div></div></div></div>
+        <p class="mb-2 text-muted text-uppercase small">Length of ship</p>
           <div class="container"><div class="row align-items-start align-items-center"><p class="pt-1 col-6">Length of ship: {{shipChange?.length}}</p><div class="col"><input [(ngModel)]="ship.length" formControlName="length" class="form-control"  type="number"/>
           <div *ngIf="length.invalid && (length.touched || length.dirty)">
             <span class="error" *ngIf="length.errors?.required">Length is required</span>
@@ -79,16 +80,19 @@
             <span class="error" *ngIf="engineNumber.errors?.required">Engine number is required</span>
             <span class="error" *ngIf="engineNumber.errors?.pattern">Only letters and numbers allowed</span>
         </div></div></div></div>
+        <p class="mb-2 text-muted text-uppercase small">Engine Power</p>
         <div class="container"><div class="row align-items-start align-items-center"><p class="pt-1 col-6">Engine Power: {{shipChange?.enginePower}}</p><div class="col"><input [(ngModel)]="ship.enginePower" formControlName="enginePower" class="form-control"  type="number"/>
             <div *ngIf="enginePower.invalid && (enginePower.touched || enginePower.dirty)">
-              <span class="error" *ngIf="enginePower.errors?.required">enginePower is required</span>
+              <span class="error" *ngIf="enginePower.errors?.required">Engine Power is required</span>
               <span class="error" *ngIf="enginePower.errors?.pattern">Only numbers allowed</span>
           </div></div></div></div>
+          <p class="mb-2 text-muted text-uppercase small">Top Speed</p>
         <div class="container"><div class="row align-items-start align-items-center"><p class="pt-1 col-6">Top Speed: {{shipChange?.topSpeed}}</p><div class="col"><input [(ngModel)]="ship.topSpeed" formControlName="topSpeed" class="form-control"  type="number"/>
             <div *ngIf="topSpeed.invalid && (topSpeed.touched || topSpeed.dirty)">
               <span class="error" *ngIf="topSpeed.errors?.required">Top speed is required</span>
               <span class="error" *ngIf="topSpeed.errors?.pattern">Only numbers allowed</span>
           </div></div></div></div>
+          <p class="mb-2 text-muted text-uppercase small">Capacity</p>
         <div class="container"><div class="row align-items-start align-items-center"><p class="pt-1 col-6">Capacity: {{shipChange?.capacity}}</p><div class="col"><input [(ngModel)]="ship.capacity" formControlName="capacity" class="form-control"  type="number"/>
             <div *ngIf="capacity.invalid && (capacity.touched || capacity.dirty)">
               <span class="error" *ngIf="capacity.errors?.required">Top speed is required</span>
