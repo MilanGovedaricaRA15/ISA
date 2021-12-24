@@ -1,5 +1,5 @@
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Cottage } from 'src/app/model/cottage';
 import { CottageReservation } from 'src/app/model/cottage-reservation';
 import { HotOffer } from 'src/app/model/hot-offer';
@@ -29,6 +29,7 @@ export class CottageCalendarComponent implements OnInit {
   daysOfMonthBeforeNumber: number;
   hotOffers: Array<HotOffer>;
   cottageReservations: Array<CottageReservation>;
+  @Output() sendCottageReservation = new EventEmitter<CottageReservation>();
 
   ngOnInit(): void {
     this.today = new Date();
@@ -502,6 +503,194 @@ export class CottageCalendarComponent implements OnInit {
       }
     }
     return response;
+  }
+
+
+  isItTakenReservationReport(day:number) : void {
+    if(this?.cottageReservations != null){
+
+      for (let cottageReservation of this.cottageReservations){
+        let availableFrom = new Date(cottageReservation.availableFrom);
+        let availableTill = new Date(cottageReservation.availableTill);
+        if(availableFrom.getFullYear()<this.today.getFullYear() && availableTill.getFullYear()<this.today.getFullYear()){
+          
+        }
+        else if(availableFrom.getFullYear()==availableTill.getFullYear()){
+          if(availableFrom.getMonth()==this.today.getMonth() && availableFrom.getDate() == day){
+            this.addReport(cottageReservation);
+          }
+          else if(availableFrom.getMonth()<this.today.getMonth() && availableTill.getMonth()>this.today.getMonth()){
+            this.addReport(cottageReservation);
+          }
+          else if(availableFrom.getMonth()<this.today.getMonth() && availableTill.getMonth()==this.today.getMonth() && availableTill.getDate() > day){
+            this.addReport(cottageReservation);
+          }
+          else if(availableFrom.getMonth()==this.today.getMonth() && availableFrom.getDate() < day && (availableTill.getDate() > day || availableTill.getMonth()>availableFrom.getMonth())){
+            this.addReport(cottageReservation);
+          }
+          else if(availableTill.getDate() == day && availableTill.getMonth()==this.today.getMonth()){
+            this.addReport(cottageReservation);
+          }
+          else {
+          }
+        }
+        else{
+          if(availableFrom.getMonth()==this.today.getMonth() && availableFrom.getDate() == day){
+            this.addReport(cottageReservation);
+          }
+          
+          else if((availableFrom.getMonth()<this.today.getMonth() || availableFrom.getFullYear()<this.today.getFullYear()) && availableTill.getMonth()>this.today.getMonth()){
+            this.addReport(cottageReservation);
+          }
+          else if((availableFrom.getMonth()<this.today.getMonth() || availableFrom.getFullYear()<this.today.getFullYear()) && availableTill.getMonth()==this.today.getMonth() && availableTill.getDate() > day){
+            this.addReport(cottageReservation);
+          }
+          else if(availableFrom.getMonth()==this.today.getMonth() && availableFrom.getDate() < day && (availableTill.getDate() > day || availableTill.getMonth()>availableFrom.getMonth() || availableTill.getFullYear()>availableFrom.getFullYear())){
+            this.addReport(cottageReservation);
+          }
+          else if(availableTill.getDate() == day && availableTill.getMonth()==this.today.getMonth()){
+            this.addReport(cottageReservation);
+          }
+          else {
+            
+          }
+
+        }
+        
+      }
+    }
+    
+  }
+
+  isItTakenNextMonthReservationReport(day:number) :void{
+    
+    if(this?.cottageReservations != null){
+
+      for (let cottageReservation of this.cottageReservations){
+        let availableFrom = new Date(cottageReservation.availableFrom);
+        let availableTill = new Date(cottageReservation.availableTill);
+
+        if(availableFrom.getFullYear()==availableTill.getFullYear() && availableFrom.getFullYear()==this.today.getFullYear()){
+
+          if(availableFrom.getMonth()==(this.today.getMonth()+1) && availableFrom.getDate() == day){
+            this.addReport(cottageReservation);
+          }
+          
+          else if(availableFrom.getMonth()<(this.today.getMonth()+1) && availableTill.getMonth()>(this.today.getMonth()+1)){
+            this.addReport(cottageReservation);          }
+          else if(availableFrom.getMonth()<(this.today.getMonth()+1) && availableTill.getMonth()==(this.today.getMonth()+1) && availableTill.getDate() > day){
+            this.addReport(cottageReservation);          }
+          else if(availableFrom.getMonth()==(this.today.getMonth()+1) && availableFrom.getDate() < day && (availableTill.getDate() > day || availableTill.getMonth()>availableFrom.getMonth())){
+            this.addReport(cottageReservation);          }
+          else if(availableTill.getDate() == day && availableTill.getMonth()==(this.today.getMonth()+1)){
+            this.addReport(cottageReservation);          }
+          else{
+          }
+        }
+        else{
+
+          let month;
+          let year;
+          if(this.today.getMonth()==11){
+            month = 0;
+            year = this.today.getFullYear()+1;
+          }
+          else {
+            month = this.today.getMonth()+1;
+            year = this.today.getFullYear();
+          }
+          if(availableFrom.getMonth()==month && availableFrom.getDate() == day){
+            this.addReport(cottageReservation);          }
+          
+          else if((availableFrom.getMonth()<month || availableFrom.getFullYear()<year) && availableTill.getMonth()>month && availableTill.getFullYear()==year){
+            this.addReport(cottageReservation);          }
+          else if((availableFrom.getMonth()<month || availableFrom.getFullYear()<year) && availableTill.getMonth()==month && availableTill.getDate() > day && availableTill.getFullYear()==year){
+            this.addReport(cottageReservation);          }
+          else if(availableFrom.getMonth()==month && availableFrom.getDate() < day && (availableTill.getDate() > day || availableTill.getMonth()>availableFrom.getMonth() || availableTill.getFullYear()>availableFrom.getFullYear())){
+            this.addReport(cottageReservation);          }
+          else if(availableTill.getDate() == day && availableTill.getMonth()==month){
+            this.addReport(cottageReservation);          }
+          else{
+          }
+        }
+      }
+    }
+  }
+
+  isItTakenPrevMonthReservationReport(day:number) : void {
+
+    if(this?.cottageReservations != null){
+
+      for (let cottageReservation of this.cottageReservations){
+        let availableFrom = new Date(cottageReservation.availableFrom);
+        let availableTill = new Date(cottageReservation.availableTill);
+        if(availableFrom.getFullYear()<this.today.getFullYear() && availableTill.getFullYear()<this.today.getFullYear()){
+        }
+        else if(availableFrom.getFullYear()==availableTill.getFullYear() && availableFrom.getFullYear()==this.today.getFullYear()){
+          if(availableFrom.getMonth()==(this.today.getMonth()-1) && availableFrom.getDate() == day){
+            this.addReport(cottageReservation);          }
+          
+          else if(availableFrom.getMonth()<(this.today.getMonth()-1) && availableTill.getMonth()>(this.today.getMonth()-1)){
+            this.addReport(cottageReservation);          }
+          else if(availableFrom.getMonth()<(this.today.getMonth()-1) && availableTill.getMonth()==(this.today.getMonth()-1) && availableTill.getDate() > day){
+            this.addReport(cottageReservation);          }
+          else if(availableFrom.getMonth()==(this.today.getMonth()-1) && availableFrom.getDate() < day && (availableTill.getDate() > day || availableTill.getMonth()>availableFrom.getMonth())){
+            this.addReport(cottageReservation);          }
+          else if(availableTill.getDate() == day && availableTill.getMonth()==(this.today.getMonth()-1)){
+            this.addReport(cottageReservation);          }
+          else{
+          }
+        }
+        else{
+          let month;
+          let year;
+          if(this.today.getMonth()==0){
+            month = 11;
+            year = this.today.getFullYear()-1;
+          }
+          else {
+            month = this.today.getMonth()-1;
+            year = this.today.getFullYear();
+          }
+          if(availableFrom.getMonth()==month && availableFrom.getDate() == day){
+            this.addReport(cottageReservation);          }
+          
+          else if((availableFrom.getMonth()<month || availableFrom.getFullYear()<year) && availableTill.getMonth()>month && availableTill.getFullYear()==year){
+            this.addReport(cottageReservation);          }
+          else if((availableFrom.getMonth()<month || availableFrom.getFullYear()<year) && availableTill.getMonth()==month && availableTill.getDate() > day && availableTill.getFullYear()==year){
+            this.addReport(cottageReservation);          }
+          else if(availableFrom.getMonth()==month && availableFrom.getDate() < day && (availableTill.getDate() > day || availableTill.getMonth()>availableFrom.getMonth() || availableTill.getFullYear()>availableFrom.getFullYear())){
+            this.addReport(cottageReservation);          }
+          else if(availableTill.getDate() == day && availableTill.getMonth()==month){
+            this.addReport(cottageReservation);          }
+          else{
+          }
+
+        }
+      }
+    }
+  }
+
+  addReport(cottageReservation: CottageReservation){
+    if(this.isOwer(cottageReservation)){
+      if(cottageReservation.report == null|| cottageReservation.report == undefined){
+        this.sendCottageReservation.emit(cottageReservation);
+      }
+      else{
+        alert("Reservation already has an report");
+      }
+    }
+    else{
+      alert("Reservation is not finished");
+    }
+    
+  }
+  isOwer(cottageReservation: CottageReservation): boolean{
+    let datum = new Date();
+    if (new Date(Date.parse(cottageReservation.availableTill.toString())).getTime() < datum.getTime()){
+        return true;
+    }
+    return false;
   }
 
 }

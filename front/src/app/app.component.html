@@ -58,8 +58,8 @@
           <app-cottage-owner-report *ngIf="showCompNumber === 3"></app-cottage-owner-report>
           <app-ship-owner-reservations (sendShipReservation)="receiveShipReservation($event)" (seeUser)="seeUserOwner($event)" *ngIf="showCompNumber === 4"></app-ship-owner-reservations>
           <app-ship-owner-report *ngIf="showCompNumber === 4"></app-ship-owner-report>
-          <app-cottage-calendar [cottageForApp]="cottageForHotOffers" *ngIf="showCompNumber === 5"></app-cottage-calendar>
-          <app-ship-calendar [shipForApp]="shipForHotOffers" *ngIf="showCompNumber === 205"></app-ship-calendar>
+          <app-cottage-calendar (sendCottageReservation)="receiveCottageReservation($event)" [cottageForApp]="cottageForHotOffers" *ngIf="showCompNumber === 5"></app-cottage-calendar>
+          <app-ship-calendar (sendShipReservation)="receiveShipReservation($event)" [shipForApp]="shipForHotOffers" *ngIf="showCompNumber === 205"></app-ship-calendar>
           <app-cottage-reservations (sendCottageReservation)="receiveCottageReservation($event)" (seeUser)="seeUserOwner($event)" [cottageForApp]="cottageForHotOffers" *ngIf="showCompNumber === 5"></app-cottage-reservations>
           <app-ship-reservations (sendShipReservation)="receiveShipReservation($event)" (seeUser)="seeUserOwner($event)" [shipForApp]="shipForHotOffers" *ngIf="showCompNumber === 205"></app-ship-reservations>
           <app-client-profile-for-owner [seeUser]="userForOwner" *ngIf="showCompNumber === 52"></app-client-profile-for-owner>
