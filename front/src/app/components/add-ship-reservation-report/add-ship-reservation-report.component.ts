@@ -26,9 +26,9 @@ export class AddShipReservationReportComponent implements OnInit {
     }
     this.reportToAdd = new Report;
     this.addNewReport = new FormGroup({
-      "report": new FormControl(null,[Validators.required,Validators.pattern('[A-Z]{1}[a-z]+')]),
-      "comment": new FormControl(null,[Validators.required,Validators.pattern('[A-Z]{1}[a-z]+')]),
-      "praise": new FormControl(null,[Validators.required,Validators.pattern('[A-Z]{1}[a-z]+')])
+      "report": new FormControl(null,[Validators.required,Validators.pattern('[a-zšđčćžA-ZŠĐČĆŽ ]*')]),
+      "comment": new FormControl(null,[Validators.required,Validators.pattern('[a-zšđčćžA-ZŠĐČĆŽ ]*')]),
+      "praise": new FormControl(null,[Validators.required,Validators.pattern('[a-zšđčćžA-ZŠĐČĆŽ ]*')])
     });
   }
 

@@ -49,6 +49,7 @@ import { CottageOwnerReportComponent } from './components/cottage-owner-report/c
 import { AddNewShipComponent } from './components/add-new-ship/add-new-ship.component';
 import { AddReportComponent } from './components/add-report/add-report.component';
 import { AddShipReservationReportComponent } from './components/add-ship-reservation-report/add-ship-reservation-report.component';
+import { MapComponent } from './components/map/map.component';
 
 @NgModule({
   declarations: [
@@ -94,7 +95,8 @@ import { AddShipReservationReportComponent } from './components/add-ship-reserva
     CottageOwnerReportComponent,
     AddNewShipComponent,
     AddReportComponent,
-    AddShipReservationReportComponent
+    AddShipReservationReportComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,
