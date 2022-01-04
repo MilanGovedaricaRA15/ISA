@@ -146,6 +146,11 @@ public class UserController {
         return new ResponseEntity<Boolean>(userService.deleteUser(id), HttpStatus.OK);
     }
 
+    @PostMapping("/users/acceptUser")
+    public ResponseEntity<Boolean> acceptUser(@RequestBody Long id) {
+        return new ResponseEntity<Boolean>(userService.acceptUser(id), HttpStatus.OK);
+    }
+
     @GetMapping("/users/getUserByEmail")
     public ResponseEntity<UserDTO> getUserByEmail(@RequestParam("email") String email, HttpServletRequest request) {
         if (request.getSession(false).getAttribute("role")!=null) {

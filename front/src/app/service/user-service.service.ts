@@ -22,6 +22,7 @@ export class UserService {
   private addNewAdmin: string;
   private deleteUserUrl: string;
   private searchInstructorssByNameUrl: string;
+  private acceptUserUrl: string;
   
 
   constructor(private http: HttpClient) {
@@ -40,6 +41,7 @@ export class UserService {
     this.addNewAdmin = 'http://localhost:8080/users/addAdmin';
     this.deleteUserUrl = 'http://localhost:8080/users/deleteUser';
     this.searchInstructorssByNameUrl = 'http://localhost:8080/users/searchInstructorsByName';
+    this.acceptUserUrl = 'http://localhost:8080/users/acceptUser';
   }
 
   public getAllUsers(): Observable<Array<User>> {
@@ -184,6 +186,10 @@ export class UserService {
 
   public removeUser(id:number): Observable<boolean>{
     return this.http.post<boolean>(this.deleteUserUrl,id);
+  }
+
+  public acceptUser(id:number): Observable<boolean> {
+    return this.http.post<boolean>(this.acceptUserUrl,id);
   }
 
   public searchInstructorssByName(firstName: string, lastName: string): Observable<Array<User>> {

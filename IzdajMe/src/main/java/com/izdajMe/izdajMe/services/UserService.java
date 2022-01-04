@@ -19,4 +19,5 @@ public interface UserService {
     List<User> searchInstructorsByName(String firstName, String lastName);
     public Boolean saveClient(User user);
     public void activate(Long id);
+    public Boolean acceptUser(long id);
 }

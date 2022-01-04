@@ -206,4 +206,10 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
+    public Boolean acceptUser(long id){
+        User user = userRepository.findById(id).get();
+        user.setVerified(true);
+        userRepository.save(user);
+        return true;
+    }
 }

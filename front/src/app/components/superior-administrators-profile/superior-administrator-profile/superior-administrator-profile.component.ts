@@ -26,6 +26,7 @@ export class SuperiorAdministratorProfileComponent implements OnInit {
   allCottages: any;
   allBoats: any;
   deletingUser: User;
+  acceptingUser: User;
   @Output() addAdmin = new EventEmitter<string>();
 
   ngOnInit(): void {
@@ -51,6 +52,7 @@ export class SuperiorAdministratorProfileComponent implements OnInit {
       this.allCottages = cottagesFromBack;
     });
 
+    this.acceptingUser = new User()
     this.deletingUser = new User()
     this.editAdministratorForm = new FormGroup({
       "firstName": new FormControl(null,[Validators.required,Validators.pattern('[A-Z]{1}[a-z]+')]),
@@ -158,6 +160,14 @@ export class SuperiorAdministratorProfileComponent implements OnInit {
         this.allUsers.splice(index, 1)
     });
     
+  }
+
+  acceptUser(index: number) {
+    this.acceptingUser = this.allUsers[index]
+    this.userService.acceptUser(this.acceptingUser.id).subscribe(ret => {
+      if(ret)
+        this.allUsers[index].verified = true;
+    });
   }
 
 }
