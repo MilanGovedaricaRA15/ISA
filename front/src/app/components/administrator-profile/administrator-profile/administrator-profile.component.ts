@@ -25,6 +25,7 @@ export class AdministratorProfileComponent implements OnInit {
   allUsers: Array<User>;
   allCottages: any;
   allBoats: any;
+  deletingUser: User;
 
   ngOnInit(): void {
     this.init();
@@ -49,6 +50,7 @@ export class AdministratorProfileComponent implements OnInit {
       this.allCottages = cottagesFromBack;
     });
 
+    this.deletingUser = new User()
     this.editAdministratorForm = new FormGroup({
       "firstName": new FormControl(null,[Validators.required,Validators.pattern('[A-Z]{1}[a-z]+')]),
       "lastName": new FormControl(null,[Validators.required,Validators.pattern('[A-Z]{1}[a-z]+')]),
@@ -142,5 +144,14 @@ export class AdministratorProfileComponent implements OnInit {
   }
   get newPassword1() {
     return this.editPasswordForm.get('newPassword1');
+  }
+
+  userDeleted(index: number) {
+    this.deletingUser = this.allUsers[index]
+    this.userService.removeUser(this.deletingUser.id).subscribe(ret => {
+      if(ret)
+        this.allUsers.splice(index, 1)
+    });
+    
   }
 }
