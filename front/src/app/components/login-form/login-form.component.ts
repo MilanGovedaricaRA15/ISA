@@ -16,6 +16,7 @@ export class LoginFormComponent implements OnInit {
   userDoesntExists: boolean = false;
   @Output() login = new EventEmitter<string>();
   @Output() profileAdministrator = new EventEmitter<string>();
+  @Output() clientToShowAuthenticated = new EventEmitter<User>();
 
   constructor(private userService:UserService) {
     this.user = new User();
@@ -27,7 +28,7 @@ export class LoginFormComponent implements OnInit {
   ngOnInit(): void {
     this.loginForm = new FormGroup({
       "email": new FormControl(null,[Validators.required,Validators.email]),
-      "password": new FormControl(null,[Validators.required,Validators.pattern('[a-zA-Z ]*')])
+      "password": new FormControl(null,[Validators.required,Validators.pattern('[a-zA-Z0-9]*')])
     });
   }
 
@@ -66,6 +67,18 @@ export class LoginFormComponent implements OnInit {
             
       //      this.userService.isBoatAdvertiserLoggedIn()
       //       this.login.emit('boatAdvertiser');
+            this.userService.isBoatAdvertiserLoggedIn().subscribe(res =>{
+              if(res){
+                this.login.emit('boatAdvertiser');
+              }
+            });
+
+            this.userService.isClientLoggedIn().subscribe(res =>{
+              if(res){
+                this.login.emit('client');
+                this.clientToShowAuthenticated.emit(this.user);
+              }
+            });
             
           }
         

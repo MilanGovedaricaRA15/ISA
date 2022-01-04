@@ -23,7 +23,8 @@ public class User {
         instructor,
         administratorSuperior,
         administratorFirstLogged,
-        administrator
+        administrator,
+        client
     }
     protected Role role;
     protected String password;

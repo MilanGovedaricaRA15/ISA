@@ -1,0 +1,213 @@
+<div class="container rounded bg-white mt-5 mb-5">
+    <div class="row">
+    
+        <div class="col-md-5 border-right">
+            <div class="p-1 py-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="text-right">Edit Profile</h4>
+                </div>
+                <form class="content" [formGroup]="editOwnerForm" (ngSubmit)="submitData()">
+                <div class="row mt-2">
+                    <div class="col-md-6"><label class="labels">First name:</label><input type="text" formControlName="firstName" [(ngModel)]="ownerChange.firstName"  class="form-control" placeholder="First Name"/>
+                        <div *ngIf="firstName.invalid && (firstName.touched || firstName.dirty)">
+                            <span class="error" *ngIf="firstName.errors?.required">First Name is required</span>
+                            <span class="error" *ngIf="firstName.errors?.pattern">Only letters allowed.First letter must be capital.</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6"><label class="labels">Last name:</label><input type="text" formControlName="lastName" [(ngModel)]="ownerChange.lastName"  class="form-control" placeholder="Last Name"/>
+                        <div *ngIf="lastName.invalid && (lastName.touched || lastName.dirty)">
+                            <span class="error" *ngIf="lastName.errors?.required">Last Name is required</span>
+                            <span class="error" *ngIf="lastName.errors?.pattern">Only letters allowed.First letter must be capital.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-12"><label class="labels">Mobile number:</label><input type="text" formControlName="mobileNumber" [(ngModel)]="ownerChange.mobileNumber"  class="form-control" placeholder="Mobile number"/>
+                        <div *ngIf="mobileNumber.invalid && (mobileNumber.touched || mobileNumber.dirty)">
+                            <span class="error" *ngIf="mobileNumber.errors?.required">Mobile number is required</span>
+                            <span class="error" *ngIf="mobileNumber.errors?.pattern">Only numbers allowed</span>
+                        </div>
+                    </div>
+                    <div class="col-md-12"><label class="labels">Address:</label> <input type="text" formControlName="address" [(ngModel)]="ownerChange.address"  class="form-control" placeholder="Address"/>
+                        <div *ngIf="address.invalid && (address.touched || address.dirty)">
+                            <span class="error" *ngIf="address.errors?.required">Address is required</span>
+                            <span class="error" *ngIf="address.errors?.pattern">Enter valid address </span>
+                        </div>
+                    </div>
+                    <div class="col-md-12"><label class="labels">Contry:</label><input type="text" formControlName="country" [(ngModel)]="ownerChange.country"  class="form-control" placeholder="Country"/>
+                        <div *ngIf="country.invalid && (country.touched || country.dirty)">
+                            <span class="error" *ngIf="country.errors?.required">Country is required</span>
+                            <span class="error" *ngIf="country.errors?.pattern">Only letters allowed.First letter must be capital.</span>
+                        </div>
+                    </div>
+                    <div class="col-md-12"><label class="labels">E-mail:</label><input type="text"  [value]="ownerChange.email" class="form-control" placeholder="E-mail" disabled/>
+                        
+                    </div>
+                    <div class="col-md-12"><label class="labels">City:</label><input type="text" formControlName="city" [(ngModel)]="ownerChange.city"  class="form-control" placeholder="City"/>
+                        <div *ngIf="city.invalid && (city.touched || city.dirty)">
+                            <span class="error" *ngIf="city.errors?.required">City is required</span>
+                            <span class="error" *ngIf="city.errors?.pattern">Only letters allowed.First letter must be capital.</span>
+                        </div>
+                    </div>
+                    <div class="col-md-12"><label class="labels">Reason:</label><input type="text" formControlName="reason" [(ngModel)]="ownerChange.reason"  class="form-control" placeholder="Reason of registration"/>
+                        <div *ngIf="reason.invalid && (reason.touched || reason.dirty)">
+                            <span class="error" *ngIf="reason.errors?.required">Reason is required</span>
+                            <span class="error" *ngIf="reason.errors?.pattern">Only letters allowed</span>
+                        </div>
+                    </div>
+                    <div class="col-md-12"><label class="labels">Current password</label><input type="password" formControlName="password" [(ngModel)]="ownerChange.password"  class="form-control" placeholder="Password"/>
+                        <div *ngIf="password.invalid && (password.touched || password.dirty)">
+                            <span class="error" *ngIf="password.errors?.required">Password is required</span>
+                            <span class="error" *ngIf="password.errors?.pattern">Only letters allowed</span>
+                        </div>
+                        <div *ngIf="wrongPassword1">
+                            <span class="error">Password is wrong</span>
+                        </div>
+                    </div>
+                    <div class="mt-5 text-center"><button class="btn btn-primary profile-button" [disabled]="editOwnerForm.invalid">Edit Profile</button></div>
+                    
+                </div>
+            </form>
+                <form class="content" [formGroup]="editPasswordForm" (ngSubmit)="submitPassword()">
+                <div class="row mt-3">
+                    <div class="col-md-12"><label class="labels">Current password</label><input type="password" formControlName="currentPassword"  class="form-control" placeholder="Password"/>
+                        <div *ngIf="currentPassword.invalid && (currentPassword.touched || currentPassword.dirty)">
+                            <span class="error" *ngIf="currentPassword.errors?.required">Password is required</span>
+                            <span class="error" *ngIf="currentPassword.errors?.pattern">Only letters allowed</span>
+                        </div>
+                        <div *ngIf="wrongPassword">
+                            <span class="error">Password is wrong</span>
+                        </div>
+                    </div>
+                    <div class="col-md-12"><label class="labels">New password</label><input type="password" formControlName="newPassword" [(ngModel)]="passwordChange.password"  class="form-control" placeholder="Password"/>
+                        <div *ngIf="newPassword.invalid && (newPassword.touched || newPassword.dirty)">
+                            <span class="error" *ngIf="newPassword.errors?.required">Password is required</span>
+                            <span class="error" *ngIf="newPassword.errors?.pattern">Only letters allowed</span>
+                        </div>
+                    </div>
+                    <div class="col-md-12"><label class="labels">Repeat new password</label><input type="password" formControlName="newPassword1" (focusout)="validatePass()"  class="form-control" placeholder="Password"/>
+                        <div *ngIf="newPassword1.invalid && (newPassword1.touched || newPassword1.dirty)">
+                            <span class="error" *ngIf="newPassword1.errors?.required">Password is required</span>
+                            <span class="error" *ngIf="newPassword1.errors?.pattern">Only letters allowed</span>
+                        </div>
+                        <div *ngIf="wrongPassword2">
+                            <span class="error">Passwords are not the same</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-5 text-center"><button class="btn btn-primary profile-button" [disabled]="editPasswordForm.invalid">Edit Password</button></div>
+                </form>
+                
+                
+            </div>
+            <div class="col-md-12"><label class="labels">Reason:</label><input type="text" id="reasonOfDelete" class="form-control" placeholder="Reason of request"/>
+            </div>
+            <button (click)="requestDelete()" class="list-item btn btn-primaty bg-danger btn-lg text-white">Request account delete</button>
+            <div *ngIf="alreadySent">
+                <span class="error">Already sent</span>
+            </div>
+            
+        </div>
+    
+
+
+        <div class="col">
+            <div class="p-1 pt-5 mt-5 py-5 row">
+
+                <div class="page-content page-container col" id="page-content">
+                        <div class="row">
+                            
+                            <div class="col">
+                                <div class="container-fluid d-flex justify-content-center">
+                                    <div class="list list-row card" >
+                                        
+                                        
+                                        
+                                        <div *ngFor="let ship of ships" class="list-item">
+                                            <div (click)="goToShipProfile(ship?.id)"><span class="w-80 avatar gd-info"><img *ngIf="ship?.images != null" style="width:120px;height:80px;"  [src]="('../../assets/images/' + ship?.images[0] +'.jpg')" alt="."><img *ngIf="ship?.images == null" style="width:120px;height:80px;"  src="../../assets/images/undefined.jpg" alt="."></span></div>
+                                            <div class="flex">{{ship?.name}}
+                                                <div class="item-except text-muted text-sm h-1x">{{ship?.description}}</div>
+                                                <div class="item-except text-muted text-sm h-1x">{{ship?.address}}</div>
+                                            </div>
+                                            <div  (click)="goToShipProfile(ship.id)" class="no-wrap ">
+                                                <div class="item-date text-muted text-sm d-none d-md-block"><b style="color: red;">{{ship?.costPerNight}}</b></div>
+                                                
+                                            </div>
+                                            <button  (click)="deleteShip(ship.id)" class="btn btn-primary bg-danger btn-block btn-sm text-white">Remove</button>
+                                            <div>
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="list-item">
+                                            <input type="text" class="form-control" placeholder="Ship Name" id="searchShipName"/>    
+                                           
+                                        </div>
+                                        <div class="list-item">
+                                            <input type="text" class="form-control" placeholder="Ship Address" id="searchShipAddress"/>    
+                                           
+                                        </div>
+                                        <div class="list-item">
+                                            <input type="text" class="form-control" placeholder="Ship Type" id="searchShipType"/>    
+                                           
+                                        </div>
+                                        <div class="list-item">
+                                            <input type="text" class="form-control" placeholder="Ship Engine Number" id="searchShipEngineNumber"/>    
+                                           
+                                        </div>
+                                        <div class="list-item">
+                                            <input type="number" class="form-control" placeholder="Ship Length" id="searchShipLength"/>    
+                                           
+                                        </div>
+                                        <div class="list-item">
+                                            <input type="number" class="form-control" placeholder="Ship Engine Power" id="searchShipEnginePower"/>    
+                                           
+                                        </div>
+                                        <div class="list-item">
+                                            <input type="number" class="form-control" placeholder="Ship Top Speed" id="searchShipTopSpeed"/>    
+                                           
+                                        </div>
+                                        <div class="list-item">
+                                            <input type="number" class="form-control" placeholder="Ship Capacity" id="searchShipCapacity"/>    
+                                           
+                                        </div>
+                                        <div class="list-item">
+                                            <input type="number" class="form-control" placeholder="Ship Cost" id="searchShipCost"/>    
+                                            <button (click)="SearchShips()" class="list-item btn btn-primaty bg-success btn-lg text-white">Search ship</button>
+                                        </div>
+                                        <div class="list-item">
+                                            <input type="text" class="form-control" placeholder="Ship Cancel Requirements" id="searchShipCancelRequirements"/>    
+                                           
+                                        </div>
+                                        <div class="list-item">
+                                            <input type="text" class="form-control" placeholder="Ship Description" id="searchShipDescription"/>    
+                                           
+                                        </div>
+                                        <div class="list-item">
+                                            <input type="text" class="form-control" placeholder="Ship Rules" id="searchShipRules"/>    
+                                           
+                                        </div>
+                                        <div class="list-item">
+                                            <input type="text" class="form-control" placeholder="Ship Navigation Equipment" id="searchShipNavigationEquipment"/>    
+                                            
+                                        </div>
+                                        <div class="list-item">
+                                            <input type="text" class="form-control" placeholder="Ship Fishing Equipment" id="searchShipFishingEquipment"/>    
+                                            
+                                        </div>
+                                        <div class="list-item">
+                                            <input type="text" class="form-control" placeholder="Ship Services" id="searchShipServices"/>    
+                                           
+                                        </div>
+                                        <button (click)="addNewShip()" class="list-item btn btn-primaty bg-success btn-lg text-white">Add new ship</button>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+               
+            </div>
+            
+        </div>
+    </div>
+</div>
+

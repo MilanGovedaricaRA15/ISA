@@ -1,0 +1,25 @@
+.column {
+    float: left;
+    width: 50%;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+button
+{
+    background-color: #000;
+    color: #fff;
+}
+button:hover
+{
+    color: #fff;
+}
+
+.error
+{
+    color: red;
+}

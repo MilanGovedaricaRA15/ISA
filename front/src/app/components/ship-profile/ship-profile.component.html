@@ -1,0 +1,247 @@
+
+<section class="mb-5">
+    <form class="content" [formGroup]="changeForm" (ngSubmit)="submitData()">
+      <div class="row">
+        <div class="col-md-6 mb-4 mb-md-0">
+    
+          <div id="mdb-lightbox-ui"></div>
+    
+          <div class="mdb-lightbox">
+    
+            <div class="row mx-1">
+    
+              <div class="col-12 mb-0">
+                <figure class="view overlay rounded z-depth-1 main-img">
+                  
+                    <img style="width:600px;height:485px;" [src]="('../../assets/images/' + shipImg +'.jpg')"
+                      class="img-fluid z-depth-1"/>
+                  
+                </figure>
+              </div>
+              <div class="col-12">
+                <div class="row">
+                  <div *ngFor='let image of shipChange?.images| slice:1' class="col-3">
+                    <div  class="view overlay rounded z-depth-1 gallery-item">     
+                      <img *ngIf='image !== undefined' (click)="select(image)" style="width:130px;height:150px;" [src]="('../../assets/images/' + image +'.jpg')"
+                          class="img-fluid">     
+                    </div>
+                  </div>  
+                </div>
+              </div>
+              <div class="d-flex justify-content-around pt-3">
+              <div>
+                <input type="file" 
+                (change)="onChange($event)">
+                <div>
+                <button (click)="saveImg()" type="button" class="btn btn-primary btn-md mr-1 mb-2">Add picture</button>
+                <div *ngIf="cantAdd">
+                  <span class="error">Ship is reserved</span>
+                </div>
+                </div>
+                <div style="color:red;" *ngIf="invalidFile">
+                  Upload jpg file
+  
+                </div>
+              </div>
+              <div>
+              <button (click)="removeImg()" type="button" class="btn btn-primary btn-md mr-1 mb-2">Remove picture</button>
+              <div *ngIf="cantRemove">
+                <span class="error">Ship is reserved</span>
+              </div>
+              </div>
+              </div>
+            </div>
+    
+          </div>
+          <app-map [address]="shipChange?.address"></app-map>
+  
+        </div>
+        <div class="col-md-6">
+    
+          <div class="container"><div class="row align-items-start align-items-center"><h5 class="col">{{shipChange?.name}}</h5><div class="col"><input [(ngModel)]="ship.name" formControlName="name" class="form-control col" type="text"/>
+          <div *ngIf="name.invalid && (name.touched || name.dirty)">
+            <span class="error" *ngIf="name.errors?.required">Name is required</span>
+            <span class="error" *ngIf="name.errors?.pattern">Only letters allowed.First letter must be capital</span>
+        </div></div></div></div>
+          <p class="mb-2 text-muted text-uppercase small">Type</p>
+          <div class="container"><div class="row align-items-start align-items-center"><p class="pt-1 col-6">Type of ship: {{shipChange?.type}}</p><div class="col"><input [(ngModel)]="ship.type" formControlName="type" class="form-control"  type="text"/>
+          <div *ngIf="type.invalid && (type.touched || type.dirty)">
+            <span class="error" *ngIf="type.errors?.required">Type is required</span>
+            <span class="error" *ngIf="type.errors?.pattern">Only letters allowed</span>
+        </div></div></div></div>
+        <p class="mb-2 text-muted text-uppercase small">Length of ship</p>
+          <div class="container"><div class="row align-items-start align-items-center"><p class="pt-1 col-6">Length of ship: {{shipChange?.length}}</p><div class="col"><input [(ngModel)]="ship.length" formControlName="length" class="form-control"  type="number"/>
+          <div *ngIf="length.invalid && (length.touched || length.dirty)">
+            <span class="error" *ngIf="length.errors?.required">Length is required</span>
+            <span class="error" *ngIf="length.errors?.pattern">Only numbers allowed</span>
+        </div></div></div></div>
+            <p class="mb-2 text-muted text-uppercase small">Engine Number</p>
+            <div class="container"><div class="row align-items-start align-items-center"><p class="pt-1 col-6">Engine Number: {{shipChange?.engineNumber}}</p><div class="col"><input [(ngModel)]="ship.engineNumber" formControlName="engineNumber" class="form-control"  type="text"/>
+            <div *ngIf="engineNumber.invalid && (engineNumber.touched || engineNumber.dirty)">
+            <span class="error" *ngIf="engineNumber.errors?.required">Engine number is required</span>
+            <span class="error" *ngIf="engineNumber.errors?.pattern">Only letters and numbers allowed</span>
+        </div></div></div></div>
+        <p class="mb-2 text-muted text-uppercase small">Engine Power</p>
+        <div class="container"><div class="row align-items-start align-items-center"><p class="pt-1 col-6">Engine Power: {{shipChange?.enginePower}}</p><div class="col"><input [(ngModel)]="ship.enginePower" formControlName="enginePower" class="form-control"  type="number"/>
+            <div *ngIf="enginePower.invalid && (enginePower.touched || enginePower.dirty)">
+              <span class="error" *ngIf="enginePower.errors?.required">Engine Power is required</span>
+              <span class="error" *ngIf="enginePower.errors?.pattern">Only numbers allowed</span>
+          </div></div></div></div>
+          <p class="mb-2 text-muted text-uppercase small">Top Speed</p>
+        <div class="container"><div class="row align-items-start align-items-center"><p class="pt-1 col-6">Top Speed: {{shipChange?.topSpeed}}</p><div class="col"><input [(ngModel)]="ship.topSpeed" formControlName="topSpeed" class="form-control"  type="number"/>
+            <div *ngIf="topSpeed.invalid && (topSpeed.touched || topSpeed.dirty)">
+              <span class="error" *ngIf="topSpeed.errors?.required">Top speed is required</span>
+              <span class="error" *ngIf="topSpeed.errors?.pattern">Only numbers allowed</span>
+          </div></div></div></div>
+          <p class="mb-2 text-muted text-uppercase small">Capacity</p>
+        <div class="container"><div class="row align-items-start align-items-center"><p class="pt-1 col-6">Capacity: {{shipChange?.capacity}}</p><div class="col"><input [(ngModel)]="ship.capacity" formControlName="capacity" class="form-control"  type="number"/>
+            <div *ngIf="capacity.invalid && (capacity.touched || capacity.dirty)">
+              <span class="error" *ngIf="capacity.errors?.required">Top speed is required</span>
+              <span class="error" *ngIf="capacity.errors?.pattern">Only numbers allowed</span>
+          </div></div></div></div>
+
+          <p class="mb-2 text-muted text-uppercase small">Fishing Equipment</p>
+          <div class="container"><div class="row align-items-start align-items-center"> <ul class='col'>
+            <li *ngFor="let item of shipChange?.fishingEquipment">
+              {{item}}
+            </li>
+          </ul>
+          <div class="col">
+            <div class="row">
+              <div *ngFor="let service of fishingEquipment;let i = index" class="form-check col">
+                <input [checked]="isCheckedFishingEquipment(service.toString())" class="form-check-input" type="checkbox" [value]="i" [id]="service">
+                <label class="form-check-label">
+                  {{service.toString()}}
+                </label>
+              </div>
+          </div>
+        </div>
+        </div></div>
+
+        <p class="mb-2 text-muted text-uppercase small">Navigation Equipment</p>
+          <div class="container"><div class="row align-items-start align-items-center"> <ul class='col'>
+            <li *ngFor="let item of shipChange?.navigationEquipment">
+              {{item}}
+            </li>
+          </ul>
+          <div class="col">
+            <div class="row">
+              <div *ngFor="let service of navigationEquipment;let i = index" class="form-check col">
+                <input [checked]="isCheckedNavigationEquipment(service.toString())" class="form-check-input" type="checkbox" [value]="i" [id]="service">
+                <label class="form-check-label">
+                  {{service.toString()}}
+                </label>
+              </div>
+          </div>
+        </div>
+        </div></div>
+         
+          <p class="mb-2 text-muted text-uppercase small">Services</p>
+          <div class="container"><div class="row align-items-start align-items-center"> <ul class='col'>
+            <li *ngFor="let item of shipChange?.services">
+              {{item}}
+            </li>
+          </ul>
+          <div class="col">
+            <div class="row">
+              <div *ngFor="let service of services;let i = index" class="form-check col">
+                <input [checked]="isChecked(service.toString())" class="form-check-input" type="checkbox" [value]="i" [id]="service">
+                <label class="form-check-label">
+                  {{service.toString()}}
+                </label>
+              </div>
+          </div>
+        </div>
+        </div></div>
+  
+        <p class="mb-2 text-muted text-uppercase small">Services price</p>
+          <div class="container"><div class="row align-items-start align-items-center"> <ul class='col'>
+            <li *ngFor="let item of servicesClass">
+              {{item.service}}
+            </li>
+          </ul>
+          <div class="col">
+            <div class="row">
+              <div *ngFor="let item of servicesClass" class="col">
+                <div *ngIf="item.cost != undefined">
+                <input  class="form-controll"  [value]="item.cost" [id]="item.service.toString()+'serviceKlasa'">
+                </div>
+                <div *ngIf="item.cost == undefined">
+                  <input  class="form-controll"  [value]="0" [id]="item.service.toString()+'serviceKlasa'">
+                  </div>
+              </div>
+          </div>
+        </div>
+        </div></div>
+          
+          <p class="mb-2 text-muted text-uppercase small">Cost per night</p>
+          <div class="container"><div class="row align-items-start align-items-center"><p class="col"><span class="mr-1"><strong>{{shipChange?.costPerNight}}</strong></span></p><div class="col"><input [(ngModel)]="ship.costPerNight" formControlName="costPerNight" class="form-control" type="number"/>
+          <div *ngIf="costPerNight.invalid && (costPerNight.touched || costPerNight.dirty)">
+            <span class="error" *ngIf="costPerNight.errors?.required">Cost per night is required</span>
+            <span class="error" *ngIf="costPerNight.errors?.pattern">Only numbers allowed</span>
+        </div></div></div></div>
+          <p class="mb-2 text-muted text-uppercase small">Address</p>
+          <div class="container"><div class="row align-items-start align-items-center"><p class="pt-1 col-6">{{shipChange?.address}}</p><div class="col"><input [(ngModel)]="ship.address" formControlName="address" class="form-control" type="text"/>
+          <div *ngIf="address.invalid && (address.touched || address.dirty)">
+            <span class="error" *ngIf="address.errors?.required">Address is required</span>
+            <span class="error" *ngIf="address.errors?.pattern">Enter valid address</span>
+        </div></div></div></div>
+          <p class="mb-2 text-muted text-uppercase small">Description</p>
+          <div class="container "><div class="row align-items-start align-items-center"><p class="pt-1 col-6">{{shipChange?.description}}</p><div class="col"><input [(ngModel)]="ship.description" formControlName="description" class="form-control" type="text"/>
+          <div *ngIf="description.invalid && (description.touched || description.dirty)">
+            <span class="error" *ngIf="description.errors?.required">Description is required</span>
+            <span class="error" *ngIf="description.errors?.pattern">Only letters allowed</span>
+        </div></div></div></div>
+          <p class="mb-2 text-muted text-uppercase small">Cancel Requirements</p>
+          <div class="container"><div class="row align-items-start align-items-center"> <ul class='col'>
+            <li>
+              {{shipChange?.cancelRequirements}}
+            </li>
+          </ul>
+          <div class="col">
+            <div class="row">
+              <div *ngFor="let cance of cancelRequirements;let i = index" class="form-check col">
+                <input [checked]="isCheckedCancelRequirements(cance.toString())" class="form-check-input" name="nesto" type="radio" [value]="i" [id]="cance">
+                <label class="form-check-label">
+                  {{cance.toString()}}
+                </label>
+              </div>
+          </div>
+        </div>
+        </div></div>
+          
+          <p class="mb-2 text-muted text-uppercase small">Rules</p>
+          <div class="container"><div class="row align-items-start align-items-center"><p class="pt-1 col-6">{{shipChange?.rules}}</p><div class="col"><input [(ngModel)]="ship.rules" formControlName="rules" class="form-control" type="text"/><div *ngIf="rules.invalid && (rules.touched || rules.dirty)">
+            <span class="error" *ngIf="rules.errors?.required">Rules is required</span>
+            <span class="error" *ngIf="rules.errors?.pattern">Only letters allowed</span>
+        </div></div></div>
+          </div>
+          <p class="mb-2 text-muted text-uppercase small">Available</p>
+          <div class="container"><div class="row align-items-start align-items-center">
+            <div class="col-6 row "><div class="d-flex justify-content-between" >From: <input style="width: 80%;" [value]="shipChange?.availableFrom" type="datetime-local" disabled></div><div class="d-flex justify-content-between">To: <input [value]="shipChange?.availableTill" style="width: 80%;" type="datetime-local" disabled></div></div>
+            <div class="col row"><div class="d-flex justify-content-between" >From: <input [(ngModel)]="ship.availableFrom" formControlName="availableFrom" class="form-control" style="width: 70%;" type="datetime-local" id="availableFrom" ></div>
+            <div *ngIf="availableFrom.invalid && (availableFrom.touched || availableFrom.dirty)">
+              <span class="error" *ngIf="availableFrom.errors?.required">From is required</span>
+            </div>
+            <div class="d-flex justify-content-between">To: <input [(ngModel)]="ship.availableTill" formControlName="availableTill" class="form-control" style="width: 70%;" type="datetime-local" id="availableTo"></div>
+            <div *ngIf="availableTill.invalid && (availableTill.touched || availableTill.dirty)">
+              <span class="error" *ngIf="availableTill.errors?.required">To is required</span>
+          </div></div>
+          </div></div>
+          
+          
+          
+          <div class="d-flex justify-content-center">
+            
+            <button [disabled]="changeForm.invalid" class="btn btn-primary btn-md mr-1 mb-2">Change</button>
+            <div *ngIf="cantChange">
+              <span class="error">Ship is reserved</span>
+            </div>
+            
+          </div>
+          
+        </div>
+      </div>
+    </form>
+    </section>
+    

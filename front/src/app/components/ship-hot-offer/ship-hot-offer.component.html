@@ -1,0 +1,83 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title m-b-0">Hot offers</h5>
+                </div>
+                <div class="table-responsive">
+                <form class="content" [formGroup]="addForm" (ngSubmit)="submitData()">
+                    <table class="table">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">From</th>
+                                <th scope="col">Till</th>
+                                <th scope="col-6">Max number of people</th>
+                                <th scope="col">Services</th>
+                                <th scope="col-6">Cost</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody *ngFor="let item of shipForApp?.hotOffers;">
+                            <tr [id]="[item.id]" *ngIf="item.free">
+                                <td scope="col">{{item.availableFrom}}</td>
+                                <td scope="col">{{item.availableTill}}</td>
+                                <td scope="col-6">{{item.numOfPeople}}</td>
+                                <td scope="col"><i *ngFor="let service of item.services;">{{service}}&nbsp;</i></td>
+                                <td scope="col-6">{{item.cost}}</td>
+                                <td scope="col-6"> <button (click)="removeHotOffer(item.id)"  class="btn btn-danger btn-md mr-1 mb-2">remove</button></td>
+                            </tr>
+                        </tbody>
+                        <tbody>
+                            <tr >
+                                <td><input [(ngModel)]="newHotOffer.availableFrom" formControlName="availableFrom" class="form-control"  type="datetime-local" id="availableFrom" >
+                                    <div *ngIf="availableFrom.invalid && (availableFrom.touched || availableFrom.dirty)">
+                                      <span class="error" *ngIf="availableFrom.errors?.required">From is required</span>
+                                    </div>
+                                </td>
+                                <td><input [(ngModel)]="newHotOffer.availableTill" formControlName="availableTill" class="form-control"  type="datetime-local" id="availableTo">
+                                    <div *ngIf="availableTill.invalid && (availableTill.touched || availableTill.dirty)">
+                                      <span class="error" *ngIf="availableTill.errors?.required">To is required</span>
+                                  </div>
+                                  <div *ngIf="availableTillError">
+                                    <span class="error">Till must me greater than from</span>
+                                </div>
+                                </td>
+                                <td><input style="width: 60%;" [(ngModel)]="newHotOffer.numOfPeople" formControlName="numOfPeople" class="form-control"  type="number"/>
+                                    <div *ngIf="numOfPeople.invalid && (numOfPeople.touched || numOfPeople.dirty)">
+                                      <span class="error" *ngIf="numOfPeople.errors?.required">Number of people is required</span>
+                                      <span class="error" *ngIf="numOfPeople.errors?.pattern">Only numbers allowed</span>
+                                  </div>
+                                </td>
+                                <td><input style="width: 100%;" class="form-control" id="zaDobijanjeServisa2">
+                                    
+                                </td>
+                                <td><input style="width: 60%;" [(ngModel)]="newHotOffer.cost" formControlName="cost" class="form-control" type="number"/>
+                                    <div *ngIf="cost.invalid && (cost.touched || cost.dirty)">
+                                      <span class="error" *ngIf="cost.errors?.required">Cost per night is required</span>
+                                      <span class="error" *ngIf="cost.errors?.pattern">Only numbers allowed</span>
+                                  </div>
+                                </td>
+                                <td>
+                                    <button [disabled]="addForm.invalid" class="btn btn-primary btn-md mr-1 mb-2">Add</button>
+                                    <div *ngIf="alreadyExistsHotOffer">
+                                        <span class="error">Term is busy</span>
+                                    </div>
+                                    <div *ngIf="doesntHaveAllServices2">
+                                        <span class="error">Ship doesn't provide selected services</span>
+                                    </div>
+                                    <div *ngIf="doesntExistService2">
+                                        <span class="error">Ship service doesn't exist</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            
+
+                        </tbody>
+                    </table>
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

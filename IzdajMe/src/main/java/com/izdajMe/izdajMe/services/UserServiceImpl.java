@@ -1,10 +1,15 @@
 package com.izdajMe.izdajMe.services;
 
+import com.izdajMe.izdajMe.model.Ship;
 import com.izdajMe.izdajMe.model.User;
 import com.izdajMe.izdajMe.repository.CottageRepository;
 import com.izdajMe.izdajMe.repository.HotOfferRepository;
 import com.izdajMe.izdajMe.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailException;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,9 +23,33 @@ public class UserServiceImpl implements UserService {
     private CottageRepository cottageRepository;
     @Autowired
     private HotOfferRepository hotOfferRepository;
+    private EmailService emailService;
+
+    @Override
+    public List<User> getAllUsers() {
+        Iterable<User> allUsers = userRepository.findAll();
+        ArrayList<User> allUsersList = new ArrayList<User>();
+        allUsers.forEach(allUsersList::add);
+
+        return allUsersList;
+    }
+
+    @Override
+    public List<User> getAllInstructors() {
+        Iterable<User> allUsers = userRepository.findAll();
+        ArrayList<User> allInstructorsList = new ArrayList<User>();
+        for (User user : allUsers) {
+            if (user.getRole().equals(User.Role.instructor)) {
+                allInstructorsList.add(user);
+            }
+        }
+
+        return allInstructorsList;
+    }
 
     public Boolean loginUser(User user) {
         User foundUser = userRepository.findByEmailAndPasswordVerified(user.getEmail(),user.getPassword());
+
         if (foundUser != null){
             return true;
         }
@@ -36,7 +65,7 @@ public class UserServiceImpl implements UserService {
             return true;
         }
 
-        user.setVerified(true); //false
+        user.setVerified(false); //false
         userRepository.save(user);
         return false;
     }
@@ -75,6 +104,8 @@ public class UserServiceImpl implements UserService {
             if(users.get(0).getRole().toString() == User.Role.administratorFirstLogged.toString())
                 users.get(0).setRole(User.Role.administrator);
             userRepository.save(users.get(0));
+            foundUser.setPassword(users.get(0).getPassword());
+            userRepository.save(foundUser);
             return true;
         }
         else {
@@ -124,4 +155,65 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
         return true;
     }
+
+    @Override
+    public List<User> searchUsersByName(String firstName, String lastName) {
+        List<User> searchedShips = new ArrayList<>();
+
+        List<User> users = userRepository.findAll();
+        for (User s : users) {
+            if (s.getFirstName().toLowerCase().contains(firstName.toLowerCase())
+            && s.getLastName().toLowerCase().contains(lastName.toLowerCase())){
+                searchedShips.add(s);
+            }
+        }
+
+        return searchedShips;
+    }
+
+    @Override
+    public List<User> searchInstructorsByName(String firstName, String lastName) {
+        List<User> searchedShips = new ArrayList<>();
+
+        List<User> users = userRepository.findAll();
+        for (User s : users) {
+            if (s.getRole().equals(User.Role.instructor)) {
+                if (s.getFirstName().toLowerCase().contains(firstName.toLowerCase())
+                        && s.getLastName().toLowerCase().contains(lastName.toLowerCase())){
+                    searchedShips.add(s);
+                }
+            }
+        }
+
+        return searchedShips;
+    }
+
+    public Boolean saveClient(User user) {
+        User foundUser = userRepository.findByEmail(user.getEmail());
+
+        if(foundUser != null){
+            return true;
+        }
+
+        user.setVerified(false); //false
+        userRepository.save(user);
+        sendNotificationForReservation(user);
+        return false;
+    }
+
+    private void sendNotificationForReservation(User user) throws MailException {
+        SimpleMailMessage mail = new SimpleMailMessage();
+        mail.setTo(user.getEmail());
+        mail.setFrom("rajkorajkeza@gmail.com");
+        mail.setSubject("Activate your account");
+        mail.setText("To activate your account press this link: " + "http://localhost:8080/users/activate?id=" + user.getId());
+        emailService.sendSimpleMessage(mail);
+    }
+
+    public void activate(Long id){
+        User user = userRepository.findById(id).get();
+        user.setVerified(true);
+        userRepository.save(user);
+    }
+
 }

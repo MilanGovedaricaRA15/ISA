@@ -1,0 +1,31 @@
+<br><br>
+<form (ngSubmit)="searchInstructors()">
+    <label>First name: </label>
+    <input type="text" id="search-instructors-first-name" name="search-instructors-first-name" [(ngModel)]="searchTextFirstName">
+    <label>Last name: </label>
+    <input type="text" id="search-instructors-last-name" name="search-instructors-last-name" [(ngModel)]="searchTextLastName">
+    <button type="submit">Search</button>
+</form>
+<br><br>
+<table style="width: 100%;">
+    <thead>
+        <th (click)="sortByFirstName()">First name</th>
+        <th (click)="sortByLastName()">Last name</th>
+        <th (click)="sortByAddress()">Address</th>
+        <th (click)="sortByEmail()">Email</th>
+        <th (click)="sortByMobile()">Mobile number</th>
+        <th (click)="sortByCountry()">Country</th>
+        <th></th>
+    </thead>
+    <tbody>
+        <tr *ngFor='let i of instructors'>
+            <td>{{i.firstName}}</td>
+            <td>{{i.lastName}}</td>
+            <td>{{i.address}}</td>
+            <td>{{i.email}}</td>
+            <td>{{i.mobileNumber}}</td>
+            <td>{{i.country}}</td>
+            <td><a href="#" (click)="goToInstructorProfile(i.email)">More details</a></td>
+        </tr>
+    </tbody>
+</table>

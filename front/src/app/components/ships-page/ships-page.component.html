@@ -1,0 +1,27 @@
+<br><br>
+<form (ngSubmit)="searchShips()">
+    <label>Search ships by name: </label>
+    <input type="text" id="search-ships" name="search-ships" [(ngModel)]="searchText">
+    <button type="submit">Search</button>
+</form>
+<br><br>
+<table style="width: 100%;">
+    <thead>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Type</th>
+        <th>Capacity</th>
+        <th>Description</th>
+        <th></th>
+    </thead>
+    <tbody>
+        <tr *ngFor='let s of ships'>
+            <td>{{s.name}}</td>
+            <td>{{s.address}}</td>
+            <td>{{s.type}}</td>
+            <td>{{s.capacity}}</td>
+            <td>{{s.description}}</td>
+            <td><a href="#" (click)="goToShipProfile(s.id)">More details</a></td>
+        </tr>
+    </tbody>
+</table>

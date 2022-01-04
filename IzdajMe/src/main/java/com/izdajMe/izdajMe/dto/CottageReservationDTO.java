@@ -1,8 +1,6 @@
 package com.izdajMe.izdajMe.dto;
 
-import com.izdajMe.izdajMe.model.Cottage;
-import com.izdajMe.izdajMe.model.CottageReservation;
-import com.izdajMe.izdajMe.model.User;
+import com.izdajMe.izdajMe.model.*;
 
 import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
@@ -17,6 +15,8 @@ public class CottageReservationDTO {
     private float cost;
     private User client;
     private Cottage cottage;
+    private Report report;
+    private Penalty penalty;
 
     public CottageReservationDTO(){}
 
@@ -28,6 +28,24 @@ public class CottageReservationDTO {
         this.cost = cottageReservation.getCost();
         this.client = cottageReservation.getClient();
         this.cottage = cottageReservation.getCottage();
+        this.report = cottageReservation.getReport();
+        this.penalty = cottageReservation.getPenalty();
+    }
+
+    public Report getReport() {
+        return report;
+    }
+
+    public void setReport(Report report) {
+        this.report = report;
+    }
+
+    public Penalty getPenalty() {
+        return penalty;
+    }
+
+    public void setPenalty(Penalty penalty) {
+        this.penalty = penalty;
     }
 
     public long getId() {

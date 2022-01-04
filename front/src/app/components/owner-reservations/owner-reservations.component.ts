@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Cottage, Services } from 'src/app/model/cottage';
 import { CottageReservation } from 'src/app/model/cottage-reservation';
+import { User } from 'src/app/model/user';
 import { CottageReservationService } from 'src/app/service/cottage-reservation-service.service';
 import { UserService } from 'src/app/service/user-service.service';
 
@@ -17,6 +18,8 @@ export class OwnerReservationsComponent implements OnInit {
   ownerReservations: Array<CottageReservation>
   newReservation: CottageReservation
   addReservationForm:any;
+  @Output() seeUser = new EventEmitter<User>();
+  @Output() sendCottageReservation = new EventEmitter<CottageReservation>();
   services = [
     'WiFi','Parking','Pool'
    ];
@@ -24,8 +27,12 @@ export class OwnerReservationsComponent implements OnInit {
   pickedUser:boolean;
   pickedUserError:boolean;
   isReserved: boolean;
+  doesntHaveAllServices: boolean;
+  doesntExistService: boolean;
 
   ngOnInit(): void {
+    this.doesntHaveAllServices = false;
+    this.doesntExistService = false;
     this.cottageReservationsService.getAllReservationsOfOwner().subscribe(ret => {
       this.ownerReservations = ret;
       this.newReservation = new CottageReservation();
@@ -58,9 +65,11 @@ export class OwnerReservationsComponent implements OnInit {
 
   submitData(){
     this.newReservation.services = new Array<Services>();
-    for(let x of this.services){
-      let element = <HTMLInputElement> document.getElementsByName(x)[0];
-      if(element.checked){
+    let element = <HTMLInputElement> document.getElementById("zaDobijanjeServisa1");
+    let servic = element.value.split(",");
+    this.doesntExistService = false; 
+    for(let x of servic){
+      if(x != ""){
         if(x === 'WiFi'){
           this.newReservation.services.push(Services.WiFi);
         }
@@ -70,34 +79,77 @@ export class OwnerReservationsComponent implements OnInit {
         else if(x === 'Pool'){
           this.newReservation.services.push(Services.Pool);
         }
+        else{
+          this.doesntExistService = true;
+        }
       }
+      
 
     }
+    if(!this.doesntExistService){
     if(this.newReservation.availableTill < this.newReservation.availableFrom){
       this.availableTillError = true;
     }
     else {
       if(this.pickedUser){
+          this.doesntHaveAllServices = false;
+          if (this.newReservation.cottage.services == null){
+            if(this.newReservation.services.length != 0){
+              this.doesntHaveAllServices = true;
+            }
+          }
+          else{
+            for(let ser of this.newReservation.services){
+              if(!this.newReservation.cottage.services.includes(ser)){
+                this.doesntHaveAllServices = true;
+              }
+            }
+          }
+          if(!this.doesntHaveAllServices){
           this.pickedUserError = false;
           this.availableTillError = false;
-          
-        
-          this.cottageReservationsService.addReservationByOwner(this.newReservation).subscribe(ret => {
-            if(ret){
-              this.ownerReservations.push(JSON.parse(JSON.stringify(this.newReservation)));
-              this.isReserved = false;
-            }
-            else{
-              this.isReserved = true;
-            }
-            });
-          } 
-        else {
+              this.cottageReservationsService.addReservationByOwner(this.newReservation).subscribe(ret => {
+                if(ret){
+                  this.ownerReservations.push(JSON.parse(JSON.stringify(this.newReservation)));
+                  this.isReserved = false;
+                }
+                else{
+                  this.isReserved = true;
+                }
+                });
+              } 
+            
+           }
+      else {
             this.pickedUserError = true;
         }
       }
+    }
      
   
+  }
+
+  seeUserProfile(email:string){
+    this.userService.getUserByEmail(email).subscribe(ret => {
+      this.seeUser.emit(ret);
+    })
+  }
+
+  addReport(cottageReservationToSend: CottageReservation){
+    this.sendCottageReservation.emit(cottageReservationToSend);
+  }
+
+  isOwerAndWithoutReport(cottageReservationForCheck: CottageReservation): boolean{
+    let datum = new Date();
+    if (new Date(Date.parse(cottageReservationForCheck.availableTill.toString())).getTime() < datum.getTime()){
+      if(cottageReservationForCheck.report == null || cottageReservationForCheck.report == undefined){
+        return true;
+      }
+      else{
+        return false;
+      }
+    }
+    return false;
   }
 
 

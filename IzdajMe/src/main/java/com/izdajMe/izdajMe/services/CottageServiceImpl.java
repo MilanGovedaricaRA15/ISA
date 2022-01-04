@@ -3,6 +3,7 @@ package com.izdajMe.izdajMe.services;
 import com.izdajMe.izdajMe.model.Cottage;
 import com.izdajMe.izdajMe.model.CottageReservation;
 import com.izdajMe.izdajMe.model.HotOffer;
+import com.izdajMe.izdajMe.model.*;
 import com.izdajMe.izdajMe.repository.CottageRepository;
 import com.izdajMe.izdajMe.repository.CottageReservationRepository;
 import com.izdajMe.izdajMe.repository.HotOfferRepository;
@@ -66,8 +67,27 @@ public class CottageServiceImpl implements CottageService {
         }
     }
 
+    public Boolean checkIsReserved(Cottage cottage){
+        if(!isReserved(cottage.getId())) {
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
     public Boolean changeCottage(Cottage cottage){
         if(!isReserved(cottage.getId())) {
+            cottageRepository.save(cottage);
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public Boolean removeHotOffer(Cottage cottage){
+        if(cottageRepository.existsById(cottage.getId())) {
             cottageRepository.save(cottage);
             return true;
         }
@@ -159,6 +179,11 @@ public class CottageServiceImpl implements CottageService {
 
     public Cottage addCottage(Cottage cottage){
         cottageRepository.save(cottage);
+        cottage.setHotOffers(new ArrayList<HotOffer>());
+        cottage.setImages(new ArrayList<String>());
+        cottage.setPriceList(new ArrayList<ServicePrice>());
+        cottage.setServices(new ArrayList<Cottage.Services>());
+        cottage.setGrades(new ArrayList<Grade>());
         return cottage;
     }
 
@@ -191,5 +216,18 @@ public class CottageServiceImpl implements CottageService {
             }
         }
         return false;
+    }
+
+    public List<Cottage> searchCottagesByName(String name) {
+        List<Cottage> searchedCottages = new ArrayList<>();
+        
+        List<Cottage> cottages = cottageRepository.findAll();
+        for (Cottage c : cottages) {
+            if (c.getName().toLowerCase().contains(name.toLowerCase())){
+                searchedCottages.add(c);
+            }
+        }
+        
+        return searchedCottages;
     }
 }

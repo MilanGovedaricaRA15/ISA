@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AccountDeleteRequest } from 'src/app/model/account-delete-request';
-import { Cottage } from 'src/app/model/cottage';
+import { Cottage, Services } from 'src/app/model/cottage';
 import { User } from 'src/app/model/user';
 import { AccountDeleteRequestService } from 'src/app/service/account-delete-request-service.service';
 import { CottageService } from 'src/app/service/cottage-service.service';
@@ -133,6 +133,122 @@ export class CottageOwnerProfileComponent implements OnInit {
     this.addNewCottageEmiter.emit(true);
   }
 
+  SearchCottages(){
+    this.cottageService.getAllCottagesOfOwner().subscribe(ret => {
+      let elementName = <HTMLInputElement> document.getElementById("searchCottagesName");
+      let name = ""
+      let rooms = -1
+      let beds = -1
+      let address = ""
+      let cost = -1
+      let description = ""
+      let rules = ""
+      let services = new Array<String>()
+      if(elementName.value != ""){
+       name = elementName.value
+      }
+      let elementRooms = <HTMLInputElement> document.getElementById("searchCottagesRooms");
+      if(elementRooms.value != ""){
+       rooms = Number(elementRooms.value)
+      }
+      let elementBeds = <HTMLInputElement> document.getElementById("searchCottagesBeds");
+      if(elementBeds.value != ""){
+       beds = Number(elementBeds.value)
+      }
+      let elementAddress = <HTMLInputElement> document.getElementById("searchCottagesAddress");
+      if(elementAddress.value != ""){
+       address = elementAddress.value
+      }
+      let elementCost = <HTMLInputElement> document.getElementById("searchCottagesCost");
+      if(elementCost.value != ""){
+       cost = Number(elementCost.value)
+      }
+      let elementDescription = <HTMLInputElement> document.getElementById("searchCottagesDescription");
+      if(elementDescription.value != ""){
+       description = elementDescription.value
+      }
+      let elementRules = <HTMLInputElement> document.getElementById("searchCottagesRules");
+      if(elementRules.value != ""){
+       rules = elementRules.value
+      }
+      let elementServices = <HTMLInputElement> document.getElementById("searchCottagesServices");
+      if(elementServices.value != ""){
+       services = elementServices.value.split(",")
+      }
+      this.cottages = new Array<Cottage>()
+      for(let p of ret){
+        let pripada = true;
+        if(name != ""){
+          if (!p.name.toLowerCase().includes(name.toLowerCase())){
+            pripada = false;
+          }
+        }
+        if(rooms != -1){
+          if(p.numOfRooms != rooms){
+            pripada = false;
+          }
+        }
+        if(beds != -1){
+          if(p.numOfBeds != beds){
+            pripada = false;
+          }
+        }
+        if(cost != -1){
+          if(p.costPerNight != cost){
+            pripada = false;
+          }
+        }
+        if(address != ""){
+          if (!p.address.toLowerCase().includes(address.toLowerCase())){
+            pripada = false;
+          }
+        }
+        if(description != ""){
+          if (!p.description.toLowerCase().includes(description.toLowerCase())){
+            pripada = false;
+          }
+        }
+        if(rules != ""){
+          if (!p.rules.toLowerCase().includes(rules.toLowerCase())){
+            pripada = false;
+          }
+        }
+        if(elementServices.value != ""){
+          for (let ser of services){
+            if(p.services == null||p.services == undefined){
+              pripada = false;
+              break;
+            }
+            if(ser.toLowerCase() === 'wifi'){
+              if (!p.services.includes(Services.WiFi)){
+                pripada = false;
+              }
+            }
+            else if(ser.toLowerCase() === 'parking'){
+              if (!p.services.includes(Services.Parking)){
+                pripada = false;
+              }
+            }
+            else if(ser.toLowerCase() === 'pool'){
+              if (!p.services.includes(Services.Pool)){
+                pripada = false;
+              }
+            }
+            else{
+              pripada = false;
+            }
+          }
+          
+        }
+        if(pripada){
+           this.cottages.push(p);
+        }
+      }
+      
+    })
+    
+  }
+
   searchCottages(){
     let nesto = this.nameForSearch;
     let a = 0;
@@ -142,6 +258,8 @@ export class CottageOwnerProfileComponent implements OnInit {
     let accountDelete = new AccountDeleteRequest();
     accountDelete.seen = false;
     accountDelete.user = JSON.parse(JSON.stringify(this.owner));
+    let elementReasonOfDelete = <HTMLInputElement> document.getElementById("reasonOfDelete");
+    accountDelete.reason = elementReasonOfDelete.value;
     this.accountDeleteRequestService.addAccountDeleteRequest(accountDelete).subscribe(ret => {
       if(ret){
         this.alreadySent = false;

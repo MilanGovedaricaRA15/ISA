@@ -20,5 +20,6 @@ export enum Role {
     instructor,
     administratorSuperior,
     administratorFirstLogged,
-    administrator
+    administrator,
+    client
 }

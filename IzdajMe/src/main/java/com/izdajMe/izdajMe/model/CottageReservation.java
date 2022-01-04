@@ -20,7 +20,13 @@ public class CottageReservation {
     @ManyToOne
     private Cottage cottage;
 
-    public CottageReservation(long id, LocalDateTime availableFrom, LocalDateTime availableTill, float cost, User client, Cottage cottage,ArrayList<Cottage.Services> services) {
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval=true)
+    private Penalty penalty;
+
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval=true)
+    private Report report;
+
+    public CottageReservation(long id,Report report,Penalty penalty, LocalDateTime availableFrom, LocalDateTime availableTill, float cost, User client, Cottage cottage,ArrayList<Cottage.Services> services) {
         this.id = id;
         this.availableFrom = availableFrom;
         this.availableTill = availableTill;
@@ -28,7 +34,26 @@ public class CottageReservation {
         this.client = client;
         this.cottage = cottage;
         this.services = services;
+        this.report = report;
+        this.penalty = penalty;
     }
+
+    public Penalty getPenalty() {
+        return penalty;
+    }
+
+    public void setPenalty(Penalty penalty) {
+        this.penalty = penalty;
+    }
+
+    public Report getReport() {
+        return report;
+    }
+
+    public void setReport(Report report) {
+        this.report = report;
+    }
+
     public CottageReservation(){}
 
     public long getId() {

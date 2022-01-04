@@ -32,17 +32,28 @@
             <div>
               <input type="file" 
               (change)="onChange($event)">
+              <div>
               <button (click)="saveImg()" type="button" class="btn btn-primary btn-md mr-1 mb-2">Add picture</button>
+              <div *ngIf="cantAdd">
+                <span class="error">Cottage is reserved</span>
+              </div>
+              </div>
               <div style="color:red;" *ngIf="invalidFile">
                 Upload jpg file
 
               </div>
             </div>
+            <div>
             <button (click)="removeImg()" type="button" class="btn btn-primary btn-md mr-1 mb-2">Remove picture</button>
+            <div *ngIf="cantRemove">
+              <span class="error">Cottage is reserved</span>
+            </div>
+            </div>
             </div>
           </div>
   
         </div>
+        <app-map [address]="cottageChange?.address"></app-map>
   
       </div>
       <div class="col-md-6">
@@ -76,6 +87,26 @@
               <label class="form-check-label">
                 {{service.toString()}}
               </label>
+            </div>
+        </div>
+      </div>
+      </div></div>
+
+      <p class="mb-2 text-muted text-uppercase small">Services price</p>
+        <div class="container"><div class="row align-items-start align-items-center"> <ul class='col'>
+          <li *ngFor="let item of servicesClass">
+            {{item.service}}
+          </li>
+        </ul>
+        <div class="col">
+          <div class="row">
+            <div *ngFor="let item of servicesClass" class="col">
+              <div *ngIf="item.cost != undefined">
+              <input  class="form-controll"  [value]="item.cost" [id]="item.service.toString()+'serviceKlasa'">
+              </div>
+              <div *ngIf="item.cost == undefined">
+                <input  class="form-controll"  [value]="0" [id]="item.service.toString()+'serviceKlasa'">
+                </div>
             </div>
         </div>
       </div>
@@ -123,6 +154,9 @@
         <div class="d-flex justify-content-center">
           
           <button [disabled]="changeForm.invalid" class="btn btn-primary btn-md mr-1 mb-2">Change</button>
+          <div *ngIf="cantChange">
+            <span class="error">Cottage is reserved</span>
+          </div>
           
         </div>
         

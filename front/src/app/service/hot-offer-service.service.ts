@@ -16,9 +16,9 @@ export class HotOfferService {
   }
 
   public saveHotOffer(hotOffer:HotOffer ): Observable<any>{
-    return this.http.post(this.addHotOfferUrl,hotOffer);
+    return this.http.post(this.addHotOfferUrl,hotOffer,{withCredentials: true});
   }
   public removeHotOffer(id:number ): Observable<boolean>{
-    return this.http.post<boolean>(this.removeHotOfferUrl,id);
+    return this.http.post<boolean>(this.removeHotOfferUrl,id,{withCredentials: true});
   }
 }

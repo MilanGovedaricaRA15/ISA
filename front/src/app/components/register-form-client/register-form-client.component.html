@@ -1,0 +1,79 @@
+<div class="container mt-5">
+    <form class="content" [formGroup]="registerForm" (ngSubmit)="submitData()">
+        <h3 class="text-center">Register Form</h3>
+        <div class="row">
+            <div class="mt-2 mb-2 col-lg-6 col-6">
+                <input type="text" formControlName="firstName" [(ngModel)]="user.firstName"  class="form-control" placeholder="First Name"/>
+                <div *ngIf="firstName.invalid && (firstName.touched || firstName.dirty)">
+                    <span class="error" *ngIf="firstName.errors?.required">First Name is required</span>
+                    <span class="error" *ngIf="firstName.errors?.pattern">Only letters allowed. First letter must be capital.</span>
+                </div>
+            </div>
+            <div class="mt-2 mb-2 col-lg-6 col-6">
+                <input type="text" formControlName="lastName" [(ngModel)]="user.lastName"  class="form-control" placeholder="Last Name"/>
+                <div *ngIf="lastName.invalid && (lastName.touched || lastName.dirty)">
+                    <span class="error" *ngIf="lastName.errors?.required">Last Name is required</span>
+                    <span class="error" *ngIf="lastName.errors?.pattern">Only letters allowed. First letter must be capital.</span>
+                </div>
+            </div>
+            <div class="mt-2 mb-2 col-lg-12 col-12">
+                <input type="text" formControlName="email" [(ngModel)]="user.email"  class="form-control" placeholder="E-mail"/>
+                <div *ngIf="email.invalid && (email.touched || email.dirty)">
+                    <span class="error" *ngIf="email.errors?.required">E-mail is required</span>
+                    <span class="error" *ngIf="email.errors?.email">Enter valid e-mail address</span>
+                </div>
+                <div *ngIf="userExists === true">
+                    <span class="error">E-mail already in use</span>
+                </div>
+            </div>
+            <div class="mt-2 mb-2 col-lg-12 col-12">
+                <input type="text" formControlName="mobileNumber" [(ngModel)]="user.mobileNumber"  class="form-control" placeholder="Mobile number"/>
+                <div *ngIf="mobileNumber.invalid && (mobileNumber.touched || mobileNumber.dirty)">
+                    <span class="error" *ngIf="mobileNumber.errors?.required">Mobile number is required</span>
+                    <span class="error" *ngIf="mobileNumber.errors?.pattern">Only numbers allowed</span>
+                </div>
+            </div>
+            <div class="mt-2 mb-2 col-lg-12 col-12">
+                <input type="text" formControlName="address" [(ngModel)]="user.address"  class="form-control" placeholder="Address"/>
+                <div *ngIf="address.invalid && (address.touched || address.dirty)">
+                    <span class="error" *ngIf="address.errors?.required">Address is required</span>
+                    <span class="error" *ngIf="address.errors?.pattern">Enter valid address </span>
+                </div>
+            </div>
+            <div class="mt-2 mb-2 col-lg-12 col-12">
+                <input type="text" formControlName="country" [(ngModel)]="user.country"  class="form-control" placeholder="Country"/>
+                <div *ngIf="country.invalid && (country.touched || country.dirty)">
+                    <span class="error" *ngIf="country.errors?.required">Country is required</span>
+                    <span class="error" *ngIf="country.errors?.pattern">Only letters allowed. First letter must be capital.</span>
+                </div>
+            </div>
+            <div class="mt-2 mb-2 col-lg-12 col-12">
+                <input type="text" formControlName="city" [(ngModel)]="user.city"  class="form-control" placeholder="City"/>
+                <div *ngIf="city.invalid && (city.touched || city.dirty)">
+                    <span class="error" *ngIf="city.errors?.required">City is required</span>
+                    <span class="error" *ngIf="city.errors?.pattern">Only letters allowed. First letter must be capital.</span>
+                </div>
+            </div>
+            <div class="mt-2 mb-2 col-lg-12 col-12">
+                <input type="password" formControlName="password" [(ngModel)]="user.password"  class="form-control" placeholder="Password"/>
+                <div *ngIf="password.invalid && (password.touched || password.dirty)">
+                    <span class="error" *ngIf="password.errors?.required">Password is required</span>
+                    <span class="error" *ngIf="password.errors?.pattern">Only letters and numbers allowed</span>
+                </div>
+            </div>
+            <div class="mt-2 mb-2 col-lg-12 col-12">
+                <input type="password" (focusout)="validatePass()" formControlName="password2" class="form-control" placeholder="Repeat password"/>
+                <div *ngIf="password2.invalid && (password2.touched || password2.dirty)">
+                    <span class="error" *ngIf="password2.errors?.required">Password is required</span>
+                    <span class="error" *ngIf="password2.errors?.pattern">Only letters and numbers allowed</span>
+                </div>
+                <div *ngIf="passwordTheSame === false">
+                    <span class="error">Passwords must be the same</span>
+                </div>
+            </div>
+            <div class="mt-2 mb-2 col-lg-12 col-12 text-center">
+               <button class="btn" [disabled]="registerForm.invalid">Register</button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,4 +1,6 @@
 import { Cottage, Services } from "./cottage";
+import { Penalty } from "./penalty";
+import { Report } from "./report";
 import { User } from "./user";
 
 export class CottageReservation {
@@ -9,4 +11,6 @@ export class CottageReservation {
     client:User;
     cottage:Cottage;
     services:Array<Services> ;
+    report:Report;
+    penalty:Penalty;
 }

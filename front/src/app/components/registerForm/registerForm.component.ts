@@ -3,9 +3,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../service/user-service.service'
 import { User } from '../../model/user';
 
-
-
-
 @Component({
   selector: 'app-registerForm',
   templateUrl: './registerForm.component.html',
@@ -27,21 +24,18 @@ export class RegisterFormComponent implements OnInit {
   
   ngOnInit(): void {
     this.registerForm = new FormGroup({
-      "firstName": new FormControl(null,[Validators.required,Validators.pattern('[A-Z]{1}[a-z]+')]),
-      "lastName": new FormControl(null,[Validators.required,Validators.pattern('[A-Z]{1}[a-z]+')]),
-      "email": new FormControl(null,[Validators.required,Validators.email]),
-      "mobileNumber": new FormControl(null,[Validators.required,Validators.pattern('[0-9]{9}')]),
-      "country": new FormControl(null,[Validators.required,Validators.pattern('[A-Z]{1}[a-z]+')]),
-      "city": new FormControl(null,[Validators.required,Validators.pattern('[A-Z]{1}[a-z]+')]),
-      "address": new FormControl(null,[Validators.required,Validators.pattern('([A-ZŠĐČĆŽ]{1}[a-zšđčćž]+ )+[0-9]+')]),
-      "role": new FormControl(null,[Validators.required]),
-      "password": new FormControl(null,[Validators.required,Validators.pattern('[a-zA-Z ]*')]),
-      "password2": new FormControl(null,[Validators.required,Validators.pattern('[a-zA-Z ]*')]),
-      "reason": new FormControl(null,[Validators.required,Validators.pattern('[a-zA-Z ]*')])
+      "firstName": new FormControl(null, [Validators.required,Validators.pattern('[A-ZŠĐČĆŽ]{1}[a-zšđčćž]+')]),
+      "lastName": new FormControl(null, [Validators.required,Validators.pattern('[A-ZŠĐČĆŽ]{1}[a-zšđčćž]+')]),
+      "email": new FormControl(null, [Validators.required,Validators.email]),
+      "mobileNumber": new FormControl(null, [Validators.required,Validators.pattern('[0-9]{6,14}')]),
+      "country": new FormControl(null, [Validators.required,Validators.pattern('[A-ZŠĐČĆŽ]{1}[a-zšđčćž]+( [A-ZŠĐČĆŽa-zšđčćž]{1}[a-zšđčćž]*)*')]),
+      "city": new FormControl(null, [Validators.required,Validators.pattern('[A-ZŠĐČĆŽ]{1}[a-zšđčćž]+( [A-ZŠĐČĆŽa-zšđčćž]{1}[a-zšđčćž]*)*')]),
+      "address": new FormControl(null, [Validators.required,Validators.pattern('([A-ZŠĐČĆŽ]{1}[a-zšđčćž]+ )+[0-9]+')]),
+      "role": new FormControl(null, [Validators.required]),
+      "password": new FormControl(null, [Validators.required,Validators.pattern('[a-zA-Z0-9]*')]),
+      "password2": new FormControl(null, [Validators.required,Validators.pattern('[a-zA-Z0-9]*')]),
+      "reason": new FormControl(null, [Validators.required,Validators.pattern('[a-zšđčćžA-ZŠĐČĆŽ ]*')])
     });
-
-    
-   
   }
 
   validatePass(){
@@ -102,10 +96,5 @@ export class RegisterFormComponent implements OnInit {
   get reason() {
     return this.registerForm.get('reason');
   }
-
-  
- 
-
-
 
 }

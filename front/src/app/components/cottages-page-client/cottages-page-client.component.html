@@ -1,0 +1,25 @@
+<br><br>
+<form (ngSubmit)="searchCottages()">
+    <label style="border-right-width: 10px;">Search by cottage name: </label>
+    <input type="text" id="search-cottages" name="search-cottages" [(ngModel)]="searchText">
+    <button type="submit">Search</button>
+</form>
+<br><br>
+<table style="width: 100%;">
+    <thead>
+        <th (click)="sortByName()">Name</th>
+        <th (click)="sortByAddress()">Address</th>
+        <th (click)="sortByDescription()">Description</th>
+        <th>Grade</th>
+        <th></th>
+    </thead>
+    <tbody>
+        <tr *ngFor='let c of cottages'>
+            <td>{{c.name}}</td>
+            <td>{{c.address}}</td>
+            <td>{{c.description}}</td>
+            <td>0.0</td>
+            <td><a href="#" (click)="goToCottageProfile(c.id)">More details</a></td>
+        </tr>
+    </tbody>
+</table>

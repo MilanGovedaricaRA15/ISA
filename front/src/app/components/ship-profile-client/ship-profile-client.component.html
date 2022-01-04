@@ -1,0 +1,58 @@
+<div class="row">
+    <div class="column">
+      <img style="width: 100%; height: 100%;" [src]="('../../assets/images/' + shipImg + '.jpg')" class="img-fluid z-depth-1"/>
+    </div>
+    <div class="column">
+      <h1>Ship informations</h1>
+      Name: {{ship.name}} <br>
+      Owner: {{ship.owner.firstName}} {{ship.owner.lastName}} <br>
+      Length: {{ship.length}} <br>
+      Type: {{ship.type}} <br>
+      Engine number: {{ship.engineNumber}} <br>
+      Engine power: {{ship.enginePower}} <br>
+      Top speed: {{ship.topSpeed}} <br>
+      Navigation equipment: {{ship.navigationEquipment}} <br>
+      Capacity: {{ship.capacity}} <br>
+      Address: {{ship.address}} <br>
+      Description: {{ship.description}} <br>
+      Grade: {{averageGrade}} <br>
+      Rules: {{ship.rules}} <br>
+      Available from: 10.12.2021 17:00 <br>
+      Services: Minibar: 300, Pet friendly: 200 <br>
+    </div>
+  </div>
+  <h1>Reservations</h1>
+  <table style="width: 100%;">
+    <thead>
+        <th>Starts </th>
+        <th>Ends </th>
+        <th>Services</th>
+        <th>Cost</th>
+        <th>User name</th>
+        <th></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>10.12.2021</td>
+            <td>16.12.2021</td>
+            <td>No services</td>
+            <td>300</td>
+            <td>Milan</td>
+        </tr>
+        <tr>
+          <td>17.12.2021</td>
+            <td>23.12.2021</td>
+            <td>Pet friendly</td>
+            <td>300</td>
+            <td>Miodrag</td>
+         </tr>
+         <tr>
+          <td>23.12.2021</td>
+            <td>25.12.2021</td>
+            <td>Minibar</td>
+            <td>100</td>
+            <td>Rajko</td>
+         </tr>
+
+    </tbody>
+</table>

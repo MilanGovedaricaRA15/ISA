@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { map } from 'rxjs/operators';
 import { Cottage, Services } from 'src/app/model/cottage';
 import { HotOffer } from 'src/app/model/hot-offer';
+import { ServicePrice } from 'src/app/model/service-price';
 import { CottageService } from 'src/app/service/cottage-service.service';
 
 @Component({
@@ -15,6 +16,9 @@ export class CottageProfileComponent implements OnInit {
   cottageChange: Cottage;
   cottageImg: String;
   changeForm:any;
+  cantRemove:Boolean;
+  cantAdd:Boolean;
+  cantChange:Boolean;
   @Output() cottageHotOffersForHotOffer = new EventEmitter<Cottage>();
   file: File = null;
   invalidFile:boolean = false;
@@ -23,10 +27,12 @@ export class CottageProfileComponent implements OnInit {
   services = [
    'WiFi','Parking','Pool'
   ];
+  servicesClass: Array<ServicePrice>;
 
   constructor(private cottageService: CottageService) { }
 
   public ngOnInit() {
+    
     this.onIni();
 
     
@@ -47,25 +53,58 @@ export class CottageProfileComponent implements OnInit {
   }
 
   public onIni(){
+    this.cantRemove = false;
+    this.cantAdd = false;
+    this.cantChange = false;
+    this.servicesClass = new Array<ServicePrice>();
     if(this.cottage == undefined){
       this.cottageService.getCottageById(Number(sessionStorage.getItem("cottageToShow"))).subscribe(ret =>{
         this.cottage = ret;
         this.cottageChange = JSON.parse(JSON.stringify(this.cottage));
+        this.servicesToShow();
         if(this?.cottageChange?.images != null){
           this.cottageImg = this?.cottageChange?.images[0];
         }
         this.cottageHotOffersForHotOffer.emit(this.cottageChange);
+        
       })
 
     }
     else{
       this.cottageChange = JSON.parse(JSON.stringify(this.cottage));
-    
+      this.servicesToShow();
       
       if(this?.cottageChange?.images != null){
         this.cottageImg = this?.cottageChange?.images[0];
       }
       this.cottageHotOffersForHotOffer.emit(this.cottageChange);
+    }
+  }
+
+  public servicesToShow(){
+    if(this.cottageChange.services!=undefined){
+      for (let s of this.cottageChange.services){
+        let found = false;
+        for (let ss of this.cottageChange.priceList){      
+          if(s == ss.service){
+            if(ss.cost != undefined || ss.cost != null){
+              this.servicesClass.push(ss);
+              found = true;
+            }
+            else{
+              ss.cost = 0;
+              this.servicesClass.push(ss);
+              found = true;
+            }
+          }
+        }
+        if (!found){
+          let da = new ServicePrice();
+          da.cost = 0;
+          da.service = s;
+          this.servicesClass.push(da);
+        }
+      }
     }
   }
 
@@ -79,45 +118,63 @@ export class CottageProfileComponent implements OnInit {
   }
 
   public removeImg() {
-    this.cottageChange.images.forEach((element, index) => {
-      if (element === this.cottageImg) {
-        this.cottageChange.images.splice(index, 1);
+    this.cottageService.checkIsReserved(this.cottageChange).subscribe(ret =>{
+      if(ret){
+        this.cottageChange.images.forEach((element, index) => {
+          if (element === this.cottageImg) {
+            this.cottageChange.images.splice(index, 1);
+          }
+        });
+        this.cottageService.removeCottageImg(this.cottageChange).subscribe(() => {
+          this.cantRemove = false;
+          this.cottage.images.forEach((element, index) => {
+            if (element === this.cottageImg) {
+              this.cottage.images.splice(index, 1);
+            }
+          });
+          this.cottageImg = this.cottageChange.images[0];
+          this.onIni();
+        });
       }
-    });
-    this.cottageService.removeCottageImg(this.cottageChange).subscribe(() => {
-      this.cottage.images.forEach((element, index) => {
-        if (element === this.cottageImg) {
-          this.cottage.images.splice(index, 1);
-        }
-      });
-      this.cottageImg = this.cottageChange.images[0];
-      this.onIni();
-    });
+      else{
+        this.cantRemove = true;
+      }
+    })
+    
   }
 
   public saveImg(){
-    if(this.file?.name.match(/.(jpg)$/i)){
-      this.invalidFile = false;
-      this.cottageService.upload(this.file).subscribe(ret=>{
-        if(ret){
-          if(this?.cottageChange?.images == null){
-            this.cottageChange.images = new Array<String>();
-          }
-          this.cottageChange.images.push(this.file.name);
-          this.cottageService.changeCottage(this.cottageChange).subscribe(()=>{
-            this.onIni();
-          }
-          )
-          
+    this.cottageService.checkIsReserved(this.cottageChange).subscribe(ret =>{
+      if(ret){
+        this.cantAdd = false;
+        if(this.file?.name.match(/.(jpg)$/i)){
+          this.invalidFile = false;
+          this.cottageService.upload(this.file).subscribe(ret=>{
+            if(ret){
+              if(this?.cottageChange?.images == null){
+                this.cottageChange.images = new Array<String>();
+              }
+              this.cottageChange.images.push(this.file.name);
+              this.cottageService.changeCottage(this.cottageChange).subscribe(()=>{
+                this.onIni();
+              }
+              )
+              
+            }
+            else {
+              this.invalidFile = true;
+            }
+          });
         }
         else {
           this.invalidFile = true;
         }
-      });
-    }
-    else {
-      this.invalidFile = true;
-    }
+      }
+      else{
+        this.cantAdd = true;
+      }
+    })
+    
 
   }
 
@@ -142,27 +199,51 @@ export class CottageProfileComponent implements OnInit {
     return false
   }
   submitData(){
-    this.cottage.services = new Array<Services>();
-    for(let x of this.services){
-      let element = <HTMLInputElement> document.getElementById(x);
-      if(element.checked){
-        if(x === 'WiFi'){
-          this.cottage.services.push(Services.WiFi);
-        }
-        else if(x === 'Parking'){
-          this.cottage.services.push(Services.Parking);
-        }
-        else if(x === 'Pool'){
-          this.cottage.services.push(Services.Pool);
-        }
+    this.cottageService.checkIsReserved(this.cottage).subscribe(ret => {
+      if(ret){
+        this.cantChange = false;
+        this.cottage.services = new Array<Services>();
+            for(let x of this.services){
+              let element = <HTMLInputElement> document.getElementById(x);
+              if(element.checked){
+                if(x === 'WiFi'){
+                  this.cottage.services.push(Services.WiFi);
+                }
+                else if(x === 'Parking'){
+                  this.cottage.services.push(Services.Parking);
+                }
+                else if(x === 'Pool'){
+                  this.cottage.services.push(Services.Pool);
+                }
+              }
+
+            }
+            for(let o of this.servicesClass){
+              let element1 = <HTMLInputElement> document.getElementById(o.service.toString()+"serviceKlasa");
+              let found = false;
+              for (let n of this.cottage.priceList){
+                if (o.service == n.service){
+                  let cost = Number(element1.value);
+                  if(cost > 0){
+                     n.cost = cost;
+                  }
+                  found = true;
+                }
+              }
+              if(!found){
+                let cost = Number(element1.value);
+                o.cost = cost;
+                this.cottage.priceList.push(o);
+              }
+            }
+            this.cottageService.changeCottage(this.cottage).subscribe(() => {
+              this.onIni();
+            });
+              }
+      else{
+        this.cantChange = true;
       }
-
-    }
-    this.cottageService.changeCottage(this.cottage).subscribe(() => {
-      this.onIni();
-    });
-    
-
+    })
   }
   get name() {
     return this.changeForm.get('name');

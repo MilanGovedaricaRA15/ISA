@@ -1,0 +1,104 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title m-b-0">Reservations</h5>
+                </div>
+                <div class="table-responsive">
+                    <form class="content" [formGroup]="addReservationForm" (ngSubmit)="submitData()">
+                    <table class="table">
+                        <thead class="thead-light">
+                            <tr >
+                                <th scope="col">Ship name</th>
+                                <th scope="col">From</th>
+                                <th scope="col">Till</th>
+                                <th scope="col">Services</th>
+                                <th scope="col-6">Cost</th>
+                                <th scope="col">First name</th>
+                                <th scope="col">Last name</th>
+                                <th scope="col">E-mail</th>
+                                <th scope="col-6">Mobile number</th>
+                                <th scope="col">Address</th>
+                                <th scope="col">Country</th>
+                                <th scope="col-6">City</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngFor="let item of ownerReservations;">
+                            <tr (click)="getClient(item.client.email,item.ship,item.availableFrom,item.availableTill)" [id]="[item.client.id]">
+                                <td scope="col">{{item.ship.name}}</td>
+                                <td scope="col">{{item.availableFrom}}</td>
+                                <td scope="col-6">{{item.availableTill}}</td>
+                                <td scope="col"><i *ngFor="let service of item.services;">{{service}}&nbsp;</i></td>
+                                <td scope="col-6">{{item.cost}}</td>
+                                <td scope="col">{{item.client.firstName}}</td>
+                                <td scope="col">{{item.client.lastName}}</td>
+                                <td scope="col">{{item.client.email}}</td>
+                                <td scope="col">{{item.client.mobileNumber}}</td>
+                                <td scope="col">{{item.client.address}}</td>
+                                <td scope="col">{{item.client.country}}</td>
+                                <td scope="col">{{item.client.city}}</td>
+                                <td scope="col"> <button type="button" (click)="seeUserProfile(item.client.email)" class="btn btn-primary btn-md mr-1 mb-2">See profile</button></td>
+                                <td scope="col" *ngIf="isOwerAndWithoutReport(item)"> <button type="button" (click)="addReport(item)" class="btn btn-primary btn-md mr-1 mb-2">Add report</button></td>
+                            </tr>
+                        </tbody>
+                        <tbody>
+                            <tr >
+                                <td scope="col">{{newReservation?.ship?.name}}</td>
+                                <td><input style="width:85%;" [(ngModel)]="newReservation.availableFrom" formControlName="availableFrom" class="form-control"  type="datetime-local" id="availableFrom" >
+                                    <div *ngIf="availableFrom.invalid && (availableFrom.touched || availableFrom.dirty)">
+                                      <span class="error" *ngIf="availableFrom.errors?.required">From is required</span>
+                                    </div>
+                                </td>
+                                <td><input style="width:85%;" [(ngModel)]="newReservation.availableTill" formControlName="availableTill" class="form-control"  type="datetime-local" id="availableTo">
+                                    <div *ngIf="availableTill.invalid && (availableTill.touched || availableTill.dirty)">
+                                      <span class="error" *ngIf="availableTill.errors?.required">To is required</span>
+                                  </div>
+                                  <div *ngIf="availableTillError">
+                                    <span class="error">Till must me greater than from</span>
+                                </div>
+                                </td>
+                                <td><input style="width: 115%;" class="form-control" id="zaDobijanjeServisa1"/>
+                                    
+                                </td>
+                                <td><input style="width: 130%;" [(ngModel)]="newReservation.cost" formControlName="cost" class="form-control" type="number"/>
+                                    <div *ngIf="cost.invalid && (cost.touched || cost.dirty)">
+                                      <span class="error" *ngIf="cost.errors?.required">Cost per night is required</span>
+                                      <span class="error" *ngIf="cost.errors?.pattern">Only numbers allowed</span>
+                                  </div>
+                                </td>
+                                <td scope="col">{{newReservation?.client?.firstName}}</td>
+                                <td scope="col">{{newReservation?.client?.lastName}}</td>
+                                <td scope="col">{{newReservation?.client?.email}}</td>
+                                <td scope="col">{{newReservation?.client?.mobileNumber}}</td>
+                                <td scope="col">{{newReservation?.client?.address}}</td>
+                                <td scope="col">{{newReservation?.client?.country}}</td>
+                                <td scope="col">{{newReservation?.client?.city}}</td>
+                                <td>
+                                    <button [disabled]="addReservationForm.invalid" class="btn btn-primary btn-md mr-1 mb-2">Add</button>
+                                    <div *ngIf="isReserved">
+                                        <span class="error">Term is busy</span>
+                                    </div>
+                                    <div *ngIf="doesntHaveAllServices">
+                                        <span class="error">Ship doesn't provide selected services</span>
+                                    </div>
+                                    <div *ngIf="pickedUserError">
+                                        <span class="error">Pick a user</span>
+                                    </div>
+                                    <div *ngIf="doesntExistService">
+                                        <span class="error">Ship service doesn't exist</span>
+                                    </div>
+                                    
+                                </td>
+
+                            </tr>
+                            
+
+                        </tbody>
+                    </table>
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
