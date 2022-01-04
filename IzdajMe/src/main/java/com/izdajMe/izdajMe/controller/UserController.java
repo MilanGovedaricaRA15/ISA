@@ -1,7 +1,6 @@
 package com.izdajMe.izdajMe.controller;
 
 import com.izdajMe.izdajMe.dto.UserDTO;
-import com.izdajMe.izdajMe.model.Ship;
 import com.izdajMe.izdajMe.model.User;
 import com.izdajMe.izdajMe.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -152,7 +150,8 @@ public class UserController {
     public ResponseEntity<UserDTO> getUserByEmail(@RequestParam("email") String email, HttpServletRequest request) {
         if (request.getSession(false).getAttribute("role")!=null) {
             if (request.getSession(false).getAttribute("role") == User.Role.cottageAdvertiser || request.getSession(false).getAttribute("role") == User.Role.boatAdvertiser
-            || request.getSession(false).getAttribute("role") == User.Role.client) {
+            || request.getSession(false).getAttribute("role") == User.Role.client || request.getSession(false).getAttribute("role") == User.Role.administrator
+            || request.getSession(false).getAttribute("role") == User.Role.administratorFirstLogged || request.getSession(false).getAttribute("role") == User.Role.administratorSuperior) {
                 User user = userService.getUserByEmail(email);
                 if (user != null) {
                     return new ResponseEntity<UserDTO>(new UserDTO(user), HttpStatus.OK);
@@ -168,14 +167,14 @@ public class UserController {
         }
     }
 
-    @GetMapping("/users/getAllUsers")
+    /*@GetMapping("/users/getAllUsers")
     public ResponseEntity<List<UserDTO>> getAllUsers() {
         List<UserDTO> list = new ArrayList<UserDTO>();
         for(User user : userService.getAllUsers()){
             list.add(new UserDTO(user));
         }
         return new ResponseEntity<List<UserDTO>>(list, HttpStatus.OK);
-    }
+    }*/
 
     @GetMapping("/users/getInstructorByEmail")
     public ResponseEntity<User> getInstructorByEmail(@RequestParam("email") String email) {

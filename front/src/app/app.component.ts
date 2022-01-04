@@ -4,7 +4,6 @@ import { User } from './model/user';
 import { CottageReservation } from './model/cottage-reservation';
 import { Ship } from './model/ship';
 import { ShipReservation } from './model/ship-reservation';
-import { User } from './model/user';
 import { CottageReservationService } from './service/cottage-reservation-service.service';
 import { UserService } from './service/user-service.service';
 

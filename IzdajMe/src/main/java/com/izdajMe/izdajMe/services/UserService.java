@@ -5,7 +5,6 @@ import com.izdajMe.izdajMe.model.User;
 import java.util.List;
 
 public interface UserService {
-    public List<User> getAllUsers();
     public List<User> getAllInstructors();
     public Boolean loginUser(User user);
     public Boolean saveUser(User user);

@@ -5,7 +5,7 @@ import TileLayer from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
 import { HttpClient } from '@angular/common/http';
 import Projection from 'ol/proj/Projection';
-import {fromLonLat} from 'ol/proj'
+import {fromLonLat} from 'ol/proj';
 import Vector from 'ol/layer/Vector';
 import {Icon,Style} from 'ol/style';
 import Vector2 from 'ol/source/Vector';
