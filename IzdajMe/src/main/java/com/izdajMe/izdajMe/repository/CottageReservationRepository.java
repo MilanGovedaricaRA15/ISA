@@ -11,5 +11,4 @@ import java.util.List;
 public interface CottageReservationRepository extends JpaRepository<CottageReservation, Long> {
     @Query("Select c from CottageReservation c where c.cottage.id = ?1")
     public List<CottageReservation> findAllByCottageId(Long id);
-
 }

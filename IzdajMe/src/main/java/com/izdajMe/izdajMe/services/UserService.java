@@ -13,5 +13,6 @@ public interface UserService {
     public List<User> getAllUsers();
     public Boolean changeAdministratorsPassword(User user);
     public Boolean saveAdmin(User user);
+    public Boolean deleteUser(long id);
 
 }

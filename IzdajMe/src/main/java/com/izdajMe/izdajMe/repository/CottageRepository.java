@@ -11,5 +11,6 @@ import java.util.List;
 public interface CottageRepository extends JpaRepository<Cottage, Long> {
     @Query("Select c from Cottage c where c.owner.email=?1")
     public List<Cottage> findAllByCottageEmail(String email);
-
+    @Query("Select c from Cottage c where c.owner.id=?1")
+    public List<Cottage> findCottagesById(long id);
 }

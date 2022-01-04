@@ -79,6 +79,11 @@ public class UserController {
         }
     }
 
+    @PostMapping("/users/deleteUser")
+    public ResponseEntity<Boolean> deleteUser(@RequestBody Long id){
+        return new ResponseEntity<Boolean>(userService.deleteUser(id), HttpStatus.OK);
+    }
+
     @GetMapping("/users/getUserByEmail")
     public ResponseEntity<UserDTO> getUserByEmail(@RequestParam("email") String email) {
         User user = userService.getUserByEmail(email);

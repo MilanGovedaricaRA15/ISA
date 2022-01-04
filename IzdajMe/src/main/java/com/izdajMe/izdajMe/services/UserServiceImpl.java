@@ -1,6 +1,8 @@
 package com.izdajMe.izdajMe.services;
 
 import com.izdajMe.izdajMe.model.User;
+import com.izdajMe.izdajMe.repository.CottageRepository;
+import com.izdajMe.izdajMe.repository.HotOfferRepository;
 import com.izdajMe.izdajMe.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,10 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private CottageRepository cottageRepository;
+    @Autowired
+    private HotOfferRepository hotOfferRepository;
 
     public Boolean loginUser(User user) {
         User foundUser = userRepository.findByEmailAndPasswordVerified(user.getEmail(),user.getPassword());
@@ -100,5 +106,22 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
         return true;
 
+    }
+
+    public Boolean deleteUser(long id) {
+        /*List<Cottage> cottages = cottageRepository.findCottagesById(id);
+        if(cottages.size() != 0){
+            for(Cottage c : cottages){
+                List<HotOffer> reservations = hotOfferRepository
+                if(reservations.size() != 0) {
+                    for(HotOffer hr : reservations) {
+                        hotOfferRepository.deleteById(hr.getId());
+                    }
+                }
+                cottageRepository.deleteById(c.getId());
+            }
+        }*/
+        userRepository.deleteById(id);
+        return true;
     }
 }

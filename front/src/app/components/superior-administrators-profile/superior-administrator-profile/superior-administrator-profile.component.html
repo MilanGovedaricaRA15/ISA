@@ -113,7 +113,7 @@
                     <h5 class="card-title m-b-0">All users</h5>
                 </div>
                 <div class="table-responsive">
-                    <table class="table">
+                    <table class="table" id="usertable">
                         <thead class="thead-light">
                             <tr >
                                 <th scope="col">Name</th>
@@ -128,7 +128,7 @@
                                 <th scope="col">Verified</th>
                             </tr>
                         </thead>
-                        <tbody *ngFor="let item of allUsers;">
+                        <tbody *ngFor="let item of allUsers;let indexOfelement=index;">
                             <tr *ngIf="item.role.toString() !== 'administratorSuperior'" >
                                 <td scope="col">{{item.firstName}}</td>
                                 <td scope="col">{{item.lastName}}</td>
@@ -142,10 +142,10 @@
                                 <td scope="col">{{item.verified}}</td>
                                 <td scope="col" *ngIf="item.verified === false ">
                                     <button class="btn btn-success" style="margin-bottom: 2px;"> Accept </button>
-                                    <button class="btn btn-danger"> Decline </button>
+                                    <button class="btn btn-danger" (click)="userDeleted(indexOfelement)"> Decline </button>
                                 </td>
                                 <td scope="col" *ngIf="item.verified">
-                                    <button class="btn btn-danger"> Delete user </button>
+                                    <button class="btn btn-danger" (click)="userDeleted(indexOfelement)"> Delete user </button>
                                 </td>
                             </tr>
                         </tbody>
