@@ -130,7 +130,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody *ngFor="let item of instructorFavors;let indexOfelement=index;">
-                                                    <tr >
+                                                    <tr>
                                                         <td scope="col">{{item.name}}</td>
                                                         <td scope="col">{{item.address}}</td>
                                                         <td scope="col">{{item.description}}</td>
@@ -161,29 +161,66 @@
                     <h5 class="card-title m-b-0">Reservations</h5>
                 </div>
                 <div class="table-responsive">
-                    <table class="table">
-                        <thead class="thead-light">
-                            <tr >
-                                <th scope="col">From</th>
-                                <th scope="col">To</th>
-                                <th scope="col">Cost</th>
-                                <th scope="col">Client</th>
-                                <th scope="col">Address</th>
-                                <th scope="col">Name</th>
-                            </tr>
-                        </thead>
-                        <tbody *ngFor="let item of instructorReservations">
-                            <tr >
-                                <td scope="col">{{item.availableFrom}}</td>
-                                <td scope="col">{{item.availableTill}}</td>
-                                <td scope="col">{{item.cost}}</td>
-                                <td scope="col">{{item.client.firstName}} {{item.client.lastName}}</td>
-                                <td scope="col">{{item.favor.address}}</td>
-                                <td scope="col">{{item.favor.name}}</td>
-                                <td scope="col"> <button type="button" (click)="seeUserProfile(item.client.email)" class="btn btn-primary btn-md mr-1 mb-2">See profile</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <form class="content" [formGroup]="addReservationForm1" (ngSubmit)="submitForm()">
+                        <table class="table">
+                            <thead class="thead-light">
+                                <tr >
+                                    <th scope="col">From</th>
+                                    <th scope="col">To</th>
+                                    <th scope="col">Cost</th>
+                                    <th scope="col">Client</th>
+                                    <th scope="col">Address</th>
+                                    <th scope="col">Name</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngFor="let item of instructorReservations">
+                                <tr (click)="getClient(item.client.email,item.availableFrom,item.availableTill,item.id)" [id]="[item.client.id]">
+                                    <td scope="col">{{item.availableFrom}}</td>
+                                    <td scope="col">{{item.availableTill}}</td>
+                                    <td scope="col">{{item.cost}}</td>
+                                    <td scope="col">{{item.client.firstName}} {{item.client.lastName}}</td>
+                                    <td scope="col">{{item.favor.address}}</td>
+                                    <td scope="col">{{item.favor.name}}</td>
+                                    <td scope="col"> <button type="button" (click)="seeUserProfile(item.client.email)" class="btn btn-primary btn-md mr-1 mb-2">See profile</button></td>
+                                </tr>
+                            </tbody>
+                            <tbody>
+                                <tr >
+                                    <td><input style="width: 85%;" [(ngModel)]="newReservation1.availableFrom" formControlName="availableFrom1" class="form-control"  type="datetime-local" id="availableFrom1" >
+                                        <div *ngIf="availableFrom1.invalid && (availableFrom1.touched || availableFrom1.dirty)">
+                                        <span class="error" *ngIf="availableFrom1.errors?.required">From is required</span>
+                                        </div>
+                                    </td>
+                                    <td><input style="width: 85%;" [(ngModel)]="newReservation1.availableTill" formControlName="availableTill1" class="form-control"  type="datetime-local" id="availableTo1">
+                                        <div *ngIf="availableTill1.invalid && (availableTill1.touched || availableTill1.dirty)">
+                                        <span class="error" *ngIf="availableTill1.errors?.required">To is required</span>
+                                    </div>
+                                    <div *ngIf="availableTillError">
+                                        <span class="error">Till must me greater than from</span>
+                                    </div>
+                                    </td>
+                                    <td><input style="width: 60%;" [(ngModel)]="newReservation1.cost" formControlName="cost1" class="form-control" type="number"/>
+                                        <div *ngIf="cost1.invalid && (cost1.touched || cost1.dirty)">
+                                        <span class="error" *ngIf="cost1.errors?.required">Cost per night is required</span>
+                                        <span class="error" *ngIf="cost1.errors?.pattern">Only numbers allowed</span>
+                                    </div>
+                                    </td>
+                                    <td scope="col">{{newReservation1?.client?.firstName}} {{newReservation1?.client?.lastName}}</td>
+                                    <td scope="col">{{newReservation1?.favor?.address}}</td>
+                                    <td scope="col">{{newReservation1?.favor?.name}}</td>
+                                    <td>
+                                        <button [disabled]="addReservationForm1.invalid" class="btn btn-primary btn-md mr-1 mb-2">Add</button>
+                                        <div *ngIf="pickedUserError">
+                                            <span class="error">Pick a user</span>
+                                        </div>
+                                        <div *ngIf="isReserved1">
+                                            <span class="error">Term is busy</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </form>
                 </div>
             </div>
         </div>

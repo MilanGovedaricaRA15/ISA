@@ -6,6 +6,7 @@ import { Ship } from './model/ship';
 import { ShipReservation } from './model/ship-reservation';
 import { CottageReservationService } from './service/cottage-reservation-service.service';
 import { UserService } from './service/user-service.service';
+import { InstructorsFavor } from './model/instructors-favor';
 
 @Component({
   selector: 'app-root',
@@ -28,6 +29,7 @@ export class AppComponent {
   userForOwner: User;
   cottageReservationReceive:CottageReservation;
   shipReservationReceive:ShipReservation;
+  reservationForHotOffers: InstructorsFavor;
 
   /**
    *

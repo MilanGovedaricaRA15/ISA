@@ -8,5 +8,7 @@ export class FavorReservation {
     cost: number;
     client: User;
     favor: InstructorsFavor;
+
+    FavorReservation() {}
     
 }

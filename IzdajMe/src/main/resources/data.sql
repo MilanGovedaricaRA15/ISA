@@ -189,6 +189,6 @@ values (4, 4, 'Pravljenje mamca', 'Ribarac', 'Mamac');
 insert into favor_reservations (id, available_from, available_till, cost, client_id, favor_id)
 values (1, DATE('2021-12-24'), DATE('2021-12-24'), 500, 14, 1);
 insert into favor_reservations (id, available_from, available_till, cost, client_id, favor_id)
-values (2, DATE('2022-1-14'), DATE('2022-1-15'), 900, 14, 3);
+values (2, DATE('2022-1-1'), DATE('2022-1-15'), 900, 14, 3);
 insert into favor_reservations (id, available_from, available_till, cost, client_id, favor_id)
 values (3, DATE('2022-2-24'), DATE('2022-2-24'), 600, 14, 2);

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FavorReservation } from 'src/app/model/favor-reservation';
 import { InstructorsFavor } from 'src/app/model/instructors-favor';
@@ -19,30 +19,45 @@ export class InstructorProfileComponent implements OnInit {
   instructor: User;
   passwordChange:User;
   instructorChange: User = new User();
-  wrongPassword1: Boolean;
-  wrongPassword2: Boolean;
-  wrongPassword: Boolean;
-  alreadySent: Boolean;
+  wrongPassword1: Boolean = false;
+  wrongPassword2: Boolean = false;
+  wrongPassword: Boolean = false;
+  alreadySent: Boolean = false;
   allFavorReservations: Array<FavorReservation> = new Array<FavorReservation>();
   instructorReservations: Array<FavorReservation> = new Array<FavorReservation>();
   allFavors: Array<InstructorsFavor> = new Array<InstructorsFavor>();
   instructorFavors: Array<InstructorsFavor> = new Array<InstructorsFavor>();
   errorMessage: Boolean = false;
+  newReservation1: FavorReservation;
+  addReservationForm1:any;
+  pickedUserError:boolean;
+  isReserved1:boolean;
+  availableTillError:boolean;
+  pickedUser:boolean;
   @Output() seeUser = new EventEmitter<User>();
+  @Input() reservationForApp: InstructorsFavor;
 
   constructor(private userService: UserService, private favorReservationService: FavorReservationService, private instructorsFavorService: InstructorsFavorService) { }
 
   ngOnInit(): void {
+        this.newReservation1 = new FavorReservation();
+        this.newReservation1.favor = new InstructorsFavor();
+        this.availableTillError = false;
+        this.pickedUser = false;
+        this.pickedUserError = false;
+        this.isReserved1 = false;
+        this.addReservationForm1 = new FormGroup({
+          "availableFrom1": new FormControl(null,[Validators.required]),
+          "availableTill1": new FormControl(null,[Validators.required]),
+          "cost1": new FormControl(null,[Validators.required,Validators.pattern('[1-9][0-9]*')])
+        });
+
     this.userService.getLoggedUser().subscribe(ret => {
       this.instructor = ret;
       this.instructorChange = JSON.parse(JSON.stringify(this.instructor));
       this.instructorChange.password = "";
       this.passwordChange = JSON.parse(JSON.stringify(this.instructor));
       this.passwordChange.password = "";
-      this.wrongPassword1 = false;
-      this.wrongPassword2 = false;
-      this.wrongPassword = false;
-      this.alreadySent = false;
     });
 
     this.instructorsFavorService.getAllFavors().subscribe(ret => {
@@ -94,6 +109,47 @@ export class InstructorProfileComponent implements OnInit {
     }
 
     return true;
+  }
+
+  submitForm(){
+    if(this.newReservation1.availableTill < this.newReservation1.availableFrom){
+      this.availableTillError = true;
+    } else {
+      if(this.pickedUser){
+        
+        this.pickedUserError = false;
+        this.availableTillError = false;
+
+        this.favorReservationService.addReservationByOwner(this.newReservation1).subscribe(ret => {
+          if(ret){
+            this.allFavorReservations.push(JSON.parse(JSON.stringify(this.newReservation1)));
+            this.instructorReservations.push(JSON.parse(JSON.stringify(this.newReservation1)));
+            this.isReserved1 = false;
+          }
+          else{
+            this.isReserved1 = true;
+          }
+          });
+      }
+    }
+  }
+
+  getClient(email:string,from:Date,till:Date,id:number){
+    let today = new Date();
+    let from1 = new Date(from);
+    let till1 = new Date(till);
+    if(today > from1 && today < till1){
+      this.favorReservationService.getById(id).subscribe(ret => {
+        this.newReservation1 = ret;
+        this.newReservation1.id = 0;
+      });
+      this.userService.getUserByEmail(email).subscribe(ret =>{
+        this.newReservation1.client = ret;
+        this.pickedUser = true;
+        this.pickedUserError = false;
+      }); 
+    }
+    
   }
 
   submitData(){
@@ -196,5 +252,15 @@ export class InstructorProfileComponent implements OnInit {
       });
     } else
       this.errorMessage = true;
+  }
+
+  get availableFrom1(){
+    return this.addReservationForm1.get('availableFrom1');
+  }
+  get availableTill1() {
+    return this.addReservationForm1.get('availableTill1');
+  }
+  get cost1() {
+    return this.addReservationForm1.get('cost1');
   }
 }

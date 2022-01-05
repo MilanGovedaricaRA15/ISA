@@ -1,14 +1,15 @@
 package com.izdajMe.izdajMe.controller;
 
+import com.izdajMe.izdajMe.dto.FavorReservationDTO;
 import com.izdajMe.izdajMe.model.FavorReservation;
+import com.izdajMe.izdajMe.model.User;
 import com.izdajMe.izdajMe.services.FavorReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,5 +29,24 @@ public class FavorReservationController {
         }
 
         return new ResponseEntity<List<FavorReservation>>(allReservations, HttpStatus.OK);
+    }
+
+    @GetMapping("/favorReservations/getReservationById")
+    public ResponseEntity<FavorReservationDTO> getById(@RequestParam("id") Long id) {
+        return new ResponseEntity<FavorReservationDTO>(new FavorReservationDTO(favorReservationService.getById(id)), HttpStatus.OK);
+    }
+
+    @PostMapping("/favorReservations/addReservationByOwner")
+    public ResponseEntity<Boolean> addReservationByOwner(@RequestBody FavorReservation favorReservation, HttpServletRequest request) {
+        if (request.getSession(false).getAttribute("role")!=null) {
+            if (request.getSession(false).getAttribute("role") == User.Role.instructor) {
+                return new ResponseEntity<Boolean>(favorReservationService.addReservationByOwner(favorReservation), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
+            }
+        }
+        else{
+            return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
+        }
     }
 }

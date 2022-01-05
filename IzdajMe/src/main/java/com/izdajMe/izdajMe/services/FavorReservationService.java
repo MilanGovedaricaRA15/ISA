@@ -7,4 +7,6 @@ import java.util.List;
 public interface FavorReservationService {
 
     List<FavorReservation> getAllReservations();
+    Boolean addReservationByOwner(FavorReservation favorReservation);
+    FavorReservation getById(long id);
 }
