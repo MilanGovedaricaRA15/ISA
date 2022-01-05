@@ -180,6 +180,17 @@ export class UserService {
     }));
   }
 
+  public isInstructorLoggedIn(): Observable<boolean> {
+    return this.getLoggedUser().pipe(map(res => {
+      if(res.role.toString() === 'instructor'){
+        return true;
+      }
+      else{
+        return false;
+      }
+    }));
+  }
+
   public adminRegistred(user: User): Observable<string> {
     return this.http.post<string>(this.addNewAdmin, user,{responseType: 'text' as 'json'});
   } 

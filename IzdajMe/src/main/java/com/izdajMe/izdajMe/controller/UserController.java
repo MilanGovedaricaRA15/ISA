@@ -156,7 +156,8 @@ public class UserController {
         if (request.getSession(false).getAttribute("role")!=null) {
             if (request.getSession(false).getAttribute("role") == User.Role.cottageAdvertiser || request.getSession(false).getAttribute("role") == User.Role.boatAdvertiser
             || request.getSession(false).getAttribute("role") == User.Role.client || request.getSession(false).getAttribute("role") == User.Role.administrator
-            || request.getSession(false).getAttribute("role") == User.Role.administratorFirstLogged || request.getSession(false).getAttribute("role") == User.Role.administratorSuperior) {
+            || request.getSession(false).getAttribute("role") == User.Role.administratorFirstLogged || request.getSession(false).getAttribute("role") == User.Role.administratorSuperior
+            || request.getSession(false).getAttribute("role") == User.Role.instructor) {
                 User user = userService.getUserByEmail(email);
                 if (user != null) {
                     return new ResponseEntity<UserDTO>(new UserDTO(user), HttpStatus.OK);

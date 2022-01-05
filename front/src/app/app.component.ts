@@ -86,6 +86,10 @@ export class AppComponent {
       this.changeNumber(31);
       sessionStorage.setItem("page", '31');
     }
+    else if (message === 'instructor') {
+      this.changeNumber(61);
+      sessionStorage.setItem("page", '61');
+    }
 
   }
 
@@ -201,6 +205,12 @@ export class AppComponent {
       if(res){
         this.changeNumber(8);
         sessionStorage.setItem("page",'8');
+      }
+    });
+    this.userService.isInstructorLoggedIn().subscribe(res => {
+      if(res){
+        this.changeNumber(61);
+        sessionStorage.setItem("page",'61');
       }
     });
   }

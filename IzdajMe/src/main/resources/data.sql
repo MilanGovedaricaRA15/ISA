@@ -7,6 +7,8 @@ delete from cottages_price_list where cottage_id!=0;
 delete from ships_price_list where ship_id!=0;
 delete from hot_offers where id!=0;
 delete from ship_hot_offers where id!=0;
+delete from favor_reservations where id!=0;
+delete from favors where id!=0;
 delete from service_price where id!=0;
 delete from ship_service_price where id!=0;
 delete from ships_grades where ship_id!=0;
@@ -38,18 +40,16 @@ insert into users (id, address, city, country, email, first_name, last_name, mob
 values (8, 'Focanska 8', 'Foca', 'RS', 'foca8@gmail.com', 'Darko', 'Bodiroga', 066589001, 'aaaa', null, 2, TRUE);
 insert into users (id, address, city, country, email, first_name, last_name, mobile_number, password, reason, role, verified)
 values (9, 'Focanska 9', 'Foca', 'RS', 'foca9@gmail.com', 'Luka', 'Lukovic', 058212546, 'aaaa', null, 4, TRUE);
-
 insert into users (id, address, city, country, email,first_name,last_name,mobile_number,password,reason,role,verified)
 values (10, 'Njegoseva 1', 'Subotica', 'Srbija', 'vrbica.vlado11@gmail.com', 'Vladimir', 'Vrbica', '123123123123', 'vrba', '', 3, TRUE);
-
 insert into users (id, address, city, country, email,first_name,last_name,mobile_number,password,reason,role,verified)
 values (11, 'Nemanjina 2', 'Srbobran', 'Srbija', 'nikola.aleksic@gmail.com', 'Nikola', 'Aleksic', '22222222222', 'leksa', '', 4, TRUE);
-
 insert into users (id, address, city, country, email,first_name,last_name,mobile_number,password,reason,role,verified)
 values (12, 'Kralja Petra 12a', 'Becej', 'Srbija', 'milos.zivic@gmail.com', 'Milos', 'Zivic', '222222222222', 'zile', '', 5, TRUE);
-
 insert into users (id, address, city, country, email,first_name,last_name,mobile_number,password,reason,role,verified)
 values (13, 'Vozdovacka 12', 'Beograd', 'Srbija', 'vesnakundacina@gmail.com', 'Vesna', 'Kundacina', 123123123, 'aaaa', 'Izdaja vikendice', 0, FALSE);
+insert into users (id, address, city, country, email,first_name,last_name,mobile_number,password,reason,role,verified)
+values (14, 'Kralja Aleksandra 12a', 'Uzice', 'Srbija', 'peraperic@gmail.com', 'Pera', 'Peric', '222222222222', 'aaaa', '', 6, TRUE);
 
 insert into cottages (id, address, available_from, available_till, description, images, name, num_of_beds, num_of_rooms, rules, services, owner_id, cost_per_night)
 values (1, 'Dunavska 1',DATE('2021-09-01'),DATE('2022-02-01'),'Na jezeru',null, 'Micova', 3, 3, 'Nisu dozvoljene zivotinje', null, 1, 50);
@@ -176,3 +176,19 @@ insert into ship_reservations (id, available_from, available_till, cost, client_
 values (3,DATE('2022-01-04'),DATE('2022-01-23'),500,2,1, null);
 insert into ship_reservations (id, available_from, available_till, cost, client_id, ship_id, services)
 values (4,DATE('2021-12-03'),DATE('2021-12-19'),500,2,1, null);
+
+insert into favors (id, instructor_id, name, address, description)
+values (1, 4, 'Cas pecanja', 'Ribarac', 'Pecanje pecaljkom');
+insert into favors (id, instructor_id, name, address, description)
+values (2, 4, 'Cas pecanja', 'Ribarac', 'Pecanje mrezom');
+insert into favors (id, instructor_id, name, address, description)
+values (3, 4, 'Isplovljavanje', 'Ribarac', 'Plovidba camcom i pecanje');
+insert into favors (id, instructor_id, name, address, description)
+values (4, 4, 'Pravljenje mamca', 'Ribarac', 'Mamac');
+
+insert into favor_reservations (id, available_from, available_till, cost, client_id, favor_id)
+values (1, DATE('2021-12-24'), DATE('2021-12-24'), 500, 14, 1);
+insert into favor_reservations (id, available_from, available_till, cost, client_id, favor_id)
+values (2, DATE('2022-1-14'), DATE('2022-1-15'), 900, 14, 3);
+insert into favor_reservations (id, available_from, available_till, cost, client_id, favor_id)
+values (3, DATE('2022-2-24'), DATE('2022-2-24'), 600, 14, 2);
