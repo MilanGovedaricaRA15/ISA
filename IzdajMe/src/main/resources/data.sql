@@ -4,11 +4,13 @@ delete from ship_reservations where id!=0;
 delete from favor_reservations where id!=0;
 delete from cottages_hot_offers where cottage_id!=0;
 delete from ships_hot_offers where ship_id!=0;
+delete from favors_hot_offers where instructors_favor_id!=0;
 delete from cottages_price_list where cottage_id!=0;
 delete from ships_price_list where ship_id!=0;
 delete from favors_price_list where instructors_favor_id!=0;
 delete from hot_offers where id!=0;
 delete from ship_hot_offers where id!=0;
+delete from favor_hot_offers where id!=0;
 delete from service_price where id!=0;
 delete from ship_service_price where id!=0;
 delete from favor_service_price where id!=0;
@@ -125,6 +127,13 @@ insert into ships_hot_offers(ship_id,hot_offers_id) values (1,1);
 insert into ship_hot_offers (id, available_from, available_till, cost, free, num_of_people, services)
 values (2,DATE('2021-12-16'),DATE('2021-12-19'),28,TRUE,4,null);
 insert into ships_hot_offers(ship_id,hot_offers_id) values (1,2);
+
+insert into favor_hot_offers (id, available_from, available_till, place, num_of_persons, services, cost, free)
+values (1,DATE('2022-1-20'),DATE('2021-1-25'),'Ribarac',5,null,1000,TRUE);
+insert into favors_hot_offers(instructors_favor_id, hot_offers_id) values (1,1);
+insert into favor_hot_offers (id, available_from, available_till, place, num_of_persons, services, cost, free)
+values (2,DATE('2022-2-2'),DATE('2021-2-12'),'Ribarac',4,null,900,TRUE);
+insert into favors_hot_offers(instructors_favor_id, hot_offers_id) values (1,2);
 
 insert into service_price (id, cost, service)
 values(1,100,0);

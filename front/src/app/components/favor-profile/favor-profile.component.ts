@@ -1,7 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FavorHotOffer } from 'src/app/model/favor-hot-offer';
 import { FavorServicePrice } from 'src/app/model/favor-service-price';
 import { FavorServices, InstructorsFavor } from 'src/app/model/instructors-favor';
+import { FavorHotOfferService } from 'src/app/service/favor-hot-offer.service';
 import { InstructorsFavorService } from 'src/app/service/instructors-favor.service';
 
 @Component({
@@ -25,8 +27,14 @@ export class FavorProfileComponent implements OnInit {
     'Boat', 'FishingRod'
   ];
   servicesClass: Array<FavorServicePrice>;
+  newHotOffer: FavorHotOffer;
+  addForm:any;
+  availableTillError:boolean = false;
+  alreadyExistsHotOffer:boolean = false;
+  doesntExistService2:boolean = false;
+  doesntHaveAllServices2:boolean = false;
 
-  constructor(private instructorsFavorService: InstructorsFavorService) { }
+  constructor(private instructorsFavorService: InstructorsFavorService, private favorHotOfferService: FavorHotOfferService) { }
 
   ngOnInit(): void {
     this.onInit();
@@ -40,6 +48,13 @@ export class FavorProfileComponent implements OnInit {
       "rules": new FormControl(null,[Validators.required,Validators.pattern('[a-zA-Z ]*')]),
       "address": new FormControl(null,[Validators.required,Validators.pattern('([A-ZŠĐČĆŽ]{1}[a-zšđčćž]+ *)+[0-9]*')])
     });
+
+    this.addForm = new FormGroup({
+      "numOfPersons": new FormControl(null,[Validators.required,Validators.pattern('[1-9][0-9]*')]),
+      "availableFrom": new FormControl(null,[Validators.required]),
+      "availableTill": new FormControl(null,[Validators.required]),
+      "cost": new FormControl(null,[Validators.required,Validators.pattern('[1-9][0-9]*')])
+    });
   }
 
   public onInit(){
@@ -47,6 +62,7 @@ export class FavorProfileComponent implements OnInit {
     this.cantAdd = false;
     this.cantChange = false;
     this.servicesClass = new Array<FavorServicePrice>();
+    this.newHotOffer = new FavorHotOffer();
     if(this.favor == undefined){
       this.instructorsFavorService.getFavorById(Number(sessionStorage.getItem("favorToShow"))).subscribe(ret =>{
         this.favor = ret;
@@ -249,9 +265,83 @@ export class FavorProfileComponent implements OnInit {
         this.cantAdd = true;
       }
     })
-    
 
   }
+
+  removeHotOffer(id:number){
+    for(let hotOffer of this.favor.hotOffers){
+      if (hotOffer.id == id){
+        const index = this.favor.hotOffers.indexOf(hotOffer);
+        if (index > -1) {
+          this.favor.hotOffers.splice(index, 1);
+        }
+      }
+    }
+    
+    this.favorHotOfferService.removeHotOffer(this.favor.id).subscribe(() => {
+      
+      });
+    
+  }
+
+  submitFormHotOffer(){
+    this.newHotOffer.services = new Array<FavorServices>();
+    let element = <HTMLInputElement> document.getElementById("zaDobijanjeServisa2");
+    let servic = element.value.split(",");
+    this.doesntExistService2 = false;
+    
+    for(let x of servic){
+      if(x != ""){
+        if(x === 'Boat'){
+          this.newHotOffer.services.push(FavorServices.Boat);
+        }
+        else if(x === 'FishingRod'){
+          this.newHotOffer.services.push(FavorServices.FishingRod);
+        }
+        else{
+          this.doesntExistService2 = true;
+        }
+      }
+      
+
+    }
+    if(!this.doesntExistService2){
+      this.doesntHaveAllServices2 = false;
+        if (this.favor.services == null){
+          if(this.newHotOffer.services.length != 0){
+            this.doesntHaveAllServices2 = true;
+          }
+        }
+        else{
+          for(let ser of this.newHotOffer.services){
+            if(!this.favor.services.includes(ser)){
+              this.doesntHaveAllServices2 = true;
+            }
+          }
+        }
+        if(!this.doesntHaveAllServices2){
+          this.newHotOffer.free = true;
+          if(this.newHotOffer.availableTill < this.newHotOffer.availableFrom){
+            this.availableTillError = true;
+          }
+          else {
+            this.availableTillError = false;
+            let changeWithThisFavor = JSON.parse(JSON.stringify(this.favor))
+            changeWithThisFavor.hotOffers.push(JSON.parse(JSON.stringify(this.newHotOffer)));
+            this.instructorsFavorService.addHotOfferToFavor(changeWithThisFavor).subscribe(ret => {
+                if(ret){
+                  this.alreadyExistsHotOffer = false;
+                  this.favor.hotOffers.push(JSON.parse(JSON.stringify(this.newHotOffer)));
+                }
+                else{
+                  this.alreadyExistsHotOffer = true;
+                }
+            });
+          }
+        }
+    }
+  }
+    
 
   get name() {
     return this.changeForm.get('name');

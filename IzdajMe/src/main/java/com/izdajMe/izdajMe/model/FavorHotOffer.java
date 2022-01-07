@@ -11,8 +11,8 @@ public class FavorHotOffer {
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected long id;
     private LocalDateTime availableFrom;
+    private LocalDateTime availableTill;
     private String place;
-    private int during;
     private int numOfPersons;
     private ArrayList<InstructorsFavor.FavorServices> services;
     private float cost;
@@ -20,12 +20,12 @@ public class FavorHotOffer {
 
     public FavorHotOffer() {}
 
-    public FavorHotOffer(long id, LocalDateTime availableFrom, String place, int during, int numOfPersons,
+    public FavorHotOffer(long id, LocalDateTime availableFrom, LocalDateTime availableTill, String place, int numOfPersons,
                          ArrayList<InstructorsFavor.FavorServices> services, float cost) {
         this.id = id;
         this.availableFrom = availableFrom;
+        this.availableTill = availableTill;
         this.place = place;
-        this.during = during;
         this.numOfPersons = numOfPersons;
         this.services = services;
         this.cost = cost;
@@ -40,13 +40,13 @@ public class FavorHotOffer {
 
     public void setAvailableFrom(LocalDateTime availableFrom) { this.availableFrom = availableFrom; }
 
+    public LocalDateTime getAvailableTill() { return this.availableTill; }
+
+    public void setAvailableTill(LocalDateTime availableTill) { this.availableTill = availableTill; }
+
     public String getPlace() { return this.place; }
 
     public void setPlace(String place) { this.place = place; }
-
-    public int getDuring() { return this.during; }
-
-    public void setDuring(int during) { this.during = during; }
 
     public int getNumOfPersons() { return this.numOfPersons; }
 

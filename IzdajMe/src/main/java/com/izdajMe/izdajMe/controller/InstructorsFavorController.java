@@ -118,4 +118,18 @@ public class InstructorsFavorController {
             return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
         }
     }
+
+    @PutMapping("/favors/addHotOfferToFavor")
+    public ResponseEntity<Boolean> addHotOfferToFavor(@RequestBody InstructorsFavor favor, HttpServletRequest request){
+        if (request.getSession(false).getAttribute("role")!=null) {
+            if (request.getSession(false).getAttribute("role") == User.Role.instructor) {
+                return new ResponseEntity<Boolean>(instructorsFavorService.addHotOfferToFavor(favor), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
+            }
+        }
+        else{
+            return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
+        }
+    }
 }

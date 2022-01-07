@@ -1,5 +1,6 @@
 package com.izdajMe.izdajMe.services;
 
+import com.izdajMe.izdajMe.model.FavorHotOffer;
 import com.izdajMe.izdajMe.model.FavorReservation;
 import com.izdajMe.izdajMe.model.InstructorsFavor;
 import com.izdajMe.izdajMe.repository.FavorReservationRepository;
@@ -97,5 +98,84 @@ public class InstructorsFavorServiceImpl implements InstructorsFavorService{
             e.printStackTrace();
             return false;
         }
+    }
+
+    public Boolean addHotOfferToFavor(InstructorsFavor favor){
+        List<FavorHotOffer> hotOffers = favor.getHotOffers();
+        InstructorsFavor favor1 = instructorsFavorRepository.findById(favor.getId()).get();
+        List<FavorHotOffer> hotOffersWithout = favor1.getHotOffers();
+        List<FavorReservation> allThisFavorReservations = favorReservationRepository.findAllByReservationId(favor.getId());
+
+        FavorHotOffer addedHotOffer = new FavorHotOffer();
+        boolean postoji = false;
+        for (FavorHotOffer offer : hotOffers){
+            postoji = false;
+            for(FavorHotOffer offer1 : favor1.getHotOffers()){
+                if (offer1.getId() == offer.getId()){
+                    postoji = true;
+                    break;
+                }
+            }
+            if(!postoji){
+                addedHotOffer = offer;
+                break;
+            }
+        }
+        boolean free = canAddHotOffer(hotOffersWithout,addedHotOffer,allThisFavorReservations);
+
+        if(free){
+            instructorsFavorRepository.save(favor);
+        }
+        return free;
+    }
+
+    public Boolean canAddHotOffer(List<FavorHotOffer> hotOffers,FavorHotOffer addedHotOffer, List<FavorReservation> favorReservations){
+        boolean free = true;
+        for(FavorHotOffer hotOffer1 : hotOffers) {
+            if(addedHotOffer.getAvailableFrom().isBefore(hotOffer1.getAvailableFrom()) && addedHotOffer.getAvailableTill().isAfter(hotOffer1.getAvailableFrom())){
+                free = false;
+                break;
+            }
+            if(addedHotOffer.getAvailableFrom().isBefore(hotOffer1.getAvailableTill()) && addedHotOffer.getAvailableTill().isAfter(hotOffer1.getAvailableTill())){
+                free = false;
+                break;
+            }
+            if(hotOffer1.getAvailableFrom().isBefore(addedHotOffer.getAvailableFrom()) && hotOffer1.getAvailableTill().isAfter(addedHotOffer.getAvailableTill())){
+                free = false;
+                break;
+            }
+            if(hotOffer1.getAvailableFrom().isEqual(addedHotOffer.getAvailableFrom()) || hotOffer1.getAvailableTill().isEqual(addedHotOffer.getAvailableTill()) || hotOffer1.getAvailableTill().isEqual(addedHotOffer.getAvailableFrom()) || hotOffer1.getAvailableFrom().isEqual(addedHotOffer.getAvailableTill())){
+                free = false;
+                break;
+            }
+        }
+        if(addedHotOffer.getAvailableFrom().equals(addedHotOffer.getAvailableTill())){
+            free = false;
+        }
+        if(addedHotOffer.getAvailableFrom().isAfter(addedHotOffer.getAvailableTill())){
+            free = false;
+        }
+
+        for(FavorReservation favorReservation : favorReservations) {
+            if(addedHotOffer.getAvailableFrom().isBefore(favorReservation.getAvailableFrom()) && addedHotOffer.getAvailableTill().isAfter(favorReservation.getAvailableFrom())){
+                free = false;
+                break;
+            }
+            if(addedHotOffer.getAvailableFrom().isBefore(favorReservation.getAvailableTill()) && addedHotOffer.getAvailableTill().isAfter(favorReservation.getAvailableTill())){
+                free = false;
+                break;
+            }
+            if(favorReservation.getAvailableFrom().isBefore(addedHotOffer.getAvailableFrom()) && favorReservation.getAvailableTill().isAfter(addedHotOffer.getAvailableTill())){
+                free = false;
+                break;
+            }
+            if(favorReservation.getAvailableFrom().isEqual(addedHotOffer.getAvailableFrom()) || favorReservation.getAvailableTill().isEqual(addedHotOffer.getAvailableTill()) || favorReservation.getAvailableTill().isEqual(addedHotOffer.getAvailableFrom()) || favorReservation.getAvailableFrom().isEqual(addedHotOffer.getAvailableTill())){
+                free = false;
+                break;
+            }
+        }
+
+
+        return free;
     }
 }
