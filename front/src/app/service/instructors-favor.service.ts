@@ -18,6 +18,7 @@ export class InstructorsFavorService {
   uploadImgUrl: string;
   addHotOfferToFavorUrl: string;
   addFavorUrl: string;
+  getAllFavorsOfInstructorUrl: string;
 
   constructor(private http: HttpClient) {
     this.getAllFavorsUrl = 'http://localhost:8080/favors/getAllFavors';
@@ -29,6 +30,7 @@ export class InstructorsFavorService {
     this.uploadImgUrl='http://localhost:8080/favors/uploadImg';
     this.addHotOfferToFavorUrl = 'http://localhost:8080/favors/addHotOfferToFavor';
     this.addFavorUrl = 'http://localhost:8080/favors/addFavor';
+    this.getAllFavorsOfInstructorUrl = 'http://localhost:8080/favors/getAllFavorsOfInstructor'
   }
 
   public getAllFavors(): Observable<Array<InstructorsFavor>> {
@@ -77,5 +79,14 @@ export class InstructorsFavorService {
 
    public addFavor(favor: InstructorsFavor):Observable<InstructorsFavor>{
     return this.http.post<InstructorsFavor>(this.addFavorUrl,favor,{withCredentials: true});
+  }
+
+   public getAllFavorsOfInstructor(): Observable<Array<InstructorsFavor>> {
+    let user = sessionStorage.getItem('email');
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+    let params = new HttpParams().set("email",user);
+  
+    return this.http.get<Array<InstructorsFavor>>(this.getAllFavorsOfInstructorUrl, {headers: headers,params: params,withCredentials: true});
   }
 }

@@ -1,5 +1,6 @@
 package com.izdajMe.izdajMe.services;
 
+import com.izdajMe.izdajMe.model.Cottage;
 import com.izdajMe.izdajMe.model.InstructorsFavor;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,4 +18,5 @@ public interface InstructorsFavorService {
     public Boolean uploadImg( MultipartFile file);
     public Boolean addHotOfferToFavor(InstructorsFavor favor);
     public InstructorsFavor addFavor(InstructorsFavor favor);
+    public List<InstructorsFavor> getAllFavorsOfInstructor(String email);
 }

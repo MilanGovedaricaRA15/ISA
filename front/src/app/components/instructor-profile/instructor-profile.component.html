@@ -128,14 +128,16 @@
                                                         <th scope="col">Name</th>
                                                         <th scope="col">Address</th>
                                                         <th scope="col">Description</th>
+                                                        <th scope="col">Cost</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody *ngFor="let item of instructorFavors;let indexOfelement=index;">
+                                                <tbody *ngFor="let item of searchFavors;let indexOfelement=index;">
                                                     <tr>
                                                         <td><div (click)="goToFavorProfile(item?.id)"><span class="w-80 avatar gd-info"><img *ngIf="item?.images != null" style="width:120px;height:80px;"  [src]="('../../assets/images/' + item?.images[0] +'.jpg')" alt="."><img *ngIf="item?.images == null" style="width:120px;height:80px;"  src="../../assets/images/undefined.jpg" alt="."></span></div></td>
                                                         <td scope="col">{{item.name}}</td>
                                                         <td scope="col">{{item.address}}</td>
                                                         <td scope="col">{{item.description}}</td>
+                                                        <td scope="col">{{item.cost}}</td>
                                                         <td> <button class="btn btn-danger" (click)="removeFavor(indexOfelement)"> Remove </button> </td> 
                                                     </tr>
                                                 </tbody>
@@ -143,6 +145,36 @@
                                             <p *ngIf="errorMessage" style="color: red; font-size: 20px;"> Favor is reserved! </p>
                                         </div>        
                                         <button (click)="addNewFavor()" class="list-item btn btn-primaty bg-success btn-lg text-white">Add new favor</button>
+                                        <div class="list-item" style="margin-top: 30px;">
+                                            <input type="text" class="form-control" placeholder="Favor Name" id="searchFavorsName"/>    
+                                           
+                                        </div>
+                                        <div class="list-item">
+                                            <input type="number" class="form-control" placeholder="Num of persons" id="searchNumOfPersons"/>    
+                                           
+                                        </div>
+                                        <div class="list-item">
+                                            <input type="text" class="form-control" placeholder="Favor Address" id="searchFavorsAddress"/>    
+                                            
+                                        </div>
+                                        <div class="list-item">
+                                            <input type="number" class="form-control" placeholder="Favor Cost" id="searchFavorsCost"/>    
+                                            
+                                        </div>
+                                        
+                                        <div class="list-item">
+                                            <input type="text" class="form-control" placeholder="Favor Description" id="searchFavorsDescription"/>    
+                                           
+                                        </div>
+                                        <div class="list-item">
+                                            <input type="text" class="form-control" placeholder="Favor Rules" id="searchFavorsRules"/>    
+                                           
+                                        </div>
+                                        <div class="list-item">
+                                            <input type="text" class="form-control" placeholder="Favor Services" id="searchFavorsServices"/>    
+                                           
+                                        </div>
+                                        <button (click)="SearchCottages()" class="list-item btn btn-primaty bg-success btn-lg text-white">Search cottage</button>
                                     </div>
                                 </div>
                             </div>

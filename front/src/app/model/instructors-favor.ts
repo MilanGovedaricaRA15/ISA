@@ -13,7 +13,7 @@ export class InstructorsFavor {
     images: Array<String>;
     numOfPersons: number;
     hotOffers: Array<FavorHotOffer>;
-    rules: Array<String>;
+    rules: String;
     services: Array<FavorServices>;
     priceList: Array<FavorServicePrice>;
     cost: number;

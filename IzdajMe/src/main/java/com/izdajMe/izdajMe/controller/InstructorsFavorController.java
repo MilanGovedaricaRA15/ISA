@@ -135,6 +135,20 @@ public class InstructorsFavorController {
         }
     }
 
+    @GetMapping("/favors/getAllFavorsOfInstructor")
+    public ResponseEntity<List<InstructorsFavor>> getAllFavorsOfInstructor(@RequestParam("email") String email, HttpServletRequest request) {
+        if (request.getSession(false).getAttribute("role")!=null) {
+            if (request.getSession(false).getAttribute("role") == User.Role.instructor) {
+                return new ResponseEntity<List<InstructorsFavor>>(instructorsFavorService.getAllFavorsOfInstructor(email), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<List<InstructorsFavor>>(new ArrayList<InstructorsFavor>(), HttpStatus.UNAUTHORIZED);
+            }
+        }
+        else{
+            return new ResponseEntity<List<InstructorsFavor>>(new ArrayList<InstructorsFavor>(), HttpStatus.UNAUTHORIZED);
+        }
+    }
+
     @PostMapping("/favors/addFavor")
     public ResponseEntity<InstructorsFavorDTO> addFavor(@RequestBody InstructorsFavor favor, HttpServletRequest request){
         if (request.getSession(false).getAttribute("role")!=null) {

@@ -185,4 +185,9 @@ public class InstructorsFavorServiceImpl implements InstructorsFavorService{
         favor.setGrades(new ArrayList<Grade>());
         return favor;
     }
+
+    public List<InstructorsFavor> getAllFavorsOfInstructor(String email) {
+        List<InstructorsFavor> instructorFavors = instructorsFavorRepository.findAllByFavorEmail(email);
+        return instructorFavors;
+    }
 }

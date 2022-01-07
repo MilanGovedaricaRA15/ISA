@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FavorReservation } from 'src/app/model/favor-reservation';
-import { InstructorsFavor } from 'src/app/model/instructors-favor';
+import { FavorServices, InstructorsFavor } from 'src/app/model/instructors-favor';
 import { User } from 'src/app/model/user';
 import { FavorReservationService } from 'src/app/service/favor-reservation.service';
 import { InstructorsFavorService } from 'src/app/service/instructors-favor.service';
@@ -14,6 +14,7 @@ import { UserService } from 'src/app/service/user-service.service';
 })
 export class InstructorProfileComponent implements OnInit {
 
+  searchFavors: Array<InstructorsFavor> = new Array<InstructorsFavor>();
   editInstructorForm:any;
   editPasswordForm:any;
   instructor: User;
@@ -77,6 +78,11 @@ export class InstructorProfileComponent implements OnInit {
           this.instructorReservations.push(fr);
       }
     });
+
+    this.instructorsFavorService.getAllFavorsOfInstructor().subscribe(ret => {
+      this.searchFavors = ret;
+      
+    })
 
     this.editInstructorForm = new FormGroup({
       "firstName": new FormControl(null,[Validators.required,Validators.pattern('[A-Z]{1}[a-z]+')]),
@@ -207,6 +213,107 @@ export class InstructorProfileComponent implements OnInit {
     else{
       this.wrongPassword2 = true;
     }
+  }
+
+  SearchCottages(){
+    this.instructorsFavorService.getAllFavorsOfInstructor().subscribe(ret => {
+      let elementName = <HTMLInputElement> document.getElementById("searchFavorsName");
+      let name = ""
+      let persons = -1
+      let address = ""
+      let cost = -1
+      let description = ""
+      let rules = ""
+      let services = new Array<String>()
+      if(elementName.value != ""){
+       name = elementName.value
+      }
+      let elPersons = <HTMLInputElement> document.getElementById("searchNumOfPersons");
+      if(elPersons.value != ""){
+        persons = Number(elPersons.value)
+      }
+      let elementAddress = <HTMLInputElement> document.getElementById("searchFavorsAddress");
+      if(elementAddress.value != ""){
+       address = elementAddress.value
+      }
+      let elementCost = <HTMLInputElement> document.getElementById("searchFavorsCost");
+      if(elementCost.value != ""){
+       cost = Number(elementCost.value)
+      }
+      let elementDescription = <HTMLInputElement> document.getElementById("searchFavorsDescription");
+      if(elementDescription.value != ""){
+       description = elementDescription.value
+      }
+      let elementRules = <HTMLInputElement> document.getElementById("searchFavorsRules");
+      if(elementRules.value != ""){
+       rules = elementRules.value
+      }
+      let elementServices = <HTMLInputElement> document.getElementById("searchFavorsServices");
+      if(elementServices.value != ""){
+       services = elementServices.value.split(",")
+      }
+      this.searchFavors = new Array<InstructorsFavor>();
+      for(let p of ret){
+        let pripada = true;
+        if(name != ""){
+          if (!p.name.toLowerCase().includes(name.toLowerCase())){
+            pripada = false;
+          }
+        }
+        if(persons != -1){
+          if(p.numOfPersons != persons){
+            pripada = false;
+          }
+        }
+        if(cost != -1){
+          if(p.cost != cost){
+            pripada = false;
+          }
+        }
+        if(address != ""){
+          if (!p.address.toLowerCase().includes(address.toLowerCase())){
+            pripada = false;
+          }
+        }
+        if(description != ""){
+          if (!p.description.toLowerCase().includes(description.toLowerCase())){
+            pripada = false;
+          }
+        }
+        if(rules != ""){
+          if (!p.rules.toLowerCase().includes(rules.toLowerCase())){
+            pripada = false;
+          }
+        }
+        if(elementServices.value != ""){
+          for (let ser of services){
+            if(p.services == null||p.services == undefined){
+              pripada = false;
+              break;
+            }
+            if(ser.toLowerCase() === 'boat'){
+              if (!p.services.includes(FavorServices.Boat)){
+                pripada = false;
+              }
+            }
+            else if(ser.toLowerCase() === 'fishingrod'){
+              if (!p.services.includes(FavorServices.FishingRod)){
+                pripada = false;
+              }
+            }
+            else{
+              pripada = false;
+            }
+          }
+          
+        }
+        if(pripada){
+           this.searchFavors.push(p);
+        }
+      }
+      
+    })
+    
   }
 
 

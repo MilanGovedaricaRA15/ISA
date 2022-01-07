@@ -1,5 +1,6 @@
 package com.izdajMe.izdajMe.repository;
 
+import com.izdajMe.izdajMe.model.Cottage;
 import com.izdajMe.izdajMe.model.InstructorsFavor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -9,6 +10,8 @@ import java.util.List;
 
 @Repository
 public interface InstructorsFavorRepository extends JpaRepository<InstructorsFavor, Long> {
-    @Query("Select c from Cottage c where c.owner.id=?1")
+    @Query("Select f from InstructorsFavor f where f.instructor.id=?1")
     public List<InstructorsFavor> findCottagesById(long id);
+    @Query("Select f from InstructorsFavor f where f.instructor.email=?1")
+    public List<InstructorsFavor> findAllByFavorEmail(String email);
 }
