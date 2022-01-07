@@ -7,6 +7,7 @@ import { ShipReservation } from './model/ship-reservation';
 import { CottageReservationService } from './service/cottage-reservation-service.service';
 import { UserService } from './service/user-service.service';
 import { InstructorsFavor } from './model/instructors-favor';
+import { FavorReservation } from './model/favor-reservation';
 
 @Component({
   selector: 'app-root',
@@ -31,6 +32,8 @@ export class AppComponent {
   shipReservationReceive:ShipReservation;
   reservationForHotOffers: InstructorsFavor;
   favorToShow: InstructorsFavor;
+  favorReservation: FavorReservation;
+  favorReservationReceive: FavorReservation;
 
   /**
    *
@@ -110,6 +113,12 @@ export class AppComponent {
     sessionStorage.setItem('receiveShipReservation',shipReservation.id.toString());
   }
 
+  receiveFavorReservation(favorReservation: FavorReservation){
+    this.favorReservation = favorReservation;
+    this.changeNumber(64);
+    sessionStorage.setItem("page",'64');
+    sessionStorage.setItem('receiveFavorReservation',favorReservation.id.toString());
+  }
 
   onClientLogin(client: User) {
     this.clientToShowAuthenticated = client;

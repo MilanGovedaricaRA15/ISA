@@ -2,6 +2,7 @@ package com.izdajMe.izdajMe.controller;
 
 import com.izdajMe.izdajMe.dto.FavorReservationDTO;
 import com.izdajMe.izdajMe.model.FavorReservation;
+import com.izdajMe.izdajMe.model.ShipReservation;
 import com.izdajMe.izdajMe.model.User;
 import com.izdajMe.izdajMe.services.FavorReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,20 @@ public class FavorReservationController {
         if (request.getSession(false).getAttribute("role")!=null) {
             if (request.getSession(false).getAttribute("role") == User.Role.instructor) {
                 return new ResponseEntity<Boolean>(favorReservationService.addReservationByOwner(favorReservation), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
+            }
+        }
+        else{
+            return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
+        }
+    }
+
+    @PutMapping("/favorReservations/changeReservationByInstructor")
+    public ResponseEntity<Boolean> changeReservationByInstructor(@RequestBody FavorReservation favorReservation, HttpServletRequest request) {
+        if (request.getSession(false).getAttribute("role")!=null) {
+            if (request.getSession(false).getAttribute("role") == User.Role.instructor) {
+                return new ResponseEntity<Boolean>(favorReservationService.changeReservationByInstructor(favorReservation), HttpStatus.OK);
             } else {
                 return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
             }

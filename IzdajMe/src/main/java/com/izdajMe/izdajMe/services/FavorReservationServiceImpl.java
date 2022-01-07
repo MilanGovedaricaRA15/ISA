@@ -1,5 +1,6 @@
 package com.izdajMe.izdajMe.services;
 
+import com.izdajMe.izdajMe.model.CottageReservation;
 import com.izdajMe.izdajMe.model.FavorReservation;
 import com.izdajMe.izdajMe.model.HotOffer;
 import com.izdajMe.izdajMe.model.InstructorsFavor;
@@ -8,6 +9,7 @@ import com.izdajMe.izdajMe.repository.InstructorsFavorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -107,5 +109,17 @@ public class FavorReservationServiceImpl implements FavorReservationService{
         }
 
         return  slobodno;
+    }
+
+    public Boolean changeReservationByInstructor(FavorReservation favorReservation) {
+        FavorReservation thisReservation = favorReservationRepository.getById(favorReservation.getId());
+        if (thisReservation.getAvailableTill().isBefore(LocalDateTime.now())&&thisReservation.getReport()==null)
+        {
+            favorReservationRepository.save(favorReservation);
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }

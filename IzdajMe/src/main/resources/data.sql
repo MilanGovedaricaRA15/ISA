@@ -219,9 +219,9 @@ values (3,DATE('2022-01-04'),DATE('2022-01-23'),500,2,1, null);
 insert into ship_reservations (id, available_from, available_till, cost, client_id, ship_id, services)
 values (4,DATE('2021-12-03'),DATE('2021-12-19'),500,2,1, null);
 
-insert into favor_reservations (id, available_from, available_till, cost, client_id, favor_id)
-values (1, DATE('2021-12-24'), DATE('2021-12-24'), 500, 14, 1);
-insert into favor_reservations (id, available_from, available_till, cost, client_id, favor_id)
-values (2, DATE('2022-1-1'), DATE('2022-1-15'), 900, 14, 3);
-insert into favor_reservations (id, available_from, available_till, cost, client_id, favor_id)
-values (3, DATE('2022-2-24'), DATE('2022-2-24'), 600, 14, 2);
+insert into favor_reservations (id, available_from, available_till, cost, client_id, favor_id, services)
+values (1, DATE('2021-12-24'), DATE('2021-12-24'), 500, 14, 1, null);
+insert into favor_reservations (id, available_from, available_till, cost, client_id, favor_id, services)
+values (2, DATE('2022-1-1'), DATE('2022-1-15'), 900, 14, 3, null);
+insert into favor_reservations (id, available_from, available_till, cost, client_id, favor_id, services)
+values (3, DATE('2022-2-24'), DATE('2022-2-24'), 600, 14, 2, null);

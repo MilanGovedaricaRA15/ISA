@@ -37,8 +37,8 @@ export class InstructorProfileComponent implements OnInit {
   pickedUser:boolean;
   @Output() seeUser = new EventEmitter<User>();
   @Output() favorToShow = new EventEmitter<InstructorsFavor>();
-  @Input() reservationForApp: InstructorsFavor;
   @Output() addNewFavorEmiter = new EventEmitter<boolean>();
+  @Output() sendFavorReservation = new EventEmitter<FavorReservation>();
 
   constructor(private userService: UserService, private favorReservationService: FavorReservationService, private instructorsFavorService: InstructorsFavorService) { }
 
@@ -314,6 +314,23 @@ export class InstructorProfileComponent implements OnInit {
       
     })
     
+  }
+
+  doesReportExists(favorForReport: FavorReservation): boolean{
+    let datum = new Date();
+    if (new Date(Date.parse(favorForReport.availableTill.toString())).getTime() < datum.getTime()){
+      if(favorForReport.report == null || favorForReport.report == undefined){
+        return true;
+      }
+      else{
+        return false;
+      }
+    }
+    return false;
+  }
+
+  addReport(favorForReport: FavorReservation) {
+    this.sendFavorReservation.emit(favorForReport);
   }
 
 

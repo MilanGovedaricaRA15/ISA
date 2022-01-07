@@ -215,6 +215,7 @@
                                     <td scope="col">{{item.favor.address}}</td>
                                     <td scope="col">{{item.favor.name}}</td>
                                     <td scope="col"> <button type="button" (click)="seeUserProfile(item.client.email)" class="btn btn-primary btn-md mr-1 mb-2">See profile</button></td>
+                                    <td scope="col" *ngIf="doesReportExists(item)"> <button type="button" (click)="addReport(item)" class="btn btn-primary btn-md mr-1 mb-2">Add report</button></td>
                                 </tr>
                             </tbody>
                             <tbody>

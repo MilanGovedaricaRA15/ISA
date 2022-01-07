@@ -57,6 +57,7 @@ import { MapComponent } from './components/map/map.component';
 import { InstructorProfileComponent } from './components/instructor-profile/instructor-profile.component';
 import { FavorProfileComponent } from './components/favor-profile/favor-profile.component';
 import { AddNewFavorComponent } from './components/add-new-favor/add-new-favor.component';
+import { AddFavorReservationReportComponent } from './components/add-favor-reservation-report/add-favor-reservation-report.component';
 
 @NgModule({
   declarations: [
@@ -110,7 +111,8 @@ import { AddNewFavorComponent } from './components/add-new-favor/add-new-favor.c
     MapComponent,
     InstructorProfileComponent,
     FavorProfileComponent,
-    AddNewFavorComponent
+    AddNewFavorComponent,
+    AddFavorReservationReportComponent
   ],
   imports: [
     BrowserModule,
