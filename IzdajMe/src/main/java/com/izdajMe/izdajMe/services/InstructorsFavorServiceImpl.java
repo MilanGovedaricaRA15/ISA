@@ -1,8 +1,6 @@
 package com.izdajMe.izdajMe.services;
 
-import com.izdajMe.izdajMe.model.FavorHotOffer;
-import com.izdajMe.izdajMe.model.FavorReservation;
-import com.izdajMe.izdajMe.model.InstructorsFavor;
+import com.izdajMe.izdajMe.model.*;
 import com.izdajMe.izdajMe.repository.FavorReservationRepository;
 import com.izdajMe.izdajMe.repository.InstructorsFavorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -175,7 +173,16 @@ public class InstructorsFavorServiceImpl implements InstructorsFavorService{
             }
         }
 
-
         return free;
+    }
+
+    public InstructorsFavor addFavor(InstructorsFavor favor){
+        instructorsFavorRepository.save(favor);
+        favor.setHotOffers(new ArrayList<FavorHotOffer>());
+        favor.setImages(new ArrayList<String>());
+        favor.setPriceList(new ArrayList<FavorServicePrice>());
+        favor.setServices(new ArrayList<InstructorsFavor.FavorServices>());
+        favor.setGrades(new ArrayList<Grade>());
+        return favor;
     }
 }

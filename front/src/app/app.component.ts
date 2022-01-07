@@ -121,6 +121,11 @@ export class AppComponent {
     sessionStorage.setItem("page",'6');
   }
 
+  addNewFavor(b:Boolean){
+    this.changeNumber(63);
+    sessionStorage.setItem("page", "63");
+  }
+
   addNewShip(b:Boolean){
     this.changeNumber(206);
     sessionStorage.setItem("page",'206');

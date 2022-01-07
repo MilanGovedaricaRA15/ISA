@@ -17,6 +17,7 @@ export class InstructorsFavorService {
   removeFavorImgUrl: string;
   uploadImgUrl: string;
   addHotOfferToFavorUrl: string;
+  addFavorUrl: string;
 
   constructor(private http: HttpClient) {
     this.getAllFavorsUrl = 'http://localhost:8080/favors/getAllFavors';
@@ -27,6 +28,7 @@ export class InstructorsFavorService {
     this.removeFavorImgUrl="http://localhost:8080/favors/removeFavorImg";
     this.uploadImgUrl='http://localhost:8080/favors/uploadImg';
     this.addHotOfferToFavorUrl = 'http://localhost:8080/favors/addHotOfferToFavor';
+    this.addFavorUrl = 'http://localhost:8080/favors/addFavor';
   }
 
   public getAllFavors(): Observable<Array<InstructorsFavor>> {
@@ -72,4 +74,8 @@ export class InstructorsFavorService {
    public addHotOfferToFavor(favorToChange:InstructorsFavor): Observable<boolean>{
     return this.http.put<boolean>(this.addHotOfferToFavorUrl,favorToChange,{withCredentials: true});
    }
+
+   public addFavor(favor: InstructorsFavor):Observable<InstructorsFavor>{
+    return this.http.post<InstructorsFavor>(this.addFavorUrl,favor,{withCredentials: true});
+  }
 }

@@ -37,6 +37,7 @@ export class InstructorProfileComponent implements OnInit {
   @Output() seeUser = new EventEmitter<User>();
   @Output() favorToShow = new EventEmitter<InstructorsFavor>();
   @Input() reservationForApp: InstructorsFavor;
+  @Output() addNewFavorEmiter = new EventEmitter<boolean>();
 
   constructor(private userService: UserService, private favorReservationService: FavorReservationService, private instructorsFavorService: InstructorsFavorService) { }
 
@@ -194,7 +195,7 @@ export class InstructorProfileComponent implements OnInit {
   }
 
   addNewFavor(): void {
-
+    this.addNewFavorEmiter.emit(true);
   }
 
   requestDelete(): void {}

@@ -16,4 +16,5 @@ public interface InstructorsFavorService {
     public Boolean removeFavorImg(InstructorsFavor favor);
     public Boolean uploadImg( MultipartFile file);
     public Boolean addHotOfferToFavor(InstructorsFavor favor);
+    public InstructorsFavor addFavor(InstructorsFavor favor);
 }

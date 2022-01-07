@@ -44,7 +44,7 @@
           <app-ships-reservations-page-client *ngIf="showCompNumber === 39"></app-ships-reservations-page-client>
           <app-instructors-reservations-page-client *ngIf="showCompNumber === 40"></app-instructors-reservations-page-client>
           
-          <app-owner-navbar (profile)="goToProfile()" *ngIf="showCompNumber === 3 || showCompNumber === 4 || showCompNumber === 205 || showCompNumber === 5 || showCompNumber === 6 || showCompNumber === 52 || showCompNumber === 210 || showCompNumber === 211 || showCompNumber === 61 || showCompNumber === 62"></app-owner-navbar>
+          <app-owner-navbar (profile)="goToProfile()" *ngIf="showCompNumber === 3 || showCompNumber === 4 || showCompNumber === 205 || showCompNumber === 5 || showCompNumber === 6 || showCompNumber === 52 || showCompNumber === 210 || showCompNumber === 211 || showCompNumber === 61 || showCompNumber === 62 || showCompNumber === 63"></app-owner-navbar>
           <app-register-form-client (registerClient)="onRegisterClient($event)" *ngIf="showCompNumber === 21"></app-register-form-client>
           <app-registerForm (register)="onRegister($event)" *ngIf="showCompNumber === 1"></app-registerForm>
           <app-login-form (login)="onLogin($event)" (profileAdministrator)="showAdministratorProfile($event)" *ngIf="showCompNumber === 2"></app-login-form>
@@ -73,8 +73,9 @@
           <app-add-new-administrator (adminAdded)="adminAdded($event)" *ngIf="showCompNumber === 50"> </app-add-new-administrator>
           <app-add-new-ship (shipToShow)="onShipClick($event)" *ngIf="showCompNumber === 206"></app-add-new-ship>
           <app-client-profile [clientAuthenticated]="clientToShowAuthenticated" *ngIf="showCompNumber === 31"></app-client-profile>
-          <app-instructor-profile *ngIf="showCompNumber === 61" (seeUser)="seeUserOwner($event)" [reservationForApp]="reservationForHotOffers" (favorToShow)="onFavorClick($event)"></app-instructor-profile>
+          <app-instructor-profile *ngIf="showCompNumber === 61" (seeUser)="seeUserOwner($event)" [reservationForApp]="reservationForHotOffers" (addNewFavorEmiter)="addNewFavor($event)" (favorToShow)="onFavorClick($event)"></app-instructor-profile>
           <app-favor-profile *ngIf="showCompNumber === 62"></app-favor-profile>
+          <app-add-new-favor (favorToShow)="onFavorClick($event)" *ngIf="showCompNumber === 63"></app-add-new-favor>
         </div>
       </div>
     </div>

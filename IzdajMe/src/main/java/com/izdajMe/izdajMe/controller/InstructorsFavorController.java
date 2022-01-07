@@ -1,6 +1,8 @@
 package com.izdajMe.izdajMe.controller;
 
+import com.izdajMe.izdajMe.dto.CottageDTO;
 import com.izdajMe.izdajMe.dto.InstructorsFavorDTO;
+import com.izdajMe.izdajMe.model.Cottage;
 import com.izdajMe.izdajMe.model.InstructorsFavor;
 import com.izdajMe.izdajMe.model.User;
 import com.izdajMe.izdajMe.services.InstructorsFavorService;
@@ -130,6 +132,20 @@ public class InstructorsFavorController {
         }
         else{
             return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
+        }
+    }
+
+    @PostMapping("/favors/addFavor")
+    public ResponseEntity<InstructorsFavorDTO> addFavor(@RequestBody InstructorsFavor favor, HttpServletRequest request){
+        if (request.getSession(false).getAttribute("role")!=null) {
+            if (request.getSession(false).getAttribute("role") == User.Role.instructor) {
+                return new ResponseEntity<InstructorsFavorDTO>(new InstructorsFavorDTO(instructorsFavorService.addFavor(favor)), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<InstructorsFavorDTO>(new InstructorsFavorDTO(), HttpStatus.UNAUTHORIZED);
+            }
+        }
+        else{
+            return new ResponseEntity<InstructorsFavorDTO>(new InstructorsFavorDTO(), HttpStatus.UNAUTHORIZED);
         }
     }
 }
