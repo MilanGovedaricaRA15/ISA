@@ -7,7 +7,7 @@ import com.izdajMe.izdajMe.model.User;
 import java.time.LocalDateTime;
 
 public class FavorReservationDTO {
-    private long id;
+    protected long id;
     private LocalDateTime availableFrom;
     private LocalDateTime availableTill;
     private float cost;

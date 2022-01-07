@@ -73,7 +73,8 @@
           <app-add-new-administrator (adminAdded)="adminAdded($event)" *ngIf="showCompNumber === 50"> </app-add-new-administrator>
           <app-add-new-ship (shipToShow)="onShipClick($event)" *ngIf="showCompNumber === 206"></app-add-new-ship>
           <app-client-profile [clientAuthenticated]="clientToShowAuthenticated" *ngIf="showCompNumber === 31"></app-client-profile>
-          <app-instructor-profile *ngIf="showCompNumber === 61" (seeUser)="seeUserOwner($event)" [reservationForApp]="reservationForHotOffers"></app-instructor-profile>
+          <app-instructor-profile *ngIf="showCompNumber === 61" (seeUser)="seeUserOwner($event)" [reservationForApp]="reservationForHotOffers" (favorToShow)="onFavorClick($event)"></app-instructor-profile>
+          <app-favor-profile *ngIf="showCompNumber === 62"></app-favor-profile>
         </div>
       </div>
     </div>

@@ -9,7 +9,7 @@ public class FavorReservation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    protected long id;
     private LocalDateTime availableFrom;
     private LocalDateTime availableTill;
     private float cost;

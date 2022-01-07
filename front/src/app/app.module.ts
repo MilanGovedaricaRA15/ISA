@@ -55,6 +55,7 @@ import { AddReportComponent } from './components/add-report/add-report.component
 import { AddShipReservationReportComponent } from './components/add-ship-reservation-report/add-ship-reservation-report.component';
 import { MapComponent } from './components/map/map.component';
 import { InstructorProfileComponent } from './components/instructor-profile/instructor-profile.component';
+import { FavorProfileComponent } from './components/favor-profile/favor-profile.component';
 
 @NgModule({
   declarations: [
@@ -106,7 +107,8 @@ import { InstructorProfileComponent } from './components/instructor-profile/inst
     AddReportComponent,
     AddShipReservationReportComponent,
     MapComponent,
-    InstructorProfileComponent
+    InstructorProfileComponent,
+    FavorProfileComponent
   ],
   imports: [
     BrowserModule,

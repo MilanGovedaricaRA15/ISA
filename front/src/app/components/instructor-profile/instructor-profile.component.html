@@ -131,6 +131,7 @@
                                                 </thead>
                                                 <tbody *ngFor="let item of instructorFavors;let indexOfelement=index;">
                                                     <tr>
+                                                        <td><div (click)="goToFavorProfile(item?.id)"><span class="w-80 avatar gd-info"><img *ngIf="item?.images != null" style="width:120px;height:80px;"  [src]="('../../assets/images/' + item?.images[0] +'.jpg')" alt="."><img *ngIf="item?.images == null" style="width:120px;height:80px;"  src="../../assets/images/undefined.jpg" alt="."></span></div></td>
                                                         <td scope="col">{{item.name}}</td>
                                                         <td scope="col">{{item.address}}</td>
                                                         <td scope="col">{{item.description}}</td>

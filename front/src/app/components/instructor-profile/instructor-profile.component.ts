@@ -35,6 +35,7 @@ export class InstructorProfileComponent implements OnInit {
   availableTillError:boolean;
   pickedUser:boolean;
   @Output() seeUser = new EventEmitter<User>();
+  @Output() favorToShow = new EventEmitter<InstructorsFavor>();
   @Input() reservationForApp: InstructorsFavor;
 
   constructor(private userService: UserService, private favorReservationService: FavorReservationService, private instructorsFavorService: InstructorsFavorService) { }
@@ -184,6 +185,12 @@ export class InstructorProfileComponent implements OnInit {
     else {
       this.wrongPassword = true;
     }
+  }
+
+  goToFavorProfile(id:number){
+    this.instructorsFavorService.getFavorById(id).subscribe(ret => {
+      this.favorToShow.emit(ret);
+    })
   }
 
   addNewFavor(): void {

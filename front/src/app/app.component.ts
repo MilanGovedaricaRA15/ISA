@@ -30,6 +30,7 @@ export class AppComponent {
   cottageReservationReceive:CottageReservation;
   shipReservationReceive:ShipReservation;
   reservationForHotOffers: InstructorsFavor;
+  favorToShow: InstructorsFavor;
 
   /**
    *
@@ -130,6 +131,13 @@ export class AppComponent {
     this.changeNumber(5);
     sessionStorage.setItem("page", '5');
     sessionStorage.setItem("cottageToShow", this.cottageToShow.id.toString());
+  }
+
+  onFavorClick(favor: InstructorsFavor){
+    this.favorToShow = favor;
+    this.changeNumber(62);
+    sessionStorage.setItem("page", '62');
+    sessionStorage.setItem("favorToShow", this.favorToShow.id.toString());
   }
 
   onShipClick(ship: Ship){
