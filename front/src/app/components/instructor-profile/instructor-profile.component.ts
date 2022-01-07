@@ -1,8 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AccountDeleteRequest } from 'src/app/model/account-delete-request';
 import { FavorReservation } from 'src/app/model/favor-reservation';
 import { FavorServices, InstructorsFavor } from 'src/app/model/instructors-favor';
 import { User } from 'src/app/model/user';
+import { AccountDeleteRequestService } from 'src/app/service/account-delete-request-service.service';
 import { FavorReservationService } from 'src/app/service/favor-reservation.service';
 import { InstructorsFavorService } from 'src/app/service/instructors-favor.service';
 import { UserService } from 'src/app/service/user-service.service';
@@ -40,7 +42,8 @@ export class InstructorProfileComponent implements OnInit {
   @Output() addNewFavorEmiter = new EventEmitter<boolean>();
   @Output() sendFavorReservation = new EventEmitter<FavorReservation>();
 
-  constructor(private userService: UserService, private favorReservationService: FavorReservationService, private instructorsFavorService: InstructorsFavorService) { }
+  constructor(private userService: UserService, private favorReservationService: FavorReservationService, private instructorsFavorService: InstructorsFavorService, 
+              private accountDeleteRequestService: AccountDeleteRequestService) { }
 
   ngOnInit(): void {
         this.newReservation1 = new FavorReservation();
@@ -164,11 +167,7 @@ export class InstructorProfileComponent implements OnInit {
     this.wrongPassword1 = true;
     this.userService.change(this.instructorChange).subscribe(ret =>{
       if(ret){
-        this.wrongPassword1 = false;
-        
-      }
-      else{
-        
+        this.wrongPassword1 = false; 
       }
     })
   }
@@ -204,7 +203,21 @@ export class InstructorProfileComponent implements OnInit {
     this.addNewFavorEmiter.emit(true);
   }
 
-  requestDelete(): void {}
+  requestDelete(){
+    let accountDelete = new AccountDeleteRequest();
+    accountDelete.seen = false;
+    accountDelete.user = JSON.parse(JSON.stringify(this.instructor));
+    let elementReasonOfDelete = <HTMLInputElement> document.getElementById("reasonOfDelete");
+    accountDelete.reason = elementReasonOfDelete.value;
+    this.accountDeleteRequestService.addAccountDeleteRequest(accountDelete).subscribe(ret => {
+      if(ret){
+        this.alreadySent = false;
+      }
+      else{
+        this.alreadySent = true;
+      }
+    })
+  }
 
   validatePass(){
     if(this.editPasswordForm.get('newPassword').value === this.editPasswordForm.get('newPassword1').value) {
