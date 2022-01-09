@@ -164,8 +164,15 @@ export class SuperiorAdministratorProfileComponent implements OnInit {
   userDeleted(index: number) {
     this.deletingUser = this.allUsers[index]
     this.userService.removeUser(this.deletingUser.id).subscribe(ret => {
-      if(ret)
+      if(ret) {
         this.allUsers.splice(index, 1);
+        this.cottageService.getAllCottages().subscribe(cottagesFromBack => {
+          this.allCottages = cottagesFromBack;
+        });
+        this.shipService.getAllShips().subscribe(shipsFromBack => {
+          this.allShips = shipsFromBack;
+        });
+      }
     });
     
   }
@@ -175,6 +182,14 @@ export class SuperiorAdministratorProfileComponent implements OnInit {
     this.cottageService.removeCottageByAdministrator(this.deletingCottage.id).subscribe(ret => {
       if(ret)
         this.allCottages.splice(index, 1);
+    })
+  }
+
+  deleteShip(index: number) {
+    this.deletingShip = this.allShips[index];
+    this.shipService.removeShipByAdministrator(this.deletingShip.id).subscribe(ret => {
+      if(ret)
+        this.allShips.splice(index, 1);
     })
   }
 

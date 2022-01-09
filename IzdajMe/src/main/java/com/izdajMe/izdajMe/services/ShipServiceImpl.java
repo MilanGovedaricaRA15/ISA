@@ -89,6 +89,26 @@ public class ShipServiceImpl implements  ShipService {
         }
     }
 
+    public Boolean removeShipByAdministrator(Long id) {
+        if(!isReserved(id)) {
+            shipRepository.deleteById(id);
+        }
+        else{
+            removeShipReservations(id);
+            shipRepository.deleteById(id);
+        }
+        return true;
+    }
+
+    private void removeShipReservations(long id) {
+        List<ShipReservation> shipReservations = shipReservationRepository.findAllByShipId(id);
+        if(shipReservations.size() != 0) {
+            for(ShipReservation sr : shipReservations){
+                shipReservationRepository.delete(sr);
+            }
+        }
+    }
+
     public Boolean checkIsReserved(Ship ship){
         if(!isReserved(ship.getId())) {
             return true;

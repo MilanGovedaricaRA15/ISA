@@ -173,7 +173,7 @@
                                 <th scope="col">Owner</th>
                             </tr>
                         </thead>
-                        <tbody *ngFor="let item of allCottages;">
+                        <tbody *ngFor="let item of allCottages;let indexOfelement=index;">
                             <tr>
                                 <td scope="col">{{item.name}}</td>
                                 <td scope="col">{{item.address}}</td>
@@ -182,7 +182,45 @@
                                 <td scope="col">{{item.numOfBeds}}</td>
                                 <td scope="col">{{item.rules}}</td>
                                 <td scope="col">{{item.owner.firstName}} {{item.owner.lastName}}</td>
-                                <td> <button class="btn btn-danger"> Delete cottage </button> </td>
+                                <td> <button class="btn btn-danger" (click)="deleteCottage(indexOfelement)"> Delete cottage </button> </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title m-b-0">All ships</h5>
+                </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="thead-light">
+                            <tr >
+                                <th scope="col">Name</th>
+                                <th scope="col">Address</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Engine number</th>
+                                <th scope="col">Engine power</th>
+                                <th scope="col">Rules</th>
+                                <th scope="col">Owner</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngFor="let item of allShips;let indexOfelement=index;">
+                            <tr>
+                                <td scope="col">{{item.name}}</td>
+                                <td scope="col">{{item.address}}</td>
+                                <td scope="col">{{item.description}}</td>
+                                <td scope="col">{{item.engineNumber}}</td>
+                                <td scope="col">{{item.enginePower}}</td>
+                                <td scope="col">{{item.rules}}</td>
+                                <td scope="col">{{item.owner.firstName}} {{item.owner.lastName}}</td>
+                                <td> <button class="btn btn-danger" (click)="deleteShip(indexOfelement)"> Delete ship </button> </td>
                             </tr>
                         </tbody>
                     </table>

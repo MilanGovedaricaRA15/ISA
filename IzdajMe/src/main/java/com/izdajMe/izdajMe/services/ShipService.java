@@ -21,4 +21,5 @@ public interface ShipService {
     public Boolean uploadImg( MultipartFile file);
     public Ship addShip(Ship ship);
     public boolean isReserved(Long id);
+    public Boolean removeShipByAdministrator(Long id);
 }

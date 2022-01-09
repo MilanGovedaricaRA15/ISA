@@ -20,6 +20,7 @@ export class ShipService {
     private addShipUrl: string;
     private addShipHotOfferToShipUrl: string;
     private checkIsReservedUrl: string;
+    private removeShipByAdministratorUrl: string;
 
     constructor(private http: HttpClient) { 
         this.getAllShipsUrl = "http://localhost:8080/ships/getAllShips";
@@ -35,6 +36,7 @@ export class ShipService {
         this.addShipUrl = 'http://localhost:8080/ships/addShip';
         this.addShipHotOfferToShipUrl = 'http://localhost:8080/ships/addHotOfferToShip';
         this.checkIsReservedUrl = 'http://localhost:8080/ships/checkIsReserved';
+        this.removeShipByAdministratorUrl = 'http://localhost:8080/ships/removeShipByAdministrator'
     }
 
     public getAllShips(): Observable<Array<Ship>> {
@@ -97,6 +99,10 @@ export class ShipService {
     
       public removeShip(shipToRemove:number ): Observable<any>{
         return this.http.post(this.removeShipUrl,shipToRemove,{withCredentials: true});
+      }
+
+      public removeShipByAdministrator(shipId: number): Observable<Boolean>{
+        return this.http.post<Boolean>(this.removeShipByAdministratorUrl,shipId,{withCredentials: true});
       }
     
       public changeShip(shipToChange:Ship): Observable<Boolean>{
