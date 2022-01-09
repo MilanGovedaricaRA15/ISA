@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface InstructorsFavorRepository extends JpaRepository<InstructorsFavor, Long> {
     @Query("Select f from InstructorsFavor f where f.instructor.id=?1")
-    public List<InstructorsFavor> findCottagesById(long id);
+    public List<InstructorsFavor> findInstructorFavorsById(long id);
     @Query("Select f from InstructorsFavor f where f.instructor.email=?1")
     public List<InstructorsFavor> findAllByFavorEmail(String email);
 }
