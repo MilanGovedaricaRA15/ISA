@@ -27,5 +27,6 @@ public interface CottageService {
     public Cottage addCottage(Cottage cottage);
     public boolean isReserved(Long id);
     public List<Cottage> searchCottagesByName(String name);
+    public Boolean removeCottageByAdministrator(Long id);
 
 }

@@ -20,6 +20,7 @@ export class CottageService {
   private addHotOfferToCottageUrl: string;
   private checkIsReservedUrl: string;
   private searchCottagesByNameUrl: string;
+  private removeCottageByAdministratorUrl: string;
 
   constructor(private http: HttpClient) { 
     this.getAllCottagesUrl="http://localhost:8080/cottages/getAllCottages";
@@ -34,6 +35,7 @@ export class CottageService {
     this.removeHotOfferUrl = 'http://localhost:8080/cottages/removeHotOffer';
     this.checkIsReservedUrl = 'http://localhost:8080/cottages/checkIsReserved';
     this.searchCottagesByNameUrl = 'http://localhost:8080/cottages/searchCottagesByName';
+    this.removeCottageByAdministratorUrl = 'http://localhost:8080/cottages/removeCottageByAdministrator';
   }
 
   public getAllCottages(): Observable<Array<Cottage>> {
@@ -81,6 +83,10 @@ export class CottageService {
 
   public removeCottage(cottageToRemove:number ): Observable<any>{
     return this.http.post(this.removeCottageUrl,cottageToRemove,{withCredentials: true});
+  }
+
+  public removeCottageByAdministrator(cottageId: number): Observable<Boolean>{
+    return this.http.post<Boolean>(this.removeCottageByAdministratorUrl,cottageId,{withCredentials: true});
   }
 
   public changeCottage(cottageToChange:Cottage): Observable<Boolean>{

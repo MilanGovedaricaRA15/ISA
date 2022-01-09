@@ -1,7 +1,10 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Cottage } from 'src/app/model/cottage';
+import { Ship } from 'src/app/model/ship';
 import { User } from 'src/app/model/user';
 import { CottageService } from 'src/app/service/cottage-service.service';
+import { ShipService } from 'src/app/service/ship-service';
 import { UserService } from 'src/app/service/user-service.service';
 
 @Component({
@@ -11,7 +14,7 @@ import { UserService } from 'src/app/service/user-service.service';
 })
 export class SuperiorAdministratorProfileComponent implements OnInit {
 
-  constructor(private userService: UserService, private cottageService: CottageService) { }
+  constructor(private userService: UserService, private cottageService: CottageService, private shipService: ShipService) { }
 
   editAdministratorForm:any;
   editPasswordForm:any;
@@ -24,9 +27,11 @@ export class SuperiorAdministratorProfileComponent implements OnInit {
   alreadySent: Boolean;
   allUsers: Array<User>;
   allCottages: any;
-  allBoats: any;
+  allShips: any;
   deletingUser: User;
   acceptingUser: User;
+  deletingCottage: Cottage;
+  deletingShip: Ship;
   @Output() addAdmin = new EventEmitter<string>();
 
   ngOnInit(): void {
@@ -50,6 +55,9 @@ export class SuperiorAdministratorProfileComponent implements OnInit {
     }); 
     this.cottageService.getAllCottages().subscribe(cottagesFromBack => {
       this.allCottages = cottagesFromBack;
+    });
+    this.shipService.getAllShips().subscribe(shipsFromBack => {
+      this.allShips = shipsFromBack;
     });
 
     this.acceptingUser = new User()
@@ -157,9 +165,17 @@ export class SuperiorAdministratorProfileComponent implements OnInit {
     this.deletingUser = this.allUsers[index]
     this.userService.removeUser(this.deletingUser.id).subscribe(ret => {
       if(ret)
-        this.allUsers.splice(index, 1)
+        this.allUsers.splice(index, 1);
     });
     
+  }
+
+  deleteCottage(index: number) {
+    this.deletingCottage = this.allCottages[index];
+    this.cottageService.removeCottageByAdministrator(this.deletingCottage.id).subscribe(ret => {
+      if(ret)
+        this.allCottages.splice(index, 1);
+    })
   }
 
   acceptUser(index: number) {

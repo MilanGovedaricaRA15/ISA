@@ -176,7 +176,7 @@
                                 <th scope="col">Owner</th>
                             </tr>
                         </thead>
-                        <tbody *ngFor="let item of allCottages;">
+                        <tbody *ngFor="let item of allCottages;let indexOfelement=index;">
                             <tr>
                                 <td scope="col">{{item.name}}</td>
                                 <td scope="col">{{item.address}}</td>
@@ -185,7 +185,7 @@
                                 <td scope="col">{{item.numOfBeds}}</td>
                                 <td scope="col">{{item.rules}}</td>
                                 <td scope="col">{{item.owner.firstName}} {{item.owner.lastName}}</td>
-                                <td> <button class="btn btn-danger"> Delete cottage </button> </td>
+                                <td> <button class="btn btn-danger" (click)="deleteCottage(indexOfelement)"> Delete cottage </button> </td>
                             </tr>
                         </tbody>
                     </table>
