@@ -136,7 +136,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public Boolean deleteUser(long id) {
-        User user = userRepository.getById(id);
+        User user = userRepository.findById(id).get();
         if(user.getRole().equals(User.Role.cottageAdvertiser))
             deleteCottageAdvertiser(id);
         else if(user.getRole().equals(User.Role.boatAdvertiser))

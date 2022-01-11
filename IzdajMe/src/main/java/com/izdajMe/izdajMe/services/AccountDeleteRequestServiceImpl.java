@@ -1,12 +1,8 @@
 package com.izdajMe.izdajMe.services;
 
 import com.izdajMe.izdajMe.model.AccountDeleteRequest;
-import com.izdajMe.izdajMe.model.CottageReservation;
 import com.izdajMe.izdajMe.repository.AccountDeleteRequestRepository;
-import com.izdajMe.izdajMe.repository.CottageReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -26,5 +22,18 @@ public class AccountDeleteRequestServiceImpl implements AccountDeleteRequestServ
             accountDeleteRequestRepository.save(accountDeleteRequest);
             return true;
         }
+    }
+
+    public List<AccountDeleteRequest> getAllRequests() {
+        Iterable<AccountDeleteRequest> allRequests = accountDeleteRequestRepository.findAll();
+        ArrayList<AccountDeleteRequest> allRequestsList = new ArrayList<>();
+        allRequests.forEach(allRequestsList::add);
+
+        return allRequestsList;
+    }
+
+    public Boolean deleteRequest(long id) {
+        accountDeleteRequestRepository.deleteById(id);
+        return true;
     }
 }

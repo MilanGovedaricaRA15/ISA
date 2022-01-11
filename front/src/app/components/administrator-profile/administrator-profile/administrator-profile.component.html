@@ -229,3 +229,39 @@
         </div>
     </div>
 </div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title m-b-0">All requests for deleting account</h5>
+                </div>
+                <div class="table-responsive">
+                    <table class="table" id="usertable">
+                        <thead class="thead-light">
+                            <tr >
+                                <th scope="col">Name</th>
+                                <th scope="col">Surname</th>
+                                <th scope="col">Reason</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngFor="let item of allRequests;let indexOfelement=index;">
+                            <tr *ngIf="item.seen === false" >
+                                <td scope="col">{{item.user.firstName}}</td>
+                                <td scope="col">{{item.user.lastName}}</td>
+                                <td scope="col">{{item.reason}}</td>
+                                <td scope="col">
+                                    <button class="btn btn-success" style="margin-bottom: 2px;" (click)="acceptRequest(indexOfelement)"> Accept </button>
+                                </td>
+                                <td scope="col">
+                                    <button class="btn btn-danger" (click)="declineRequest(indexOfelement)"> Decline </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
