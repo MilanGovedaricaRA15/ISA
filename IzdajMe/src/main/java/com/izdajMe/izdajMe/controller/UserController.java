@@ -97,7 +97,7 @@ public class UserController {
     public ResponseEntity<Boolean> changeUser(@RequestBody User user, HttpServletRequest request) {
         if (request.getSession(false).getAttribute("role")!=null) {
             if (request.getSession(false).getAttribute("role") == User.Role.cottageAdvertiser || request.getSession(false).getAttribute("role") == User.Role.boatAdvertiser
-                    || request.getSession(false).getAttribute("role") == User.Role.client) {
+                    || request.getSession(false).getAttribute("role") == User.Role.instructor || request.getSession(false).getAttribute("role") == User.Role.client) {
                 if (userService.changeUser(user)) {
                     return new ResponseEntity<Boolean>(true, HttpStatus.OK);
                 } else {
@@ -116,7 +116,7 @@ public class UserController {
     public ResponseEntity<Boolean> changePasswordUser(@RequestBody List<User> users, HttpServletRequest request) {
         if (request.getSession(false).getAttribute("role")!=null) {
             if (request.getSession(false).getAttribute("role") == User.Role.cottageAdvertiser || request.getSession(false).getAttribute("role") == User.Role.boatAdvertiser
-                    || request.getSession(false).getAttribute("role") == User.Role.client) {
+                    || request.getSession(false).getAttribute("role") == User.Role.instructor || request.getSession(false).getAttribute("role") == User.Role.client) {
                 if (userService.changePasswordUser(users)) {
                     return new ResponseEntity<Boolean>(true, HttpStatus.OK);
                 } else {
@@ -156,7 +156,8 @@ public class UserController {
         if (request.getSession(false).getAttribute("role")!=null) {
             if (request.getSession(false).getAttribute("role") == User.Role.cottageAdvertiser || request.getSession(false).getAttribute("role") == User.Role.boatAdvertiser
             || request.getSession(false).getAttribute("role") == User.Role.client || request.getSession(false).getAttribute("role") == User.Role.administrator
-            || request.getSession(false).getAttribute("role") == User.Role.administratorFirstLogged || request.getSession(false).getAttribute("role") == User.Role.administratorSuperior) {
+            || request.getSession(false).getAttribute("role") == User.Role.administratorFirstLogged || request.getSession(false).getAttribute("role") == User.Role.administratorSuperior
+            || request.getSession(false).getAttribute("role") == User.Role.instructor) {
                 User user = userService.getUserByEmail(email);
                 if (user != null) {
                     return new ResponseEntity<UserDTO>(new UserDTO(user), HttpStatus.OK);

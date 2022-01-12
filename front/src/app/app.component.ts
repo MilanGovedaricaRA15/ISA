@@ -6,6 +6,8 @@ import { Ship } from './model/ship';
 import { ShipReservation } from './model/ship-reservation';
 import { CottageReservationService } from './service/cottage-reservation-service.service';
 import { UserService } from './service/user-service.service';
+import { InstructorsFavor } from './model/instructors-favor';
+import { FavorReservation } from './model/favor-reservation';
 
 @Component({
   selector: 'app-root',
@@ -28,6 +30,10 @@ export class AppComponent {
   userForOwner: User;
   cottageReservationReceive:CottageReservation;
   shipReservationReceive:ShipReservation;
+  reservationForHotOffers: InstructorsFavor;
+  favorToShow: InstructorsFavor;
+  favorReservation: FavorReservation;
+  favorReservationReceive: FavorReservation;
 
   /**
    *
@@ -86,6 +92,10 @@ export class AppComponent {
       this.changeNumber(31);
       sessionStorage.setItem("page", '31');
     }
+    else if (message === 'instructor') {
+      this.changeNumber(61);
+      sessionStorage.setItem("page", '61');
+    }
 
   }
 
@@ -103,6 +113,12 @@ export class AppComponent {
     sessionStorage.setItem('receiveShipReservation',shipReservation.id.toString());
   }
 
+  receiveFavorReservation(favorReservation: FavorReservation){
+    this.favorReservation = favorReservation;
+    this.changeNumber(64);
+    sessionStorage.setItem("page",'64');
+    sessionStorage.setItem('receiveFavorReservation',favorReservation.id.toString());
+  }
 
   onClientLogin(client: User) {
     this.clientToShowAuthenticated = client;
@@ -112,6 +128,11 @@ export class AppComponent {
   addNewCottage(b:Boolean){
     this.changeNumber(6);
     sessionStorage.setItem("page",'6');
+  }
+
+  addNewFavor(b:Boolean){
+    this.changeNumber(63);
+    sessionStorage.setItem("page", "63");
   }
 
   addNewShip(b:Boolean){
@@ -124,6 +145,13 @@ export class AppComponent {
     this.changeNumber(5);
     sessionStorage.setItem("page", '5');
     sessionStorage.setItem("cottageToShow", this.cottageToShow.id.toString());
+  }
+
+  onFavorClick(favor: InstructorsFavor){
+    this.favorToShow = favor;
+    this.changeNumber(62);
+    sessionStorage.setItem("page", '62');
+    sessionStorage.setItem("favorToShow", this.favorToShow.id.toString());
   }
 
   onShipClick(ship: Ship){
@@ -201,6 +229,12 @@ export class AppComponent {
       if(res){
         this.changeNumber(8);
         sessionStorage.setItem("page",'8');
+      }
+    });
+    this.userService.isInstructorLoggedIn().subscribe(res => {
+      if(res){
+        this.changeNumber(61);
+        sessionStorage.setItem("page",'61');
       }
     });
   }

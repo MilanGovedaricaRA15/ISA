@@ -12,4 +12,6 @@ import java.util.List;
 public interface ShipRepository extends JpaRepository<Ship, Long>  {
     @Query("Select c from Ship c where c.owner.email=?1")
     public List<Ship> findAllByShipEmail(String email);
+    @Query("Select c from Ship c where c.owner.id=?1")
+    public List<Ship> findShipsById(long id);
 }

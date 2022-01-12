@@ -92,6 +92,12 @@ public class CottageController {
             return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
         }
     }
+
+    @PostMapping("/cottages/removeCottageByAdministrator")
+    public ResponseEntity<Boolean> removeCottageByAdministrator(@RequestBody Long id, HttpServletRequest request){
+        return new ResponseEntity<Boolean>(cottageService.removeCottageByAdministrator(id), HttpStatus.OK);
+    }
+
     @PostMapping("/cottages/uploadImg")
     public ResponseEntity<Boolean> uploadImg(@RequestPart("file") MultipartFile file, HttpServletRequest request){
         if (request.getSession(false).getAttribute("role")!=null) {

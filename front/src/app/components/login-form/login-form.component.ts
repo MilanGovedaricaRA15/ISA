@@ -79,6 +79,12 @@ export class LoginFormComponent implements OnInit {
                 this.clientToShowAuthenticated.emit(this.user);
               }
             });
+
+            this.userService.isInstructorLoggedIn().subscribe(res =>{
+              if(res){
+                this.login.emit('instructor');
+              }
+            });
             
           }
         

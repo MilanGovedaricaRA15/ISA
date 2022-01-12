@@ -101,6 +101,12 @@ public class ShipController {
             return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
         }
     }
+
+    @PostMapping("/ships/removeShipByAdministrator")
+    public ResponseEntity<Boolean> removeShipByAdministrator(@RequestBody Long id, HttpServletRequest request){
+        return new ResponseEntity<Boolean>(shipService.removeShipByAdministrator(id), HttpStatus.OK);
+    }
+
     @PostMapping("/ships/uploadImg")
     public ResponseEntity<Boolean> uploadImg(@RequestPart("file") MultipartFile file, HttpServletRequest request){
         if (request.getSession(false).getAttribute("role")!=null) {

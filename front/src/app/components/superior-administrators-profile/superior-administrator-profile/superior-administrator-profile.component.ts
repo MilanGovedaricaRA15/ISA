@@ -1,7 +1,12 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Cottage } from 'src/app/model/cottage';
+import { Ship } from 'src/app/model/ship';
 import { User } from 'src/app/model/user';
+import { AccountDeleteRequestService } from 'src/app/service/account-delete-request-service.service';
 import { CottageService } from 'src/app/service/cottage-service.service';
+import { GradeService } from 'src/app/service/grade-service.service';
+import { ShipService } from 'src/app/service/ship-service';
 import { UserService } from 'src/app/service/user-service.service';
 
 @Component({
@@ -11,7 +16,8 @@ import { UserService } from 'src/app/service/user-service.service';
 })
 export class SuperiorAdministratorProfileComponent implements OnInit {
 
-  constructor(private userService: UserService, private cottageService: CottageService) { }
+  constructor(private userService: UserService, private cottageService: CottageService, private shipService: ShipService, 
+              private accountDeleteRequestsService: AccountDeleteRequestService, private gradeService: GradeService) { }
 
   editAdministratorForm:any;
   editPasswordForm:any;
@@ -24,9 +30,13 @@ export class SuperiorAdministratorProfileComponent implements OnInit {
   alreadySent: Boolean;
   allUsers: Array<User>;
   allCottages: any;
-  allBoats: any;
+  allShips: any;
+  allRequests: any;
+  allGrades: any;
   deletingUser: User;
   acceptingUser: User;
+  deletingCottage: Cottage;
+  deletingShip: Ship;
   @Output() addAdmin = new EventEmitter<string>();
 
   ngOnInit(): void {
@@ -50,6 +60,15 @@ export class SuperiorAdministratorProfileComponent implements OnInit {
     }); 
     this.cottageService.getAllCottages().subscribe(cottagesFromBack => {
       this.allCottages = cottagesFromBack;
+    });
+    this.shipService.getAllShips().subscribe(shipsFromBack => {
+      this.allShips = shipsFromBack;
+    });
+    this.accountDeleteRequestsService.getAllRequests().subscribe(requestsFromBack => {
+      this.allRequests = requestsFromBack;
+    });
+    this.gradeService.getAllGrades().subscribe(gradesFromBack => {
+      this.allGrades = gradesFromBack;
     });
 
     this.acceptingUser = new User()
@@ -156,10 +175,33 @@ export class SuperiorAdministratorProfileComponent implements OnInit {
   userDeleted(index: number) {
     this.deletingUser = this.allUsers[index]
     this.userService.removeUser(this.deletingUser.id).subscribe(ret => {
-      if(ret)
-        this.allUsers.splice(index, 1)
+      if(ret) {
+        this.allUsers.splice(index, 1);
+        this.cottageService.getAllCottages().subscribe(cottagesFromBack => {
+          this.allCottages = cottagesFromBack;
+        });
+        this.shipService.getAllShips().subscribe(shipsFromBack => {
+          this.allShips = shipsFromBack;
+        });
+      }
     });
     
+  }
+
+  deleteCottage(index: number) {
+    this.deletingCottage = this.allCottages[index];
+    this.cottageService.removeCottageByAdministrator(this.deletingCottage.id).subscribe(ret => {
+      if(ret)
+        this.allCottages.splice(index, 1);
+    })
+  }
+
+  deleteShip(index: number) {
+    this.deletingShip = this.allShips[index];
+    this.shipService.removeShipByAdministrator(this.deletingShip.id).subscribe(ret => {
+      if(ret)
+        this.allShips.splice(index, 1);
+    })
   }
 
   acceptUser(index: number) {
@@ -170,4 +212,52 @@ export class SuperiorAdministratorProfileComponent implements OnInit {
     });
   }
 
+  acceptRequest(index: number) {
+    let acceptingRequest = this.allRequests[index];
+    this.accountDeleteRequestsService.deleteRequest(acceptingRequest.id).subscribe(ret => {
+      if(ret)
+        this.userService.removeUser(acceptingRequest.user.id).subscribe(ret => {
+          if(ret) {
+            this.userService.getAllUsers().subscribe(ret => {
+              this.allUsers = ret;
+              this.allRequests[index].seen = true;
+            });
+            this.cottageService.getAllCottages().subscribe(cottagesFromBack => {
+              this.allCottages = cottagesFromBack;
+            });
+            this.shipService.getAllShips().subscribe(shipsFromBack => {
+              this.allShips = shipsFromBack;
+            });
+          }
+        });
+    });
+  }
+
+  declineRequest(index: number) {
+    let deletingRequest = this.allRequests[index];
+    this.accountDeleteRequestsService.deleteRequest(deletingRequest.id).subscribe(ret => {
+      if(ret)
+        this.allRequests[index].seen = true;
+    });
+  }
+
+  acceptGrade(index: number) {
+    let acceptingGrade = this.allGrades[index];
+    this.gradeService.acceptGrade(acceptingGrade.id).subscribe(ret => {
+      if(ret)
+        this.gradeService.getAllGrades().subscribe(ret => {
+          this.allGrades = ret;
+        });
+    });
+  }
+
+  declineGrade(index: number) {
+    let deletingGrade = this.allGrades[index];
+    this.gradeService.removeGrade(deletingGrade.id).subscribe(ret => {
+      if(ret)
+        this.gradeService.getAllGrades().subscribe(ret => {
+          this.allGrades = ret;
+        });
+    });
+  }
 }

@@ -67,6 +67,26 @@ public class CottageServiceImpl implements CottageService {
         }
     }
 
+    public Boolean removeCottageByAdministrator(Long id){
+        if(!isReserved(id)) {
+            cottageRepository.deleteById(id);
+        }
+        else{
+            removeCottageReservations(id);
+            cottageRepository.deleteById(id);
+        }
+        return true;
+    }
+
+    private void removeCottageReservations(long id) {
+        List<CottageReservation> cottageReservations = cottageReservationRepository.findAllByCottageId(id);
+        if(cottageReservations.size() != 0) {
+            for(CottageReservation cr : cottageReservations){
+                cottageReservationRepository.delete(cr);
+            }
+        }
+    }
+
     public Boolean checkIsReserved(Cottage cottage){
         if(!isReserved(cottage.getId())) {
             return true;

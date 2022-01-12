@@ -28,7 +28,7 @@ public class Cottage {
     private float costPerNight;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
     private List<ServicePrice> priceList;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
+    @OneToMany
     private List<Grade> grades;
 
     public Cottage(long id,List<Grade> grades,User owner, String name, String address, String description, ArrayList<String> images, int numOfRooms, int numOfBeds, String rules, ArrayList<Services> services, LocalDateTime availableFrom, LocalDateTime availableTill, List<HotOffer> hotOffers, float costPerNight, List<ServicePrice> priceList) {

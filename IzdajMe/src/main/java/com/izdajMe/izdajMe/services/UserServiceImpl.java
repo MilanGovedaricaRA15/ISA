@@ -1,9 +1,7 @@
 package com.izdajMe.izdajMe.services;
 
-import com.izdajMe.izdajMe.model.User;
-import com.izdajMe.izdajMe.repository.CottageRepository;
-import com.izdajMe.izdajMe.repository.HotOfferRepository;
-import com.izdajMe.izdajMe.repository.UserRepository;
+import com.izdajMe.izdajMe.model.*;
+import com.izdajMe.izdajMe.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
@@ -19,8 +17,16 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private CottageRepository cottageRepository;
     @Autowired
-    private HotOfferRepository hotOfferRepository;
+    private ShipRepository shipRepository;
+    @Autowired
+    InstructorsFavorRepository instructorsFavorRepository;
     private EmailService emailService;
+    @Autowired
+    private CottageReservationRepository cottageReservationRepository;
+    @Autowired
+    private ShipReservationRepository shipReservationRepository;
+    @Autowired
+    private FavorReservationRepository favorReservationRepository;
 
     @Override
     public List<User> getAllUsers() {
@@ -130,7 +136,6 @@ public class UserServiceImpl implements UserService {
     }
 
     public Boolean deleteUser(long id) {
-        /*List<Cottage> cottages = cottageRepository.findCottagesById(id);
         User user = userRepository.findById(id).get();
         if(user.getRole().equals(User.Role.cottageAdvertiser))
             deleteCottageAdvertiser(id);
@@ -140,35 +145,64 @@ public class UserServiceImpl implements UserService {
             deleteInstructor(id);
 
         userRepository.deleteById(id);
-        sendMailFromAdministrator(user);
         return true;
-    }
-
-    private void sendMailFromAdministrator(User user) throws MailException{
-        SimpleMailMessage mail = new SimpleMailMessage();
-        mail.setTo(user.getEmail());
-        mail.setFrom("vrbica.vlado11@gmail.com");
-        mail.setSubject("Deleting account");
-        mail.setText("Your account has been deleted!");
-        emailService.sendSimpleMessage(mail);
-        return;
     }
 
     private void deleteCottageAdvertiser(long id) {
         List<Cottage> cottages = cottageRepository.findCottagesById(id);
         if(cottages.size() != 0){
             for(Cottage c : cottages){
-                List<HotOffer> reservations = hotOfferRepository
-                if(reservations.size() != 0) {
-                    for(HotOffer hr : reservations) {
-                        hotOfferRepository.deleteById(hr.getId());
-                    }
-                }
+                removeCottageReservations(c.getId());
                 cottageRepository.deleteById(c.getId());
             }
-        }*/
-        userRepository.deleteById(id);
-        return true;
+        }
+    }
+
+    private void deleteShipAdvertiser(long id) {
+        List<Ship> ships = shipRepository.findShipsById(id);
+        if(ships.size() != 0){
+            for(Ship s : ships){
+                removeShipReservations(s.getId());
+                shipRepository.deleteById(s.getId());
+            }
+        }
+    }
+
+    private void deleteInstructor(long id) {
+        List<InstructorsFavor> instructorFavors = instructorsFavorRepository.findInstructorFavorsById(id);
+        if(instructorFavors.size() != 0){
+            for(InstructorsFavor i : instructorFavors){
+                removeFavorReservations(i.getId());
+                instructorsFavorRepository.deleteById(i.getId());
+            }
+        }
+    }
+
+    private void removeCottageReservations(long id) {
+        List<CottageReservation> cottageReservations = cottageReservationRepository.findAllByCottageId(id);
+        if(cottageReservations.size() != 0) {
+            for(CottageReservation cr : cottageReservations){
+                cottageReservationRepository.delete(cr);
+            }
+        }
+    }
+
+    private void removeShipReservations(long id) {
+        List<ShipReservation> shipReservations = shipReservationRepository.findAllByShipId(id);
+        if(shipReservations.size() != 0) {
+            for(ShipReservation sr : shipReservations){
+                shipReservationRepository.delete(sr);
+            }
+        }
+    }
+
+    private void removeFavorReservations(long id) {
+        List<FavorReservation> favorReservations = favorReservationRepository.findAllByReservationId(id);
+        if(favorReservations.size() != 0) {
+            for(FavorReservation fr : favorReservations){
+                favorReservationRepository.delete(fr);
+            }
+        }
     }
 
     @Override

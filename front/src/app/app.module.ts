@@ -54,6 +54,10 @@ import { AddNewShipComponent } from './components/add-new-ship/add-new-ship.comp
 import { AddReportComponent } from './components/add-report/add-report.component';
 import { AddShipReservationReportComponent } from './components/add-ship-reservation-report/add-ship-reservation-report.component';
 import { MapComponent } from './components/map/map.component';
+import { InstructorProfileComponent } from './components/instructor-profile/instructor-profile.component';
+import { FavorProfileComponent } from './components/favor-profile/favor-profile.component';
+import { AddNewFavorComponent } from './components/add-new-favor/add-new-favor.component';
+import { AddFavorReservationReportComponent } from './components/add-favor-reservation-report/add-favor-reservation-report.component';
 
 @NgModule({
   declarations: [
@@ -104,7 +108,11 @@ import { MapComponent } from './components/map/map.component';
     AddNewShipComponent,
     AddReportComponent,
     AddShipReservationReportComponent,
-    MapComponent
+    MapComponent,
+    InstructorProfileComponent,
+    FavorProfileComponent,
+    AddNewFavorComponent,
+    AddFavorReservationReportComponent
   ],
   imports: [
     BrowserModule,

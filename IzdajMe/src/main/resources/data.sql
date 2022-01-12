@@ -1,18 +1,24 @@
 delete from account_delete_requests where id!=0;
 delete from cottage_reservations where id!=0;
 delete from ship_reservations where id!=0;
+delete from favor_reservations where id!=0;
 delete from cottages_hot_offers where cottage_id!=0;
 delete from ships_hot_offers where ship_id!=0;
+delete from favors_hot_offers where instructors_favor_id!=0;
 delete from cottages_price_list where cottage_id!=0;
 delete from ships_price_list where ship_id!=0;
+delete from favors_price_list where instructors_favor_id!=0;
 delete from hot_offers where id!=0;
 delete from ship_hot_offers where id!=0;
+delete from favor_hot_offers where id!=0;
 delete from service_price where id!=0;
 delete from ship_service_price where id!=0;
+delete from favor_service_price where id!=0;
 delete from ships_grades where ship_id!=0;
 delete from cottages_grades where cottage_id!=0;
 delete from grades where id!=0;
 delete from cottages where id!=0;
+delete from favors where id!=0;
 delete from spring_session where primary_id!='0';
 delete from spring_session_attributes where session_primary_id!='0';
 delete from ships where id!=0;
@@ -38,18 +44,16 @@ insert into users (id, address, city, country, email, first_name, last_name, mob
 values (8, 'Focanska 8', 'Foca', 'RS', 'foca8@gmail.com', 'Darko', 'Bodiroga', 066589001, 'aaaa', null, 2, TRUE);
 insert into users (id, address, city, country, email, first_name, last_name, mobile_number, password, reason, role, verified)
 values (9, 'Focanska 9', 'Foca', 'RS', 'foca9@gmail.com', 'Luka', 'Lukovic', 058212546, 'aaaa', null, 4, TRUE);
-
 insert into users (id, address, city, country, email,first_name,last_name,mobile_number,password,reason,role,verified)
 values (10, 'Njegoseva 1', 'Subotica', 'Srbija', 'vrbica.vlado11@gmail.com', 'Vladimir', 'Vrbica', '123123123123', 'vrba', '', 3, TRUE);
-
 insert into users (id, address, city, country, email,first_name,last_name,mobile_number,password,reason,role,verified)
 values (11, 'Nemanjina 2', 'Srbobran', 'Srbija', 'nikola.aleksic@gmail.com', 'Nikola', 'Aleksic', '22222222222', 'leksa', '', 4, TRUE);
-
 insert into users (id, address, city, country, email,first_name,last_name,mobile_number,password,reason,role,verified)
 values (12, 'Kralja Petra 12a', 'Becej', 'Srbija', 'milos.zivic@gmail.com', 'Milos', 'Zivic', '222222222222', 'zile', '', 5, TRUE);
-
 insert into users (id, address, city, country, email,first_name,last_name,mobile_number,password,reason,role,verified)
 values (13, 'Vozdovacka 12', 'Beograd', 'Srbija', 'vesnakundacina@gmail.com', 'Vesna', 'Kundacina', 123123123, 'aaaa', 'Izdaja vikendice', 0, FALSE);
+insert into users (id, address, city, country, email,first_name,last_name,mobile_number,password,reason,role,verified)
+values (14, 'Kralja Aleksandra 12a', 'Uzice', 'Srbija', 'peraperic@gmail.com', 'Pera', 'Peric', '222222222222', 'aaaa', '', 6, TRUE);
 
 insert into cottages (id, address, available_from, available_till, description, images, name, num_of_beds, num_of_rooms, rules, services, owner_id, cost_per_night)
 values (1, 'Dunavska 1',DATE('2021-09-01'),DATE('2022-02-01'),'Na jezeru',null, 'Micova', 3, 3, 'Nisu dozvoljene zivotinje', null, 1, 50);
@@ -67,27 +71,36 @@ values (4, 3,DATE('2021-09-01'),DATE('2022-02-01'), 'Shipneki', 'typefour', 113,
 insert into ships(id, owner_id, available_from, available_till, name, type, length, engine_number, engine_power, top_speed, navigation_equipment, address, description, images, capacity, rules,fishing_equipment,cancel_requirements,cost_per_night)
 values (5, 3,DATE('2021-09-01'),DATE('2022-02-01'), 'Ship', 'typefifth', 84, '123e456', 117, 200, null, 'Nikole Tesle 5', 'Description', null, 15, 'pravila',null,'free',50);
 
-insert into grades(id, user_id, value, comment)
-values (1, 3, 7 , 'Not too bad');
-insert into grades(id, user_id, value, comment)
-values (2, 3, 7, 'Not too baaad');
-insert into grades(id, user_id, value, comment)
-values (3, 3, 6, 'Bad');
-insert into grades(id, user_id, value, comment)
-values (4, 3, 9, 'Very good');
-insert into grades(id, user_id, value, comment)
-values (5, 3, 8, 'Good');
+insert into grades(id, user_id, value, comment, seen)
+values (1, 3, 7 , 'Not too bad', false);
+insert into grades(id, user_id, value, comment, seen)
+values (2, 3, 7, 'Not too baaad', false);
+insert into grades(id, user_id, value, comment, seen)
+values (3, 3, 6, 'Bad', false);
+insert into grades(id, user_id, value, comment, seen)
+values (4, 3, 9, 'Very good', false);
+insert into grades(id, user_id, value, comment, seen)
+values (5, 3, 8, 'Good', false);
 
-insert into grades(id, user_id, value, comment)
-values (6, 3, 7 , 'Not too bad');
-insert into grades(id, user_id, value, comment)
-values (7, 3, 7, 'Not too baaad');
-insert into grades(id, user_id, value, comment)
-values (8, 3, 6, 'Bad');
-insert into grades(id, user_id, value, comment)
-values (9, 3, 9, 'Very good');
-insert into grades(id, user_id, value, comment)
-values (10, 3, 8, 'Good');
+insert into grades(id, user_id, value, comment, seen)
+values (6, 3, 7 , 'Not too bad', false);
+insert into grades(id, user_id, value, comment, seen)
+values (7, 3, 7, 'Not too baaad', false);
+insert into grades(id, user_id, value, comment, seen)
+values (8, 3, 6, 'Bad', false);
+insert into grades(id, user_id, value, comment, seen)
+values (9, 3, 9, 'Very good', false);
+insert into grades(id, user_id, value, comment, seen)
+values (10, 3, 8, 'Good', false);
+
+insert into favors (id, instructor_id, name, address, description, images, num_of_persons, rules, services, cost, available_from, available_till, cancellation_condition)
+values (1, 4, 'Cas pecanja', 'Ribarac', 'Pecanje pecaljkom', null, 4, 'Samo punoletni mogu', null, 1200, DATE('2022-02-01'), DATE('2022-02-17'), 'Free');
+insert into favors (id, instructor_id, name, address, description, images, num_of_persons, rules, services, cost, available_from, available_till, cancellation_condition)
+values (2, 4, 'Cas pecanja', 'Ribarac', 'Pecanje mrezom', null, 10, 'Samo punoletni mogu', null, 1000, DATE('2022-01-04'), DATE('2022-01-26'), '5%');
+insert into favors (id, instructor_id, name, address, description, images, num_of_persons, rules, services, cost, available_from, available_till, cancellation_condition)
+values (3, 4, 'Isplovljavanje', 'Ribarac', 'Plovidba camcom i pecanje', null, 2, 'Samo punoletni mogu', null, 2000, DATE('2022-02-01'), DATE('2022-02-27'), '10%');
+insert into favors (id, instructor_id, name, address, description, images, num_of_persons, rules, services, cost, available_from, available_till, cancellation_condition)
+values (4, 4, 'Pravljenje mamca', 'Ribarac', 'Mamac', null, 3, 'Samo punoletni mogu', null, 500, DATE('2022-01-01'), DATE('2022-02-1'), '15%');
 
 insert into ships_grades(ship_id, grades_id) values (1, 1);
 insert into ships_grades(ship_id, grades_id) values (1, 2);
@@ -115,6 +128,13 @@ insert into ship_hot_offers (id, available_from, available_till, cost, free, num
 values (2,DATE('2021-12-16'),DATE('2021-12-19'),28,TRUE,4,null);
 insert into ships_hot_offers(ship_id,hot_offers_id) values (1,2);
 
+insert into favor_hot_offers (id, available_from, available_till, place, num_of_persons, services, cost, free)
+values (1,DATE('2022-1-20'),DATE('2021-1-25'),'Ribarac',5,null,1000,TRUE);
+insert into favors_hot_offers(instructors_favor_id, hot_offers_id) values (1,1);
+insert into favor_hot_offers (id, available_from, available_till, place, num_of_persons, services, cost, free)
+values (2,DATE('2022-2-2'),DATE('2021-2-12'),'Ribarac',4,null,900,TRUE);
+insert into favors_hot_offers(instructors_favor_id, hot_offers_id) values (1,2);
+
 insert into service_price (id, cost, service)
 values(1,100,0);
 insert into service_price (id, cost, service)
@@ -136,6 +156,17 @@ insert into ship_service_price (id, cost, service)
 values(4,60,0);
 insert into ship_service_price (id, cost, service)
 values(5,120,1);
+
+insert into favor_service_price (id, cost, service)
+values(1, 800, 0);
+insert into favor_service_price (id, cost, service)
+values(2, 2000, 1);
+insert into favor_service_price (id, cost, service)
+values(3, 4200, 1);
+insert into favor_service_price (id, cost, service)
+values(4, 1500, 1);
+insert into favor_service_price (id, cost, service)
+values(5, 720, 0);
 
 insert into ships_price_list (ship_id,price_list_id)
 values(1,1);
@@ -159,6 +190,17 @@ values(2,4);
 insert into cottages_price_list (cottage_id,price_list_id)
 values(2,5);
 
+insert into favors_price_list (instructors_favor_id,price_list_id)
+values(4,1);
+insert into favors_price_list (instructors_favor_id,price_list_id)
+values(4,2);
+insert into favors_price_list (instructors_favor_id,price_list_id)
+values(1,3);
+insert into favors_price_list (instructors_favor_id,price_list_id)
+values(2,4);
+insert into favors_price_list (instructors_favor_id,price_list_id)
+values(3,5);
+
 insert into cottage_reservations (id, available_from, available_till, cost, client_id, cottage_id, services)
 values (1,DATE('2021-12-20'),DATE('2021-12-23'),233,2,1, null);
 insert into cottage_reservations (id, available_from, available_till, cost, client_id, cottage_id, services)
@@ -176,3 +218,10 @@ insert into ship_reservations (id, available_from, available_till, cost, client_
 values (3,DATE('2022-01-04'),DATE('2022-01-23'),500,2,1, null);
 insert into ship_reservations (id, available_from, available_till, cost, client_id, ship_id, services)
 values (4,DATE('2021-12-03'),DATE('2021-12-19'),500,2,1, null);
+
+insert into favor_reservations (id, available_from, available_till, cost, client_id, favor_id, services)
+values (1, DATE('2021-12-24'), DATE('2021-12-24'), 500, 14, 1, null);
+insert into favor_reservations (id, available_from, available_till, cost, client_id, favor_id, services)
+values (2, DATE('2022-1-1'), DATE('2022-1-15'), 900, 14, 3, null);
+insert into favor_reservations (id, available_from, available_till, cost, client_id, favor_id, services)
+values (3, DATE('2022-2-24'), DATE('2022-2-24'), 600, 14, 2, null);

@@ -1,0 +1,253 @@
+
+<section class="mb-5">
+    <form class="content" [formGroup]="changeForm" (ngSubmit)="submitData()">
+      <div class="row">
+        <div class="col-md-6 mb-4 mb-md-0">
+    
+          <div id="mdb-lightbox-ui"></div>
+    
+          <div class="mdb-lightbox">
+    
+            <div class="row mx-1">
+    
+              <div class="col-12 mb-0">
+                <figure class="view overlay rounded z-depth-1 main-img">
+                  
+                    <img style="width:600px;height:485px;" [src]="('../../assets/images/' + favorImg +'.jpg')"
+                      class="img-fluid z-depth-1"/>
+                  
+                </figure>
+              </div>
+              <div class="col-12">
+                <div class="row">
+                  <div *ngFor='let image of favorChange?.images| slice:1' class="col-3">
+                    <div  class="view overlay rounded z-depth-1 gallery-item">     
+                      <img *ngIf='image !== undefined' (click)="select(image)" style="width:130px;height:150px;" [src]="('../../assets/images/' + image +'.jpg')"
+                          class="img-fluid">     
+                    </div>
+                  </div>  
+                </div>
+              </div>
+              <div class="d-flex justify-content-around pt-3">
+              <div>
+                <input type="file" 
+                (change)="onChange($event)">
+                <div>
+                <button (click)="saveImg()" type="button" class="btn btn-primary btn-md mr-1 mb-2">Add picture</button>
+                <div *ngIf="cantAdd">
+                  <span class="error">Favor is reserved</span>
+                </div>
+                </div>
+                <div style="color:red;" *ngIf="invalidFile">
+                  Upload jpg file
+  
+                </div>
+              </div>
+              <div>
+              <button (click)="removeImg()" type="button" class="btn btn-primary btn-md mr-1 mb-2">Remove picture</button>
+              <div *ngIf="cantRemove">
+                <span class="error">Favor is reserved</span>
+              </div>
+              </div>
+              </div>
+            </div>
+    
+          </div>
+    
+        </div>
+        <div class="col-md-6">
+    
+          <div class="container"><div class="row align-items-start align-items-center"><h5 class="col">{{favorChange?.name}}</h5><div class="col"><input [(ngModel)]="favor.name" formControlName="name" class="form-control col" type="text"/>
+          <div *ngIf="name.invalid && (name.touched || name.dirty)">
+            <span class="error" *ngIf="name.errors?.required">Name is required</span>
+            <span class="error" *ngIf="name.errors?.pattern">Only letters allowed.First letter must be capital</span>
+        </div></div></div></div>
+          <p class="mb-2 text-muted text-uppercase small">Persons</p>
+          <div class="container"><div class="row align-items-start align-items-center"><p class="pt-1 col-6">Number of persons: {{favorChange?.numOfPersons}}</p><div class="col"><input [(ngModel)]="favor.numOfPersons" formControlName="numOfPersons" class="form-control"  type="number"/>
+          <div *ngIf="numOfPersons.invalid && (numOfPersons.touched || numOfPersons.dirty)">
+            <span class="error" *ngIf="numOfPersons.errors?.required">Number of rooms is required</span>
+            <span class="error" *ngIf="numOfPersons.errors?.pattern">Only numbers allowed</span>
+        </div></div></div></div>
+          <p class="mb-2 text-muted text-uppercase small">Services</p>
+          <div class="container"><div class="row align-items-start align-items-center"> <ul class='col'>
+            <li *ngFor="let item of favorChange?.services">
+              {{item}}
+            </li>
+          </ul>
+          <div class="col">
+            <div class="row">
+              <div *ngFor="let service of favorServices;let i = index" class="form-check col">
+                <input [checked]="isChecked(service.toString())" class="form-check-input" type="checkbox" [value]="i" [id]="service">
+                <label class="form-check-label">
+                  {{service.toString()}}
+                </label>
+              </div>
+          </div>
+        </div>
+        </div></div>
+  
+        <p class="mb-2 text-muted text-uppercase small">Services price</p>
+          <div class="container"><div class="row align-items-start align-items-center"> <ul class='col'>
+            <li *ngFor="let item of servicesClass">
+              {{item.service.toString()}}
+            </li>
+          </ul>
+          <div class="col">
+            <div class="row">
+              <div *ngFor="let item of servicesClass" class="col">
+                <div *ngIf="item.cost != undefined">
+                <input  class="form-controll"  [value]="item.cost" [id]="item.service.toString()+'serviceKlasa'">
+                </div>
+                <div *ngIf="item.cost == undefined">
+                  <input  class="form-controll"  [value]="0" [id]="item.service.toString()+'serviceKlasa'">
+                  </div>
+              </div>
+          </div>
+        </div>
+        </div></div>
+          
+          <p class="mb-2 text-muted text-uppercase small">Cost</p>
+          <div class="container"><div class="row align-items-start align-items-center"><p class="col"><span class="mr-1"><strong>{{favorChange?.cost}}</strong></span></p><div class="col"><input [(ngModel)]="favor.cost" formControlName="cost" class="form-control" type="number"/>
+          <div *ngIf="cost.invalid && (cost.touched || cost.dirty)">
+            <span class="error" *ngIf="cost.errors?.required">Cost is required</span>
+            <span class="error" *ngIf="cost.errors?.pattern">Only numbers allowed</span>
+        </div></div></div></div>
+          <p class="mb-2 text-muted text-uppercase small">Address</p>
+          <div class="container"><div class="row align-items-start align-items-center"><p class="pt-1 col-6">{{favorChange?.address}}</p><div class="col"><input [(ngModel)]="favor.address" formControlName="address" class="form-control" type="text"/>
+          <div *ngIf="address.invalid && (address.touched || address.dirty)">
+            <span class="error" *ngIf="address.errors?.required">Address is required</span>
+            <span class="error" *ngIf="address.errors?.pattern">Enter valid address</span>
+        </div></div></div></div>
+          <p class="mb-2 text-muted text-uppercase small">Description</p>
+          <div class="container "><div class="row align-items-start align-items-center"><p class="pt-1 col-6">{{favorChange?.description}}</p><div class="col"><input [(ngModel)]="favor.description" formControlName="description" class="form-control" type="text"/>
+          <div *ngIf="description.invalid && (description.touched || description.dirty)">
+            <span class="error" *ngIf="description.errors?.required">Description is required</span>
+            <span class="error" *ngIf="description.errors?.pattern">Only letters allowed</span>
+        </div></div></div></div>
+          <p class="mb-2 text-muted text-uppercase small">Rules</p>
+          <div class="container"><div class="row align-items-start align-items-center"><p class="pt-1 col-6">{{favorChange?.rules}}</p><div class="col"><input [(ngModel)]="favor.rules" formControlName="rules" class="form-control" type="text"/><div *ngIf="rules.invalid && (rules.touched || rules.dirty)">
+            <span class="error" *ngIf="rules.errors?.required">Rules is required</span>
+            <span class="error" *ngIf="rules.errors?.pattern">Only letters allowed</span>
+        </div></div></div></div>
+          <p class="mb-2 text-muted text-uppercase small">Available</p>
+          <div class="container"><div class="row align-items-start align-items-center">
+            <div class="col-6 row "><div class="d-flex justify-content-between" >From: <input style="width: 80%;" [value]="favorChange?.availableFrom" type="datetime-local" disabled></div><div class="d-flex justify-content-between">To: <input [value]="favorChange?.availableTill" style="width: 80%;" type="datetime-local" disabled></div></div>
+            <div class="col row"><div class="d-flex justify-content-between" >From: <input [(ngModel)]="favor.availableFrom" formControlName="availableFrom" class="form-control" style="width: 70%;" type="datetime-local" id="availableFrom" ></div>
+            <div *ngIf="availableFrom.invalid && (availableFrom.touched || availableFrom.dirty)">
+              <span class="error" *ngIf="availableFrom.errors?.required">From is required</span>
+            </div>
+            <div class="d-flex justify-content-between">To: <input [(ngModel)]="favor.availableTill" formControlName="availableTill" class="form-control" style="width: 70%;" type="datetime-local" id="availableTo"></div>
+            <div *ngIf="availableTill.invalid && (availableTill.touched || availableTill.dirty)">
+              <span class="error" *ngIf="availableTill.errors?.required">To is required</span>
+          </div></div>
+          </div></div>
+          <p class="mb-2 text-muted text-uppercase small">Cancellation condition</p>
+          <div class="container"><div class="row align-items-start align-items-center"><p class="pt-1 col-6">{{favorChange?.cancellationCondition}}</p>
+          <div class="col-3" >
+            <select name="" id="select1" style="width: 100px;" class="form-control">
+              <option value="0"> Free </option>
+              <option value="1"> 5% </option>
+              <option value="2"> 10% </option>
+              <option value="3"> 15% </option>
+            </select>
+          </div></div></div>
+          
+          
+          
+          <div class="d-flex justify-content-center">
+            
+            <button [disabled]="changeForm.invalid" class="btn btn-primary btn-md mr-1 mb-2">Change</button>
+            <div *ngIf="cantChange">
+              <span class="error" style="color: red;">Favor is reserved!</span>
+            </div>
+            
+          </div>
+          
+        </div>
+      </div>
+    </form>
+    </section>
+    
+    <div class="container">
+      <div class="row">
+          <div class="col-12">
+              <div class="card">
+                  <div class="card-body text-center">
+                      <h5 class="card-title m-b-0">Hot offers</h5>
+                  </div>
+                  <div class="table-responsive">
+                  <form class="content" [formGroup]="addForm" (ngSubmit)="submitFormHotOffer()">
+                      <table class="table">
+                          <thead class="thead-light">
+                              <tr>
+                                  <th scope="col">From</th>
+                                  <th scope="col">Till</th>
+                                  <th scope="col-6">Max number of persons</th>
+                                  <th scope="col">Services</th>
+                                  <th scope="col-6">Cost</th>
+                                  <th scope="col"></th>
+                              </tr>
+                          </thead>
+                          <tbody *ngFor="let item of favor?.hotOffers;">
+                              <tr [id]="[item.id]" *ngIf="item.free">
+                                  <td scope="col">{{item.availableFrom}}</td>
+                                  <td scope="col">{{item.availableTill}}</td>
+                                  <td scope="col-6">{{item.numOfPersons}}</td>
+                                  <td scope="col"><i *ngFor="let service of item.services;">{{service}}&nbsp;</i></td>
+                                  <td scope="col-6">{{item.cost}}</td>
+                                  <td scope="col-6"> <button (click)="removeHotOffer(item.id)"  class="btn btn-danger btn-md mr-1 mb-2">remove</button></td>
+                              </tr>
+                          </tbody>
+                          <tbody>
+                              <tr >
+                                  <td><input [(ngModel)]="newHotOffer.availableFrom" formControlName="availableFrom" class="form-control"  type="datetime-local" id="availableFrom" >
+                                      <div *ngIf="availableFrom.invalid && (availableFrom.touched || availableFrom.dirty)">
+                                        <span class="error" *ngIf="availableFrom.errors?.required">From is required</span>
+                                      </div>
+                                  </td>
+                                  <td><input [(ngModel)]="newHotOffer.availableTill" formControlName="availableTill" class="form-control"  type="datetime-local" id="availableTo">
+                                      <div *ngIf="availableTill.invalid && (availableTill.touched || availableTill.dirty)">
+                                        <span class="error" *ngIf="availableTill.errors?.required">To is required</span>
+                                    </div>
+                                    <div *ngIf="availableTillError">
+                                      <span class="error">Till must me greater than from</span>
+                                  </div>
+                                  </td>
+                                  <td><input style="width: 60%;" [(ngModel)]="newHotOffer.numOfPersons" formControlName="numOfPersons" class="form-control"  type="number"/>
+                                      <div *ngIf="numOfPersons.invalid && (numOfPersons.touched || numOfPersons.dirty)">
+                                        <span class="error" *ngIf="numOfPersons.errors?.required">Number of people is required</span>
+                                        <span class="error" *ngIf="numOfPersons.errors?.pattern">Only numbers allowed</span>
+                                    </div>
+                                  </td>
+                                  <td><input style="width: 100%;" class="form-control" id="zaDobijanjeServisa2">
+                                      
+                                  </td>
+                                  <td><input style="width: 60%;" [(ngModel)]="newHotOffer.cost" formControlName="cost" class="form-control" type="number"/>
+                                      <div *ngIf="cost.invalid && (cost.touched || cost.dirty)">
+                                        <span class="error" *ngIf="cost.errors?.required">Cost per night is required</span>
+                                        <span class="error" *ngIf="cost.errors?.pattern">Only numbers allowed</span>
+                                    </div>
+                                  </td>
+                                  <td>
+                                      <button [disabled]="addForm.invalid" class="btn btn-primary btn-md mr-1 mb-2">Add</button>
+                                      <div *ngIf="alreadyExistsHotOffer">
+                                          <span class="error">Term is busy</span>
+                                      </div>
+                                      <div *ngIf="doesntHaveAllServices2">
+                                          <span class="error">Favor doesn't provide selected services</span>
+                                      </div>
+                                      <div *ngIf="doesntExistService2">
+                                          <span class="error">Favor service doesn't exist</span>
+                                      </div>
+                                  </td>
+                              </tr>
+                              
+  
+                          </tbody>
+                      </table>
+                  </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
