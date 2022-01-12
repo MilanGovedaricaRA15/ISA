@@ -71,27 +71,27 @@ values (4, 3,DATE('2021-09-01'),DATE('2022-02-01'), 'Shipneki', 'typefour', 113,
 insert into ships(id, owner_id, available_from, available_till, name, type, length, engine_number, engine_power, top_speed, navigation_equipment, address, description, images, capacity, rules,fishing_equipment,cancel_requirements,cost_per_night)
 values (5, 3,DATE('2021-09-01'),DATE('2022-02-01'), 'Ship', 'typefifth', 84, '123e456', 117, 200, null, 'Nikole Tesle 5', 'Description', null, 15, 'pravila',null,'free',50);
 
-insert into grades(id, user_id, value, comment)
-values (1, 3, 7 , 'Not too bad');
-insert into grades(id, user_id, value, comment)
-values (2, 3, 7, 'Not too baaad');
-insert into grades(id, user_id, value, comment)
-values (3, 3, 6, 'Bad');
-insert into grades(id, user_id, value, comment)
-values (4, 3, 9, 'Very good');
-insert into grades(id, user_id, value, comment)
-values (5, 3, 8, 'Good');
+insert into grades(id, user_id, value, comment, seen)
+values (1, 3, 7 , 'Not too bad', false);
+insert into grades(id, user_id, value, comment, seen)
+values (2, 3, 7, 'Not too baaad', false);
+insert into grades(id, user_id, value, comment, seen)
+values (3, 3, 6, 'Bad', false);
+insert into grades(id, user_id, value, comment, seen)
+values (4, 3, 9, 'Very good', false);
+insert into grades(id, user_id, value, comment, seen)
+values (5, 3, 8, 'Good', false);
 
-insert into grades(id, user_id, value, comment)
-values (6, 3, 7 , 'Not too bad');
-insert into grades(id, user_id, value, comment)
-values (7, 3, 7, 'Not too baaad');
-insert into grades(id, user_id, value, comment)
-values (8, 3, 6, 'Bad');
-insert into grades(id, user_id, value, comment)
-values (9, 3, 9, 'Very good');
-insert into grades(id, user_id, value, comment)
-values (10, 3, 8, 'Good');
+insert into grades(id, user_id, value, comment, seen)
+values (6, 3, 7 , 'Not too bad', false);
+insert into grades(id, user_id, value, comment, seen)
+values (7, 3, 7, 'Not too baaad', false);
+insert into grades(id, user_id, value, comment, seen)
+values (8, 3, 6, 'Bad', false);
+insert into grades(id, user_id, value, comment, seen)
+values (9, 3, 9, 'Very good', false);
+insert into grades(id, user_id, value, comment, seen)
+values (10, 3, 8, 'Good', false);
 
 insert into favors (id, instructor_id, name, address, description, images, num_of_persons, rules, services, cost, available_from, available_till, cancellation_condition)
 values (1, 4, 'Cas pecanja', 'Ribarac', 'Pecanje pecaljkom', null, 4, 'Samo punoletni mogu', null, 1200, DATE('2022-02-01'), DATE('2022-02-17'), 'Free');

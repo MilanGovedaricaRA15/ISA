@@ -8,41 +8,30 @@ public class Complaint {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private User author;
-    private User complaintUser;
+    @ManyToOne
+    private User user;
     private String text;
 
     public Complaint() {}
 
-    public Complaint(long id, User author, User complaintUser, String text) {
+    public Complaint(long id, User user, String text) {
         this.id = id;
-        this.author = author;
-        this.complaintUser = complaintUser;
+        this.user = user;
         this.text = text;
     }
 
-    public long getId() {
-        return id;
-    }
+    public long getId() { return id; }
 
     public void setId(long id) {
         this.id = id;
     }
 
-    public User getAuthor() {
-        return author;
+    public User getUser() {
+        return user;
     }
 
-    public void setAuthor(User author) {
-        this.author = author;
-    }
-
-    public User getComplaintUser() {
-        return complaintUser;
-    }
-
-    public void setComplaintUser(User complaintUser) {
-        this.complaintUser = complaintUser;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getText() {

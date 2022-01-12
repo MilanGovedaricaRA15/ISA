@@ -1,6 +1,7 @@
 package com.izdajMe.izdajMe.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name="grades")
@@ -8,10 +9,11 @@ public class Grade {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private User user;
     private int value;
     private String comment;
+    private Boolean seen;
 
     public Grade() {}
 
@@ -20,6 +22,7 @@ public class Grade {
         this.user = user;
         this.value = value;
         this.comment = comment;
+        seen = false;
     }
 
     public long getId() {
@@ -53,6 +56,10 @@ public class Grade {
     public void setComment(String comment) {
         this.comment = comment;
     }
+
+    public Boolean getSeen() { return seen; }
+
+    public void setSeen(Boolean seen) { this.seen = seen; }
 
     @Override
     public String toString() {

@@ -5,6 +5,7 @@ import { Ship } from 'src/app/model/ship';
 import { User } from 'src/app/model/user';
 import { AccountDeleteRequestService } from 'src/app/service/account-delete-request-service.service';
 import { CottageService } from 'src/app/service/cottage-service.service';
+import { GradeService } from 'src/app/service/grade-service.service';
 import { ShipService } from 'src/app/service/ship-service';
 import { UserService } from 'src/app/service/user-service.service';
 
@@ -16,7 +17,7 @@ import { UserService } from 'src/app/service/user-service.service';
 export class AdministratorProfileComponent implements OnInit {
 
   constructor(private userService: UserService, private cottageService: CottageService, private shipService: ShipService, 
-              private accountDeleteRequestsService: AccountDeleteRequestService) { }
+              private accountDeleteRequestsService: AccountDeleteRequestService, private gradeService: GradeService) { }
 
   editAdministratorForm:any;
   editPasswordForm:any;
@@ -32,6 +33,7 @@ export class AdministratorProfileComponent implements OnInit {
   allBoats: any;
   allShips: any;
   allRequests: any;
+  allGrades: any;
   deletingUser: User;
   acceptingUser: User;
   deletingCottage: Cottage;
@@ -64,6 +66,9 @@ export class AdministratorProfileComponent implements OnInit {
     });
     this.accountDeleteRequestsService.getAllRequests().subscribe(requestsFromBack => {
       this.allRequests = requestsFromBack;
+    });
+    this.gradeService.getAllGrades().subscribe(gradesFromBack => {
+      this.allGrades = gradesFromBack;
     });
 
     this.acceptingUser = new User()
@@ -229,6 +234,26 @@ export class AdministratorProfileComponent implements OnInit {
     this.accountDeleteRequestsService.deleteRequest(deletingRequest.id).subscribe(ret => {
       if(ret)
         this.allRequests[index].seen = true;
+    });
+  }
+
+  acceptGrade(index: number) {
+    let acceptingGrade = this.allGrades[index];
+    this.gradeService.acceptGrade(acceptingGrade.id).subscribe(ret => {
+      if(ret)
+        this.gradeService.getAllGrades().subscribe(ret => {
+          this.allGrades = ret;
+        });
+    });
+  }
+
+  declineGrade(index: number) {
+    let deletingGrade = this.allGrades[index];
+    this.gradeService.removeGrade(deletingGrade.id).subscribe(ret => {
+      if(ret)
+        this.gradeService.getAllGrades().subscribe(ret => {
+          this.allGrades = ret;
+        });
     });
   }
 }

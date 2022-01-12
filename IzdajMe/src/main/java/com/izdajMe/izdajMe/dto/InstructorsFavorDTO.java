@@ -32,7 +32,6 @@ public class InstructorsFavorDTO {
         this.name = instructorsFavor.getName();
         this.address = instructorsFavor.getAddress();
         this.description = instructorsFavor.getDescription();
-        this.grades = instructorsFavor.getGrades();
         this.images = instructorsFavor.getImages();
         this.numOfPersons = instructorsFavor.getNumOfPersons();
         this.hotOffers = instructorsFavor.getHotOffers();
