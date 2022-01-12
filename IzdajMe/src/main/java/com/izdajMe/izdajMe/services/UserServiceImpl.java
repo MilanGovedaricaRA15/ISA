@@ -131,6 +131,31 @@ public class UserServiceImpl implements UserService {
 
     public Boolean deleteUser(long id) {
         /*List<Cottage> cottages = cottageRepository.findCottagesById(id);
+        User user = userRepository.findById(id).get();
+        if(user.getRole().equals(User.Role.cottageAdvertiser))
+            deleteCottageAdvertiser(id);
+        else if(user.getRole().equals(User.Role.boatAdvertiser))
+            deleteShipAdvertiser(id);
+        else if(user.getRole().equals(User.Role.instructor))
+            deleteInstructor(id);
+
+        userRepository.deleteById(id);
+        sendMailFromAdministrator(user);
+        return true;
+    }
+
+    private void sendMailFromAdministrator(User user) throws MailException{
+        SimpleMailMessage mail = new SimpleMailMessage();
+        mail.setTo(user.getEmail());
+        mail.setFrom("vrbica.vlado11@gmail.com");
+        mail.setSubject("Deleting account");
+        mail.setText("Your account has been deleted!");
+        emailService.sendSimpleMessage(mail);
+        return;
+    }
+
+    private void deleteCottageAdvertiser(long id) {
+        List<Cottage> cottages = cottageRepository.findCottagesById(id);
         if(cottages.size() != 0){
             for(Cottage c : cottages){
                 List<HotOffer> reservations = hotOfferRepository
