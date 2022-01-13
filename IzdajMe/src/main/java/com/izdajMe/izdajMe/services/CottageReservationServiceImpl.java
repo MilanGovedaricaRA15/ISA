@@ -1,6 +1,7 @@
 package com.izdajMe.izdajMe.services;
 
 import com.izdajMe.izdajMe.model.*;
+import com.izdajMe.izdajMe.repository.ConcurentWatcherRepository;
 import com.izdajMe.izdajMe.repository.CottageRepository;
 import com.izdajMe.izdajMe.repository.CottageReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.Timestamp;
@@ -23,6 +25,8 @@ public class CottageReservationServiceImpl implements CottageReservationService{
     private CottageReservationRepository cottageReservationRepository;
     @Autowired
     private CottageRepository cottageRepository;
+    @Autowired
+    private ConcurentWatcherRepository concurentWatcherRepository;
     @Autowired
     private EmailService emailService;
 
@@ -106,21 +110,33 @@ public class CottageReservationServiceImpl implements CottageReservationService{
         return  slobodno;
     }
 
+    @Transactional(readOnly = false)
     public Boolean addReservationByOwner(CottageReservation cottageReservation){
 
-        List<CottageReservation> allThisCottageReservations = cottageReservationRepository.findAllByCottageId(cottageReservation.getCottage().getId());
-        Cottage thisCottage = cottageRepository.getById(cottageReservation.getCottage().getId());
-        List<HotOffer> allThisCottageHotOffers = thisCottage.getHotOffers();
+        if (concurentWatcherRepository.findByTableName("CottageReservation").getWriting() == false) {
+            ConcurentWatcher cw = concurentWatcherRepository.findByTableName("CottageReservation");
+            cw.setWriting(true);
+            concurentWatcherRepository.save(cw);
+            List<CottageReservation> allThisCottageReservations = cottageReservationRepository.findAllByCottageId(cottageReservation.getCottage().getId());
+            Cottage thisCottage = cottageRepository.getById(cottageReservation.getCottage().getId());
+            List<HotOffer> allThisCottageHotOffers = thisCottage.getHotOffers();
 
-        boolean slobodno = canAddReservation(allThisCottageReservations, cottageReservation, allThisCottageHotOffers);
-        if(slobodno) {
-            cottageReservationRepository.save(cottageReservation);
-            sendNotificationForReservation(cottageReservation);
-            return true;
+            boolean slobodno = canAddReservation(allThisCottageReservations, cottageReservation, allThisCottageHotOffers);
+            if (slobodno) {
+                cottageReservationRepository.save(cottageReservation);
+                cw.setWriting(false);
+                concurentWatcherRepository.save(cw);
+                sendNotificationForReservation(cottageReservation);
+                return true;
+            } else {
+                cw.setWriting(false);
+                concurentWatcherRepository.save(cw);
+                return false;
+            }
         }
         else{
             return false;
-        }
+            }
     }
     public Boolean changeReservationByOwner(CottageReservation cottageReservation){
         CottageReservation thisReservation = cottageReservationRepository.getById(cottageReservation.getId());

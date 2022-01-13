@@ -67,10 +67,60 @@ public class UserServiceImpl implements UserService {
         User foundUser = userRepository.findByEmailAndPasswordVerified(user.getEmail(),user.getPassword());
 
         if (foundUser != null){
+            inicijalizuj();
             return true;
         }
         else{
             return false;
+        }
+    }
+
+    private void inicijalizuj(){
+        Cottage c = cottageRepository.getById(new Long(1));
+        ArrayList<Cottage.Services> services = new ArrayList<Cottage.Services>();
+        services.add(Cottage.Services.Parking);
+        services.add(Cottage.Services.Pool);
+        ArrayList<String> images = new ArrayList<String>();
+        images.add("vikendica1");
+        images.add("vikendica2");
+        images.add("vikendica3");
+        images.add("vikendica4");
+        images.add("vikendica5");
+        int doz = 0;
+        if(c.getServices() == null || c.getImages() == null){
+            doz = 1;
+        }
+        if(c.getServices() == null) {
+            c.setServices(services);
+        }
+        if(c.getImages() == null){
+            c.setImages(images);
+        }
+        if(doz == 1) {
+            cottageRepository.save(c);
+        }
+
+
+        Ship s = shipRepository.getById(new Long(1));
+        ArrayList<Ship.Services> services1 = new ArrayList<Ship.Services>();
+        services1.add(Ship.Services.HairDryer);
+        services1.add(Ship.Services.Minibar);
+        images = new ArrayList<String>();
+        images.add("ship1");
+        images.add("ship2");
+        images.add("ship3");
+        int doz2 = 0;
+        if(s.getServices() == null || s.getImages() == null){
+            doz2 = 1;
+        }
+        if(s.getServices() == null) {
+            s.setServices(services1);
+        }
+        if(s.getImages() == null){
+            s.setImages(images);
+        }
+        if(doz2 == 1) {
+            shipRepository.save(s);
         }
     }
 

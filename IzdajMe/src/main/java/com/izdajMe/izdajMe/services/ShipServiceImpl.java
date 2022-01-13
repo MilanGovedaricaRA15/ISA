@@ -4,6 +4,7 @@ import com.izdajMe.izdajMe.model.*;
 import com.izdajMe.izdajMe.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -19,6 +20,8 @@ public class ShipServiceImpl implements  ShipService {
     private ShipRepository shipRepository;
     @Autowired
     private ShipReservationRepository shipReservationRepository;
+    @Autowired
+    private ConcurentWatcherRepository concurentWatcherRepository;
 
     @Override
     public List<Ship> getAllShips() {
@@ -119,9 +122,19 @@ public class ShipServiceImpl implements  ShipService {
     }
 
     public Boolean changeShip(Ship ship){
-        if(!isReserved(ship.getId())) {
-            shipRepository.save(ship);
-            return true;
+        if (concurentWatcherRepository.findByTableName("ShipReservation").getWriting() == false) {
+            ConcurentWatcher cw = concurentWatcherRepository.findByTableName("Ship");
+            cw.setWriting(true);
+            if (!isReserved(ship.getId())) {
+                shipRepository.save(ship);
+                cw.setWriting(false);
+                concurentWatcherRepository.save(cw);
+                return true;
+            } else {
+                cw.setWriting(false);
+                concurentWatcherRepository.save(cw);
+                return false;
+            }
         }
         else{
             return false;
@@ -129,11 +142,21 @@ public class ShipServiceImpl implements  ShipService {
     }
 
     public Boolean removeHotOffer(Ship ship){
-        if(shipRepository.existsById(ship.getId())) {
-            shipRepository.save(ship);
-            return true;
+        if (concurentWatcherRepository.findByTableName("ShipReservation").getWriting() == false) {
+            ConcurentWatcher cw = concurentWatcherRepository.findByTableName("ShipHotOffer");
+            cw.setWriting(true);
+            if (shipRepository.existsById(ship.getId())) {
+                shipRepository.save(ship);
+                cw.setWriting(false);
+                concurentWatcherRepository.save(cw);
+                return true;
+            } else {
+                cw.setWriting(false);
+                concurentWatcherRepository.save(cw);
+                return false;
+            }
         }
-        else{
+        else {
             return false;
         }
     }
@@ -187,34 +210,43 @@ public class ShipServiceImpl implements  ShipService {
 
         return slobodno;
     }
-
+    @Transactional(readOnly = false)
     public Boolean addHotOfferToShip(Ship ship){
-        List<ShipHotOffer> shipHotOffers = ship.getHotOffers();
-        Ship ship1 = shipRepository.findById(ship.getId()).get();
-        List<ShipHotOffer> hotOffersWithout = ship1.getHotOffers();
-        List<ShipReservation> allThisShipReservations = shipReservationRepository.findAllByShipId(ship.getId());
+        if (concurentWatcherRepository.findByTableName("ShipReservation").getWriting() == false) {
+            ConcurentWatcher cw = concurentWatcherRepository.findByTableName("ShipHotOffer");
+            cw.setWriting(true);
+            List<ShipHotOffer> shipHotOffers = ship.getHotOffers();
+            Ship ship1 = shipRepository.findById(ship.getId()).get();
+            List<ShipHotOffer> hotOffersWithout = ship1.getHotOffers();
+            List<ShipReservation> allThisShipReservations = shipReservationRepository.findAllByShipId(ship.getId());
 
-        ShipHotOffer addedHotOffer = new ShipHotOffer();
-        boolean postoji = false;
-        for (ShipHotOffer offer : shipHotOffers){
-            postoji = false;
-            for(ShipHotOffer offer1 : ship1.getHotOffers()){
-                if (offer1.getId() == offer.getId()){
-                    postoji = true;
+            ShipHotOffer addedHotOffer = new ShipHotOffer();
+            boolean postoji = false;
+            for (ShipHotOffer offer : shipHotOffers) {
+                postoji = false;
+                for (ShipHotOffer offer1 : ship1.getHotOffers()) {
+                    if (offer1.getId() == offer.getId()) {
+                        postoji = true;
+                        break;
+                    }
+                }
+                if (!postoji) {
+                    addedHotOffer = offer;
                     break;
                 }
             }
-            if(!postoji){
-                addedHotOffer = offer;
-                break;
-            }
-        }
-        boolean slobodno = canAddHotOffer(hotOffersWithout,addedHotOffer,allThisShipReservations);
+            boolean slobodno = canAddHotOffer(hotOffersWithout, addedHotOffer, allThisShipReservations);
 
-        if(slobodno){
-            shipRepository.save(ship);
+            if (slobodno) {
+                shipRepository.save(ship);
+            }
+            cw.setWriting(false);
+            concurentWatcherRepository.save(cw);
+            return slobodno;
         }
-        return slobodno;
+        else{
+            return false;
+        }
     }
 
 
