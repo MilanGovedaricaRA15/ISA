@@ -6,6 +6,7 @@ import com.izdajMe.izdajMe.repository.GradeRepository;
 import com.izdajMe.izdajMe.repository.InstructorsFavorRepository;
 import com.izdajMe.izdajMe.repository.ShipRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,6 +22,8 @@ public class GradeServiceImpl implements GradeService{
     private ShipRepository shipRepository;
     @Autowired
     private InstructorsFavorRepository instructorsFavorRepository;
+    @Autowired
+    private EmailService emailService;
 
     public List<Grade> getAllGrades() {
         Iterable<Grade> allGrades = gradeRepository.findAll();
@@ -34,7 +37,17 @@ public class GradeServiceImpl implements GradeService{
         Grade grade = gradeRepository.findById(id).get();
         grade.setSeen(true);
         gradeRepository.save(grade);
+        sendNotificationForAcceptingGrade(grade);
         return true;
+    }
+
+    private void sendNotificationForAcceptingGrade(Grade grade) {
+        SimpleMailMessage mail = new SimpleMailMessage();
+        mail.setTo(grade.getUser().getEmail());
+        mail.setFrom("rajkorajkeza@gmail.com");
+        mail.setSubject("Accepting grade");
+        mail.setText("You have just been rated!");
+        emailService.sendSimpleMessage(mail);
     }
 
     public Boolean deleteGrade(long id) {
