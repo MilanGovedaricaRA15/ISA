@@ -4,6 +4,7 @@ import { Cottage } from 'src/app/model/cottage';
 import { Ship } from 'src/app/model/ship';
 import { User } from 'src/app/model/user';
 import { AccountDeleteRequestService } from 'src/app/service/account-delete-request-service.service';
+import { ComplaintServiceService } from 'src/app/service/complaint-service.service';
 import { CottageService } from 'src/app/service/cottage-service.service';
 import { GradeService } from 'src/app/service/grade-service.service';
 import { ShipService } from 'src/app/service/ship-service';
@@ -17,7 +18,8 @@ import { UserService } from 'src/app/service/user-service.service';
 export class AdministratorProfileComponent implements OnInit {
 
   constructor(private userService: UserService, private cottageService: CottageService, private shipService: ShipService, 
-              private accountDeleteRequestsService: AccountDeleteRequestService, private gradeService: GradeService) { }
+              private accountDeleteRequestsService: AccountDeleteRequestService, private gradeService: GradeService, 
+              private complaintService: ComplaintServiceService) { }
 
   editAdministratorForm:any;
   editPasswordForm:any;
@@ -34,6 +36,7 @@ export class AdministratorProfileComponent implements OnInit {
   allShips: any;
   allRequests: any;
   allGrades: any;
+  allComplaints: any;
   deletingUser: User;
   acceptingUser: User;
   deletingCottage: Cottage;
@@ -70,6 +73,9 @@ export class AdministratorProfileComponent implements OnInit {
     });
     this.gradeService.getAllGrades().subscribe(gradesFromBack => {
       this.allGrades = gradesFromBack;
+    });
+    this.complaintService.getAllComplaints().subscribe(complaintsFromBack => {
+      this.allComplaints = complaintsFromBack;
     });
 
     this.acceptingUser = new User()
@@ -265,5 +271,9 @@ export class AdministratorProfileComponent implements OnInit {
           this.allGrades = ret;
         });
     });
+  }
+
+  sendAnswer(index: number) {
+    this.addAnswer.emit(index.toString());
   }
 }
