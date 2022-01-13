@@ -8,6 +8,7 @@ delete from favors_hot_offers where instructors_favor_id!=0;
 delete from cottages_price_list where cottage_id!=0;
 delete from ships_price_list where ship_id!=0;
 delete from favors_price_list where instructors_favor_id!=0;
+delete from complaints where id!=0;
 delete from hot_offers where id!=0;
 delete from ship_hot_offers where id!=0;
 delete from favor_hot_offers where id!=0;
@@ -101,6 +102,11 @@ insert into favors (id, instructor_id, name, address, description, images, num_o
 values (3, 4, 'Isplovljavanje', 'Ribarac', 'Plovidba camcom i pecanje', null, 2, 'Samo punoletni mogu', null, 2000, DATE('2022-02-01'), DATE('2022-02-27'), '10%');
 insert into favors (id, instructor_id, name, address, description, images, num_of_persons, rules, services, cost, available_from, available_till, cancellation_condition)
 values (4, 4, 'Pravljenje mamca', 'Ribarac', 'Mamac', null, 3, 'Samo punoletni mogu', null, 500, DATE('2022-01-01'), DATE('2022-02-1'), '15%');
+
+insert into complaints (id, text, author_id, complaint_user_id, answer)
+values (1, 'Nova zalba', 14, 1, '');
+insert into complaints (id, text, author_id, complaint_user_id, answer)
+values (2, 'Nova zalbaaaaaa', 14, 2, '');
 
 insert into ships_grades(ship_id, grades_id) values (1, 1);
 insert into ships_grades(ship_id, grades_id) values (1, 2);

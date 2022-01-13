@@ -5,4 +5,5 @@ export class Complaint {
     author: User;
     complaintUser: User;
     text:string;
+    answer: string;
 }

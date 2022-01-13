@@ -1,4 +1,4 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Cottage } from 'src/app/model/cottage';
 import { Ship } from 'src/app/model/ship';
@@ -38,6 +38,7 @@ export class AdministratorProfileComponent implements OnInit {
   acceptingUser: User;
   deletingCottage: Cottage;
   deletingShip: Ship;
+  @Output() addAnswer = new EventEmitter<string>();
 
   ngOnInit(): void {
     this.init();

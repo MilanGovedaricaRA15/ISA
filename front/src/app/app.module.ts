@@ -58,6 +58,7 @@ import { InstructorProfileComponent } from './components/instructor-profile/inst
 import { FavorProfileComponent } from './components/favor-profile/favor-profile.component';
 import { AddNewFavorComponent } from './components/add-new-favor/add-new-favor.component';
 import { AddFavorReservationReportComponent } from './components/add-favor-reservation-report/add-favor-reservation-report.component';
+import { AddAnswerToComplaintComponent } from './components/add-answer-to-complaint/add-answer-to-complaint.component';
 
 @NgModule({
   declarations: [
@@ -112,7 +113,8 @@ import { AddFavorReservationReportComponent } from './components/add-favor-reser
     InstructorProfileComponent,
     FavorProfileComponent,
     AddNewFavorComponent,
-    AddFavorReservationReportComponent
+    AddFavorReservationReportComponent,
+    AddAnswerToComplaintComponent
   ],
   imports: [
     BrowserModule,

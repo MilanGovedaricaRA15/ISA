@@ -8,6 +8,7 @@ import { CottageReservationService } from './service/cottage-reservation-service
 import { UserService } from './service/user-service.service';
 import { InstructorsFavor } from './model/instructors-favor';
 import { FavorReservation } from './model/favor-reservation';
+import { Complaint } from './model/complaint';
 
 @Component({
   selector: 'app-root',
@@ -256,6 +257,28 @@ export class AppComponent {
     this.changeNumber(50);
     sessionStorage.setItem("page",'50');
   } 
+
+  addAnswer(index: string) {
+    this.changeNumber(300);
+    sessionStorage.setItem("page",'300');
+    sessionStorage.setItem("complaintToAnswer", index);
+  }
+
+  answerIsSended() {
+    this.userService.isSuperiorAdministratorLoggedIn().subscribe(res => {
+      if(res){
+        this.changeNumber(8);
+        sessionStorage.setItem("page",'8');
+      }
+    });
+    this.userService.isAdministratorLoggedIn().subscribe(res => {
+      if(res){
+        this.changeNumber(7);
+        sessionStorage.setItem("page",'7');
+      }
+    });
+  }
+
   updateShipHotOffers(fromShipComponent: Ship){
     this.shipForHotOffers = fromShipComponent;
   }
