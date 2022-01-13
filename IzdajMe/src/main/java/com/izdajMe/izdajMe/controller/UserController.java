@@ -146,6 +146,11 @@ public class UserController {
         return new ResponseEntity<Boolean>(userService.deleteUser(id), HttpStatus.OK);
     }
 
+    @PostMapping("/users/declineUser")
+    public ResponseEntity<Boolean> declineUser(@RequestBody Long id){
+        return new ResponseEntity<Boolean>(userService.declineUser(id), HttpStatus.OK);
+    }
+
     @PostMapping("/users/acceptUser")
     public ResponseEntity<Boolean> acceptUser(@RequestBody Long id) {
         return new ResponseEntity<Boolean>(userService.acceptUser(id), HttpStatus.OK);

@@ -212,6 +212,16 @@ export class SuperiorAdministratorProfileComponent implements OnInit {
     });
   }
 
+  userDeclined(index:number) {
+    let declineUser = this.allUsers[index]
+    this.userService.declineUser(declineUser.id).subscribe(ret => {
+      if(ret)
+        this.userService.getAllUsers().subscribe(ret => {
+          this.allUsers = ret;
+        });
+    });
+  }
+
   acceptRequest(index: number) {
     let acceptingRequest = this.allRequests[index];
     this.accountDeleteRequestsService.deleteRequest(acceptingRequest.id).subscribe(ret => {
