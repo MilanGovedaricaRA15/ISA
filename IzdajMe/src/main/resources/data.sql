@@ -1,4 +1,5 @@
 delete from account_delete_requests where id!=0;
+delete from concurent_watcher where id!=0;
 delete from cottage_reservations where id!=0;
 delete from ship_reservations where id!=0;
 delete from favor_reservations where id!=0;
@@ -58,7 +59,7 @@ values (14, 'Kralja Aleksandra 12a', 'Uzice', 'Srbija', 'peraperic@gmail.com', '
 insert into cottages (id, address, available_from, available_till, description, images, name, num_of_beds, num_of_rooms, rules, services, owner_id, cost_per_night)
 values (1, 'Dunavska 1',DATE('2021-09-01'),DATE('2022-02-01'),'Na jezeru',null, 'Micova', 3, 3, 'Nisu dozvoljene zivotinje', null, 1, 50);
 insert into cottages (id, address, available_from, available_till, description, images, name, num_of_beds, num_of_rooms, rules, services, owner_id, cost_per_night)
-values (2, 'Dunavska 2',DATE('2021-08-22'),DATE('2021-10-01'),'Blizu jezera',null, 'Popici', 3, 3, 'Nisu dozvoljene zivotinje', null, 1, 30);
+values (2, 'Dunavska 2',DATE('2021-08-22'),DATE('2021-10-01'),'Blizu jezera', null, 'Popici', 3, 3, 'Nisu dozvoljene zivotinje', null, 1, 30);
 
 insert into ships(id, owner_id, available_from, available_till, name, type, length, engine_number, engine_power, top_speed, navigation_equipment, address, description, images, capacity, rules,fishing_equipment,cancel_requirements,cost_per_night)
 values (1, 3,DATE('2021-09-01'),DATE('2022-02-01'), 'Shipfirst', 'typeone', 72, '123a456', 157, 245, null, 'Nikole Tesle 1', 'Description', null, 20, 'pravila',null,'free',90);
@@ -225,3 +226,7 @@ insert into favor_reservations (id, available_from, available_till, cost, client
 values (2, DATE('2022-1-1'), DATE('2022-1-15'), 900, 14, 3, null);
 insert into favor_reservations (id, available_from, available_till, cost, client_id, favor_id, services)
 values (3, DATE('2022-2-24'), DATE('2022-2-24'), 600, 14, 2, null);
+
+insert into concurent_watcher (id, table_name, is_writing) values (1, 'CottageReservation', false);
+
+

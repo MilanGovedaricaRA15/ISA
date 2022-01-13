@@ -1,14 +1,12 @@
 package com.izdajMe.izdajMe.services;
 
 import com.izdajMe.izdajMe.model.*;
-import com.izdajMe.izdajMe.repository.CottageRepository;
-import com.izdajMe.izdajMe.repository.CottageReservationRepository;
-import com.izdajMe.izdajMe.repository.ShipRepository;
-import com.izdajMe.izdajMe.repository.ShipReservationRepository;
+import com.izdajMe.izdajMe.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import java.sql.Timestamp;
@@ -26,6 +24,8 @@ public class ShipReservationServiceImpl implements ShipReservationService {
     private ShipRepository shipRepository;
     @Autowired
     private EmailService emailService;
+    @Autowired
+    private ConcurentWatcherRepository concurentWatcherRepository;
 
     public List<ShipReservation> getAllReservationsOfShip(Long id) {
         List<ShipReservation> allThisShipReservations = shipReservationRepository.findAllByShipId(id);
@@ -120,17 +120,27 @@ public class ShipReservationServiceImpl implements ShipReservationService {
         return  slobodno;
     }
 
+    @Transactional(readOnly = false)
     public Boolean addReservationByOwner(ShipReservation shipReservation){
+        if (concurentWatcherRepository.findByTableName("ShipReservation").getWriting() == false) {
+            ConcurentWatcher cw = concurentWatcherRepository.findByTableName("ShipReservation");
+            cw.setWriting(true);
+            List<ShipReservation> allThisShipReservations = shipReservationRepository.findAllByShipId(shipReservation.getShip().getId());
+            Ship thisShip = shipRepository.getById(shipReservation.getShip().getId());
+            List<ShipHotOffer> allThisShipHotOffers = thisShip.getHotOffers();
 
-        List<ShipReservation> allThisShipReservations = shipReservationRepository.findAllByShipId(shipReservation.getShip().getId());
-        Ship thisShip = shipRepository.getById(shipReservation.getShip().getId());
-        List<ShipHotOffer> allThisShipHotOffers = thisShip.getHotOffers();
-
-        boolean slobodno = canAddReservation(allThisShipReservations, shipReservation, allThisShipHotOffers);
-        if(slobodno) {
-            shipReservationRepository.save(shipReservation);
-            sendNotificationForReservation(shipReservation);
-            return true;
+            boolean slobodno = canAddReservation(allThisShipReservations, shipReservation, allThisShipHotOffers);
+            if (slobodno) {
+                shipReservationRepository.save(shipReservation);
+                cw.setWriting(false);
+                concurentWatcherRepository.save(cw);
+                sendNotificationForReservation(shipReservation);
+                return true;
+            } else {
+                cw.setWriting(false);
+                concurentWatcherRepository.save(cw);
+                return false;
+            }
         }
         else{
             return false;
