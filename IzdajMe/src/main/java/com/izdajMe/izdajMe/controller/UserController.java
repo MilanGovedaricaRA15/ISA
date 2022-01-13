@@ -173,15 +173,6 @@ public class UserController {
         }
     }
 
-    /*@GetMapping("/users/getAllUsers")
-    public ResponseEntity<List<UserDTO>> getAllUsers() {
-        List<UserDTO> list = new ArrayList<UserDTO>();
-        for(User user : userService.getAllUsers()){
-            list.add(new UserDTO(user));
-        }
-        return new ResponseEntity<List<UserDTO>>(list, HttpStatus.OK);
-    }*/
-
     @GetMapping("/users/getInstructorByEmail")
     public ResponseEntity<User> getInstructorByEmail(@RequestParam("email") String email) {
         User user = userService.getUserByEmail(email);

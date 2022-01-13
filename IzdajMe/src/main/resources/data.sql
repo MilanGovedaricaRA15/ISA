@@ -51,7 +51,7 @@ values (11, 'Nemanjina 2', 'Srbobran', 'Srbija', 'nikola.aleksic@gmail.com', 'Ni
 insert into users (id, address, city, country, email,first_name,last_name,mobile_number,password,reason,role,verified)
 values (12, 'Kralja Petra 12a', 'Becej', 'Srbija', 'milos.zivic@gmail.com', 'Milos', 'Zivic', '222222222222', 'zile', '', 5, TRUE);
 insert into users (id, address, city, country, email,first_name,last_name,mobile_number,password,reason,role,verified)
-values (13, 'Vozdovacka 12', 'Beograd', 'Srbija', 'vesnakundacina@gmail.com', 'Vesna', 'Kundacina', 123123123, 'aaaa', 'Izdaja vikendice', 0, FALSE);
+values (13, 'Vozdovacka 12', 'Beograd', 'Srbija', 'vesnakundacina852@gmail.com', 'Vesna', 'Kundacina', 123123123, 'aaaa', 'Izdaja vikendice', 0, FALSE);
 insert into users (id, address, city, country, email,first_name,last_name,mobile_number,password,reason,role,verified)
 values (14, 'Kralja Aleksandra 12a', 'Uzice', 'Srbija', 'peraperic@gmail.com', 'Pera', 'Peric', '222222222222', 'aaaa', '', 6, TRUE);
 
