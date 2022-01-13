@@ -270,6 +270,12 @@ export class AppComponent {
     sessionStorage.setItem("requestToAnswer", index);
   }
 
+  decliningUserReason(index: string) {
+    this.changeNumber(302);
+    sessionStorage.setItem("page",'302');
+    sessionStorage.setItem("requestToDecliningAnswer", index);
+  }
+
   answerIsSended() {
     this.userService.isSuperiorAdministratorLoggedIn().subscribe(res => {
       if(res){
@@ -286,6 +292,21 @@ export class AppComponent {
   }
 
   reasonIsSended() {
+    this.userService.isSuperiorAdministratorLoggedIn().subscribe(res => {
+      if(res){
+        this.changeNumber(8);
+        sessionStorage.setItem("page",'8');
+      }
+    });
+    this.userService.isAdministratorLoggedIn().subscribe(res => {
+      if(res){
+        this.changeNumber(7);
+        sessionStorage.setItem("page",'7');
+      }
+    });
+  }
+
+  registrationReasonIsSended() {
     this.userService.isSuperiorAdministratorLoggedIn().subscribe(res => {
       if(res){
         this.changeNumber(8);

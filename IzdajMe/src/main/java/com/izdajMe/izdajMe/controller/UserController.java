@@ -147,8 +147,8 @@ public class UserController {
     }
 
     @PostMapping("/users/declineUser")
-    public ResponseEntity<Boolean> declineUser(@RequestBody Long id){
-        return new ResponseEntity<Boolean>(userService.declineUser(id), HttpStatus.OK);
+    public ResponseEntity<Boolean> declineUser(@RequestBody String text){
+        return new ResponseEntity<Boolean>(userService.declineUser(text), HttpStatus.OK);
     }
 
     @PostMapping("/users/acceptUser")

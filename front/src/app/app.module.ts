@@ -60,6 +60,7 @@ import { AddNewFavorComponent } from './components/add-new-favor/add-new-favor.c
 import { AddFavorReservationReportComponent } from './components/add-favor-reservation-report/add-favor-reservation-report.component';
 import { AddAnswerToComplaintComponent } from './components/add-answer-to-complaint/add-answer-to-complaint.component';
 import { AddReasonForDeletingRequestComponent } from './components/add-reason-for-deleting-request/add-reason-for-deleting-request.component';
+import { AddAnswerForDecliningRegistrationComponent } from './components/add-answer-for-declining-registration/add-answer-for-declining-registration.component';
 
 @NgModule({
   declarations: [
@@ -116,7 +117,8 @@ import { AddReasonForDeletingRequestComponent } from './components/add-reason-fo
     AddNewFavorComponent,
     AddFavorReservationReportComponent,
     AddAnswerToComplaintComponent,
-    AddReasonForDeletingRequestComponent
+    AddReasonForDeletingRequestComponent,
+    AddAnswerForDecliningRegistrationComponent
   ],
   imports: [
     BrowserModule,

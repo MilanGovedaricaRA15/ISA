@@ -199,8 +199,8 @@ export class UserService {
     return this.http.post<boolean>(this.deleteUserUrl,id);
   }
 
-  public declineUser(id:number): Observable<boolean>{
-    return this.http.post<boolean>(this.declineUserUrl,id);
+  public declineUser(text:string): Observable<boolean>{
+    return this.http.post<boolean>(this.declineUserUrl,text);
   }
 
   public acceptUser(id:number): Observable<boolean> {

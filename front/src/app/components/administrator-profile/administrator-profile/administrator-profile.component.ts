@@ -43,6 +43,7 @@ export class AdministratorProfileComponent implements OnInit {
   deletingShip: Ship;
   @Output() addAnswer = new EventEmitter<string>();
   @Output() addReason = new EventEmitter<string>();
+  @Output() decliningReason = new EventEmitter<string>();
 
   ngOnInit(): void {
     this.init();
@@ -192,13 +193,7 @@ export class AdministratorProfileComponent implements OnInit {
   }
 
   userDeclined(index:number) {
-    let declineUser = this.allUsers[index]
-    this.userService.declineUser(declineUser.id).subscribe(ret => {
-      if(ret)
-        this.userService.getAllUsers().subscribe(ret => {
-          this.allUsers = ret;
-        });
-    });
+    this.decliningReason.emit(index.toString());
   }
 
   acceptUser(index: number) {

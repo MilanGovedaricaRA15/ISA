@@ -15,7 +15,7 @@ public interface UserService {
     public Boolean changeAdministratorsPassword(User user);
     public Boolean saveAdmin(User user);
     public Boolean deleteUser(long id);
-    public Boolean declineUser(long id);
+    public Boolean declineUser(String text);
     public List<User> searchUsersByName(String firstName, String lastName);
     List<User> searchInstructorsByName(String firstName, String lastName);
     public Boolean saveClient(User user);

@@ -198,10 +198,10 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    public Boolean declineUser(long id) {
-        User user = userRepository.findById(id).get();
-        userRepository.deleteById(id);
-        sendNotificationFromAdminForFailedRegistration(user);
+    public Boolean declineUser(String text) {
+        User user = userRepository.findById((long) Integer.parseInt(text.split(" ")[0])).get();
+        userRepository.deleteById((long) Integer.parseInt(text.split(" ")[0]));
+        sendNotificationFromAdminForFailedRegistration(user, text.split(" ")[1]);
         return true;
     }
 
@@ -381,12 +381,13 @@ public class UserServiceImpl implements UserService {
         emailService.sendSimpleMessage(mail);
     }
 
-    private void sendNotificationFromAdminForFailedRegistration(User user) throws MailException {
+    private void sendNotificationFromAdminForFailedRegistration(User user, String text) throws MailException {
         SimpleMailMessage mail = new SimpleMailMessage();
         mail.setTo(user.getEmail());
         mail.setFrom("rajkorajkeza@gmail.com");
         mail.setSubject("Failed registration");
-        mail.setText("Your registration was denied because your personal informations were entered incorrectly");
+        mail.setText("Your request for registration has been declined!" + "\n"
+                + "Reason: " + text);
         emailService.sendSimpleMessage(mail);
     }
 }
