@@ -59,6 +59,7 @@ import { FavorProfileComponent } from './components/favor-profile/favor-profile.
 import { AddNewFavorComponent } from './components/add-new-favor/add-new-favor.component';
 import { AddFavorReservationReportComponent } from './components/add-favor-reservation-report/add-favor-reservation-report.component';
 import { AddAnswerToComplaintComponent } from './components/add-answer-to-complaint/add-answer-to-complaint.component';
+import { AddReasonForDeletingRequestComponent } from './components/add-reason-for-deleting-request/add-reason-for-deleting-request.component';
 
 @NgModule({
   declarations: [
@@ -114,7 +115,8 @@ import { AddAnswerToComplaintComponent } from './components/add-answer-to-compla
     FavorProfileComponent,
     AddNewFavorComponent,
     AddFavorReservationReportComponent,
-    AddAnswerToComplaintComponent
+    AddAnswerToComplaintComponent,
+    AddReasonForDeletingRequestComponent
   ],
   imports: [
     BrowserModule,

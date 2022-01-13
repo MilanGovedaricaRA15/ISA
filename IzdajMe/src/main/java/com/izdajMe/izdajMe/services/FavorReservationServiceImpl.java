@@ -122,4 +122,12 @@ public class FavorReservationServiceImpl implements FavorReservationService{
             return false;
         }
     }
+
+    public void deleteByClientId(long id) {
+        List<FavorReservation> reservations = favorReservationRepository.findAll();
+        for(FavorReservation fr: reservations){
+            if(fr.getClient().getId() == id)
+                favorReservationRepository.deleteById(fr.getId());
+        }
+    }
 }

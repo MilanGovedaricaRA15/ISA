@@ -19,7 +19,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private ShipRepository shipRepository;
     @Autowired
-    InstructorsFavorRepository instructorsFavorRepository;
+    private InstructorsFavorRepository instructorsFavorRepository;
     @Autowired
     private EmailService emailService;
     @Autowired
@@ -28,6 +28,18 @@ public class UserServiceImpl implements UserService {
     private ShipReservationRepository shipReservationRepository;
     @Autowired
     private FavorReservationRepository favorReservationRepository;
+    @Autowired
+    private ComplaintRepository complaintRepository;
+    @Autowired
+    private GradeRepository gradeRepository;
+    @Autowired
+    private GradeService gradeService;
+    @Autowired
+    private CottageReservationService cottageReservationService;
+    @Autowired
+    private ShipReservationService shipReservationService;
+    @Autowired
+    private FavorReservationService favorReservationService;
 
     @Override
     public List<User> getAllUsers() {
@@ -145,6 +157,9 @@ public class UserServiceImpl implements UserService {
 
     public Boolean deleteUser(long id) {
         User user = userRepository.findById(id).get();
+        cottageReservationService.deleteByClientId(id);
+        shipReservationService.deleteByClientId(id);
+        favorReservationService.deleteByClientId(id);
         if(user.getRole().equals(User.Role.cottageAdvertiser))
             deleteCottageAdvertiser(id);
         else if(user.getRole().equals(User.Role.boatAdvertiser))
@@ -152,8 +167,34 @@ public class UserServiceImpl implements UserService {
         else if(user.getRole().equals(User.Role.instructor))
             deleteInstructor(id);
 
+        deleteComplaints(id);
+        deleteGrades(id);
         userRepository.deleteById(id);
         return true;
+    }
+
+    private void deleteGrades(long id) {
+        List<Grade> grades = gradeRepository.findGradesById(id);
+        if(grades.size() != 0){
+            for(Grade g: grades){
+                gradeService.deleteGrade(g.getId());
+            }
+        }
+    }
+
+    private void deleteComplaints(long id) {
+        List<Complaint> complaintsByAuthor = complaintRepository.findComplaintsByAuthorId(id);
+        if(complaintsByAuthor.size() != 0) {
+            for(Complaint c : complaintsByAuthor) {
+                complaintRepository.deleteById(c.getId());
+            }
+        }
+        List<Complaint> complaintsOfComplaintUser = complaintRepository.findComplaintsByComplaintUserId(id);
+        if(complaintsOfComplaintUser.size() != 0) {
+            for(Complaint c : complaintsOfComplaintUser) {
+                complaintRepository.deleteById(c.getId());
+            }
+        }
     }
 
     private void deleteCottageAdvertiser(long id) {

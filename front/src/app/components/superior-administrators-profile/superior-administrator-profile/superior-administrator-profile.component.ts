@@ -43,6 +43,7 @@ export class SuperiorAdministratorProfileComponent implements OnInit {
   deletingShip: Ship;
   @Output() addAdmin = new EventEmitter<string>();
   @Output() addAnswer = new EventEmitter<string>();
+  @Output() addReason = new EventEmitter<string>();
 
   ngOnInit(): void {
     this.init();
@@ -232,7 +233,7 @@ export class SuperiorAdministratorProfileComponent implements OnInit {
 
   acceptRequest(index: number) {
     let acceptingRequest = this.allRequests[index];
-    this.accountDeleteRequestsService.deleteRequest(acceptingRequest.id).subscribe(ret => {
+    this.accountDeleteRequestsService.acceptRequest(acceptingRequest).subscribe(ret => {
       if(ret)
         this.userService.removeUser(acceptingRequest.user.id).subscribe(ret => {
           if(ret) {
@@ -252,11 +253,7 @@ export class SuperiorAdministratorProfileComponent implements OnInit {
   }
 
   declineRequest(index: number) {
-    let deletingRequest = this.allRequests[index];
-    this.accountDeleteRequestsService.deleteRequest(deletingRequest.id).subscribe(ret => {
-      if(ret)
-        this.allRequests[index].seen = true;
-    });
+    this.addReason.emit(index.toString());
   }
 
   acceptGrade(index: number) {

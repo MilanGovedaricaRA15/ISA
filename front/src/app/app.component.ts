@@ -264,7 +264,28 @@ export class AppComponent {
     sessionStorage.setItem("complaintToAnswer", index);
   }
 
+  addReason(index: string) {
+    this.changeNumber(301);
+    sessionStorage.setItem("page",'301');
+    sessionStorage.setItem("requestToAnswer", index);
+  }
+
   answerIsSended() {
+    this.userService.isSuperiorAdministratorLoggedIn().subscribe(res => {
+      if(res){
+        this.changeNumber(8);
+        sessionStorage.setItem("page",'8');
+      }
+    });
+    this.userService.isAdministratorLoggedIn().subscribe(res => {
+      if(res){
+        this.changeNumber(7);
+        sessionStorage.setItem("page",'7');
+      }
+    });
+  }
+
+  reasonIsSended() {
     this.userService.isSuperiorAdministratorLoggedIn().subscribe(res => {
       if(res){
         this.changeNumber(8);

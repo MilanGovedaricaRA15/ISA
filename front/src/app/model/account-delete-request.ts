@@ -5,5 +5,5 @@ export class AccountDeleteRequest {
     user: User;
     seen: boolean;
     reason: string;
-
+    answer:string;
 }

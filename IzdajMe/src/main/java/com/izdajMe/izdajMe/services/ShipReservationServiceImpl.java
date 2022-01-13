@@ -146,4 +146,12 @@ public class ShipReservationServiceImpl implements ShipReservationService {
         emailService.sendSimpleMessage(mail);
         return;
     }
+
+    public void deleteByClientId(long id) {
+        List<ShipReservation> reservations = shipReservationRepository.findAll();
+        for(ShipReservation sr: reservations){
+            if(sr.getClient().getId() == id)
+                shipReservationRepository.deleteById(sr.getId());
+        }
+    }
 }

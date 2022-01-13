@@ -142,4 +142,12 @@ public class CottageReservationServiceImpl implements CottageReservationService{
         emailService.sendSimpleMessage(mail);
         return;
     }
+
+    public void deleteByClientId(long id) {
+        List<CottageReservation> reservations = cottageReservationRepository.findAll();
+        for(CottageReservation cr: reservations){
+            if(cr.getClient().getId() == id)
+                cottageReservationRepository.deleteById(cr.getId());
+        }
+    }
 }
