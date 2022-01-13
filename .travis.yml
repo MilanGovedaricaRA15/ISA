@@ -1,1 +1,5 @@
 language: java
+os: windows
+branches:
+  only:
+  - main
