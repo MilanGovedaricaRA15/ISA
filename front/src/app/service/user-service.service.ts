@@ -7,7 +7,6 @@ import { map } from 'rxjs/operators';
 @Injectable()
 export class UserService {
 
-  private allUsersUrl: string;
   private getAllUsersUrl: string;
   private getAllInstructorsUrl: string;
   private usersUrlLogin: string;
@@ -21,12 +20,12 @@ export class UserService {
   private changeAdministratorsPassword: string;
   private addNewAdmin: string;
   private deleteUserUrl: string;
+  private declineUserUrl: string;
   private searchInstructorssByNameUrl: string;
   private acceptUserUrl: string;
   
 
   constructor(private http: HttpClient) {
-    this.allUsersUrl = 'http://localhost:8080/users/getAllUsers';
     this.getAllUsersUrl = 'http://localhost:8080/users/getAllUsers';
     this.getAllInstructorsUrl = 'http://localhost:8080/users/getAllInstructors';
     this.usersUrlLogin = 'http://localhost:8080/users/login';
@@ -40,6 +39,7 @@ export class UserService {
     this.changeAdministratorsPassword = 'http://localhost:8080/users/changeAdministratorsPassword';
     this.addNewAdmin = 'http://localhost:8080/users/addAdmin';
     this.deleteUserUrl = 'http://localhost:8080/users/deleteUser';
+    this.declineUserUrl = 'http://localhost:8080/users/declineUser';
     this.searchInstructorssByNameUrl = 'http://localhost:8080/users/searchInstructorsByName';
     this.acceptUserUrl = 'http://localhost:8080/users/acceptUser';
   }
@@ -197,6 +197,10 @@ export class UserService {
 
   public removeUser(id:number): Observable<boolean>{
     return this.http.post<boolean>(this.deleteUserUrl,id);
+  }
+
+  public declineUser(id:number): Observable<boolean>{
+    return this.http.post<boolean>(this.declineUserUrl,id);
   }
 
   public acceptUser(id:number): Observable<boolean> {

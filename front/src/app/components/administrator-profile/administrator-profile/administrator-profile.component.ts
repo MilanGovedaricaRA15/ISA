@@ -181,7 +181,16 @@ export class AdministratorProfileComponent implements OnInit {
         });
       }
     });
-    
+  }
+
+  userDeclined(index:number) {
+    let declineUser = this.allUsers[index]
+    this.userService.declineUser(declineUser.id).subscribe(ret => {
+      if(ret)
+        this.userService.getAllUsers().subscribe(ret => {
+          this.allUsers = ret;
+        });
+    });
   }
 
   acceptUser(index: number) {

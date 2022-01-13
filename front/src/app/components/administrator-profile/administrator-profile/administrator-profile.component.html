@@ -139,7 +139,7 @@
                                 <td scope="col">{{item.verified}}</td>
                                 <td scope="col" *ngIf="item.verified === false ">
                                     <button class="btn btn-success" style="margin-bottom: 2px;" (click)="acceptUser(indexOfelement)"> Accept </button>
-                                    <button class="btn btn-danger" (click)="userDeleted(indexOfelement)"> Decline </button>
+                                    <button class="btn btn-danger" (click)="userDeclined(indexOfelement)"> Decline </button>
                                 </td>
                                 <td scope="col" *ngIf="item.verified">
                                     <button class="btn btn-danger" (click)="userDeleted(indexOfelement)"> Delete user </button>

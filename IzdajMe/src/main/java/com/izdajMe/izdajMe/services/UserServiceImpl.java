@@ -20,6 +20,7 @@ public class UserServiceImpl implements UserService {
     private ShipRepository shipRepository;
     @Autowired
     InstructorsFavorRepository instructorsFavorRepository;
+    @Autowired
     private EmailService emailService;
     @Autowired
     private CottageReservationRepository cottageReservationRepository;
@@ -133,6 +134,13 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
         return true;
 
+    }
+
+    public Boolean declineUser(long id) {
+        User user = userRepository.findById(id).get();
+        userRepository.deleteById(id);
+        sendNotificationFromAdminForFailedRegistration(user);
+        return true;
     }
 
     public Boolean deleteUser(long id) {
@@ -269,6 +277,25 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(id).get();
         user.setVerified(true);
         userRepository.save(user);
+        sendNotificationFromAdminForSuccessRegistration(user);
         return true;
+    }
+
+    private void sendNotificationFromAdminForSuccessRegistration(User user) throws MailException{
+        SimpleMailMessage mail = new SimpleMailMessage();
+        mail.setTo(user.getEmail());
+        mail.setFrom("rajkorajkeza@gmail.com");
+        mail.setSubject("Accepting registration");
+        mail.setText("Your registration request has been accepted. Welcome! :)");
+        emailService.sendSimpleMessage(mail);
+    }
+
+    private void sendNotificationFromAdminForFailedRegistration(User user) throws MailException {
+        SimpleMailMessage mail = new SimpleMailMessage();
+        mail.setTo(user.getEmail());
+        mail.setFrom("rajkorajkeza@gmail.com");
+        mail.setSubject("Failed registration");
+        mail.setText("Your registration was denied because your personal informations were entered incorrectly");
+        emailService.sendSimpleMessage(mail);
     }
 }
