@@ -17,6 +17,7 @@ before_script:
 branches:
   only:
   - testing
+  - main
 language: java
 services:
 - postgresql
