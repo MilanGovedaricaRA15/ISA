@@ -14,7 +14,7 @@ branches:
 
 addons:
   sonarcloud:
-    organization: "milangovedarica15-1" # the key of the org you chose at step #3
+    organization: "milangovedaricara15" # the key of the org you chose at step #3
     token:
       secure: "70d843b5a065c504240c45a0e000f772b2e9610a" # encrypted value of your token
   
