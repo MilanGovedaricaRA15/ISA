@@ -11,6 +11,13 @@ before_script:
 branches: 
   only: 
     - testing
+
+addons:
+  sonarcloud:
+    organization: "milangovedarica15-1" # the key of the org you chose at step #3
+    token:
+      secure: "70d843b5a065c504240c45a0e000f772b2e9610a" # encrypted value of your token
+  
 language: java
 services:
   - postgresql
@@ -18,3 +25,4 @@ install:
 - ./mvnw install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 script:
 - ./mvnw test -B
+- sonar-scanner
