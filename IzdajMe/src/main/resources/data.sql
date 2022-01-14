@@ -234,5 +234,9 @@ insert into favor_reservations (id, available_from, available_till, cost, client
 values (3, DATE('2022-2-24'), DATE('2022-2-24'), 600, 14, 2, null);
 
 insert into concurent_watcher (id, table_name, is_writing) values (1, 'CottageReservation', false);
-
+insert into concurent_watcher (id, table_name, is_writing) values (2, 'Cottage', false);
+insert into concurent_watcher (id, table_name, is_writing) values (3, 'ShipReservation', false);
+insert into concurent_watcher (id, table_name, is_writing) values (4, 'Ship', false);
+insert into concurent_watcher (id, table_name, is_writing) values (5, 'ShipHotOffer', false);
+insert into concurent_watcher (id, table_name, is_writing) values (6, 'CottageHotOffer', false);
 
