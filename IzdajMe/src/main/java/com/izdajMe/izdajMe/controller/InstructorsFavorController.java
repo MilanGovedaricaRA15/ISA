@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +33,21 @@ public class InstructorsFavorController {
         }
 
         return new ResponseEntity<List<InstructorsFavor>>(allFavors, HttpStatus.OK);
+    }
+
+    @GetMapping("/favors/getAllAvailableFavors")
+    public ResponseEntity<List<InstructorsFavorDTO>> getAllAvailableCottages(@RequestParam("from") String from, @RequestParam("to") String to, @RequestParam("numOfGuests") int numOfGuests){
+        List<InstructorsFavorDTO> availableFavors = new ArrayList<InstructorsFavorDTO>();
+
+        Timestamp fromDateTs = new Timestamp(Long.parseLong(from));
+        Timestamp toDateTs = new Timestamp(Long.parseLong(to));
+        LocalDateTime fromDate = fromDateTs.toLocalDateTime();
+        LocalDateTime toDate = toDateTs.toLocalDateTime();
+
+        for(InstructorsFavor c : instructorsFavorService.getAllAvailableFavors(fromDate, toDate, numOfGuests)) {
+            availableFavors.add(new InstructorsFavorDTO(c));
+        }
+        return new ResponseEntity<List<InstructorsFavorDTO>>(availableFavors, HttpStatus.OK);
     }
 
     @PostMapping("/favors/deleteFavor")

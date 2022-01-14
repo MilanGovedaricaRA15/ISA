@@ -15,6 +15,7 @@ export class ClientProfileComponent implements OnInit {
   viewInformation: boolean = true;
   editInformation: boolean = false;
   passwordChange: boolean = false;
+  viewCottageReservations: boolean = true;
   oldPasswordMatch: boolean = false;
   passwordTheSame: boolean = false;
 
@@ -52,11 +53,13 @@ export class ClientProfileComponent implements OnInit {
   editInformations() : void {
     this.viewInformation = false;
     this.editInformation = true;
+    this.viewCottageReservations = false;
   }
 
   editPassword() : void {
     this.viewInformation = false;
     this.passwordChange = true;
+    this.viewCottageReservations = false;
   }
 
   validatePass(){
@@ -93,6 +96,7 @@ export class ClientProfileComponent implements OnInit {
         if (ret) {
           this.passwordChange = false;
           this.viewInformation = true;
+          this.viewCottageReservations = true;
           this.oldPassword.value = "";
           this.newPassword.value = "";
           this.newPassword2.value = "";
@@ -113,6 +117,7 @@ export class ClientProfileComponent implements OnInit {
       })
       this.viewInformation = true;
       this.editInformation = false;
+      this.viewCottageReservations = true;
     } else {
       alert('Wrong password!');
     }

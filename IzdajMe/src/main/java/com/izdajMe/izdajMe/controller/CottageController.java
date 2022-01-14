@@ -15,6 +15,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.InputStream;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,6 +57,21 @@ public class CottageController {
             list.add(new CottageDTO(c));
         }
         return new ResponseEntity<List<CottageDTO>>(list, HttpStatus.OK);
+    }
+
+    @GetMapping("/cottages/getAllAvailableCottages")
+    public ResponseEntity<List<CottageDTO>> getAllAvailableCottages(@RequestParam("from") String from, @RequestParam("to") String to, @RequestParam("numOfGuests") int numOfGuests){
+        List<CottageDTO> availableCottages = new ArrayList<CottageDTO>();
+
+        Timestamp fromDateTs = new Timestamp(Long.parseLong(from));
+        Timestamp toDateTs = new Timestamp(Long.parseLong(to));
+        LocalDateTime fromDate = fromDateTs.toLocalDateTime();
+        LocalDateTime toDate = toDateTs.toLocalDateTime();
+
+        for(Cottage c : cottageService.getAllAvailableCottages(fromDate, toDate, numOfGuests)) {
+            availableCottages.add(new CottageDTO(c));
+        }
+        return new ResponseEntity<List<CottageDTO>>(availableCottages, HttpStatus.OK);
     }
 
     @PutMapping("/cottages/removeCottageImg")

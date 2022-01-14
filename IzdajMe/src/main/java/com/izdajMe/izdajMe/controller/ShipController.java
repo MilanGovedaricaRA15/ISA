@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +42,22 @@ public class ShipController {
         }
 
         return new ResponseEntity<List<Ship>>(allShips, HttpStatus.OK);
+    }
+
+    @GetMapping("/ships/getAllAvailableShips")
+    public ResponseEntity<List<ShipDTO>> getAllAvailableShips(@RequestParam("from") String from, @RequestParam("to") String to, @RequestParam("numOfGuests") int numOfGuests){
+        List<ShipDTO> availableShips = new ArrayList<>();
+
+        Timestamp fromDateTs = new Timestamp(Long.parseLong(from));
+        Timestamp toDateTs = new Timestamp(Long.parseLong(to));
+        LocalDateTime fromDate = fromDateTs.toLocalDateTime();
+        LocalDateTime toDate = toDateTs.toLocalDateTime();
+
+        for(Ship ship : shipService.getAllAvailableShips(fromDate, toDate, numOfGuests)) {
+            availableShips.add(new ShipDTO(ship));
+        }
+
+        return new ResponseEntity<List<ShipDTO>>(availableShips, HttpStatus.OK);
     }
 
     @GetMapping("/ships/searchShipsByName")

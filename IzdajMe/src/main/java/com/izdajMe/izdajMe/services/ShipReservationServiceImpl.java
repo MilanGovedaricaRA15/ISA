@@ -144,6 +144,21 @@ public class ShipReservationServiceImpl implements ShipReservationService {
         }
     }
 
+    public Boolean addReservationByClient(ShipReservation shipReservation){
+        List<ShipReservation> allThisShipReservations = shipReservationRepository.findAllByShipId(shipReservation.getShip().getId());
+        Ship thisShip = shipRepository.getById(shipReservation.getShip().getId());
+        List<ShipHotOffer> allThisShipHotOffers = thisShip.getHotOffers();
+
+        if(canAddReservation(allThisShipReservations, shipReservation, allThisShipHotOffers)) {
+            shipReservationRepository.save(shipReservation);
+            sendNotificationForClientReservation(shipReservation);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     private void sendNotificationForReservation(ShipReservation shipReservation) throws MailException {
         SimpleMailMessage mail = new SimpleMailMessage();
         mail.setTo(shipReservation.getClient().getEmail());
@@ -153,6 +168,15 @@ public class ShipReservationServiceImpl implements ShipReservationService {
         emailService.sendSimpleMessage(mail);
         return;
     }
+
+    private void sendNotificationForClientReservation(ShipReservation shipReservation) throws MailException {
+        SimpleMailMessage mail = new SimpleMailMessage();
+        mail.setTo(shipReservation.getClient().getEmail());
+        mail.setFrom("rajkorajkeza@gmail.com");
+        mail.setSubject("IzdajMe new reservation");
+        mail.setText("New reservation is made from: " + shipReservation.getAvailableFrom() + " till: " + shipReservation.getAvailableTill() + " in ship: " + shipReservation.getShip().getName() + " by: " + shipReservation.getClient().getFirstName());
+        emailService.sendSimpleMessage(mail);
+	}
 
     public void deleteByClientId(long id) {
         List<ShipReservation> reservations = shipReservationRepository.findAll();

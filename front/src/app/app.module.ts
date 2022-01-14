@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { RegisterFormComponent } from './components/registerForm/registerForm.component';
@@ -58,6 +56,7 @@ import { InstructorProfileComponent } from './components/instructor-profile/inst
 import { FavorProfileComponent } from './components/favor-profile/favor-profile.component';
 import { AddNewFavorComponent } from './components/add-new-favor/add-new-favor.component';
 import { AddFavorReservationReportComponent } from './components/add-favor-reservation-report/add-favor-reservation-report.component';
+import { CreateAReservationClientComponent } from './components/create-a-reservation-client/create-a-reservation-client.component';
 import { AddAnswerToComplaintComponent } from './components/add-answer-to-complaint/add-answer-to-complaint.component';
 import { AddReasonForDeletingRequestComponent } from './components/add-reason-for-deleting-request/add-reason-for-deleting-request.component';
 import { AddAnswerForDecliningRegistrationComponent } from './components/add-answer-for-declining-registration/add-answer-for-declining-registration.component';
@@ -116,6 +115,7 @@ import { AddAnswerForDecliningRegistrationComponent } from './components/add-ans
     FavorProfileComponent,
     AddNewFavorComponent,
     AddFavorReservationReportComponent,
+    CreateAReservationClientComponent,
     AddAnswerToComplaintComponent,
     AddReasonForDeletingRequestComponent,
     AddAnswerForDecliningRegistrationComponent

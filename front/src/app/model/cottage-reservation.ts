@@ -10,7 +10,7 @@ export class CottageReservation {
     cost:number;
     client:User;
     cottage:Cottage;
-    services:Array<Services> ;
+    services:Array<Services>;
     report:Report;
     penalty:Penalty;
 }

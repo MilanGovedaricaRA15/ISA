@@ -28,6 +28,7 @@ export class AppComponent {
   shipToShowClient: Ship;
   instructorToShowClient: User;
   clientToShowAuthenticated: User;
+  clientProfileAuthenticated: User;
   userForOwner: User;
   cottageReservationReceive:CottageReservation;
   shipReservationReceive:ShipReservation;
@@ -383,6 +384,11 @@ export class AppComponent {
   goToInstructorsReservationsPageClient(){
     this.changeNumber(40);
     sessionStorage.setItem("page", '40');
+  }
+
+  goToCreateReservationPageClient() {
+    this.changeNumber(41);
+    sessionStorage.setItem("page", '41');
   }
 
   seeUserOwner(user: User){

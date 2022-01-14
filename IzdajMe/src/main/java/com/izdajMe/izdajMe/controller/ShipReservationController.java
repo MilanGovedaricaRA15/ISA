@@ -78,6 +78,20 @@ public class ShipReservationController {
         }
     }
 
+    @PostMapping("/shipReservation/addReservationByClient")
+    public ResponseEntity<Boolean> addReservationByClient(@RequestBody ShipReservation shipReservation,HttpServletRequest request) {
+        if (request.getSession(false).getAttribute("role") != null) {
+            if (request.getSession(false).getAttribute("role") == User.Role.client) {
+                return new ResponseEntity<Boolean>(shipReservationService.addReservationByClient(shipReservation), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
+            }
+        }
+        else {
+            return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
+        }
+    }
+
     @PutMapping("/shipReservation/changeReservationByOwner")
     public ResponseEntity<Boolean> changeReservationByOwner(@RequestBody ShipReservation shipReservation, HttpServletRequest request) {
         if (request.getSession(false).getAttribute("role") != null) {
