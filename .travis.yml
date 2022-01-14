@@ -1,4 +1,20 @@
+before_install: 
+ - cd IzdajMe
+ - chmod +x mvnw
+ - sudo service postgresql stop
+ - sed -e 's/^port.*/port = 5432/' /etc/postgresql/10/main/postgresql.conf > postgresql.conf
+ - sudo chown postgres postgresql.conf
+ - sudo mv postgresql.conf /etc/postgresql/10/main
+ - sudo service postgresql start 10
+before_script:
+  - psql -c 'create database izdajme;' -U postgres
+branches: 
+  only: 
+    - testing
 language: java
-branches:
-  only:
-  - main
+services:
+  - postgresql
+install:
+- ./mvnw install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+script:
+- ./mvnw test -B
