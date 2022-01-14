@@ -24,7 +24,7 @@ import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {Cottage.class,User.class})
-public class CottageServiceTest {
+class CottageServiceTest {
 
     @Mock
     private CottageRepository cottageRepositoryMock;
@@ -36,7 +36,7 @@ public class CottageServiceTest {
     private CottageServiceImpl cottageService;
 
     @Test
-    public void testFindAllCottage() {
+    void testFindAllCottage() {
         when(cottageRepositoryMock.findAll()).thenReturn(Arrays.asList(new Cottage(DB_ID,null,
                 null,DB_NAME,DB_ADDRESS,DB_DESCRIPTION,null,DB_NUMOFROOMS,DB_NUMOFBEDS,DB_RULES,null,
                 null, null,null,DB_COSTPERNIGHT, null)));
