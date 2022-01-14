@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 
 @Entity
-@Table(name="hotOffers")
+@Table(name = "hotOffers")
 public class HotOffer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,7 +28,8 @@ public class HotOffer {
         this.free = true;
     }
 
-    public HotOffer(){}
+    public HotOffer() {
+    }
 
     public long getId() {
         return id;

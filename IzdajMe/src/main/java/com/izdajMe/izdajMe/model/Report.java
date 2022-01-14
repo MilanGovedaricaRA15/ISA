@@ -3,7 +3,7 @@ package com.izdajMe.izdajMe.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name="reports")
+@Table(name = "reports")
 public class Report {
 
     @Id
@@ -16,9 +16,10 @@ public class Report {
     private Boolean shouldGetPenalty;
     private Boolean verified;
 
-    public  Report(){}
+    public Report() {
+    }
 
-    public Report(long id, String report, String comment, String praise, Boolean showedUp, Boolean shouldGetPenalty,Boolean verified) {
+    public Report(long id, String report, String comment, String praise, Boolean showedUp, Boolean shouldGetPenalty, Boolean verified) {
         this.id = id;
         this.report = report;
         this.comment = comment;

@@ -93,7 +93,6 @@ public class InstructorsFavorServiceImpl implements InstructorsFavorService{
         }
         catch (IllegalStateException | IOException e)
         {
-            e.printStackTrace();
             return false;
         }
     }

@@ -8,18 +8,32 @@ import java.util.List;
 
 public interface ShipService {
     public List<Ship> getAllShips();
+
     public Ship getShipById(Long id);
+
     public List<Ship> searchShipsByName(String name);
+
     public float getShipAverageGrade(Long id);
+
     public List<Ship> getAllShipsOfOwner(String email);
+
     public Boolean removeShipImg(Ship ship);
+
     public Boolean removeShip(Long id);
+
     public Boolean changeShip(Ship ship);
+
     public Boolean checkIsReserved(Ship ship);
+
     public Boolean removeHotOffer(Ship ship);
+
     public Boolean addHotOfferToShip(Ship ship);
-    public Boolean uploadImg( MultipartFile file);
+
+    public Boolean uploadImg(MultipartFile file);
+
     public Ship addShip(Ship ship);
+
     public boolean isReserved(Long id);
+
     public Boolean removeShipByAdministrator(Long id);
 }

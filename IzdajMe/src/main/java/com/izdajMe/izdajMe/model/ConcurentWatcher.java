@@ -3,7 +3,7 @@ package com.izdajMe.izdajMe.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name="concurentWatcher")
+@Table(name = "concurentWatcher")
 public class ConcurentWatcher {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -12,7 +12,8 @@ public class ConcurentWatcher {
     private String tableName;
     private Boolean isWriting;
 
-    public ConcurentWatcher(){}
+    public ConcurentWatcher() {
+    }
 
     public ConcurentWatcher(long id, String tableName, Boolean isWriting) {
         this.id = id;

@@ -20,12 +20,12 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:4200")
 public class AccountDeleteRequestController {
     @Autowired
-    private AccountDeleteRequestService accountDeleteRequestService ;
+    private AccountDeleteRequestService accountDeleteRequestService;
 
     @GetMapping("/accountDeleteRequest/getAllRequests")
-    public ResponseEntity<List<AccountDeleteRequest>> getAllRequests(){
+    public ResponseEntity<List<AccountDeleteRequest>> getAllRequests() {
         List<AccountDeleteRequest> allRequests = new ArrayList<>();
-        for(AccountDeleteRequest request : accountDeleteRequestService.getAllRequests()) {
+        for (AccountDeleteRequest request : accountDeleteRequestService.getAllRequests()) {
             allRequests.add(request);
         }
 
@@ -33,27 +33,26 @@ public class AccountDeleteRequestController {
     }
 
     @PostMapping("/accountDeleteRequest/addAccountDeleteRequest")
-    public ResponseEntity<Boolean> addAccountDeleteRequest(@RequestBody AccountDeleteRequest accountDeleteRequest,HttpServletRequest request){
-        if (request.getSession(false).getAttribute("role")!=null) {
+    public ResponseEntity<Boolean> addAccountDeleteRequest(@RequestBody AccountDeleteRequest accountDeleteRequest, HttpServletRequest request) {
+        if (request.getSession(false).getAttribute("role") != null) {
             if (request.getSession(false).getAttribute("role") == User.Role.cottageAdvertiser || request.getSession(false).getAttribute("role") == User.Role.boatAdvertiser
                     || request.getSession(false).getAttribute("role") == User.Role.instructor) {
                 return new ResponseEntity<Boolean>(accountDeleteRequestService.addAccountDeleteRequest(accountDeleteRequest), HttpStatus.OK);
             } else {
                 return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
             }
-        }
-        else{
+        } else {
             return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
         }
     }
 
     @PostMapping("/accountDeleteRequest/acceptRequest")
-    public ResponseEntity<Boolean> acceptRequest(@RequestBody AccountDeleteRequest accountDeleteRequest){
+    public ResponseEntity<Boolean> acceptRequest(@RequestBody AccountDeleteRequest accountDeleteRequest) {
         return new ResponseEntity<Boolean>(accountDeleteRequestService.acceptRequest(accountDeleteRequest), HttpStatus.OK);
     }
 
     @PostMapping("/accountDeleteRequest/declineRequest")
-    public ResponseEntity<Boolean> declineRequest(@RequestBody AccountDeleteRequest accountDeleteRequest){
+    public ResponseEntity<Boolean> declineRequest(@RequestBody AccountDeleteRequest accountDeleteRequest) {
         return new ResponseEntity<Boolean>(accountDeleteRequestService.declineRequest(accountDeleteRequest), HttpStatus.OK);
     }
 }

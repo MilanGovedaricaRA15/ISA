@@ -12,7 +12,7 @@ public class EmailServiceImpl implements EmailService {
     @Autowired
     private JavaMailSender emailSender;
 
-    public void sendSimpleMessage(SimpleMailMessage mail){
+    public void sendSimpleMessage(SimpleMailMessage mail) {
         emailSender.send(mail);
     }
 }
