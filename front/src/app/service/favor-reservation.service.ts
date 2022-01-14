@@ -9,12 +9,14 @@ import { FavorReservation } from '../model/favor-reservation';
 export class FavorReservationService {
   getAllReservationsUrl: string;
   addReservationByOwnerUrl: string;
+  addReservationByClientUrl: string;
   getByIdUrl: string;
   changeReservationByInstructorUrl: string;
 
   constructor(private http: HttpClient) {
     this.getAllReservationsUrl = 'http://localhost:8080/favorReservations/getAllReservations';
     this.addReservationByOwnerUrl = 'http://localhost:8080/favorReservations/addReservationByOwner';
+    this.addReservationByClientUrl = 'http://localhost:8080/favorReservations/addReservationByClient';
     this.getByIdUrl = 'http://localhost:8080/favorReservations/getReservationById';
     this.changeReservationByInstructorUrl="http://localhost:8080/favorReservations/changeReservationByInstructor";
   }
@@ -28,6 +30,10 @@ export class FavorReservationService {
 
   public addReservationByOwner(favorReservation: FavorReservation):Observable<boolean>{
     return this.http.post<boolean>(this.addReservationByOwnerUrl,favorReservation,{withCredentials: true});
+  }
+
+  public addReservationByClient(favorReservation: FavorReservation) : Observable<boolean>{
+    return this.http.post<boolean>(this.addReservationByClientUrl, favorReservation, {withCredentials: true});
   }
 
   public getById(id:number) {

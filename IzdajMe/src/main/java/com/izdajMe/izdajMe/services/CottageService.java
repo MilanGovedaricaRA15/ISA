@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.InputStream;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import java.util.List;
 public interface CottageService {
     public List<Cottage> getAllCottagesOfOwner(String email);
     public List<Cottage> getAllCottages();
+    public List<Cottage> getAllAvailableCottages(LocalDateTime from, LocalDateTime to, int numOfGuests);
     public Boolean removeCottageImg(Cottage cottage);
     public Boolean removeCottage(Long id);
     public Boolean changeCottage(Cottage cottage);
@@ -28,5 +30,5 @@ public interface CottageService {
     public boolean isReserved(Long id);
     public List<Cottage> searchCottagesByName(String name);
     public Boolean removeCottageByAdministrator(Long id);
-
+    public Boolean isCottageAvailable(Long id, LocalDateTime from, LocalDateTime to, int numOfGuests);
 }

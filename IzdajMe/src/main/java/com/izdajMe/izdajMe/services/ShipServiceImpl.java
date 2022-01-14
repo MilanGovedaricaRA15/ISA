@@ -30,6 +30,20 @@ public class ShipServiceImpl implements  ShipService {
     }
 
     @Override
+    public List<Ship> getAllAvailableShips(LocalDateTime from, LocalDateTime to, int numOfGuests) {
+        Iterable<Ship> allCottages = getAllShips();
+        ArrayList<Ship> allAvailableShips = new ArrayList<>();
+
+        for (Ship s : allCottages) {
+            if (isShipAvailable(s.getId(), from, to, numOfGuests)) {
+                allAvailableShips.add(s);
+            }
+        }
+
+        return allAvailableShips;
+    }
+
+    @Override
     public Ship getShipById(Long id) {
         return shipRepository.findById(id).get();
     }
@@ -259,6 +273,38 @@ public class ShipServiceImpl implements  ShipService {
                 return true;
             }
         }
+        return false;
+    }
+
+    public boolean isShipAvailable(long id, LocalDateTime from, LocalDateTime to, int numOfGuests) {
+        Ship s = shipRepository.findById(id).get();
+        if (from.compareTo(s.getAvailableTill()) > 0 || to.compareTo(s.getAvailableTill()) > 0  ||
+                to.compareTo(s.getAvailableFrom()) < 0 || from.compareTo(s.getAvailableFrom()) < 0 ) {
+            return false;
+        } else {
+            if (isReservedFromTill(id, from, to)) {
+                return false;
+            } else {
+                if (s.getCapacity() < numOfGuests) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    public boolean isReservedFromTill(long id, LocalDateTime from, LocalDateTime to) {
+        List<ShipReservation> cottageReservations = shipReservationRepository.findAllByShipId(id);
+
+        for (ShipReservation s : cottageReservations) {
+            if ((from.compareTo(s.getAvailableFrom()) > 0 && from.compareTo(s.getAvailableTill()) < 0) ||
+                    (to.compareTo(s.getAvailableFrom()) > 0 && to.compareTo(s.getAvailableTill()) < 0) ||
+                    (from.compareTo(s.getAvailableFrom()) < 0 && to.compareTo(s.getAvailableTill()) > 0)) {
+                return true;
+            }
+        }
+
         return false;
     }
 }

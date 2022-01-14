@@ -101,8 +101,10 @@
       </form>
         
     </div>
-    
-  </div>
+
+</div>
+
+<div *ngIf="viewCottageReservations">
   <h1>Cottage reservations</h1>
   <table style="width: 100%;">
     <thead>
@@ -121,14 +123,15 @@
             <td>300</td>
             <td>Popici</td>
             <td><button>Cancel</button></td>
-         </tr>
-         <tr>
+          </tr>
+          <tr>
           <td>23.12.2021</td>
             <td>25.12.2021</td>
             <td>Pool</td>
             <td>100</td>
             <td>Micova</td>
             <td><button>Cancel</button></td>
-         </tr>
+          </tr>
     </tbody>
   </table>
+</div>

@@ -9,6 +9,7 @@ import { Cottage } from '../model/cottage';
 })
 export class CottageService {
   private getAllCottagesUrl: string;
+  private getAllAvailableCottagesUrl: string;
   private getCottageByIdUrl: string;
   private removeCottageImgUrl: string;
   private getAllCottagesOfOwnerUrl: string;
@@ -24,6 +25,7 @@ export class CottageService {
 
   constructor(private http: HttpClient) { 
     this.getAllCottagesUrl="http://localhost:8080/cottages/getAllCottages";
+    this.getAllAvailableCottagesUrl="http://localhost:8080/cottages/getAllAvailableCottages";
     this.getAllCottagesOfOwnerUrl="http://localhost:8080/cottages/getAllCottagesOfOwner";
     this.removeCottageImgUrl="http://localhost:8080/cottages/removeCottageImg";
     this.removeCottageUrl="http://localhost:8080/cottages/removeCottage";
@@ -42,7 +44,17 @@ export class CottageService {
     let headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json');
   
-    return this.http.get<Array<Cottage>>(this.getAllCottagesUrl, {headers: headers,withCredentials: true});
+    return this.http.get<Array<Cottage>>(this.getAllCottagesUrl, {headers: headers, withCredentials: true});
+  }
+
+  public getAllAvailableCottages(from: Date, to: Date, numOfGuests: number): Observable<Array<Cottage>> {
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+    let stringFrom = from.getTime().toString();
+    let stringTo = to.getTime().toString();
+    let params = new HttpParams().set("from", stringFrom).set("to", stringTo).set("numOfGuests", numOfGuests);  
+  
+    return this.http.get<Array<Cottage>>(this.getAllAvailableCottagesUrl, {headers: headers, params: params, withCredentials: true});
   }
 
   public addCottage(cottage: Cottage):Observable<Cottage>{

@@ -80,6 +80,21 @@ public class CottageReservationController {
             return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
         }
     }
+
+    @PostMapping("/cottageReservation/addReservationByClient")
+    public ResponseEntity<Boolean> addReservationByClient(@RequestBody CottageReservation cottageReservation, HttpServletRequest request) {
+        if (request.getSession(false).getAttribute("role") != null) {
+            if (request.getSession(false).getAttribute("role") == User.Role.client) {
+                return new ResponseEntity<Boolean>(cottageReservationService.addReservationByClient(cottageReservation), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
+            }
+        }
+        else{
+            return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
+        }
+    }
+
     @PutMapping("/cottageReservation/changeReservationByOwner")
     public ResponseEntity<Boolean> changeReservationByOwner(@RequestBody CottageReservation cottageReservation,HttpServletRequest request) {
         if (request.getSession(false).getAttribute("role")!=null) {

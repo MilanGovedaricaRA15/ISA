@@ -1,6 +1,5 @@
 import { Grade } from "./grade";
 import { ShipHotOffer } from "./ship-hot-offer";
-import { ShipReservation } from "./ship-reservation";
 import { ShipServicePrice } from "./ship-service-price";
 import { User } from "./user";
 

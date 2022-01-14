@@ -8,7 +8,9 @@ public class Complaint {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    @ManyToOne
     private User author;
+    @ManyToOne
     private User complaintUser;
     private String text;
 

@@ -1,4 +1,3 @@
-
 import { Grade } from './grade';
 import { HotOffer } from './hot-offer';
 import { ServicePrice } from './service-price';
@@ -17,13 +16,12 @@ export class Cottage {
     availableFrom:Date;
     availableTill:Date;
     grades: Array<Grade>;
-    hotOffers:Array<HotOffer> ;
+    hotOffers:Array<HotOffer>;
     costPerNight:number;
     owner:User;
     priceList:Array<ServicePrice>;
-
-    
 }
+
 export enum Services {
     WiFi="WiFi",
     Parking="Parking",

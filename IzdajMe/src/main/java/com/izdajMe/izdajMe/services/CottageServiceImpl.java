@@ -1,5 +1,6 @@
 package com.izdajMe.izdajMe.services;
 
+import com.izdajMe.izdajMe.dto.CottageDTO;
 import com.izdajMe.izdajMe.model.Cottage;
 import com.izdajMe.izdajMe.model.CottageReservation;
 import com.izdajMe.izdajMe.model.HotOffer;
@@ -45,6 +46,19 @@ public class CottageServiceImpl implements CottageService {
         ArrayList<Cottage> allCottagesList = new ArrayList<Cottage>();
         allCottages.forEach(allCottagesList::add);
         return allCottagesList;
+    }
+
+    public List<Cottage> getAllAvailableCottages(LocalDateTime from, LocalDateTime to, int numOfGuests){
+        Iterable<Cottage> allCottages = getAllCottages();
+        ArrayList<Cottage> allAvailableCottages = new ArrayList<>();
+
+        for (Cottage c : allCottages) {
+            if (isCottageAvailable(c.getId(), from, to, numOfGuests)) {
+                allAvailableCottages.add(c);
+            }
+        }
+
+        return allAvailableCottages;
     }
 
     public Boolean removeCottageImg(Cottage cottage){
@@ -249,5 +263,37 @@ public class CottageServiceImpl implements CottageService {
         }
         
         return searchedCottages;
+    }
+
+    public Boolean isCottageAvailable(Long id, LocalDateTime from, LocalDateTime to, int numOfGuests) {
+        Cottage c = cottageRepository.findById(id).get();
+        if (from.compareTo(c.getAvailableTill()) > 0 || to.compareTo(c.getAvailableTill()) > 0  ||
+                to.compareTo(c.getAvailableFrom()) < 0 || from.compareTo(c.getAvailableFrom()) < 0 ) {
+            return false;
+        } else {
+            if (isReservedFromTill(id, from, to)) {
+                return false;
+            } else {
+                if (c.getNumOfBeds() < numOfGuests) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    public Boolean isReservedFromTill(Long id, LocalDateTime from, LocalDateTime to) {
+        List<CottageReservation> cottageReservations = cottageReservationRepository.findAllByCottageId(id);
+
+        for (CottageReservation c : cottageReservations) {
+            if ((from.compareTo(c.getAvailableFrom()) > 0 && from.compareTo(c.getAvailableTill()) < 0) ||
+                    (to.compareTo(c.getAvailableFrom()) > 0 && to.compareTo(c.getAvailableTill()) < 0) ||
+                    (from.compareTo(c.getAvailableFrom()) < 0 && to.compareTo(c.getAvailableTill()) > 0)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

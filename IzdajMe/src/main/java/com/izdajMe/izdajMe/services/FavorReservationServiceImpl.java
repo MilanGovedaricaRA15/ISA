@@ -1,12 +1,11 @@
 package com.izdajMe.izdajMe.services;
 
-import com.izdajMe.izdajMe.model.CottageReservation;
-import com.izdajMe.izdajMe.model.FavorReservation;
-import com.izdajMe.izdajMe.model.HotOffer;
-import com.izdajMe.izdajMe.model.InstructorsFavor;
+import com.izdajMe.izdajMe.model.*;
 import com.izdajMe.izdajMe.repository.FavorReservationRepository;
 import com.izdajMe.izdajMe.repository.InstructorsFavorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -20,6 +19,8 @@ public class FavorReservationServiceImpl implements FavorReservationService{
     private FavorReservationRepository favorReservationRepository;
     @Autowired
     private InstructorsFavorRepository instructorsFavorRepository;
+    @Autowired
+    private EmailService emailService;
 
     @Override
     public List<FavorReservation> getAllReservations() {
@@ -51,7 +52,7 @@ public class FavorReservationServiceImpl implements FavorReservationService{
         InstructorsFavor thisFavor = instructorsFavorRepository.getById(favorReservation.getFavor().getId());
         //List<HotOffer> allThisCottageHotOffers = thisCottage.getHotOffers();
 
-        boolean slobodno = canAddReservation(allFavorReservations, favorReservation, new ArrayList<HotOffer>());
+        boolean slobodno = canAddReservation(allFavorReservations, favorReservation, new ArrayList<FavorHotOffer>());
         if(slobodno) {
             favorReservationRepository.save(favorReservation);
             //sendNotificationForReservation(favorReservation);
@@ -62,7 +63,22 @@ public class FavorReservationServiceImpl implements FavorReservationService{
         }
     }
 
-    public Boolean canAddReservation(List<FavorReservation> allThisFavorReservations, FavorReservation favorReservation, List<HotOffer> hotOffers){
+    public Boolean addReservationByClient(FavorReservation favorReservation){
+        List<FavorReservation> allFavorReservations = getReservationsById(favorReservation.getFavor().getId());
+        InstructorsFavor thisFavor = instructorsFavorRepository.getById(favorReservation.getFavor().getId());
+        List<FavorHotOffer> allThisFavorHotOffers = thisFavor.getHotOffers();
+
+        if(canAddReservation(allFavorReservations, favorReservation, allThisFavorHotOffers)) {
+            favorReservationRepository.save(favorReservation);
+            sendNotificationForClientReservation(favorReservation);
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public Boolean canAddReservation(List<FavorReservation> allThisFavorReservations, FavorReservation favorReservation, List<FavorHotOffer> hotOffers){
         boolean slobodno = true;
         for(FavorReservation favorReservation1 : allThisFavorReservations) {
             if(favorReservation.getAvailableFrom().isBefore(favorReservation1.getAvailableFrom()) && favorReservation.getAvailableTill().isAfter(favorReservation1.getAvailableFrom())){
@@ -89,7 +105,7 @@ public class FavorReservationServiceImpl implements FavorReservationService{
             slobodno = false;
         }
 
-        for(HotOffer hotOffer : hotOffers) {
+        for(FavorHotOffer hotOffer : hotOffers) {
             if(favorReservation.getAvailableFrom().isBefore(hotOffer.getAvailableFrom()) && favorReservation.getAvailableTill().isAfter(hotOffer.getAvailableFrom())){
                 slobodno = false;
                 break;
@@ -121,5 +137,14 @@ public class FavorReservationServiceImpl implements FavorReservationService{
         else{
             return false;
         }
+    }
+
+    private void sendNotificationForClientReservation(FavorReservation favorReservation) throws MailException {
+        SimpleMailMessage mail = new SimpleMailMessage();
+        mail.setTo(favorReservation.getClient().getEmail());
+        mail.setFrom("rajkorajkeza@gmail.com");
+        mail.setSubject("IzdajMe new reservation");
+        mail.setText("New reservation is made from: " + favorReservation.getAvailableFrom() + " till: " + favorReservation.getAvailableTill() + " in ship: " + favorReservation.getFavor().getName() + " by: " + favorReservation.getClient().getFirstName());
+        emailService.sendSimpleMessage(mail);
     }
 }

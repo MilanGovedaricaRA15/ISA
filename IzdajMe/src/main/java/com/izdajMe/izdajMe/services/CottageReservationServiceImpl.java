@@ -103,7 +103,7 @@ public class CottageReservationServiceImpl implements CottageReservationService{
             }
         }
 
-        return  slobodno;
+        return slobodno;
     }
 
     public Boolean addReservationByOwner(CottageReservation cottageReservation){
@@ -122,6 +122,22 @@ public class CottageReservationServiceImpl implements CottageReservationService{
             return false;
         }
     }
+
+    public Boolean addReservationByClient(CottageReservation cottageReservation){
+        List<CottageReservation> allThisCottageReservations = cottageReservationRepository.findAllByCottageId(cottageReservation.getCottage().getId());
+        Cottage thisCottage = cottageRepository.getById(cottageReservation.getCottage().getId());
+        List<HotOffer> allThisCottageHotOffers = thisCottage.getHotOffers();
+
+        if(canAddReservation(allThisCottageReservations, cottageReservation, allThisCottageHotOffers)) {
+            cottageReservationRepository.save(cottageReservation);
+            sendNotificationForClientReservation(cottageReservation);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     public Boolean changeReservationByOwner(CottageReservation cottageReservation){
         CottageReservation thisReservation = cottageReservationRepository.getById(cottageReservation.getId());
         if (thisReservation.getAvailableTill().isBefore(LocalDateTime.now())&&thisReservation.getReport()==null&&thisReservation.getPenalty()==null)
@@ -133,6 +149,7 @@ public class CottageReservationServiceImpl implements CottageReservationService{
             return false;
         }
     }
+
     private void sendNotificationForReservation(CottageReservation cottageReservation) throws MailException{
         SimpleMailMessage mail = new SimpleMailMessage();
         mail.setTo(cottageReservation.getClient().getEmail());
@@ -141,5 +158,14 @@ public class CottageReservationServiceImpl implements CottageReservationService{
         mail.setText("New reservation is made from: " + cottageReservation.getAvailableFrom() + " till: " + cottageReservation.getAvailableTill() + " in cottage: " + cottageReservation.getCottage().getName() + " by: " + cottageReservation.getCottage().getOwner().getFirstName());
         emailService.sendSimpleMessage(mail);
         return;
+    }
+
+    private void sendNotificationForClientReservation(CottageReservation cottageReservation) throws MailException{
+        SimpleMailMessage mail = new SimpleMailMessage();
+        mail.setTo(cottageReservation.getClient().getEmail());
+        mail.setFrom("rajkorajkeza@gmail.com");
+        mail.setSubject("IzdajMe new reservation");
+        mail.setText("New reservation is made from: " + cottageReservation.getAvailableFrom() + " till: " + cottageReservation.getAvailableTill() + " in cottage: " + cottageReservation.getCottage().getName() + " by: " + cottageReservation.getClient().getFirstName());
+        emailService.sendSimpleMessage(mail);
     }
 }
