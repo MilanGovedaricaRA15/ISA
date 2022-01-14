@@ -16,7 +16,7 @@ addons:
   sonarcloud:
     organization: "milangovedaricara15" # the key of the org you chose at step #3
     token:
-      secure: "70d843b5a065c504240c45a0e000f772b2e9610a" # encrypted value of your token
+      secure: "1c83dc7564c662d4269aca09ded317da7cc8d972" # encrypted value of your token
   
 language: java
 services:
