@@ -1,10 +1,12 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Cottage } from 'src/app/model/cottage';
 import { Ship } from 'src/app/model/ship';
 import { User } from 'src/app/model/user';
 import { AccountDeleteRequestService } from 'src/app/service/account-delete-request-service.service';
+import { ComplaintServiceService } from 'src/app/service/complaint-service.service';
 import { CottageService } from 'src/app/service/cottage-service.service';
+import { GradeService } from 'src/app/service/grade-service.service';
 import { ShipService } from 'src/app/service/ship-service';
 import { UserService } from 'src/app/service/user-service.service';
 
@@ -16,7 +18,8 @@ import { UserService } from 'src/app/service/user-service.service';
 export class AdministratorProfileComponent implements OnInit {
 
   constructor(private userService: UserService, private cottageService: CottageService, private shipService: ShipService, 
-              private accountDeleteRequestsService: AccountDeleteRequestService) { }
+              private accountDeleteRequestsService: AccountDeleteRequestService, private gradeService: GradeService, 
+              private complaintService: ComplaintServiceService) { }
 
   editAdministratorForm:any;
   editPasswordForm:any;
@@ -32,10 +35,15 @@ export class AdministratorProfileComponent implements OnInit {
   allBoats: any;
   allShips: any;
   allRequests: any;
+  allGrades: any;
+  allComplaints: any;
   deletingUser: User;
   acceptingUser: User;
   deletingCottage: Cottage;
   deletingShip: Ship;
+  @Output() addAnswer = new EventEmitter<string>();
+  @Output() addReason = new EventEmitter<string>();
+  @Output() decliningReason = new EventEmitter<string>();
 
   ngOnInit(): void {
     this.init();
@@ -64,6 +72,12 @@ export class AdministratorProfileComponent implements OnInit {
     });
     this.accountDeleteRequestsService.getAllRequests().subscribe(requestsFromBack => {
       this.allRequests = requestsFromBack;
+    });
+    this.gradeService.getAllGrades().subscribe(gradesFromBack => {
+      this.allGrades = gradesFromBack;
+    });
+    this.complaintService.getAllComplaints().subscribe(complaintsFromBack => {
+      this.allComplaints = complaintsFromBack;
     });
 
     this.acceptingUser = new User()
@@ -176,7 +190,10 @@ export class AdministratorProfileComponent implements OnInit {
         });
       }
     });
-    
+  }
+
+  userDeclined(index:number) {
+    this.decliningReason.emit(index.toString());
   }
 
   acceptUser(index: number) {
@@ -205,7 +222,7 @@ export class AdministratorProfileComponent implements OnInit {
 
   acceptRequest(index: number) {
     let acceptingRequest = this.allRequests[index];
-    this.accountDeleteRequestsService.deleteRequest(acceptingRequest.id).subscribe(ret => {
+    this.accountDeleteRequestsService.acceptRequest(acceptingRequest).subscribe(ret => {
       if(ret)
         this.userService.removeUser(acceptingRequest.user.id).subscribe(ret => {
           if(ret) {
@@ -225,10 +242,30 @@ export class AdministratorProfileComponent implements OnInit {
   }
 
   declineRequest(index: number) {
-    let deletingRequest = this.allRequests[index];
-    this.accountDeleteRequestsService.deleteRequest(deletingRequest.id).subscribe(ret => {
+    this.addReason.emit(index.toString());
+  }
+
+  acceptGrade(index: number) {
+    let acceptingGrade = this.allGrades[index];
+    this.gradeService.acceptGrade(acceptingGrade.id).subscribe(ret => {
       if(ret)
-        this.allRequests[index].seen = true;
+        this.gradeService.getAllGrades().subscribe(ret => {
+          this.allGrades = ret;
+        });
     });
+  }
+
+  declineGrade(index: number) {
+    let deletingGrade = this.allGrades[index];
+    this.gradeService.removeGrade(deletingGrade.id).subscribe(ret => {
+      if(ret)
+        this.gradeService.getAllGrades().subscribe(ret => {
+          this.allGrades = ret;
+        });
+    });
+  }
+
+  sendAnswer(index: number) {
+    this.addAnswer.emit(index.toString());
   }
 }

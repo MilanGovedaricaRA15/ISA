@@ -1,0 +1,31 @@
+addons:
+  sonarcloud:
+    organization: "milangovedaricara15"
+    token:
+      secure: "O1+Y3erIfq5i/QGmaVXNaor8big7zef8Awi73VxsedzAryM/iBbSaJ9foj3qz3iiW+W8Kn9AS5X4TzVj5EBzfzyctDTdBV6CWszeHXcU4B5tF9bKzVapyvEXElEAxMeFt+7HX7Pzyl7LRJCyT23vByuA84svRbK+SLrHaZxaflag/BD3Nf7kkR6w2oEZB1gnAKe1XWqKQg5CcZC1vnb88ATaeu5e2UP2+m0aQkBJkq2nAzuHCdmsgYjTiiX/2jSrpPsx6+sUx9GizYpuRpwnC1utGnnq5aWH12qxsYbb/DI31Uvfih3t0sQJy54qvw4hf0aDDHBgStZHuCwo2PI3IeKViww9jlJ1ckaKrgteVgdcb/J9QEQb5uz2eRz6geeYEHV5aPhTGIXv/aq3Qf6rBAdqmC1fe0jH301dp9WMOV7VeXIlb21YOtsyfV/+eHeBuIxpr4S2TCFL1VS9NQf/uVxP1zTR2FGgm4xaUOVeYlgpSJOgUv/utu++0p0uVkn1uOO8EYrQySeYuvA5oXdGDgcS/BhVgLM34qATcrQsC6SgJAMB6T/Dlcp9i+bQ6zXE/249IXeUpSNgljh3IS1H1gesXxDP4Ph7OGZG45sQtmOBtpiOf0AzKmZ9rk6QtV87IC4hN+e83+z/Y14THg5ASuoLchFCqNp47cQE85X/kkk=" # encrypted value of your token
+
+before_install:
+- cd IzdajMe
+- chmod +x mvnw
+- sudo service postgresql stop
+- sed -e 's/^port.*/port = 5432/' /etc/postgresql/10/main/postgresql.conf > postgresql.conf
+- sudo chown postgres postgresql.conf
+- sudo mv postgresql.conf /etc/postgresql/10/main
+- sudo service postgresql start 10
+before_script:
+- psql -c 'create database izdajme;' -U postgres
+branches:
+  only:
+  - testing
+  - main
+language: java
+services:
+- postgresql
+install:
+- "./mvnw install -DskipTests=true -Dmaven.javadoc.skip=true -B -V"
+script:
+- "./mvnw test -B"
+- ./mvnw clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=MilanGovedaricaRA15_ISA
+env:
+  global:
+    secure: O1+Y3erIfq5i/QGmaVXNaor8big7zef8Awi73VxsedzAryM/iBbSaJ9foj3qz3iiW+W8Kn9AS5X4TzVj5EBzfzyctDTdBV6CWszeHXcU4B5tF9bKzVapyvEXElEAxMeFt+7HX7Pzyl7LRJCyT23vByuA84svRbK+SLrHaZxaflag/BD3Nf7kkR6w2oEZB1gnAKe1XWqKQg5CcZC1vnb88ATaeu5e2UP2+m0aQkBJkq2nAzuHCdmsgYjTiiX/2jSrpPsx6+sUx9GizYpuRpwnC1utGnnq5aWH12qxsYbb/DI31Uvfih3t0sQJy54qvw4hf0aDDHBgStZHuCwo2PI3IeKViww9jlJ1ckaKrgteVgdcb/J9QEQb5uz2eRz6geeYEHV5aPhTGIXv/aq3Qf6rBAdqmC1fe0jH301dp9WMOV7VeXIlb21YOtsyfV/+eHeBuIxpr4S2TCFL1VS9NQf/uVxP1zTR2FGgm4xaUOVeYlgpSJOgUv/utu++0p0uVkn1uOO8EYrQySeYuvA5oXdGDgcS/BhVgLM34qATcrQsC6SgJAMB6T/Dlcp9i+bQ6zXE/249IXeUpSNgljh3IS1H1gesXxDP4Ph7OGZG45sQtmOBtpiOf0AzKmZ9rk6QtV87IC4hN+e83+z/Y14THg5ASuoLchFCqNp47cQE85X/kkk=

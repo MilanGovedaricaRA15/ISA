@@ -47,8 +47,13 @@ public class AccountDeleteRequestController {
         }
     }
 
-    @PostMapping("/accountDeleteRequest/deleteRequest")
-    public ResponseEntity<Boolean> deleteRequest(@RequestBody Long id){
-        return new ResponseEntity<Boolean>(accountDeleteRequestService.deleteRequest(id), HttpStatus.OK);
+    @PostMapping("/accountDeleteRequest/acceptRequest")
+    public ResponseEntity<Boolean> acceptRequest(@RequestBody AccountDeleteRequest accountDeleteRequest){
+        return new ResponseEntity<Boolean>(accountDeleteRequestService.acceptRequest(accountDeleteRequest), HttpStatus.OK);
+    }
+
+    @PostMapping("/accountDeleteRequest/declineRequest")
+    public ResponseEntity<Boolean> declineRequest(@RequestBody AccountDeleteRequest accountDeleteRequest){
+        return new ResponseEntity<Boolean>(accountDeleteRequestService.declineRequest(accountDeleteRequest), HttpStatus.OK);
     }
 }

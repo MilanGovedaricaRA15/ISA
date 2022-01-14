@@ -49,11 +49,13 @@
 
           <app-create-a-reservation-client (clientProfileAuthenticated)="goToClientProfile()" *ngIf="showCompNumber === 41"></app-create-a-reservation-client>
           
-          <app-owner-navbar (profile)="goToProfile()" *ngIf="showCompNumber === 3 || showCompNumber === 4 || showCompNumber === 205 || showCompNumber === 5 || showCompNumber === 6 || showCompNumber === 50 || showCompNumber === 52 || showCompNumber === 210 || showCompNumber === 211 || showCompNumber === 61 || showCompNumber === 62 || showCompNumber === 63 || showCompNumber === 64"></app-owner-navbar>
+          <app-owner-navbar (profile)="goToProfile()" *ngIf="showCompNumber === 3 || showCompNumber === 4 || showCompNumber === 205 || showCompNumber === 5 
+                                      || showCompNumber === 6 || showCompNumber === 50 || showCompNumber === 52 || showCompNumber === 210 || showCompNumber === 211 
+                                      || showCompNumber === 61 || showCompNumber === 62 || showCompNumber === 63 || showCompNumber === 64 
+                                      || showCompNumber === 300 || showCompNumber === 301 || showCompNumber === 302" ></app-owner-navbar>
           <app-register-form-client (registerClient)="onRegisterClient($event)" *ngIf="showCompNumber === 21"></app-register-form-client>
           <app-registerForm (register)="onRegister($event)" *ngIf="showCompNumber === 1"></app-registerForm>
-          <app-login-form (login)="onLogin($event)" (profileAdministrator)="showAdministratorProfile($event)" *ngIf="showCompNumber === 2"></app-login-form>
-          <app-login-form (login)="onLogin($event)" (clientToShowAuthenticated)="onClientLogin($event)" *ngIf="showCompNumber === 2"></app-login-form>
+          <app-login-form (login)="onLogin($event)" (clientToShowAuthenticated)="onClientLogin($event)" (profileAdministrator)="showAdministratorProfile($event)" *ngIf="showCompNumber === 2"></app-login-form>
           <app-cottage-owner-profile (addNewCottageEmiter)="addNewCottage($event)" (cottageToShow)="onCottageClick($event)" *ngIf="showCompNumber === 3"></app-cottage-owner-profile>
           <app-ship-owner-profile (addNewShipEmiter)="addNewShip($event)" (shipToShow)="onShipClick($event)" *ngIf="showCompNumber === 4"></app-ship-owner-profile>
           <app-ship-profile [ship]="shipToShow" (shipHotOffersForHotOffer)="updateShipHotOffers($event)" *ngIf="showCompNumber === 205"></app-ship-profile>
@@ -72,9 +74,9 @@
           <app-add-report (goToProfile)="goToProfile()" [cottageReservation]="cottageReservationReceive" *ngIf="showCompNumber === 210"></app-add-report>
           <app-add-ship-reservation-report (goToProfile)="goToProfile()" [shipReservation]="shipReservationReceive" *ngIf="showCompNumber === 211"></app-add-ship-reservation-report>
           <app-add-new-cottage (cottageToShow)="onCottageClick($event)" *ngIf="showCompNumber === 6"></app-add-new-cottage>
-          <app-administrator-profile *ngIf="showCompNumber === 7"></app-administrator-profile>
+          <app-administrator-profile (addAnswer)="addAnswer($event)" (addReason)="addReason($event)" (decliningReason)="decliningUserReason($event)" *ngIf="showCompNumber === 7"></app-administrator-profile>
           <app-change-administrators-password (nextProfile)="changeProfile($event)" *ngIf="showCompNumber === 9"></app-change-administrators-password>
-          <app-superior-administrator-profile (addAdmin)="addAdministrator()" *ngIf="showCompNumber === 8"></app-superior-administrator-profile>
+          <app-superior-administrator-profile (addAdmin)="addAdministrator()" (addAnswer)="addAnswer($event)" (addReason)="addReason($event)" (decliningReason)="decliningUserReason($event)" *ngIf="showCompNumber === 8"></app-superior-administrator-profile>
           <app-add-new-administrator (adminAdded)="adminAdded($event)" *ngIf="showCompNumber === 50"> </app-add-new-administrator>
           <app-add-new-ship (shipToShow)="onShipClick($event)" *ngIf="showCompNumber === 206"></app-add-new-ship>
           <app-client-profile [clientAuthenticated]="clientToShowAuthenticated" *ngIf="showCompNumber === 31"></app-client-profile>
@@ -82,6 +84,9 @@
           <app-favor-profile *ngIf="showCompNumber === 62"></app-favor-profile>
           <app-add-new-favor (favorToShow)="onFavorClick($event)" *ngIf="showCompNumber === 63"></app-add-new-favor>
           <app-add-favor-reservation-report (goToProfile)="goToProfile()" [favorReservation]="favorReservationReceive" *ngIf="showCompNumber === 64"></app-add-favor-reservation-report>
+          <app-add-answer-to-complaint (answerSended)="answerIsSended()" *ngIf="showCompNumber === 300"></app-add-answer-to-complaint>
+          <app-add-reason-for-deleting-request (reasonSended)="reasonIsSended()" *ngIf="showCompNumber === 301"></app-add-reason-for-deleting-request>
+          <app-add-answer-for-declining-registration (decliningReason)="registrationReasonIsSended()" *ngIf="showCompNumber === 302"></app-add-answer-for-declining-registration>
         </div>
       </div>
     </div>

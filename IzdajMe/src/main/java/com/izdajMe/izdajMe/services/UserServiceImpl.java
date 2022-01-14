@@ -19,7 +19,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private ShipRepository shipRepository;
     @Autowired
-    InstructorsFavorRepository instructorsFavorRepository;
+    private InstructorsFavorRepository instructorsFavorRepository;
+    @Autowired
     private EmailService emailService;
     @Autowired
     private CottageReservationRepository cottageReservationRepository;
@@ -27,6 +28,18 @@ public class UserServiceImpl implements UserService {
     private ShipReservationRepository shipReservationRepository;
     @Autowired
     private FavorReservationRepository favorReservationRepository;
+    @Autowired
+    private ComplaintRepository complaintRepository;
+    @Autowired
+    private GradeRepository gradeRepository;
+    @Autowired
+    private GradeService gradeService;
+    @Autowired
+    private CottageReservationService cottageReservationService;
+    @Autowired
+    private ShipReservationService shipReservationService;
+    @Autowired
+    private FavorReservationService favorReservationService;
 
     @Override
     public List<User> getAllUsers() {
@@ -54,10 +67,60 @@ public class UserServiceImpl implements UserService {
         User foundUser = userRepository.findByEmailAndPasswordVerified(user.getEmail(),user.getPassword());
 
         if (foundUser != null){
+            inicijalizuj();
             return true;
         }
         else{
             return false;
+        }
+    }
+
+    private void inicijalizuj(){
+        Cottage c = cottageRepository.getById(new Long(1));
+        ArrayList<Cottage.Services> services = new ArrayList<Cottage.Services>();
+        services.add(Cottage.Services.Parking);
+        services.add(Cottage.Services.Pool);
+        ArrayList<String> images = new ArrayList<String>();
+        images.add("vikendica1");
+        images.add("vikendica2");
+        images.add("vikendica3");
+        images.add("vikendica4");
+        images.add("vikendica5");
+        int doz = 0;
+        if(c.getServices() == null || c.getImages() == null){
+            doz = 1;
+        }
+        if(c.getServices() == null) {
+            c.setServices(services);
+        }
+        if(c.getImages() == null){
+            c.setImages(images);
+        }
+        if(doz == 1) {
+            cottageRepository.save(c);
+        }
+
+
+        Ship s = shipRepository.getById(new Long(1));
+        ArrayList<Ship.Services> services1 = new ArrayList<Ship.Services>();
+        services1.add(Ship.Services.HairDryer);
+        services1.add(Ship.Services.Minibar);
+        images = new ArrayList<String>();
+        images.add("ship1");
+        images.add("ship2");
+        images.add("ship3");
+        int doz2 = 0;
+        if(s.getServices() == null || s.getImages() == null){
+            doz2 = 1;
+        }
+        if(s.getServices() == null) {
+            s.setServices(services1);
+        }
+        if(s.getImages() == null){
+            s.setImages(images);
+        }
+        if(doz2 == 1) {
+            shipRepository.save(s);
         }
     }
 
@@ -135,8 +198,18 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    public Boolean declineUser(String text) {
+        User user = userRepository.findById((long) Integer.parseInt(text.split(" ")[0])).get();
+        userRepository.deleteById((long) Integer.parseInt(text.split(" ")[0]));
+        sendNotificationFromAdminForFailedRegistration(user, text.split(" ")[1]);
+        return true;
+    }
+
     public Boolean deleteUser(long id) {
         User user = userRepository.findById(id).get();
+        cottageReservationService.deleteByClientId(id);
+        shipReservationService.deleteByClientId(id);
+        favorReservationService.deleteByClientId(id);
         if(user.getRole().equals(User.Role.cottageAdvertiser))
             deleteCottageAdvertiser(id);
         else if(user.getRole().equals(User.Role.boatAdvertiser))
@@ -144,8 +217,34 @@ public class UserServiceImpl implements UserService {
         else if(user.getRole().equals(User.Role.instructor))
             deleteInstructor(id);
 
+        deleteComplaints(id);
+        deleteGrades(id);
         userRepository.deleteById(id);
         return true;
+    }
+
+    private void deleteGrades(long id) {
+        List<Grade> grades = gradeRepository.findGradesById(id);
+        if(grades.size() != 0){
+            for(Grade g: grades){
+                gradeService.deleteGrade(g.getId());
+            }
+        }
+    }
+
+    private void deleteComplaints(long id) {
+        List<Complaint> complaintsByAuthor = complaintRepository.findComplaintsByAuthorId(id);
+        if(complaintsByAuthor.size() != 0) {
+            for(Complaint c : complaintsByAuthor) {
+                complaintRepository.deleteById(c.getId());
+            }
+        }
+        List<Complaint> complaintsOfComplaintUser = complaintRepository.findComplaintsByComplaintUserId(id);
+        if(complaintsOfComplaintUser.size() != 0) {
+            for(Complaint c : complaintsOfComplaintUser) {
+                complaintRepository.deleteById(c.getId());
+            }
+        }
     }
 
     private void deleteCottageAdvertiser(long id) {
@@ -269,6 +368,26 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(id).get();
         user.setVerified(true);
         userRepository.save(user);
+        sendNotificationFromAdminForSuccessRegistration(user);
         return true;
+    }
+
+    private void sendNotificationFromAdminForSuccessRegistration(User user) throws MailException{
+        SimpleMailMessage mail = new SimpleMailMessage();
+        mail.setTo(user.getEmail());
+        mail.setFrom("rajkorajkeza@gmail.com");
+        mail.setSubject("Accepting registration");
+        mail.setText("Your registration request has been accepted. Welcome! :)");
+        emailService.sendSimpleMessage(mail);
+    }
+
+    private void sendNotificationFromAdminForFailedRegistration(User user, String text) throws MailException {
+        SimpleMailMessage mail = new SimpleMailMessage();
+        mail.setTo(user.getEmail());
+        mail.setFrom("rajkorajkeza@gmail.com");
+        mail.setSubject("Failed registration");
+        mail.setText("Your request for registration has been declined!" + "\n"
+                + "Reason: " + text);
+        emailService.sendSimpleMessage(mail);
     }
 }

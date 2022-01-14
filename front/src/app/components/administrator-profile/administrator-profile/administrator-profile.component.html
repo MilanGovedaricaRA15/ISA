@@ -139,7 +139,7 @@
                                 <td scope="col">{{item.verified}}</td>
                                 <td scope="col" *ngIf="item.verified === false ">
                                     <button class="btn btn-success" style="margin-bottom: 2px;" (click)="acceptUser(indexOfelement)"> Accept </button>
-                                    <button class="btn btn-danger" (click)="userDeleted(indexOfelement)"> Decline </button>
+                                    <button class="btn btn-danger" (click)="userDeclined(indexOfelement)"> Decline </button>
                                 </td>
                                 <td scope="col" *ngIf="item.verified">
                                     <button class="btn btn-danger" (click)="userDeleted(indexOfelement)"> Delete user </button>
@@ -256,6 +256,76 @@
                                 </td>
                                 <td scope="col">
                                     <button class="btn btn-danger" (click)="declineRequest(indexOfelement)"> Decline </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title m-b-0">All grades</h5>
+                </div>
+                <div class="table-responsive">
+                    <table class="table" id="usertable">
+                        <thead class="thead-light">
+                            <tr >
+                                <th scope="col">Name</th>
+                                <th scope="col">Surname</th>
+                                <th scope="col">Value</th>
+                                <th scope="col">Comment</th>  
+                            </tr>
+                        </thead>
+                        <tbody *ngFor="let item of allGrades;let indexOfelement=index;">
+                            <tr *ngIf="item.seen === false" >
+                                <td scope="col">{{item.user.firstName}}</td>
+                                <td scope="col">{{item.user.lastName}}</td>
+                                <td scope="col">{{item.value}}</td>
+                                <td scope="col">{{item.comment}}</td>
+                                <td scope="col">
+                                    <button class="btn btn-success" style="margin-bottom: 2px;" (click)="acceptGrade(indexOfelement)"> Accept </button>
+                                </td>
+                                <td scope="col">
+                                    <button class="btn btn-danger" (click)="declineGrade(indexOfelement)"> Decline </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title m-b-0">All complaints</h5>
+                </div>
+                <div class="table-responsive">
+                    <table class="table" id="usertable">
+                        <thead class="thead-light">
+                            <tr >
+                                <th scope="col">Author</th>
+                                <th scope="col">Complaint user</th>
+                                <th scope="col">Text</th> 
+                            </tr>
+                        </thead>
+                        <tbody *ngFor="let item of allComplaints;let indexOfelement=index;">
+                            <tr >
+                                <td scope="col">{{item.author.firstName}} {{item.author.lastName}}</td>
+                                <td scope="col">{{item.complaintUser.firstName}} {{item.complaintUser.lastName}}</td>
+                                <td scope="col">{{item.text}}</td>
+                                <td scope="col">
+                                    <button class="btn btn-primary" style="margin-bottom: 2px;" (click)="sendAnswer(indexOfelement)"> Answer </button>
                                 </td>
                             </tr>
                         </tbody>

@@ -47,15 +47,12 @@ public class FavorReservationServiceImpl implements FavorReservationService{
     }
 
     public Boolean addReservationByOwner(FavorReservation favorReservation){
-
         List<FavorReservation> allFavorReservations = getReservationsById(favorReservation.getFavor().getId());
-        InstructorsFavor thisFavor = instructorsFavorRepository.getById(favorReservation.getFavor().getId());
-        //List<HotOffer> allThisCottageHotOffers = thisCottage.getHotOffers();
 
-        boolean slobodno = canAddReservation(allFavorReservations, favorReservation, new ArrayList<FavorHotOffer>());
-        if(slobodno) {
+        boolean free = canAddReservation(allFavorReservations, favorReservation, new ArrayList<FavorHotOffer>());
+        if(free) {
             favorReservationRepository.save(favorReservation);
-            //sendNotificationForReservation(favorReservation);
+            sendNotificationForReservation(favorReservation);
             return true;
         }
         else{
@@ -73,58 +70,58 @@ public class FavorReservationServiceImpl implements FavorReservationService{
             sendNotificationForClientReservation(favorReservation);
             return true;
         }
-        else{
+        else {
             return false;
         }
     }
-
+	
     public Boolean canAddReservation(List<FavorReservation> allThisFavorReservations, FavorReservation favorReservation, List<FavorHotOffer> hotOffers){
-        boolean slobodno = true;
+        boolean free = true;
         for(FavorReservation favorReservation1 : allThisFavorReservations) {
             if(favorReservation.getAvailableFrom().isBefore(favorReservation1.getAvailableFrom()) && favorReservation.getAvailableTill().isAfter(favorReservation1.getAvailableFrom())){
-                slobodno = false;
+                free = false;
                 break;
             }
             if(favorReservation.getAvailableFrom().isBefore(favorReservation1.getAvailableTill()) && favorReservation.getAvailableTill().isAfter(favorReservation1.getAvailableTill())){
-                slobodno = false;
+                free = false;
                 break;
             }
             if(favorReservation1.getAvailableFrom().isBefore(favorReservation.getAvailableFrom()) && favorReservation1.getAvailableTill().isAfter(favorReservation.getAvailableTill())){
-                slobodno = false;
+                free = false;
                 break;
             }
             if(favorReservation1.getAvailableFrom().isEqual(favorReservation.getAvailableFrom()) || favorReservation1.getAvailableTill().isEqual(favorReservation.getAvailableTill()) || favorReservation1.getAvailableTill().isEqual(favorReservation.getAvailableFrom()) || favorReservation1.getAvailableFrom().isEqual(favorReservation.getAvailableTill())){
-                slobodno = false;
+                free = false;
                 break;
             }
         }
         if(favorReservation.getAvailableFrom().equals(favorReservation.getAvailableTill())){
-            slobodno = false;
+            free = false;
         }
         if(favorReservation.getAvailableFrom().isAfter(favorReservation.getAvailableTill())) {
-            slobodno = false;
+            free = false;
         }
 
         for(FavorHotOffer hotOffer : hotOffers) {
             if(favorReservation.getAvailableFrom().isBefore(hotOffer.getAvailableFrom()) && favorReservation.getAvailableTill().isAfter(hotOffer.getAvailableFrom())){
-                slobodno = false;
+                free = false;
                 break;
             }
             if(favorReservation.getAvailableFrom().isBefore(hotOffer.getAvailableTill()) && favorReservation.getAvailableTill().isAfter(hotOffer.getAvailableTill())){
-                slobodno = false;
+                free = false;
                 break;
             }
             if(hotOffer.getAvailableFrom().isBefore(favorReservation.getAvailableFrom()) && hotOffer.getAvailableTill().isAfter(favorReservation.getAvailableTill())){
-                slobodno = false;
+                free = false;
                 break;
             }
             if(hotOffer.getAvailableFrom().isEqual(favorReservation.getAvailableFrom()) || hotOffer.getAvailableTill().isEqual(favorReservation.getAvailableTill()) || hotOffer.getAvailableTill().isEqual(favorReservation.getAvailableFrom()) || hotOffer.getAvailableFrom().isEqual(favorReservation.getAvailableTill())){
-                slobodno = false;
+                free = false;
                 break;
             }
         }
 
-        return  slobodno;
+        return  free;
     }
 
     public Boolean changeReservationByInstructor(FavorReservation favorReservation) {
@@ -138,6 +135,15 @@ public class FavorReservationServiceImpl implements FavorReservationService{
             return false;
         }
     }
+	
+	private void sendNotificationForReservation(FavorReservation favorReservation){
+        SimpleMailMessage mail = new SimpleMailMessage();
+        mail.setTo(favorReservation.getClient().getEmail());
+        mail.setFrom("rajkorajkeza@gmail.com");
+        mail.setSubject("New reservation");
+        mail.setText("Your reservation has been created by instructor!");
+        emailService.sendSimpleMessage(mail);
+    }
 
     private void sendNotificationForClientReservation(FavorReservation favorReservation) throws MailException {
         SimpleMailMessage mail = new SimpleMailMessage();
@@ -146,5 +152,13 @@ public class FavorReservationServiceImpl implements FavorReservationService{
         mail.setSubject("IzdajMe new reservation");
         mail.setText("New reservation is made from: " + favorReservation.getAvailableFrom() + " till: " + favorReservation.getAvailableTill() + " in ship: " + favorReservation.getFavor().getName() + " by: " + favorReservation.getClient().getFirstName());
         emailService.sendSimpleMessage(mail);
+	}
+		
+    public void deleteByClientId(long id) {
+        List<FavorReservation> reservations = favorReservationRepository.findAll();
+        for(FavorReservation fr: reservations){
+            if(fr.getClient().getId() == id)
+                favorReservationRepository.deleteById(fr.getId());
+        }
     }
 }

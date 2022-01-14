@@ -13,6 +13,7 @@ public class Complaint {
     @ManyToOne
     private User complaintUser;
     private String text;
+    private String answer;
 
     public Complaint() {}
 
@@ -23,29 +24,19 @@ public class Complaint {
         this.text = text;
     }
 
-    public long getId() {
-        return id;
-    }
+    public long getId() { return id; }
 
     public void setId(long id) {
         this.id = id;
     }
 
-    public User getAuthor() {
-        return author;
-    }
+    public User getAuthor() { return author; }
 
-    public void setAuthor(User author) {
-        this.author = author;
-    }
+    public void setAuthor(User author) { this.author = author; }
 
-    public User getComplaintUser() {
-        return complaintUser;
-    }
+    public User getComplaintUser() { return complaintUser; }
 
-    public void setComplaintUser(User complaintUser) {
-        this.complaintUser = complaintUser;
-    }
+    public void setComplaintUser(User complaintUser) { this.complaintUser = complaintUser; }
 
     public String getText() {
         return text;
@@ -54,4 +45,8 @@ public class Complaint {
     public void setText(String text) {
         this.text = text;
     }
+
+    public String getAnswer() { return answer; }
+
+    public void setAnswer(String answer) { this.answer = answer; }
 }

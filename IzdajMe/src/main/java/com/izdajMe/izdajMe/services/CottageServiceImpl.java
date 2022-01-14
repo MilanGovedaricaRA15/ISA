@@ -5,12 +5,10 @@ import com.izdajMe.izdajMe.model.Cottage;
 import com.izdajMe.izdajMe.model.CottageReservation;
 import com.izdajMe.izdajMe.model.HotOffer;
 import com.izdajMe.izdajMe.model.*;
-import com.izdajMe.izdajMe.repository.CottageRepository;
-import com.izdajMe.izdajMe.repository.CottageReservationRepository;
-import com.izdajMe.izdajMe.repository.HotOfferRepository;
-import com.izdajMe.izdajMe.repository.UserRepository;
+import com.izdajMe.izdajMe.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -30,6 +28,8 @@ public class CottageServiceImpl implements CottageService {
     private HotOfferRepository hotOfferRepository;
     @Autowired
     private CottageReservationRepository cottageReservationRepository;
+    @Autowired
+    private ConcurentWatcherRepository concurentWatcherRepository;
 
 
     public List<Cottage> getAllCottagesOfOwner(String email){
@@ -109,24 +109,45 @@ public class CottageServiceImpl implements CottageService {
             return false;
         }
     }
-
+    @Transactional(readOnly = false)
     public Boolean changeCottage(Cottage cottage){
-        if(!isReserved(cottage.getId())) {
-            cottageRepository.save(cottage);
-            return true;
+        if (concurentWatcherRepository.findByTableName("CottageReservation").getWriting() == false) {
+            ConcurentWatcher cw = concurentWatcherRepository.findByTableName("Cottage");
+            cw.setWriting(true);
+            if (!isReserved(cottage.getId())) {
+                cottageRepository.save(cottage);
+                cw.setWriting(false);
+                concurentWatcherRepository.save(cw);
+                return true;
+            } else {
+                cw.setWriting(false);
+                concurentWatcherRepository.save(cw);
+                return false;
+            }
         }
-        else{
+        else {
             return false;
         }
     }
 
+    @Transactional(readOnly = false)
     public Boolean removeHotOffer(Cottage cottage){
-        if(cottageRepository.existsById(cottage.getId())) {
-            cottageRepository.save(cottage);
-            return true;
+        if (concurentWatcherRepository.findByTableName("CottageReservation").getWriting() == false) {
+            ConcurentWatcher cw = concurentWatcherRepository.findByTableName("CottageHotOffer");
+            cw.setWriting(true);
+            if (cottageRepository.existsById(cottage.getId())) {
+                cottageRepository.save(cottage);
+                cw.setWriting(false);
+                concurentWatcherRepository.save(cw);
+                return true;
+            } else {
+                cw.setWriting(false);
+                concurentWatcherRepository.save(cw);
+                return false;
+            }
         }
         else{
-            return false;
+            return  false;
         }
     }
 
@@ -179,34 +200,43 @@ public class CottageServiceImpl implements CottageService {
 
         return slobodno;
     }
-
+    @Transactional(readOnly = false)
     public Boolean addHotOfferToCottage(Cottage cottage){
-        List<HotOffer> hotOffers = cottage.getHotOffers();
-        Cottage cottage1 = cottageRepository.findById(cottage.getId()).get();
-        List<HotOffer> hotOffersWithout = cottage1.getHotOffers();
-        List<CottageReservation> allThisCottageReservations = cottageReservationRepository.findAllByCottageId(cottage.getId());
+        if (concurentWatcherRepository.findByTableName("CottageReservation").getWriting() == false) {
+            ConcurentWatcher cw = concurentWatcherRepository.findByTableName("CottageHotOffer");
+            cw.setWriting(true);
+            concurentWatcherRepository.save(cw);
+            List<HotOffer> hotOffers = cottage.getHotOffers();
+            Cottage cottage1 = cottageRepository.findById(cottage.getId()).get();
+            List<HotOffer> hotOffersWithout = cottage1.getHotOffers();
+            List<CottageReservation> allThisCottageReservations = cottageReservationRepository.findAllByCottageId(cottage.getId());
 
-        HotOffer addedHotOffer = new HotOffer();
-        boolean postoji = false;
-        for (HotOffer offer : hotOffers){
-            postoji = false;
-            for(HotOffer offer1 : cottage1.getHotOffers()){
-                if (offer1.getId() == offer.getId()){
-                    postoji = true;
+            HotOffer addedHotOffer = new HotOffer();
+            boolean postoji = false;
+            for (HotOffer offer : hotOffers) {
+                postoji = false;
+                for (HotOffer offer1 : cottage1.getHotOffers()) {
+                    if (offer1.getId() == offer.getId()) {
+                        postoji = true;
+                        break;
+                    }
+                }
+                if (!postoji) {
+                    addedHotOffer = offer;
                     break;
                 }
             }
-            if(!postoji){
-                addedHotOffer = offer;
-                break;
-            }
-        }
-        boolean slobodno = canAddHotOffer(hotOffersWithout,addedHotOffer,allThisCottageReservations);
+            boolean slobodno = canAddHotOffer(hotOffersWithout, addedHotOffer, allThisCottageReservations);
 
-        if(slobodno){
-            cottageRepository.save(cottage);
+            if (slobodno) {
+                cottageRepository.save(cottage);
+            }
+            cw.setWriting(false);
+            concurentWatcherRepository.save(cw);
+            return slobodno;
+        } else{
+            return false;
         }
-        return slobodno;
     }
 
 

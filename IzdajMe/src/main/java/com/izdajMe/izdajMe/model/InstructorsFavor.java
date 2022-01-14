@@ -17,8 +17,6 @@ public class InstructorsFavor {
     private String name;
     private String address;
     private String description;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
-    private List<Grade> grades;
     private ArrayList<String> images;
     private int numOfPersons;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
@@ -71,10 +69,6 @@ public class InstructorsFavor {
     public String getDescription() { return this.description; }
 
     public void setDescription(String description) { this.description = description; }
-
-    public List<Grade> getGrades() { return this.grades; }
-
-    public void setGrades(List<Grade> grades) { this.grades = grades; }
 
     public ArrayList<String> getImages() { return this.images; }
 

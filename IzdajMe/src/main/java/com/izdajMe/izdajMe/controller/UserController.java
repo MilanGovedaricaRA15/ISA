@@ -146,6 +146,11 @@ public class UserController {
         return new ResponseEntity<Boolean>(userService.deleteUser(id), HttpStatus.OK);
     }
 
+    @PostMapping("/users/declineUser")
+    public ResponseEntity<Boolean> declineUser(@RequestBody String text){
+        return new ResponseEntity<Boolean>(userService.declineUser(text), HttpStatus.OK);
+    }
+
     @PostMapping("/users/acceptUser")
     public ResponseEntity<Boolean> acceptUser(@RequestBody Long id) {
         return new ResponseEntity<Boolean>(userService.acceptUser(id), HttpStatus.OK);
@@ -172,15 +177,6 @@ public class UserController {
             return new ResponseEntity<UserDTO>((UserDTO) null, HttpStatus.UNAUTHORIZED);
         }
     }
-
-    /*@GetMapping("/users/getAllUsers")
-    public ResponseEntity<List<UserDTO>> getAllUsers() {
-        List<UserDTO> list = new ArrayList<UserDTO>();
-        for(User user : userService.getAllUsers()){
-            list.add(new UserDTO(user));
-        }
-        return new ResponseEntity<List<UserDTO>>(list, HttpStatus.OK);
-    }*/
 
     @GetMapping("/users/getInstructorByEmail")
     public ResponseEntity<User> getInstructorByEmail(@RequestParam("email") String email) {

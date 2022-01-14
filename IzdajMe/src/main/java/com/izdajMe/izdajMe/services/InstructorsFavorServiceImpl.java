@@ -195,7 +195,6 @@ public class InstructorsFavorServiceImpl implements InstructorsFavorService{
         favor.setImages(new ArrayList<String>());
         favor.setPriceList(new ArrayList<FavorServicePrice>());
         favor.setServices(new ArrayList<InstructorsFavor.FavorServices>());
-        favor.setGrades(new ArrayList<Grade>());
         return favor;
     }
 

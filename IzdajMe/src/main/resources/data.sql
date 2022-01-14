@@ -1,4 +1,5 @@
 delete from account_delete_requests where id!=0;
+delete from concurent_watcher where id!=0;
 delete from cottage_reservations where id!=0;
 delete from ship_reservations where id!=0;
 delete from favor_reservations where id!=0;
@@ -8,6 +9,7 @@ delete from favors_hot_offers where instructors_favor_id!=0;
 delete from cottages_price_list where cottage_id!=0;
 delete from ships_price_list where ship_id!=0;
 delete from favors_price_list where instructors_favor_id!=0;
+delete from complaints where id!=0;
 delete from hot_offers where id!=0;
 delete from ship_hot_offers where id!=0;
 delete from favor_hot_offers where id!=0;
@@ -51,7 +53,7 @@ values (11, 'Nemanjina 2', 'Srbobran', 'Srbija', 'nikola.aleksic@gmail.com', 'Ni
 insert into users (id, address, city, country, email,first_name,last_name,mobile_number,password,reason,role,verified)
 values (12, 'Kralja Petra 12a', 'Becej', 'Srbija', 'milos.zivic@gmail.com', 'Milos', 'Zivic', '222222222222', 'zile', '', 5, TRUE);
 insert into users (id, address, city, country, email,first_name,last_name,mobile_number,password,reason,role,verified)
-values (13, 'Vozdovacka 12', 'Beograd', 'Srbija', 'vesnakundacina@gmail.com', 'Vesna', 'Kundacina', 123123123, 'aaaa', 'Izdaja vikendice', 0, FALSE);
+values (13, 'Vozdovacka 12', 'Beograd', 'Srbija', 'vesnakundacina852@gmail.com', 'Vesna', 'Kundacina', 123123123, 'aaaa', 'Izdaja vikendice', 0, FALSE);
 insert into users (id, address, city, country, email,first_name,last_name,mobile_number,password,reason,role,verified)
 values (14, 'Kralja Aleksandra 12a', 'Uzice', 'Srbija', 'peraperic@gmail.com', 'Pera', 'Peric', '222222222222', 'aaaa', '', 6, TRUE);
 
@@ -314,6 +316,11 @@ values (7, 25, 'Isplovljavanje', 'Ribarsko ostrvo', 'Plovidba camcom i pecanje',
 insert into favors (id, instructor_id, name, address, description, images, num_of_persons, rules, services, cost, available_from, available_till, cancellation_condition)
 values (8, 26, 'Pravljenje mamca', 'Ribarac', 'Mamac', null, 3, 'Samo punoletni mogu', null, 500, DATE('2022-01-01'), DATE('2022-03-1'), '15%');
 
+insert into complaints (id, text, author_id, complaint_user_id, answer)
+values (1, 'Nova zalba', 14, 1, '');
+insert into complaints (id, text, author_id, complaint_user_id, answer)
+values (2, 'Nova zalbaaaaaa', 14, 2, '');
+
 insert into ships_grades(ship_id, grades_id) values (1, 1);
 insert into ships_grades(ship_id, grades_id) values (1, 2);
 insert into ships_grades(ship_id, grades_id) values (2, 3);
@@ -381,10 +388,10 @@ values (2, DATE('2021-12-16'), DATE('2021-12-19'), 28, TRUE, 4, null);
 insert into ships_hot_offers(ship_id,hot_offers_id) values (1, 2);
 
 insert into favor_hot_offers (id, available_from, available_till, place, num_of_persons, services, cost, free)
-values (1, DATE('2022-1-20'), DATE('2021-1-25'), 'Ribarac', 5, null, 1000, TRUE);
+values (1, DATE('2022-01-20'), DATE('2021-01-25'), 'Ribarac', 5, null, 1000, TRUE);
 insert into favors_hot_offers(instructors_favor_id, hot_offers_id) values (1, 1);
 insert into favor_hot_offers (id, available_from, available_till, place, num_of_persons, services, cost, free)
-values (2, DATE('2022-2-2'), DATE('2021-2-12'), 'Ribarac', 4, null, 900, TRUE);
+values (2, DATE('2022-02-02'), DATE('2021-02-12'), 'Ribarac', 4, null, 900, TRUE);
 insert into favors_hot_offers(instructors_favor_id, hot_offers_id) values (1, 2);
 
 insert into service_price (id, cost, service)
@@ -541,3 +548,10 @@ insert into favor_reservations (id, available_from, available_till, cost, client
 values (2, DATE('2022-01-01'), DATE('2022-01-15'), 900, 14, 3, null);
 insert into favor_reservations (id, available_from, available_till, cost, client_id, favor_id, services)
 values (3, DATE('2022-02-24'), DATE('2022-02-24'), 600, 14, 2, null);
+
+insert into concurent_watcher (id, table_name, is_writing) values (1, 'CottageReservation', false);
+insert into concurent_watcher (id, table_name, is_writing) values (2, 'Cottage', false);
+insert into concurent_watcher (id, table_name, is_writing) values (3, 'ShipReservation', false);
+insert into concurent_watcher (id, table_name, is_writing) values (4, 'Ship', false);
+insert into concurent_watcher (id, table_name, is_writing) values (5, 'ShipHotOffer', false);
+insert into concurent_watcher (id, table_name, is_writing) values (6, 'CottageHotOffer', false);

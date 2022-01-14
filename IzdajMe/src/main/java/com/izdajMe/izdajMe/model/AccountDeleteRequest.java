@@ -11,13 +11,15 @@ public class AccountDeleteRequest {
     @ManyToOne
     private User user;
     private String reason;
+    private String answer;
     private boolean seen;
 
-    public AccountDeleteRequest(long id, User user, boolean seen, String reason) {
+    public AccountDeleteRequest(long id, User user, boolean seen, String reason, String answer) {
         this.id = id;
         this.user = user;
         this.seen = seen;
         this.reason = reason;
+        this.answer = answer;
     }
 
     public AccountDeleteRequest(){
@@ -30,6 +32,10 @@ public class AccountDeleteRequest {
     public void setReason(String reason) {
         this.reason = reason;
     }
+
+    public String getAnswer() { return answer; }
+
+    public void setAnswer(String answer) { this.answer = answer; }
 
     public long getId() {
         return id;

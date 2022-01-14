@@ -9,12 +9,14 @@ import { AccountDeleteRequest } from '../model/account-delete-request';
 export class AccountDeleteRequestService {
   private addAccountDeleteRequestUrl: string;
   private getAllRequestsUrl: string;
-  private deleteRequestUrl: string;
+  private declineRequestUrl: string;
+  private acceptRequestUrl: string;
 
   constructor(private http: HttpClient) { 
     this.addAccountDeleteRequestUrl = "http://localhost:8080/accountDeleteRequest/addAccountDeleteRequest";
     this.getAllRequestsUrl = 'http://localhost:8080/accountDeleteRequest/getAllRequests';
-    this.deleteRequestUrl = 'http://localhost:8080/accountDeleteRequest/deleteRequest';
+    this.declineRequestUrl = 'http://localhost:8080/accountDeleteRequest/declineRequest';
+    this.acceptRequestUrl = 'http://localhost:8080/accountDeleteRequest/acceptRequest';
   }
 
   public addAccountDeleteRequest(accountDeleteRequest: AccountDeleteRequest):Observable<boolean>{
@@ -28,7 +30,11 @@ export class AccountDeleteRequestService {
     return this.http.get<Array<AccountDeleteRequest>>(this.getAllRequestsUrl, {headers: headers});
   }
 
-  public deleteRequest(id:number): Observable<boolean>{
-    return this.http.post<boolean>(this.deleteRequestUrl,id);
+  public acceptRequest(accountDeleteRequest: AccountDeleteRequest): Observable<boolean>{
+    return this.http.post<boolean>(this.acceptRequestUrl,accountDeleteRequest);
+  }
+
+  public declineRequest(accountDeleteRequest: AccountDeleteRequest): Observable<boolean>{
+    return this.http.post<boolean>(this.declineRequestUrl,accountDeleteRequest);
   }
 }

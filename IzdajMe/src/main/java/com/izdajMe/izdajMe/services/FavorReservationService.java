@@ -12,4 +12,5 @@ public interface FavorReservationService {
     Boolean addReservationByClient(FavorReservation favorReservation);
     FavorReservation getById(long id);
     public Boolean changeReservationByInstructor(FavorReservation favorReservation);
+    public void deleteByClientId(long id);
 }
