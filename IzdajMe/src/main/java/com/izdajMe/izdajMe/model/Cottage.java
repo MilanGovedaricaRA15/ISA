@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name="cottages")
+@Table(name = "cottages")
 public class Cottage {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,15 +23,15 @@ public class Cottage {
     private ArrayList<Services> services;
     private LocalDateTime availableFrom;
     private LocalDateTime availableTill;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<HotOffer> hotOffers;
     private float costPerNight;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ServicePrice> priceList;
     @OneToMany
     private List<Grade> grades;
 
-    public Cottage(long id,List<Grade> grades,User owner, String name, String address, String description, ArrayList<String> images, int numOfRooms, int numOfBeds, String rules, ArrayList<Services> services, LocalDateTime availableFrom, LocalDateTime availableTill, List<HotOffer> hotOffers, float costPerNight, List<ServicePrice> priceList) {
+    public Cottage(long id, List<Grade> grades, User owner, String name, String address, String description, ArrayList<String> images, int numOfRooms, int numOfBeds, String rules, ArrayList<Services> services, LocalDateTime availableFrom, LocalDateTime availableTill, List<HotOffer> hotOffers, float costPerNight, List<ServicePrice> priceList) {
         this.id = id;
         this.owner = owner;
         this.name = name;
@@ -58,7 +58,8 @@ public class Cottage {
         this.grades = grades;
     }
 
-    public Cottage(){}
+    public Cottage() {
+    }
 
     public long getId() {
         return id;

@@ -25,18 +25,17 @@ import java.util.List;
 
 public class CottageController {
     @Autowired
-    private CottageService cottageService ;
+    private CottageService cottageService;
 
     @GetMapping("/cottages/getAllCottagesOfOwner")
     public ResponseEntity<List<Cottage>> getAllCottagesOfOwner(@RequestParam("email") String email, HttpServletRequest request) {
-        if (request.getSession(false).getAttribute("role")!=null) {
+        if (request.getSession(false).getAttribute("role") != null) {
             if (request.getSession(false).getAttribute("role") == User.Role.cottageAdvertiser) {
                 return new ResponseEntity<List<Cottage>>(cottageService.getAllCottagesOfOwner(email), HttpStatus.OK);
             } else {
                 return new ResponseEntity<List<Cottage>>(new ArrayList<Cottage>(), HttpStatus.UNAUTHORIZED);
             }
-        }
-        else{
+        } else {
             return new ResponseEntity<List<Cottage>>(new ArrayList<Cottage>(), HttpStatus.UNAUTHORIZED);
         }
     }
@@ -46,19 +45,18 @@ public class CottageController {
         Cottage cottage = cottageService.getCottageById(id);
         if (cottage != null) {
             return new ResponseEntity<CottageDTO>(new CottageDTO(cottage), HttpStatus.OK);
-        }
-        else {
+        } else {
             return new ResponseEntity<CottageDTO>(new CottageDTO(cottage), HttpStatus.NOT_FOUND);
         }
     }
 
     @GetMapping("/cottages/getAllCottages")
-    public ResponseEntity<List<CottageDTO>> getAllCottages(){
+    public ResponseEntity<List<CottageDTO>> getAllCottages() {
         List<CottageDTO> list = new ArrayList<CottageDTO>();
-        for(Cottage c : cottageService.getAllCottages()){
+        for (Cottage c : cottageService.getAllCottages()) {
             list.add(new CottageDTO(c));
         }
-        return new ResponseEntity<List<CottageDTO>>(list,HttpStatus.OK);
+        return new ResponseEntity<List<CottageDTO>>(list, HttpStatus.OK);
     }
 
     @GetMapping("/cottages/getAllAvailableCottages")
@@ -77,8 +75,8 @@ public class CottageController {
     }
 
     @PutMapping("/cottages/removeCottageImg")
-    public ResponseEntity<Void> removeCottageImg(@RequestBody Cottage cottage, HttpServletRequest request){
-        if (request.getSession(false).getAttribute("role")!=null) {
+    public ResponseEntity<Void> removeCottageImg(@RequestBody Cottage cottage, HttpServletRequest request) {
+        if (request.getSession(false).getAttribute("role") != null) {
             if (request.getSession(false).getAttribute("role") == User.Role.cottageAdvertiser) {
                 if (cottageService.removeCottageImg(cottage)) {
                     return ResponseEntity.ok(null);
@@ -88,14 +86,14 @@ public class CottageController {
             } else {
                 return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
             }
-        }
-        else{
+        } else {
             return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
         }
     }
+
     @PostMapping("/cottages/removeCottage")
-    public ResponseEntity<Void> removeCottage(@RequestBody Long id, HttpServletRequest request){
-        if (request.getSession(false).getAttribute("role")!=null) {
+    public ResponseEntity<Void> removeCottage(@RequestBody Long id, HttpServletRequest request) {
+        if (request.getSession(false).getAttribute("role") != null) {
             if (request.getSession(false).getAttribute("role") == User.Role.cottageAdvertiser) {
                 if (cottageService.removeCottage(id)) {
                     return ResponseEntity.ok(null);
@@ -105,20 +103,19 @@ public class CottageController {
             } else {
                 return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
             }
-        }
-        else{
+        } else {
             return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
         }
     }
 
     @PostMapping("/cottages/removeCottageByAdministrator")
-    public ResponseEntity<Boolean> removeCottageByAdministrator(@RequestBody Long id, HttpServletRequest request){
+    public ResponseEntity<Boolean> removeCottageByAdministrator(@RequestBody Long id, HttpServletRequest request) {
         return new ResponseEntity<Boolean>(cottageService.removeCottageByAdministrator(id), HttpStatus.OK);
     }
 
     @PostMapping("/cottages/uploadImg")
-    public ResponseEntity<Boolean> uploadImg(@RequestPart("file") MultipartFile file, HttpServletRequest request){
-        if (request.getSession(false).getAttribute("role")!=null) {
+    public ResponseEntity<Boolean> uploadImg(@RequestPart("file") MultipartFile file, HttpServletRequest request) {
+        if (request.getSession(false).getAttribute("role") != null) {
             if (request.getSession(false).getAttribute("role") == User.Role.cottageAdvertiser) {
                 if (cottageService.uploadImg(file)) {
                     return new ResponseEntity<Boolean>(true, HttpStatus.OK);
@@ -128,29 +125,27 @@ public class CottageController {
             } else {
                 return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
             }
-        }
-        else{
+        } else {
             return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
         }
     }
 
     @PostMapping("/cottages/addCottage")
-    public ResponseEntity<CottageDTO> addCottage(@RequestBody Cottage cottage, HttpServletRequest request){
-        if (request.getSession(false).getAttribute("role")!=null) {
+    public ResponseEntity<CottageDTO> addCottage(@RequestBody Cottage cottage, HttpServletRequest request) {
+        if (request.getSession(false).getAttribute("role") != null) {
             if (request.getSession(false).getAttribute("role") == User.Role.cottageAdvertiser) {
                 return new ResponseEntity<CottageDTO>(new CottageDTO(cottageService.addCottage(cottage)), HttpStatus.OK);
             } else {
                 return new ResponseEntity<CottageDTO>(new CottageDTO(), HttpStatus.UNAUTHORIZED);
             }
-        }
-        else{
+        } else {
             return new ResponseEntity<CottageDTO>(new CottageDTO(), HttpStatus.UNAUTHORIZED);
         }
     }
 
     @PutMapping("/cottages/changeCottage")
-    public ResponseEntity<Boolean> changeCottage(@RequestBody Cottage cottage, HttpServletRequest request){
-        if (request.getSession(false).getAttribute("role")!=null) {
+    public ResponseEntity<Boolean> changeCottage(@RequestBody Cottage cottage, HttpServletRequest request) {
+        if (request.getSession(false).getAttribute("role") != null) {
             if (request.getSession(false).getAttribute("role") == User.Role.cottageAdvertiser) {
                 if (cottageService.changeCottage(cottage)) {
                     return new ResponseEntity<Boolean>(true, HttpStatus.OK);
@@ -160,15 +155,14 @@ public class CottageController {
             } else {
                 return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
             }
-        }
-        else{
+        } else {
             return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
         }
     }
 
     @PostMapping("/cottages/checkIsReserved")
-    public ResponseEntity<Boolean> checkIsReserved(@RequestBody Cottage cottage, HttpServletRequest request){
-        if (request.getSession(false).getAttribute("role")!=null) {
+    public ResponseEntity<Boolean> checkIsReserved(@RequestBody Cottage cottage, HttpServletRequest request) {
+        if (request.getSession(false).getAttribute("role") != null) {
             if (request.getSession(false).getAttribute("role") == User.Role.cottageAdvertiser) {
                 if (cottageService.checkIsReserved(cottage)) {
                     return new ResponseEntity<Boolean>(true, HttpStatus.OK);
@@ -178,15 +172,14 @@ public class CottageController {
             } else {
                 return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
             }
-        }
-        else{
+        } else {
             return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
         }
     }
 
     @PutMapping("/cottages/removeHotOffer")
-    public ResponseEntity<Boolean> removeHotOffer(@RequestBody Cottage cottage, HttpServletRequest request){
-        if (request.getSession(false).getAttribute("role")!=null) {
+    public ResponseEntity<Boolean> removeHotOffer(@RequestBody Cottage cottage, HttpServletRequest request) {
+        if (request.getSession(false).getAttribute("role") != null) {
             if (request.getSession(false).getAttribute("role") == User.Role.cottageAdvertiser) {
                 if (cottageService.removeHotOffer(cottage)) {
                     return new ResponseEntity<Boolean>(true, HttpStatus.OK);
@@ -196,22 +189,20 @@ public class CottageController {
             } else {
                 return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
             }
-        }
-        else{
+        } else {
             return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
         }
     }
 
     @PutMapping("/cottages/addHotOfferToCottage")
-    public ResponseEntity<Boolean> addHotOfferToCottage(@RequestBody Cottage cottage, HttpServletRequest request){
-        if (request.getSession(false).getAttribute("role")!=null) {
+    public ResponseEntity<Boolean> addHotOfferToCottage(@RequestBody Cottage cottage, HttpServletRequest request) {
+        if (request.getSession(false).getAttribute("role") != null) {
             if (request.getSession(false).getAttribute("role") == User.Role.cottageAdvertiser) {
                 return new ResponseEntity<Boolean>(cottageService.addHotOfferToCottage(cottage), HttpStatus.OK);
             } else {
                 return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
             }
-        }
-        else{
+        } else {
             return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
         }
     }

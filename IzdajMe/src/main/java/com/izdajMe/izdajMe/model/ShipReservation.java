@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 @Entity
-@Table(name="shipReservations")
+@Table(name = "shipReservations")
 public class ShipReservation {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,15 +18,16 @@ public class ShipReservation {
     private User client;
     @ManyToOne
     private Ship ship;
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval=true)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private Penalty penalty;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval=true)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private Report report;
 
-    public ShipReservation(){}
+    public ShipReservation() {
+    }
 
-    public ShipReservation(long id,Report report,Penalty penalty, LocalDateTime availableFrom, LocalDateTime availableTill, ArrayList<Ship.Services> services, float cost, User client, Ship ship) {
+    public ShipReservation(long id, Report report, Penalty penalty, LocalDateTime availableFrom, LocalDateTime availableTill, ArrayList<Ship.Services> services, float cost, User client, Ship ship) {
         this.id = id;
         this.availableFrom = availableFrom;
         this.availableTill = availableTill;
