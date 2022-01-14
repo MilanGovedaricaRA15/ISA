@@ -120,7 +120,7 @@ public class ShipServiceImpl implements  ShipService {
             return false;
         }
     }
-
+    @Transactional(readOnly = false)
     public Boolean changeShip(Ship ship){
         if (concurentWatcherRepository.findByTableName("ShipReservation").getWriting() == false) {
             ConcurentWatcher cw = concurentWatcherRepository.findByTableName("Ship");
@@ -140,7 +140,7 @@ public class ShipServiceImpl implements  ShipService {
             return false;
         }
     }
-
+    @Transactional(readOnly = false)
     public Boolean removeHotOffer(Ship ship){
         if (concurentWatcherRepository.findByTableName("ShipReservation").getWriting() == false) {
             ConcurentWatcher cw = concurentWatcherRepository.findByTableName("ShipHotOffer");

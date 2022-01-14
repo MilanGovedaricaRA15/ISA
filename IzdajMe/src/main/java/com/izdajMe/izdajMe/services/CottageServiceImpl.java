@@ -95,7 +95,7 @@ public class CottageServiceImpl implements CottageService {
             return false;
         }
     }
-
+    @Transactional(readOnly = false)
     public Boolean changeCottage(Cottage cottage){
         if (concurentWatcherRepository.findByTableName("CottageReservation").getWriting() == false) {
             ConcurentWatcher cw = concurentWatcherRepository.findByTableName("Cottage");
@@ -116,6 +116,7 @@ public class CottageServiceImpl implements CottageService {
         }
     }
 
+    @Transactional(readOnly = false)
     public Boolean removeHotOffer(Cottage cottage){
         if (concurentWatcherRepository.findByTableName("CottageReservation").getWriting() == false) {
             ConcurentWatcher cw = concurentWatcherRepository.findByTableName("CottageHotOffer");
