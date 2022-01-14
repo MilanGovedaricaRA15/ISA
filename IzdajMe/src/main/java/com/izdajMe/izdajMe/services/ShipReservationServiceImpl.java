@@ -144,17 +144,28 @@ public class ShipReservationServiceImpl implements ShipReservationService {
         }
     }
 
+    @Transactional(readOnly = false)
     public Boolean addReservationByClient(ShipReservation shipReservation){
-        List<ShipReservation> allThisShipReservations = shipReservationRepository.findAllByShipId(shipReservation.getShip().getId());
-        Ship thisShip = shipRepository.getById(shipReservation.getShip().getId());
-        List<ShipHotOffer> allThisShipHotOffers = thisShip.getHotOffers();
+        if (concurentWatcherRepository.findByTableName("ShipReservation").getWriting() == false&&concurentWatcherRepository.findByTableName("Ship").getWriting() == false&&concurentWatcherRepository.findByTableName("ShipHotOffer").getWriting() == false) {
+            ConcurentWatcher cw = concurentWatcherRepository.findByTableName("ShipReservation");
+            cw.setWriting(true);
+            List<ShipReservation> allThisShipReservations = shipReservationRepository.findAllByShipId(shipReservation.getShip().getId());
+            Ship thisShip = shipRepository.getById(shipReservation.getShip().getId());
+            List<ShipHotOffer> allThisShipHotOffers = thisShip.getHotOffers();
 
-        if(canAddReservation(allThisShipReservations, shipReservation, allThisShipHotOffers)) {
-            shipReservationRepository.save(shipReservation);
-            sendNotificationForClientReservation(shipReservation);
-            return true;
+            if (canAddReservation(allThisShipReservations, shipReservation, allThisShipHotOffers)) {
+                shipReservationRepository.save(shipReservation);
+                cw.setWriting(false);
+                concurentWatcherRepository.save(cw);
+                sendNotificationForClientReservation(shipReservation);
+                return true;
+            } else {
+                cw.setWriting(false);
+                concurentWatcherRepository.save(cw);
+                return false;
+            }
         }
-        else {
+        else{
             return false;
         }
     }
