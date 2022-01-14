@@ -17,6 +17,8 @@
 		<java.version>11</java.version>
 		<maven.compiler.source>8</maven.compiler.source>
 		<maven.compiler.target>8</maven.compiler.target>
+		<sonar.organization>milangovedaricara15</sonar.organization>
+		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -82,8 +84,6 @@
 			</plugin>
 		</plugins>
 	</build>
-
-
 
 </project>
 
