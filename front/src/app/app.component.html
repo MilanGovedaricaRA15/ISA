@@ -1,10 +1,13 @@
 <app-home-page-navbar (homePage)="goToHomePage()" (cottagesPage)="goToCottagesPage()" (shipsPage)="goToShipsPage()" (instructorsPage)="goToInstructorsPage()" (loginPage)="goToLoginPage()" 
           *ngIf="showCompNumber === 0 || showCompNumber === 1 || showCompNumber === 2 || showCompNumber === 11 || showCompNumber === 12 || showCompNumber === 13 || showCompNumber === 15 || showCompNumber === 16 || showCompNumber === 17 || showCompNumber === 21"></app-home-page-navbar>
-<app-client-navbar (clientProfile)="goToClientProfile()" (cottagesPageClient)="goToCottagesPageClient()" (shipsPageClient)="goToShipsPageClient()" (instructorsPageClient)="goToInstructorsPageClient()"
-          (cottagesReservationsPageClient)="goToCottagesReservationsPageClient()" (shipsReservationsPageClient)="goToShipsReservationsPageClient()" (instructorsReservationsPageClient)="goToInstructorsReservationsPageClient()"
+<app-client-navbar (clientProfile)="goToClientProfile()" (cottagesPageClient)="goToCottagesPageClient()" (shipsPageClient)="goToShipsPageClient()"
+            (instructorsPageClient)="goToInstructorsPageClient()" (cottagesReservationsPageClient)="goToCottagesReservationsPageClient()"
+            (shipsReservationsPageClient)="goToShipsReservationsPageClient()" (instructorsReservationsPageClient)="goToInstructorsReservationsPageClient()"
+            (createReservationPageClient)="goToCreateReservationPageClient()"
           *ngIf="showCompNumber === 31 || showCompNumber === 32 || showCompNumber === 33 || showCompNumber === 34
           || showCompNumber === 35 || showCompNumber === 36 || showCompNumber === 37
-          || showCompNumber === 38 || showCompNumber === 39 || showCompNumber === 40"></app-client-navbar>
+          || showCompNumber === 38 || showCompNumber === 39 || showCompNumber === 40
+          || showCompNumber === 41"></app-client-navbar>
 <div class="container">
   <div class="row">
     <div class="col-md-12">
@@ -43,6 +46,8 @@
           <app-cottages-reservations-page-client *ngIf="showCompNumber === 38"></app-cottages-reservations-page-client>
           <app-ships-reservations-page-client *ngIf="showCompNumber === 39"></app-ships-reservations-page-client>
           <app-instructors-reservations-page-client *ngIf="showCompNumber === 40"></app-instructors-reservations-page-client>
+
+          <app-create-a-reservation-client (clientProfileAuthenticated)="goToClientProfile()" *ngIf="showCompNumber === 41"></app-create-a-reservation-client>
           
           <app-owner-navbar (profile)="goToProfile()" *ngIf="showCompNumber === 3 || showCompNumber === 4 || showCompNumber === 205 || showCompNumber === 5 
                                       || showCompNumber === 6 || showCompNumber === 50 || showCompNumber === 52 || showCompNumber === 210 || showCompNumber === 211 

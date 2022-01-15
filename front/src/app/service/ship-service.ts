@@ -8,6 +8,7 @@ import { Ship } from "../model/ship";
 })
 export class ShipService {
     private getAllShipsUrl: string;
+    private getAllAvailableShipsUrl: string;
     private getShipByIdUrl: string;
     private searchShipsByNameUrl: string;
     private getShipAverageGradeUrl: string;
@@ -24,6 +25,7 @@ export class ShipService {
 
     constructor(private http: HttpClient) { 
         this.getAllShipsUrl = "http://localhost:8080/ships/getAllShips";
+        this.getAllAvailableShipsUrl = "http://localhost:8080/ships/getAllAvailableShips";
         this.getShipByIdUrl = 'http://localhost:8080/ships/getShipById';
         this.searchShipsByNameUrl = 'http://localhost:8080/ships/searchShipsByName';
         this.getShipAverageGradeUrl = 'http://localhost:8080/ships/getShipAverageGrade';
@@ -45,6 +47,16 @@ export class ShipService {
 
         return this.http.get<Array<Ship>>(this.getAllShipsUrl, {headers: headers});
     }
+
+    public getAllAvailableShips(from: Date, to: Date, numOfGuests: number): Observable<Array<Ship>> {
+      let headers = new HttpHeaders();
+      headers.append('Content-Type', 'application/json');
+      let stringFrom = from.getTime().toString();
+      let stringTo = to.getTime().toString();
+      let params = new HttpParams().set("from", stringFrom).set("to", stringTo).set("numOfGuests", numOfGuests);  
+
+      return this.http.get<Array<Ship>>(this.getAllAvailableShipsUrl, {headers: headers, params: params});
+  }
 
     public getShipById(id: number): Observable<Ship> {
         let ship = id;

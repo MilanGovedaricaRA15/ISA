@@ -19,12 +19,11 @@ public class AccountDeleteRequestServiceImpl implements AccountDeleteRequestServ
     @Autowired
     private UserService userService;
 
-    public Boolean addAccountDeleteRequest(AccountDeleteRequest accountDeleteRequest){
+    public Boolean addAccountDeleteRequest(AccountDeleteRequest accountDeleteRequest) {
         List<AccountDeleteRequest> allNotSeenUserAccountDeleteRequestList = accountDeleteRequestRepository.findAllNotSeenByUserId(accountDeleteRequest.getUser().getId());
-        if(allNotSeenUserAccountDeleteRequestList.size() != 0){
+        if (allNotSeenUserAccountDeleteRequestList.size() != 0) {
             return false;
-        }
-        else {
+        } else {
             accountDeleteRequestRepository.save(accountDeleteRequest);
             return true;
         }

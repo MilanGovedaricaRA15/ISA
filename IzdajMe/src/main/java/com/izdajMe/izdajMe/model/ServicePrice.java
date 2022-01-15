@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 
 @Entity
-@Table(name="service_price")
+@Table(name = "service_price")
 public class ServicePrice {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,7 +18,9 @@ public class ServicePrice {
         this.service = service;
         this.cost = cost;
     }
-    public ServicePrice(){}
+
+    public ServicePrice() {
+    }
 
     public long getId() {
         return id;

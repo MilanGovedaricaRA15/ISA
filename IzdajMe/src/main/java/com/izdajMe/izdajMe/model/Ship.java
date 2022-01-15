@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name="ships")
+@Table(name = "ships")
 public class Ship {
 
     @Id
@@ -28,7 +28,7 @@ public class Ship {
     private String rules;
     private ArrayList<FishingEquipment> fishingEquipment;
     private String cancelRequirements;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ShipServicePrice> priceList;
     @OneToMany
     private List<Grade> grades;
@@ -36,11 +36,12 @@ public class Ship {
     private LocalDateTime availableFrom;
     private LocalDateTime availableTill;
     private ArrayList<Services> services;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ShipHotOffer> hotOffers;
 
 
-    public Ship() {}
+    public Ship() {
+    }
 
     public enum Services {
         PetFriendly,
@@ -48,7 +49,7 @@ public class Ship {
         HairDryer
     }
 
-    public Ship(long id,List<ShipHotOffer> hotOffers,ArrayList<Services> services, User owner, String name, String type, float length, String engineNumber, float enginePower, float topSpeed, ArrayList<NavigationEquipment> navigationEquipment, String address, String description, ArrayList<String> images, int capacity, String rules, ArrayList<FishingEquipment> fishingEquipment, String cancelRequirements, List<ShipServicePrice> priceList, List<Grade> grades, float costPerNight, LocalDateTime availableFrom, LocalDateTime availableTill) {
+    public Ship(long id, List<ShipHotOffer> hotOffers, ArrayList<Services> services, User owner, String name, String type, float length, String engineNumber, float enginePower, float topSpeed, ArrayList<NavigationEquipment> navigationEquipment, String address, String description, ArrayList<String> images, int capacity, String rules, ArrayList<FishingEquipment> fishingEquipment, String cancelRequirements, List<ShipServicePrice> priceList, List<Grade> grades, float costPerNight, LocalDateTime availableFrom, LocalDateTime availableTill) {
         this.id = id;
         this.owner = owner;
         this.name = name;

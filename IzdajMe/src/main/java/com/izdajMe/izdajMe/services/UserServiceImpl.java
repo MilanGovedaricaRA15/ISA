@@ -76,7 +76,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private void inicijalizuj(){
-        Cottage c = cottageRepository.getById(new Long(1));
+        Cottage c = cottageRepository.getById(1L);
         ArrayList<Cottage.Services> services = new ArrayList<Cottage.Services>();
         services.add(Cottage.Services.Parking);
         services.add(Cottage.Services.Pool);
@@ -101,7 +101,7 @@ public class UserServiceImpl implements UserService {
         }
 
 
-        Ship s = shipRepository.getById(new Long(1));
+        Ship s = shipRepository.getById(1L);
         ArrayList<Ship.Services> services1 = new ArrayList<Ship.Services>();
         services1.add(Ship.Services.HairDryer);
         services1.add(Ship.Services.Minibar);
@@ -160,7 +160,7 @@ public class UserServiceImpl implements UserService {
     public Boolean changePasswordUser(List<User> users) {
         User foundUser = userRepository.findByIdAndPassword(users.get(0).getId(),users.get(1).getPassword());
         if (foundUser != null){
-            if(users.get(0).getRole().toString() == User.Role.administratorFirstLogged.toString())
+            if(users.get(0).getRole().toString().equals(User.Role.administratorFirstLogged.toString()))
                 users.get(0).setRole(User.Role.administrator);
             userRepository.save(users.get(0));
             foundUser.setPassword(users.get(0).getPassword());
@@ -325,11 +325,9 @@ public class UserServiceImpl implements UserService {
 
         List<User> users = userRepository.findAll();
         for (User s : users) {
-            if (s.getRole().equals(User.Role.instructor)) {
-                if (s.getFirstName().toLowerCase().contains(firstName.toLowerCase())
-                        && s.getLastName().toLowerCase().contains(lastName.toLowerCase())){
+            if (s.getRole().equals(User.Role.instructor) && s.getFirstName().toLowerCase().contains(firstName.toLowerCase())
+                    && s.getLastName().toLowerCase().contains(lastName.toLowerCase())) {
                     searchedShips.add(s);
-                }
             }
         }
 

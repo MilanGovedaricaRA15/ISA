@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 @Entity
-@Table(name="shipHotOffers")
+@Table(name = "shipHotOffers")
 public class ShipHotOffer {
 
     @Id
@@ -19,7 +19,7 @@ public class ShipHotOffer {
     private float cost;
     private Boolean free;
 
-    public  ShipHotOffer(){
+    public ShipHotOffer() {
 
     }
 

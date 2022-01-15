@@ -3,7 +3,7 @@ package com.izdajMe.izdajMe.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name="ship_service_price")
+@Table(name = "ship_service_price")
 public class ShipServicePrice {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -12,7 +12,7 @@ public class ShipServicePrice {
     private Ship.Services service;
     private float cost;
 
-    public ShipServicePrice(){
+    public ShipServicePrice() {
 
     }
 

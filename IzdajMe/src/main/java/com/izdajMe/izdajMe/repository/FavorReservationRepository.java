@@ -11,4 +11,6 @@ import java.util.List;
 public interface FavorReservationRepository extends JpaRepository<FavorReservation, Long> {
     @Query("Select f from FavorReservation f where f.favor.id = ?1")
     public List<FavorReservation> findAllByReservationId(Long id);
+    @Query("Select f from FavorReservation f where f.favor.id = ?1")
+    public List<FavorReservation> findAllByFavorId(Long id);
 }

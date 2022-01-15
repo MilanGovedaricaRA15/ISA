@@ -1,0 +1,102 @@
+<h1>Create a reservation</h1>
+<label>Step 1: Chose a entity, date and time of reservation</label>
+<form (ngSubmit)="availableReservations()" ngNativeValidate>
+    <label style="min-width: 15%;">Entity:</label>
+    <select id="entity" style="min-width: 20%;" required>
+        <option value="cottage">Cottage</option>
+        <option value="ship">Ship</option>
+        <option value="fishing">Fishing adventure</option>
+    </select><br>
+    
+    <label style="min-width: 15%;">Start date:</label>
+    <input type="date" id="startDate" min="{{today}}" value={{today}} onkeydown="return false" style="min-width: 20%;" required><br>
+    
+    <label style="min-width: 15%;">End date:</label>
+    <input type="date" id="endDate" min="{{today}}" value={{today}} onkeydown="return false" style="min-width: 20%;" required><br>
+    
+    <label style="min-width: 15%;">Number of guests:</label>
+    <input type="number" id="numOfGuests" min=1 max=30 value=1 onkeydown="return false" style="min-width: 20%;" required><br>
+    
+    <button class="btn" type="submit">Find available entities</button>
+</form>
+<br>
+<br>
+<br>
+<div *ngIf="entity === 'cottage'">
+    <h1>Available cottages:</h1>
+    <br>
+    <table style="width: 100%;">
+        <thead>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Description</th>
+            <th (click)="sortCottageByCost()" style="cursor: pointer;">Cost per night</th>
+            <th (click)="sortCottageByGrade()" style="cursor: pointer;">Grade</th>
+            <th>Services</th>
+            <th>Choose</th>
+        </thead>
+        <tbody>
+            <tr *ngFor='let c of cottages'>
+                <td>{{c.cottage.name}}</td>
+                <td>{{c.cottage.address}}</td>
+                <td>{{c.cottage.description}}</td>
+                <td>{{c.cottage.costPerNight}}</td>
+                <td>{{c.averageGrade}}</td>
+                <td><div *ngFor='let s of c.cottage.priceList'><input type="checkbox" id={{s.id}}>{{s.service}} ({{s.cost}})</div></td>
+                <td><a href="#" (click)="bookTheCottage(c.cottage.id)">Choose</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div *ngIf="entity === 'ship'">
+    <h1>Available ships:</h1>
+    <br>
+    <table style="width: 100%;">
+        <thead>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Description</th>
+            <th (click)="sortShipByCost()" style="cursor: pointer;">Cost per night</th>
+            <th (click)="sortShipByGrade()" style="cursor: pointer;">Grade</th>
+            <th>Services</th>
+            <th></th>
+        </thead>
+        <tbody>
+            <tr *ngFor='let s of ships'>
+                <td>{{s.ship.name}}</td>
+                <td>{{s.ship.address}}</td>
+                <td>{{s.ship.description}}</td>
+                <td>{{s.ship.costPerNight}}</td>
+                <td>{{s.averageGrade}}</td>
+                <td><div *ngFor='let sr of s.ship.priceList'><input type="checkbox" id={{sr.id}}>{{sr.service}} ({{sr.cost}})</div></td>
+                <td><a href="#" (click)="bookTheShip(s.ship.id)">Choose</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div *ngIf="entity === 'fishing'">
+    <h1>Available instructors favors:</h1>
+    <br>
+    <table style="width: 100%;">
+        <thead>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Description</th>
+            <th (click)="sortFavorByCost()" style="cursor: pointer;">Price</th>
+            <th (click)="sortFavorByGrade()" style="cursor: pointer;">Grade</th>
+            <th>Services</th>
+            <th></th>
+        </thead>
+        <tbody>
+            <tr *ngFor='let f of instructorsFavors'>
+                <td>{{f.instructorsFavor.name}}</td>
+                <td>{{f.instructorsFavor.address}}</td>
+                <td>{{f.instructorsFavor.description}}</td>
+                <td>{{f.instructorsFavor.cost}}</td>
+                <td>{{f.averageGrade}}</td>
+                <td><div *ngFor='let s of f.instructorsFavor.priceList'><input type="checkbox" id={{s.id}}>{{s.service}} ({{s.cost}})</div></td>
+                <td><a href="#" (click)="bookTheInstructorsFavor(f.instructorsFavor.id)">Choose</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

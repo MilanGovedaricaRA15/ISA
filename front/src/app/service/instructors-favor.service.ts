@@ -10,6 +10,7 @@ import { InstructorsFavor } from '../model/instructors-favor';
 export class InstructorsFavorService {
   
   getAllFavorsUrl: string;
+  getAllAvailableFavorsUrl: string;
   deleteFavorUrl: string;
   getFavorByIdUrl: string;
   checkIsReservedUrl: string;
@@ -22,6 +23,7 @@ export class InstructorsFavorService {
 
   constructor(private http: HttpClient) {
     this.getAllFavorsUrl = 'http://localhost:8080/favors/getAllFavors';
+    this.getAllAvailableFavorsUrl = 'http://localhost:8080/favors/getAllAvailableFavors';
     this.deleteFavorUrl = 'http://localhost:8080/favors/deleteFavor';
     this.getFavorByIdUrl = 'http://localhost:8080/favors/getFavorById';
     this.checkIsReservedUrl = 'http://localhost:8080/favors/checkIsReserved';
@@ -38,6 +40,16 @@ export class InstructorsFavorService {
     headers.append('Content-Type', 'application/json');
 
     return this.http.get<Array<InstructorsFavor>>(this.getAllFavorsUrl, {headers: headers});
+  }
+
+  public getAllAvailableFavors(from: Date, to: Date, numOfGuests: number): Observable<Array<InstructorsFavor>> {
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+    let stringFrom = from.getTime().toString();
+    let stringTo = to.getTime().toString();
+    let params = new HttpParams().set("from", stringFrom).set("to", stringTo).set("numOfGuests", numOfGuests);  
+
+    return this.http.get<Array<InstructorsFavor>>(this.getAllAvailableFavorsUrl, {headers: headers, params: params});
   }
 
   public deleteFavor(id:number): Observable<boolean> {

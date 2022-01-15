@@ -1,5 +1,6 @@
 package com.izdajMe.izdajMe.services;
 
+import com.izdajMe.izdajMe.dto.CottageDTO;
 import com.izdajMe.izdajMe.model.Cottage;
 import com.izdajMe.izdajMe.model.CottageReservation;
 import com.izdajMe.izdajMe.model.HotOffer;
@@ -31,47 +32,57 @@ public class CottageServiceImpl implements CottageService {
     private ConcurentWatcherRepository concurentWatcherRepository;
 
 
-    public List<Cottage> getAllCottagesOfOwner(String email){
+    public List<Cottage> getAllCottagesOfOwner(String email) {
         List<Cottage> ownerCottagesList = cottageRepository.findAllByCottageEmail(email);
         return ownerCottagesList;
     }
 
     public Cottage getCottageById(Long id) {
-      return cottageRepository.findById(id).get();
+        return cottageRepository.findById(id).get();
     }
 
-    public List<Cottage> getAllCottages(){
+    public List<Cottage> getAllCottages() {
         Iterable<Cottage> allCottages = cottageRepository.findAll();
         ArrayList<Cottage> allCottagesList = new ArrayList<Cottage>();
         allCottages.forEach(allCottagesList::add);
         return allCottagesList;
     }
 
+    public List<Cottage> getAllAvailableCottages(LocalDateTime from, LocalDateTime to, int numOfGuests){
+        Iterable<Cottage> allCottages = getAllCottages();
+        ArrayList<Cottage> allAvailableCottages = new ArrayList<>();
+
+        for (Cottage c : allCottages) {
+            if (isCottageAvailable(c.getId(), from, to, numOfGuests)) {
+                allAvailableCottages.add(c);
+            }
+        }
+
+        return allAvailableCottages;
+    }
+
     public Boolean removeCottageImg(Cottage cottage){
         if(!isReserved(cottage.getId())) {
             cottageRepository.save(cottage);
             return true;
-        }
-        else{
+        } else {
             return false;
         }
     }
 
-    public Boolean removeCottage(Long id){
-        if(!isReserved(id)) {
+    public Boolean removeCottage(Long id) {
+        if (!isReserved(id)) {
             cottageRepository.deleteById(id);
             return true;
-        }
-        else{
+        } else {
             return false;
         }
     }
 
-    public Boolean removeCottageByAdministrator(Long id){
-        if(!isReserved(id)) {
+    public Boolean removeCottageByAdministrator(Long id) {
+        if (!isReserved(id)) {
             cottageRepository.deleteById(id);
-        }
-        else{
+        } else {
             removeCottageReservations(id);
             cottageRepository.deleteById(id);
         }
@@ -80,23 +91,23 @@ public class CottageServiceImpl implements CottageService {
 
     private void removeCottageReservations(long id) {
         List<CottageReservation> cottageReservations = cottageReservationRepository.findAllByCottageId(id);
-        if(cottageReservations.size() != 0) {
-            for(CottageReservation cr : cottageReservations){
+        if (cottageReservations.size() != 0) {
+            for (CottageReservation cr : cottageReservations) {
                 cottageReservationRepository.delete(cr);
             }
         }
     }
 
-    public Boolean checkIsReserved(Cottage cottage){
-        if(!isReserved(cottage.getId())) {
+    public Boolean checkIsReserved(Cottage cottage) {
+        if (!isReserved(cottage.getId())) {
             return true;
-        }
-        else{
+        } else {
             return false;
         }
     }
 
-    public Boolean changeCottage(Cottage cottage){
+    @Transactional(readOnly = false)
+    public Boolean changeCottage(Cottage cottage) {
         if (concurentWatcherRepository.findByTableName("CottageReservation").getWriting() == false) {
             ConcurentWatcher cw = concurentWatcherRepository.findByTableName("Cottage");
             cw.setWriting(true);
@@ -110,13 +121,13 @@ public class CottageServiceImpl implements CottageService {
                 concurentWatcherRepository.save(cw);
                 return false;
             }
-        }
-        else {
+        } else {
             return false;
         }
     }
 
-    public Boolean removeHotOffer(Cottage cottage){
+    @Transactional(readOnly = false)
+    public Boolean removeHotOffer(Cottage cottage) {
         if (concurentWatcherRepository.findByTableName("CottageReservation").getWriting() == false) {
             ConcurentWatcher cw = concurentWatcherRepository.findByTableName("CottageHotOffer");
             cw.setWriting(true);
@@ -130,53 +141,52 @@ public class CottageServiceImpl implements CottageService {
                 concurentWatcherRepository.save(cw);
                 return false;
             }
-        }
-        else{
-            return  false;
+        } else {
+            return false;
         }
     }
 
-    public Boolean canAddHotOffer(List<HotOffer> hotOffers,HotOffer addedHotOffer, List<CottageReservation> cottageReservations){
+    public Boolean canAddHotOffer(List<HotOffer> hotOffers, HotOffer addedHotOffer, List<CottageReservation> cottageReservations) {
         boolean slobodno = true;
-        for(HotOffer hotOffer1 : hotOffers) {
-            if(addedHotOffer.getAvailableFrom().isBefore(hotOffer1.getAvailableFrom()) && addedHotOffer.getAvailableTill().isAfter(hotOffer1.getAvailableFrom())){
+        for (HotOffer hotOffer1 : hotOffers) {
+            if (addedHotOffer.getAvailableFrom().isBefore(hotOffer1.getAvailableFrom()) && addedHotOffer.getAvailableTill().isAfter(hotOffer1.getAvailableFrom())) {
                 slobodno = false;
                 break;
             }
-            if(addedHotOffer.getAvailableFrom().isBefore(hotOffer1.getAvailableTill()) && addedHotOffer.getAvailableTill().isAfter(hotOffer1.getAvailableTill())){
+            if (addedHotOffer.getAvailableFrom().isBefore(hotOffer1.getAvailableTill()) && addedHotOffer.getAvailableTill().isAfter(hotOffer1.getAvailableTill())) {
                 slobodno = false;
                 break;
             }
-            if(hotOffer1.getAvailableFrom().isBefore(addedHotOffer.getAvailableFrom()) && hotOffer1.getAvailableTill().isAfter(addedHotOffer.getAvailableTill())){
+            if (hotOffer1.getAvailableFrom().isBefore(addedHotOffer.getAvailableFrom()) && hotOffer1.getAvailableTill().isAfter(addedHotOffer.getAvailableTill())) {
                 slobodno = false;
                 break;
             }
-            if(hotOffer1.getAvailableFrom().isEqual(addedHotOffer.getAvailableFrom()) || hotOffer1.getAvailableTill().isEqual(addedHotOffer.getAvailableTill()) || hotOffer1.getAvailableTill().isEqual(addedHotOffer.getAvailableFrom()) || hotOffer1.getAvailableFrom().isEqual(addedHotOffer.getAvailableTill())){
+            if (hotOffer1.getAvailableFrom().isEqual(addedHotOffer.getAvailableFrom()) || hotOffer1.getAvailableTill().isEqual(addedHotOffer.getAvailableTill()) || hotOffer1.getAvailableTill().isEqual(addedHotOffer.getAvailableFrom()) || hotOffer1.getAvailableFrom().isEqual(addedHotOffer.getAvailableTill())) {
                 slobodno = false;
                 break;
             }
         }
-        if(addedHotOffer.getAvailableFrom().equals(addedHotOffer.getAvailableTill())){
+        if (addedHotOffer.getAvailableFrom().equals(addedHotOffer.getAvailableTill())) {
             slobodno = false;
         }
-        if(addedHotOffer.getAvailableFrom().isAfter(addedHotOffer.getAvailableTill())){
+        if (addedHotOffer.getAvailableFrom().isAfter(addedHotOffer.getAvailableTill())) {
             slobodno = false;
         }
 
-        for(CottageReservation cottageReservation : cottageReservations) {
-            if(addedHotOffer.getAvailableFrom().isBefore(cottageReservation.getAvailableFrom()) && addedHotOffer.getAvailableTill().isAfter(cottageReservation.getAvailableFrom())){
+        for (CottageReservation cottageReservation : cottageReservations) {
+            if (addedHotOffer.getAvailableFrom().isBefore(cottageReservation.getAvailableFrom()) && addedHotOffer.getAvailableTill().isAfter(cottageReservation.getAvailableFrom())) {
                 slobodno = false;
                 break;
             }
-            if(addedHotOffer.getAvailableFrom().isBefore(cottageReservation.getAvailableTill()) && addedHotOffer.getAvailableTill().isAfter(cottageReservation.getAvailableTill())){
+            if (addedHotOffer.getAvailableFrom().isBefore(cottageReservation.getAvailableTill()) && addedHotOffer.getAvailableTill().isAfter(cottageReservation.getAvailableTill())) {
                 slobodno = false;
                 break;
             }
-            if(cottageReservation.getAvailableFrom().isBefore(addedHotOffer.getAvailableFrom()) && cottageReservation.getAvailableTill().isAfter(addedHotOffer.getAvailableTill())){
+            if (cottageReservation.getAvailableFrom().isBefore(addedHotOffer.getAvailableFrom()) && cottageReservation.getAvailableTill().isAfter(addedHotOffer.getAvailableTill())) {
                 slobodno = false;
                 break;
             }
-            if(cottageReservation.getAvailableFrom().isEqual(addedHotOffer.getAvailableFrom()) || cottageReservation.getAvailableTill().isEqual(addedHotOffer.getAvailableTill()) || cottageReservation.getAvailableTill().isEqual(addedHotOffer.getAvailableFrom()) || cottageReservation.getAvailableFrom().isEqual(addedHotOffer.getAvailableTill())){
+            if (cottageReservation.getAvailableFrom().isEqual(addedHotOffer.getAvailableFrom()) || cottageReservation.getAvailableTill().isEqual(addedHotOffer.getAvailableTill()) || cottageReservation.getAvailableTill().isEqual(addedHotOffer.getAvailableFrom()) || cottageReservation.getAvailableFrom().isEqual(addedHotOffer.getAvailableTill())) {
                 slobodno = false;
                 break;
             }
@@ -185,8 +195,9 @@ public class CottageServiceImpl implements CottageService {
 
         return slobodno;
     }
+
     @Transactional(readOnly = false)
-    public Boolean addHotOfferToCottage(Cottage cottage){
+    public Boolean addHotOfferToCottage(Cottage cottage) {
         if (concurentWatcherRepository.findByTableName("CottageReservation").getWriting() == false) {
             ConcurentWatcher cw = concurentWatcherRepository.findByTableName("CottageHotOffer");
             cw.setWriting(true);
@@ -219,14 +230,13 @@ public class CottageServiceImpl implements CottageService {
             cw.setWriting(false);
             concurentWatcherRepository.save(cw);
             return slobodno;
-        } else{
+        } else {
             return false;
         }
     }
 
 
-
-    public Cottage addCottage(Cottage cottage){
+    public Cottage addCottage(Cottage cottage) {
         cottageRepository.save(cottage);
         cottage.setHotOffers(new ArrayList<HotOffer>());
         cottage.setImages(new ArrayList<String>());
@@ -236,31 +246,27 @@ public class CottageServiceImpl implements CottageService {
         return cottage;
     }
 
-    public Boolean uploadImg(MultipartFile file){
+    public Boolean uploadImg(MultipartFile file) {
 
-            String orgName = file.getOriginalFilename();
+        String orgName = file.getOriginalFilename();
 
-            String filePath = "../front/src/assets/images/" + orgName +".jpg";
-            File dest = new File(filePath);
-            if(!dest.exists())
-            {
+        String filePath = "../front/src/assets/images/" + orgName + ".jpg";
+        File dest = new File(filePath);
+        if (!dest.exists()) {
 
-            }
-            try {
-                file.transferTo(Paths.get(filePath));
-                return true;
-            }
-            catch (IllegalStateException | IOException e)
-            {
-                e.printStackTrace();
-                return false;
-            }
+        }
+        try {
+            file.transferTo(Paths.get(filePath));
+            return true;
+        } catch (IllegalStateException | IOException e) {
+            return false;
+        }
     }
 
-    public boolean isReserved(Long id){
+    public boolean isReserved(Long id) {
         List<CottageReservation> allCottageReservationsList = cottageReservationRepository.findAllByCottageId(id);
-        for(CottageReservation cottageReservation : allCottageReservationsList){
-            if(LocalDateTime.now().isBefore(cottageReservation.getAvailableTill())){
+        for (CottageReservation cottageReservation : allCottageReservationsList) {
+            if (LocalDateTime.now().isBefore(cottageReservation.getAvailableTill())) {
                 return true;
             }
         }
@@ -269,14 +275,46 @@ public class CottageServiceImpl implements CottageService {
 
     public List<Cottage> searchCottagesByName(String name) {
         List<Cottage> searchedCottages = new ArrayList<>();
-        
+
         List<Cottage> cottages = cottageRepository.findAll();
         for (Cottage c : cottages) {
-            if (c.getName().toLowerCase().contains(name.toLowerCase())){
+            if (c.getName().toLowerCase().contains(name.toLowerCase())) {
                 searchedCottages.add(c);
             }
         }
-        
+
         return searchedCottages;
+    }
+
+    public Boolean isCottageAvailable(Long id, LocalDateTime from, LocalDateTime to, int numOfGuests) {
+        Cottage c = cottageRepository.findById(id).get();
+        if (from.compareTo(c.getAvailableTill()) > 0 || to.compareTo(c.getAvailableTill()) > 0  ||
+                to.compareTo(c.getAvailableFrom()) < 0 || from.compareTo(c.getAvailableFrom()) < 0 ) {
+            return false;
+        } else {
+            if (isReservedFromTill(id, from, to)) {
+                return false;
+            } else {
+                if (c.getNumOfBeds() < numOfGuests) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    public Boolean isReservedFromTill(Long id, LocalDateTime from, LocalDateTime to) {
+        List<CottageReservation> cottageReservations = cottageReservationRepository.findAllByCottageId(id);
+
+        for (CottageReservation c : cottageReservations) {
+            if ((from.compareTo(c.getAvailableFrom()) > 0 && from.compareTo(c.getAvailableTill()) < 0) ||
+                    (to.compareTo(c.getAvailableFrom()) > 0 && to.compareTo(c.getAvailableTill()) < 0) ||
+                    (from.compareTo(c.getAvailableFrom()) < 0 && to.compareTo(c.getAvailableTill()) > 0)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

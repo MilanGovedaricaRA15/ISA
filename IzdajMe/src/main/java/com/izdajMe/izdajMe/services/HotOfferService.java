@@ -6,5 +6,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 public interface HotOfferService {
     public Boolean saveHotOffer(HotOffer hotOffer);
-    public Boolean removeHotOffer( Long id);
+
+    public Boolean removeHotOffer(Long id);
 }

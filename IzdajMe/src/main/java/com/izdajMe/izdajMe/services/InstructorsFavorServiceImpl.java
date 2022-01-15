@@ -43,6 +43,19 @@ public class InstructorsFavorServiceImpl implements InstructorsFavorService{
         return allFavorsList;
     }
 
+    public List<InstructorsFavor> getAllAvailableFavors(LocalDateTime from, LocalDateTime to, int numOfGuests) {
+        Iterable<InstructorsFavor> allCottages = getAllFavors();
+        ArrayList<InstructorsFavor> allAvailableFavors = new ArrayList<>();
+
+        for (InstructorsFavor c : allCottages) {
+            if (isFavorAvailable(c.getId(), from, to, numOfGuests)) {
+                allAvailableFavors.add(c);
+            }
+        }
+
+        return allAvailableFavors;
+    }
+
     public Boolean deleteFavor(long id){
         instructorsFavorRepository.deleteById(id);
         return true;
@@ -121,7 +134,6 @@ public class InstructorsFavorServiceImpl implements InstructorsFavorService{
         }
         catch (IllegalStateException | IOException e)
         {
-            e.printStackTrace();
             return false;
         }
     }
@@ -244,5 +256,37 @@ public class InstructorsFavorServiceImpl implements InstructorsFavorService{
     public List<InstructorsFavor> getAllFavorsOfInstructor(String email) {
         List<InstructorsFavor> instructorFavors = instructorsFavorRepository.findAllByFavorEmail(email);
         return instructorFavors;
+    }
+
+    public Boolean isFavorAvailable(Long id, LocalDateTime from, LocalDateTime to, int numOfGuests) {
+        InstructorsFavor f = instructorsFavorRepository.findById(id).get();
+        if (from.compareTo(f.getAvailableTill()) > 0 || to.compareTo(f.getAvailableTill()) > 0  ||
+                to.compareTo(f.getAvailableFrom()) < 0 || from.compareTo(f.getAvailableFrom()) < 0 ) {
+            return false;
+        } else {
+            if (isReservedFromTill(id, from, to)) {
+                return false;
+            } else {
+                if (f.getNumOfPersons() < numOfGuests) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    public Boolean isReservedFromTill(Long id, LocalDateTime from, LocalDateTime to) {
+        List<FavorReservation> favorReservations = favorReservationRepository.findAllByFavorId(id);
+
+        for (FavorReservation f : favorReservations) {
+            if ((from.compareTo(f.getAvailableFrom()) > 0 && from.compareTo(f.getAvailableTill()) < 0) ||
+                    (to.compareTo(f.getAvailableFrom()) > 0 && to.compareTo(f.getAvailableTill()) < 0) ||
+                    (from.compareTo(f.getAvailableFrom()) < 0 && to.compareTo(f.getAvailableTill()) > 0)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

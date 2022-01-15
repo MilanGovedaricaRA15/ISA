@@ -3,7 +3,7 @@ package com.izdajMe.izdajMe.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name="accountDeleteRequests")
+@Table(name = "accountDeleteRequests")
 public class AccountDeleteRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,7 +22,7 @@ public class AccountDeleteRequest {
         this.answer = answer;
     }
 
-    public AccountDeleteRequest(){
+    public AccountDeleteRequest() {
     }
 
     public String getReason() {
@@ -33,9 +33,13 @@ public class AccountDeleteRequest {
         this.reason = reason;
     }
 
-    public String getAnswer() { return answer; }
+    public String getAnswer() {
+        return answer;
+    }
 
-    public void setAnswer(String answer) { this.answer = answer; }
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
 
     public long getId() {
         return id;

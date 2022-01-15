@@ -20,23 +20,23 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:4200")
 public class ShipReservationController {
     @Autowired
-    private ShipReservationService shipReservationService ;
+    private ShipReservationService shipReservationService;
 
     @GetMapping("/shipReservation/getAllReservationsOfShip")
     public ResponseEntity<List<ShipReservationDTO>> getAllReservationsOfShip(@RequestParam("id") Long id) {
 
         List<ShipReservationDTO> list = new ArrayList<ShipReservationDTO>();
-        for (ShipReservation c : shipReservationService.getAllReservationsOfShip(id)){
+        for (ShipReservation c : shipReservationService.getAllReservationsOfShip(id)) {
             list.add(new ShipReservationDTO(c));
         }
         return new ResponseEntity<List<ShipReservationDTO>>(list, HttpStatus.OK);
     }
 
     @GetMapping("/shipReservation/getAllReservationsOfShipFromTill")
-    public ResponseEntity<List<ShipReservationDTO>> getAllReservationsOfShipFromTill(@RequestParam("id") Long id,@RequestParam("from") String from,@RequestParam("to") String to) {
+    public ResponseEntity<List<ShipReservationDTO>> getAllReservationsOfShipFromTill(@RequestParam("id") Long id, @RequestParam("from") String from, @RequestParam("to") String to) {
 
         List<ShipReservationDTO> list = new ArrayList<ShipReservationDTO>();
-        for (ShipReservation c : shipReservationService.getAllReservationsOfShipFromTill(id,from,to)){
+        for (ShipReservation c : shipReservationService.getAllReservationsOfShipFromTill(id, from, to)) {
             list.add(new ShipReservationDTO(c));
         }
         return new ResponseEntity<List<ShipReservationDTO>>(list, HttpStatus.OK);
@@ -49,7 +49,7 @@ public class ShipReservationController {
 
     @GetMapping("/shipReservation/getAllReservationsOfOwner")
     public ResponseEntity<List<ShipReservationDTO>> getAllReservationsOfOwner(@RequestParam("email") String email, HttpServletRequest request) {
-        if (request.getSession(false).getAttribute("role")!=null) {
+        if (request.getSession(false).getAttribute("role") != null) {
             if (request.getSession(false).getAttribute("role") == User.Role.boatAdvertiser) {
                 List<ShipReservationDTO> list = new ArrayList<ShipReservationDTO>();
                 for (ShipReservation c : shipReservationService.getAllReservationsOfOwner(email)) {
@@ -60,36 +60,47 @@ public class ShipReservationController {
             } else {
                 return new ResponseEntity<List<ShipReservationDTO>>(new ArrayList<ShipReservationDTO>(), HttpStatus.UNAUTHORIZED);
             }
-        }
-        else{
+        } else {
             return new ResponseEntity<List<ShipReservationDTO>>(new ArrayList<ShipReservationDTO>(), HttpStatus.UNAUTHORIZED);
         }
     }
 
     @PostMapping("/shipReservation/addReservationByOwner")
-    public ResponseEntity<Boolean> addReservationByOwner(@RequestBody ShipReservation shipReservation,HttpServletRequest request) {
-        if (request.getSession(false).getAttribute("role")!=null) {
+    public ResponseEntity<Boolean> addReservationByOwner(@RequestBody ShipReservation shipReservation, HttpServletRequest request) {
+        if (request.getSession(false).getAttribute("role") != null) {
             if (request.getSession(false).getAttribute("role") == User.Role.boatAdvertiser) {
                 return new ResponseEntity<Boolean>(shipReservationService.addReservationByOwner(shipReservation), HttpStatus.OK);
             } else {
                 return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
             }
+        } else {
+            return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
         }
-        else{
+    }
+
+    @PostMapping("/shipReservation/addReservationByClient")
+    public ResponseEntity<Boolean> addReservationByClient(@RequestBody ShipReservation shipReservation,HttpServletRequest request) {
+        if (request.getSession(false).getAttribute("role") != null) {
+            if (request.getSession(false).getAttribute("role") == User.Role.client) {
+                return new ResponseEntity<Boolean>(shipReservationService.addReservationByClient(shipReservation), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
+            }
+        }
+        else {
             return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
         }
     }
 
     @PutMapping("/shipReservation/changeReservationByOwner")
-    public ResponseEntity<Boolean> changeReservationByOwner(@RequestBody ShipReservation shipReservation,HttpServletRequest request) {
-        if (request.getSession(false).getAttribute("role")!=null) {
+    public ResponseEntity<Boolean> changeReservationByOwner(@RequestBody ShipReservation shipReservation, HttpServletRequest request) {
+        if (request.getSession(false).getAttribute("role") != null) {
             if (request.getSession(false).getAttribute("role") == User.Role.boatAdvertiser) {
                 return new ResponseEntity<Boolean>(shipReservationService.changeReservationByOwner(shipReservation), HttpStatus.OK);
             } else {
                 return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
             }
-        }
-        else{
+        } else {
             return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
         }
     }
