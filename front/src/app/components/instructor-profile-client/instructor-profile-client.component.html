@@ -1,10 +1,22 @@
 <div class="row">
     <div class="column">
       <h1>Adventure informations</h1>
-      Name: Pecanje na dunavu <br>
-      Address: Dunav 1 <br>
-      Description: Uzbudljivo pecanje <br>
-      Grade: 6.0 <br>
+      <div *ngFor="let f of instructorsFavors; let i = index;">
+        <h4>Adventure {{i+1}}</h4>
+        Name: {{f.name}} <br>
+        Address: {{f.address}} <br>
+        Descriptions: {{f.description}} <br>
+        numOfPersons: {{f.numOfPersons}} <br>
+        Rules: {{f.rules}} <br>
+        Available from: {{f.availableFrom | date:'dd.MM.yyyy'}} <br>
+        Available till: {{f.availableTill | date:'dd.MM.yyyy'}} <br>
+        Cost: {{f.cost}} <br>
+        Cancellation condition: {{f.cancellationCondition}} <br>
+        Services:
+        <ul *ngFor='let s of f.priceList'>
+          <li>{{s.service}}</li>
+        </ul>
+      </div>
     </div>
     <div class="column">
         <h1>Instructor informations</h1>
@@ -28,27 +40,12 @@
         <th></th>
     </thead>
     <tbody>
-        <tr>
-            <td>10.12.2021</td>
-            <td>16.12.2021</td>
-            <td>No services</td>
-            <td>300</td>
-            <td>Milan</td>
-        </tr>
-        <tr>
-          <td>17.12.2021</td>
-            <td>23.12.2021</td>
-            <td>Boat</td>
-            <td>300</td>
-            <td>Miodrag</td>
-         </tr>
-         <tr>
-          <td>23.12.2021</td>
-            <td>25.12.2021</td>
-            <td>Outside of coast</td>
-            <td>100</td>
-            <td>Rajko</td>
-         </tr>
-
+      <tr *ngFor='let fr of favorReservations'>
+        <td>{{fr.availableFrom | date:'dd.MM.yyyy'}}</td>
+        <td>{{fr.availableTill | date:'dd.MM.yyyy'}}</td>
+        <td><div *ngFor='let s of fr.services'>{{s}}</div></td>
+        <td>{{fr.cost}}</td>
+        <td>{{fr.client.firstName}}</td>
+      </tr>
     </tbody>
 </table>

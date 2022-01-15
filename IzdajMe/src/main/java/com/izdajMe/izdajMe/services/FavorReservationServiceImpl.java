@@ -161,4 +161,12 @@ public class FavorReservationServiceImpl implements FavorReservationService{
                 favorReservationRepository.deleteById(fr.getId());
         }
     }
+
+    public List<FavorReservation> getAllReservationsOfInstructorFavors(String email) {
+        Iterable<FavorReservation> allReservations = favorReservationRepository.getAllReservationsOfInstructorFavors(email);
+        ArrayList<FavorReservation> allReservationsList = new ArrayList<FavorReservation>();
+        allReservations.forEach(allReservationsList::add);
+
+        return allReservationsList;
+    }
 }

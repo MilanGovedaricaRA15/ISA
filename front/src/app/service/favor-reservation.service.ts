@@ -12,6 +12,7 @@ export class FavorReservationService {
   addReservationByClientUrl: string;
   getByIdUrl: string;
   changeReservationByInstructorUrl: string;
+  getAllReservationsOfInstructorFavorsUrl: string;
 
   constructor(private http: HttpClient) {
     this.getAllReservationsUrl = 'http://localhost:8080/favorReservations/getAllReservations';
@@ -19,6 +20,7 @@ export class FavorReservationService {
     this.addReservationByClientUrl = 'http://localhost:8080/favorReservations/addReservationByClient';
     this.getByIdUrl = 'http://localhost:8080/favorReservations/getReservationById';
     this.changeReservationByInstructorUrl="http://localhost:8080/favorReservations/changeReservationByInstructor";
+    this.getAllReservationsOfInstructorFavorsUrl = "http://localhost:8080/favorReservations/getAllReservationsOfInstructorFavors"
   }
 
   public getAllReservations(): Observable<Array<FavorReservation>> {
@@ -45,5 +47,13 @@ export class FavorReservationService {
 
   public changeReservationByInstructor(favorReservation: FavorReservation):Observable<boolean>{
     return this.http.put<boolean>(this.changeReservationByInstructorUrl,favorReservation,{withCredentials: true});
+  }
+
+  public getAllReservationsOfInstructorFavors(email: string) : Observable<Array<FavorReservation>> {
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+    let params = new HttpParams().set("email", email);
+
+    return this.http.get<Array<FavorReservation>>(this.getAllReservationsOfInstructorFavorsUrl, {headers: headers, params: params});
   }
 }

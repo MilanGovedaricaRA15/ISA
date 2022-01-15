@@ -1,5 +1,5 @@
 <h1>Create a reservation</h1>
-<label>Step 1: Chose a entity, date and time of reservation</label>
+<h3>Step 1: Chose a entity, start date, end dta and number of guests of reservation</h3>
 <form (ngSubmit)="availableReservations()" ngNativeValidate>
     <label style="min-width: 15%;">Entity:</label>
     <select id="entity" style="min-width: 20%;" required>
@@ -22,9 +22,9 @@
 <br>
 <br>
 <br>
-<div *ngIf="entity === 'cottage'">
-    <h1>Available cottages:</h1>
-    <br>
+<div
+ *ngIf="entity === 'cottage'">
+    <h3>Step 2: Choose one of the available cottages</h3>
     <table style="width: 100%;">
         <thead>
             <th>Name</th>
@@ -33,6 +33,7 @@
             <th (click)="sortCottageByCost()" style="cursor: pointer;">Cost per night</th>
             <th (click)="sortCottageByGrade()" style="cursor: pointer;">Grade</th>
             <th>Services</th>
+            <th (click)="sortCottageByTotalPrice()" style="cursor: pointer;">Total price</th>
             <th>Choose</th>
         </thead>
         <tbody>
@@ -42,15 +43,15 @@
                 <td>{{c.cottage.description}}</td>
                 <td>{{c.cottage.costPerNight}}</td>
                 <td>{{c.averageGrade}}</td>
-                <td><div *ngFor='let s of c.cottage.priceList'><input type="checkbox" id={{s.id}}>{{s.service}} ({{s.cost}})</div></td>
+                <td><div *ngFor='let s of c.cottage.priceList'><input type="checkbox" id={{s.id}} (change)="checkCottageService(c.cottage.id, s.id, s.cost)">{{s.service}} ({{s.cost}} per day)</div></td>
+                <td>{{c.totalPrice}}</td>
                 <td><a href="#" (click)="bookTheCottage(c.cottage.id)">Choose</a></td>
             </tr>
         </tbody>
     </table>
 </div>
 <div *ngIf="entity === 'ship'">
-    <h1>Available ships:</h1>
-    <br>
+    <h3>Step 2: Choose one of the available ships</h3>
     <table style="width: 100%;">
         <thead>
             <th>Name</th>
@@ -59,6 +60,7 @@
             <th (click)="sortShipByCost()" style="cursor: pointer;">Cost per night</th>
             <th (click)="sortShipByGrade()" style="cursor: pointer;">Grade</th>
             <th>Services</th>
+            <th (click)="sortShipByTotalPrice()" style="cursor: pointer;">Total price</th>
             <th></th>
         </thead>
         <tbody>
@@ -68,15 +70,15 @@
                 <td>{{s.ship.description}}</td>
                 <td>{{s.ship.costPerNight}}</td>
                 <td>{{s.averageGrade}}</td>
-                <td><div *ngFor='let sr of s.ship.priceList'><input type="checkbox" id={{sr.id}}>{{sr.service}} ({{sr.cost}})</div></td>
+                <td><div *ngFor='let sr of s.ship.priceList'><input type="checkbox" id={{sr.id}} (change)="checkShipService(s.ship.id, sr.id, sr.cost)">{{sr.service}} ({{sr.cost}} per day)</div></td>
+                <td>{{s.totalPrice}}</td>
                 <td><a href="#" (click)="bookTheShip(s.ship.id)">Choose</a></td>
             </tr>
         </tbody>
     </table>
 </div>
 <div *ngIf="entity === 'fishing'">
-    <h1>Available instructors favors:</h1>
-    <br>
+    <h3>Step 2: Choose one of the available instructors favors</h3>
     <table style="width: 100%;">
         <thead>
             <th>Name</th>
@@ -85,6 +87,7 @@
             <th (click)="sortFavorByCost()" style="cursor: pointer;">Price</th>
             <th (click)="sortFavorByGrade()" style="cursor: pointer;">Grade</th>
             <th>Services</th>
+            <th (click)="sortFavorByTotalPrice()" style="cursor: pointer;">Total price</th>
             <th></th>
         </thead>
         <tbody>
@@ -94,7 +97,8 @@
                 <td>{{f.instructorsFavor.description}}</td>
                 <td>{{f.instructorsFavor.cost}}</td>
                 <td>{{f.averageGrade}}</td>
-                <td><div *ngFor='let s of f.instructorsFavor.priceList'><input type="checkbox" id={{s.id}}>{{s.service}} ({{s.cost}})</div></td>
+                <td><div *ngFor='let s of f.instructorsFavor.priceList'><input type="checkbox" id={{s.id}} (change)="checkFavorService(f.instructorsFavor.id, s.id, s.cost)">{{s.service}} ({{s.cost}} per day)</div></td>
+                <td>{{f.totalPrice}}</td>
                 <td><a href="#" (click)="bookTheInstructorsFavor(f.instructorsFavor.id)">Choose</a></td>
             </tr>
         </tbody>

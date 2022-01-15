@@ -198,8 +198,7 @@ public class InstructorsFavorServiceImpl implements InstructorsFavorService{
     }
 
     public List<InstructorsFavor> getAllFavorsOfInstructor(String email) {
-        List<InstructorsFavor> instructorFavors = instructorsFavorRepository.findAllByFavorEmail(email);
-        return instructorFavors;
+        return instructorsFavorRepository.findAllByFavorEmail(email);
     }
 
     public Boolean isFavorAvailable(Long id, LocalDateTime from, LocalDateTime to, int numOfGuests) {

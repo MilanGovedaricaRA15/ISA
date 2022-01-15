@@ -16,6 +16,7 @@ export class CottageReservationService {
   private addReservationByClientUrl: string;
   private changeReservationByOwnerUrl: string;
   private getByIdUrl: string;
+  private getCottageReservationsOfClientUrl: string;
 
   constructor(private http: HttpClient) {
     this.getAllReservationsOfCottageUrl="http://localhost:8080/cottageReservation/getAllReservationsOfCottage";
@@ -25,6 +26,7 @@ export class CottageReservationService {
     this.addReservationByClientUrl="http://localhost:8080/cottageReservation/addReservationByClient";
     this.changeReservationByOwnerUrl="http://localhost:8080/cottageReservation/changeReservationByOwner";
     this.getByIdUrl="http://localhost:8080/cottageReservation/getById";
+    this.getCottageReservationsOfClientUrl = "http://localhost:8080/cottageReservation/getCottageReservationsOfClient";
    }
 
    public getAllReservationsOfCottage(cottage: Cottage): Observable<Array<CottageReservation>> {
@@ -72,6 +74,14 @@ export class CottageReservationService {
     headers.append('Content-Type', 'application/json');
     let params = new HttpParams().set("id",id.toString());
     return this.http.get<CottageReservation>(this.getByIdUrl,{headers: headers,params: params,withCredentials: true});
+  }
+
+  public getCottageReservationsOfClient(email: string) : Observable<Array<CottageReservation>> {
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+    let params = new HttpParams().set("email", email);
+  
+    return this.http.get<Array<CottageReservation>>(this.getCottageReservationsOfClientUrl, {headers: headers, params: params, withCredentials: true});
   }
 
 }

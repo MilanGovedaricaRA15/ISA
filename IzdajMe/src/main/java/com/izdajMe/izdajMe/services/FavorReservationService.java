@@ -13,4 +13,5 @@ public interface FavorReservationService {
     FavorReservation getById(long id);
     public Boolean changeReservationByInstructor(FavorReservation favorReservation);
     public void deleteByClientId(long id);
+    List<FavorReservation> getAllReservationsOfInstructorFavors(String email);
 }

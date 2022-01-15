@@ -3,10 +3,12 @@ import { Cottage } from "../model/cottage";
 export class CottageDTO {
     cottage: Cottage;
     averageGrade: number;
+    totalPrice: number;
 
-    constructor(cottage: Cottage, averageGrade: number) {
+    constructor(cottage: Cottage, averageGrade: number, totalPrice: number) {
         this.cottage = cottage;
         this.averageGrade = averageGrade;
+        this.totalPrice = totalPrice;
     }
 }
 

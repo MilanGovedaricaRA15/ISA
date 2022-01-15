@@ -105,4 +105,14 @@ public class CottageReservationController {
             return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
         }
     }
+
+    @GetMapping("/cottageReservation/getCottageReservationsOfClient")
+    public ResponseEntity<List<CottageReservationDTO>> getCottageReservationsOfClient(@RequestParam("email") String email) {
+        List<CottageReservationDTO> clientCottageReservations = new ArrayList<CottageReservationDTO>();
+        for (CottageReservation c : cottageReservationService.getCottageReservationsOfClient(email)) {
+            clientCottageReservations.add(new CottageReservationDTO(c));
+        }
+
+        return new ResponseEntity<List<CottageReservationDTO>>(clientCottageReservations, HttpStatus.OK);
+    }
 }

@@ -529,7 +529,11 @@ values (3, DATE('2022-01-04'), DATE('2022-01-23'), 500, 2, 1, null);
 insert into cottage_reservations (id, available_from, available_till, cost, client_id, cottage_id, services)
 values (4, DATE('2021-12-03'), DATE('2021-12-19'), 500, 2, 1, null);
 insert into cottage_reservations (id, available_from, available_till, cost, client_id, cottage_id, services)
-values (5, DATE('2022-01-23'), DATE('2022-01-25'), 500, 2, 10, null);
+values (5, DATE('2022-01-23'), DATE('2022-01-25'), 500, 31, 10, null);
+insert into cottage_reservations (id, available_from, available_till, cost, client_id, cottage_id, services)
+values (6, DATE('2021-10-03'), DATE('2021-10-09'), 780, 14, 7, null);
+insert into cottage_reservations (id, available_from, available_till, cost, client_id, cottage_id, services)
+values (7, DATE('2022-02-01'), DATE('2022-02-03'), 150, 14, 8, null);
 
 insert into ship_reservations (id, available_from, available_till, cost, client_id, ship_id, services)
 values (1, DATE('2021-12-20'), DATE('2021-12-23'), 233, 2, 1, null);

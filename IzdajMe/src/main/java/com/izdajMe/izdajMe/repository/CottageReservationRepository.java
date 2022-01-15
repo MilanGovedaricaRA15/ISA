@@ -15,4 +15,6 @@ public interface CottageReservationRepository extends JpaRepository<CottageReser
     public List<CottageReservation> findAllByCottageId(Long id);
     @Query("Select c from CottageReservation c where c.cottage.id = ?1 and c.availableFrom >= ?2 and c.availableTill <= ?3")
     public List<CottageReservation> findAllByCottageIdFromTill(Long id, LocalDateTime fromDate, LocalDateTime toDate);
+    @Query("Select c from CottageReservation c where c.client.email = ?1")
+    public List<CottageReservation> findAllByClientEmail(String email);
 }

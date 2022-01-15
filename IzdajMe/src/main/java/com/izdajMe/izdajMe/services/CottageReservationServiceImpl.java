@@ -31,8 +31,7 @@ public class CottageReservationServiceImpl implements CottageReservationService 
     private EmailService emailService;
 
     public List<CottageReservation> getAllReservationsOfCottage(Long id) {
-        List<CottageReservation> allThisCottageReservations = cottageReservationRepository.findAllByCottageId(id);
-        return allThisCottageReservations;
+        return cottageReservationRepository.findAllByCottageId(id);
     }
 
     public CottageReservation getById(Long id) {
@@ -189,5 +188,9 @@ public class CottageReservationServiceImpl implements CottageReservationService 
             if (cr.getClient().getId() == id)
                 cottageReservationRepository.deleteById(cr.getId());
         }
+    }
+
+    public List<CottageReservation> getCottageReservationsOfClient(String email) {
+        return cottageReservationRepository.findAllByClientEmail(email);
     }
 }

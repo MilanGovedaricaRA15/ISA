@@ -78,4 +78,14 @@ public class FavorReservationController {
             return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
         }
     }
+
+    @GetMapping("/favorReservations/getAllReservationsOfInstructorFavors")
+    public ResponseEntity<List<FavorReservation>> getAllReservationsOfInstructorFavors(@RequestParam("email") String email){
+        List<FavorReservation> allReservations = new ArrayList<>();
+        for(FavorReservation favorReservation : favorReservationService.getAllReservationsOfInstructorFavors(email)) {
+            allReservations.add(favorReservation);
+        }
+
+        return new ResponseEntity<List<FavorReservation>>(allReservations, HttpStatus.OK);
+    }
 }

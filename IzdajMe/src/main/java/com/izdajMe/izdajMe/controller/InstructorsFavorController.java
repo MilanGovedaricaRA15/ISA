@@ -166,6 +166,11 @@ public class InstructorsFavorController {
         }
     }
 
+    @GetMapping("/favors/getAllFavorsByInstructorsEmail")
+    public ResponseEntity<List<InstructorsFavor>> getAllFavorsByInstructorsEmail(@RequestParam("email") String email, HttpServletRequest request) {
+        return new ResponseEntity<List<InstructorsFavor>>(instructorsFavorService.getAllFavorsOfInstructor(email), HttpStatus.OK);
+    }
+
     @PostMapping("/favors/addFavor")
     public ResponseEntity<InstructorsFavorDTO> addFavor(@RequestBody InstructorsFavor favor, HttpServletRequest request){
         if (request.getSession(false).getAttribute("role")!=null) {
