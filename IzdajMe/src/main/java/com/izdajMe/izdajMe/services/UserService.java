@@ -21,4 +21,5 @@ public interface UserService {
     public Boolean saveClient(User user);
     public void activate(Long id);
     public Boolean acceptUser(long id);
+    public Boolean changePrepaid(long id);
 }

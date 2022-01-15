@@ -12,6 +12,7 @@ public class FavorHotOffer {
     protected long id;
     private LocalDateTime availableFrom;
     private LocalDateTime availableTill;
+    private LocalDateTime validUntil;
     private String place;
     private int numOfPersons;
     private ArrayList<InstructorsFavor.FavorServices> services;
@@ -20,11 +21,12 @@ public class FavorHotOffer {
 
     public FavorHotOffer() {}
 
-    public FavorHotOffer(long id, LocalDateTime availableFrom, LocalDateTime availableTill, String place, int numOfPersons,
-                         ArrayList<InstructorsFavor.FavorServices> services, float cost) {
+    public FavorHotOffer(long id, LocalDateTime availableFrom, LocalDateTime availableTill, LocalDateTime validUntil, String place,
+                         int numOfPersons, ArrayList<InstructorsFavor.FavorServices> services, float cost) {
         this.id = id;
         this.availableFrom = availableFrom;
         this.availableTill = availableTill;
+        this.validUntil = validUntil;
         this.place = place;
         this.numOfPersons = numOfPersons;
         this.services = services;
@@ -43,6 +45,10 @@ public class FavorHotOffer {
     public LocalDateTime getAvailableTill() { return this.availableTill; }
 
     public void setAvailableTill(LocalDateTime availableTill) { this.availableTill = availableTill; }
+
+    public LocalDateTime getValidUntil() { return validUntil; }
+
+    public void setValidUntil(LocalDateTime validUntil) { this.validUntil = validUntil; }
 
     public String getPlace() { return this.place; }
 

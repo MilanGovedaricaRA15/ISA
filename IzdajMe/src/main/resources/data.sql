@@ -28,34 +28,34 @@ delete from users where id!=0;
 delete from reports where id!=0;
 delete from penalties where id!=0;
 
-insert into users (id, address, city, country, email,first_name,last_name,mobile_number,password,reason,role,verified)
-values (1, 'Ilije 1', 'Beograd', 'Srbija', 'rajkorajkoza@gmail.com', 'Milan', 'Govedarica', 123123123, 'aaaa', 'Izdaja vikendice', 0, TRUE);
-insert into users (id, address, city, country, email,first_name,last_name,mobile_number,password,reason,role,verified)
-values (2, 'Banjalucka 2', 'Banjaluka', 'Bosna', 'popaljubav@gmail.com', 'Miodrag', 'Prod', 111222333, 'aaaa', null, 0, TRUE);
-insert into users (id, address, city, country, email, first_name, last_name, mobile_number, password, reason, role, verified)
-values (3, 'Focanska 2', 'Foca', 'Bosna', 'foca@gmail.com', 'Coa', 'Podunavac', 064456456, 'aaaa', 'reason', 1, TRUE);
-insert into users (id, address, city, country, email, first_name, last_name, mobile_number, password, reason, role, verified)
-values (4, 'Sarajevska 4', 'Sarajevo', 'FBiH', 'sar4@gmail.com', 'Dragan', 'Radic', 065189898, 'aaaa', null, 2, TRUE);
-insert into users (id, address, city, country, email, first_name, last_name, mobile_number, password, reason, role, verified)
-values (5, 'Focanska 5', 'Foca', 'RS', 'foca5@gmail.com', 'Zoran', 'Puric', 060124785, 'aaaa', null, 2, TRUE);
-insert into users (id, address, city, country, email, first_name, last_name, mobile_number, password, reason, role, verified)
-values (6, 'Focanska 6', 'Foca', 'RS', 'foca6@gmail.com', 'Goran', 'Kitic', 065741963, 'aaaa', null, 2, TRUE);
-insert into users (id, address, city, country, email, first_name, last_name, mobile_number, password, reason, role, verified)
-values (7, 'Sarajevska 7', 'Sarajevo', 'FBiH', 'sar7@gmail.com', 'Marko', 'Vojinovic', 064456456, 'aaaa', null, 2, TRUE);
-insert into users (id, address, city, country, email, first_name, last_name, mobile_number, password, reason, role, verified)
-values (8, 'Focanska 8', 'Foca', 'RS', 'foca8@gmail.com', 'Darko', 'Bodiroga', 066589001, 'aaaa', null, 2, TRUE);
-insert into users (id, address, city, country, email, first_name, last_name, mobile_number, password, reason, role, verified)
-values (9, 'Focanska 9', 'Foca', 'RS', 'foca9@gmail.com', 'Luka', 'Lukovic', 058212546, 'aaaa', null, 4, TRUE);
-insert into users (id, address, city, country, email,first_name,last_name,mobile_number,password,reason,role,verified)
-values (10, 'Njegoseva 1', 'Subotica', 'Srbija', 'vrbica.vlado11@gmail.com', 'Vladimir', 'Vrbica', '123123123123', 'vrba', '', 3, TRUE);
-insert into users (id, address, city, country, email,first_name,last_name,mobile_number,password,reason,role,verified)
-values (11, 'Nemanjina 2', 'Srbobran', 'Srbija', 'nikola.aleksic@gmail.com', 'Nikola', 'Aleksic', '22222222222', 'leksa', '', 4, TRUE);
-insert into users (id, address, city, country, email,first_name,last_name,mobile_number,password,reason,role,verified)
-values (12, 'Kralja Petra 12a', 'Becej', 'Srbija', 'milos.zivic@gmail.com', 'Milos', 'Zivic', '222222222222', 'zile', '', 5, TRUE);
-insert into users (id, address, city, country, email,first_name,last_name,mobile_number,password,reason,role,verified)
-values (13, 'Vozdovacka 12', 'Beograd', 'Srbija', 'vesnakundacina852@gmail.com', 'Vesna', 'Kundacina', 123123123, 'aaaa', 'Izdaja vikendice', 0, FALSE);
-insert into users (id, address, city, country, email,first_name,last_name,mobile_number,password,reason,role,verified)
-values (14, 'Kralja Aleksandra 12a', 'Uzice', 'Srbija', 'peraperic@gmail.com', 'Pera', 'Peric', '222222222222', 'aaaa', '', 6, TRUE);
+insert into users (id, address, city, country, email,first_name,last_name,mobile_number,password,reason,role,verified, prepaid)
+values (1, 'Ilije 1', 'Beograd', 'Srbija', 'rajkorajkoza@gmail.com', 'Milan', 'Govedarica', 123123123, 'aaaa', 'Izdaja vikendice', 0, TRUE, TRUE);
+insert into users (id, address, city, country, email,first_name,last_name,mobile_number,password,reason,role,verified, prepaid)
+values (2, 'Banjalucka 2', 'Banjaluka', 'Bosna', 'popaljubav@gmail.com', 'Miodrag', 'Prod', 111222333, 'aaaa', null, 0, TRUE, TRUE);
+insert into users (id, address, city, country, email, first_name, last_name, mobile_number, password, reason, role, verified, prepaid)
+values (3, 'Focanska 2', 'Foca', 'Bosna', 'foca@gmail.com', 'Coa', 'Podunavac', 064456456, 'aaaa', 'reason', 1, TRUE, FALSE);
+insert into users (id, address, city, country, email, first_name, last_name, mobile_number, password, reason, role, verified, prepaid)
+values (4, 'Sarajevska 4', 'Sarajevo', 'FBiH', 'sar4@gmail.com', 'Dragan', 'Radic', 065189898, 'aaaa', null, 2, TRUE, TRUE);
+insert into users (id, address, city, country, email, first_name, last_name, mobile_number, password, reason, role, verified, prepaid)
+values (5, 'Focanska 5', 'Foca', 'RS', 'foca5@gmail.com', 'Zoran', 'Puric', 060124785, 'aaaa', null, 2, TRUE, FALSE);
+insert into users (id, address, city, country, email, first_name, last_name, mobile_number, password, reason, role, verified, prepaid)
+values (6, 'Focanska 6', 'Foca', 'RS', 'foca6@gmail.com', 'Goran', 'Kitic', 065741963, 'aaaa', null, 2, TRUE, TRUE);
+insert into users (id, address, city, country, email, first_name, last_name, mobile_number, password, reason, role, verified, prepaid)
+values (7, 'Sarajevska 7', 'Sarajevo', 'FBiH', 'sar7@gmail.com', 'Marko', 'Vojinovic', 064456456, 'aaaa', null, 2, TRUE, TRUE);
+insert into users (id, address, city, country, email, first_name, last_name, mobile_number, password, reason, role, verified, prepaid)
+values (8, 'Focanska 8', 'Foca', 'RS', 'foca8@gmail.com', 'Darko', 'Bodiroga', 066589001, 'aaaa', null, 2, TRUE, FALSE);
+insert into users (id, address, city, country, email, first_name, last_name, mobile_number, password, reason, role, verified, prepaid)
+values (9, 'Focanska 9', 'Foca', 'RS', 'foca9@gmail.com', 'Luka', 'Lukovic', 058212546, 'aaaa', null, 4, TRUE, FALSE);
+insert into users (id, address, city, country, email,first_name,last_name,mobile_number,password,reason,role,verified, prepaid)
+values (10, 'Njegoseva 1', 'Subotica', 'Srbija', 'vrbica.vlado11@gmail.com', 'Vladimir', 'Vrbica', '123123123123', 'vrba', '', 3, TRUE, TRUE);
+insert into users (id, address, city, country, email,first_name,last_name,mobile_number,password,reason,role,verified, prepaid)
+values (11, 'Nemanjina 2', 'Srbobran', 'Srbija', 'nikola.aleksic@gmail.com', 'Nikola', 'Aleksic', '22222222222', 'leksa', '', 4, TRUE, TRUE);
+insert into users (id, address, city, country, email,first_name,last_name,mobile_number,password,reason,role,verified, prepaid)
+values (12, 'Kralja Petra 12a', 'Becej', 'Srbija', 'milos.zivic@gmail.com', 'Milos', 'Zivic', '222222222222', 'zile', '', 5, TRUE, TRUE);
+insert into users (id, address, city, country, email,first_name,last_name,mobile_number,password,reason,role,verified, prepaid)
+values (13, 'Vozdovacka 12', 'Beograd', 'Srbija', 'vesnakundacina852@gmail.com', 'Vesna', 'Kundacina', 123123123, 'aaaa', 'Izdaja vikendice', 0, FALSE, TRUE);
+insert into users (id, address, city, country, email,first_name,last_name,mobile_number,password,reason,role,verified, prepaid)
+values (14, 'Kralja Aleksandra 12a', 'Uzice', 'Srbija', 'peraperic@gmail.com', 'Pera', 'Peric', '222222222222', 'aaaa', '', 6, TRUE, TRUE);
 
 insert into cottages (id, address, available_from, available_till, description, images, name, num_of_beds, num_of_rooms, rules, services, owner_id, cost_per_night)
 values (1, 'Dunavska 1',DATE('2021-09-01'),DATE('2022-02-01'),'Na jezeru',null, 'Micova', 3, 3, 'Nisu dozvoljene zivotinje', null, 1, 50);
@@ -135,11 +135,11 @@ insert into ship_hot_offers (id, available_from, available_till, cost, free, num
 values (2,DATE('2021-12-16'),DATE('2021-12-19'),28,TRUE,4,null);
 insert into ships_hot_offers(ship_id,hot_offers_id) values (1,2);
 
-insert into favor_hot_offers (id, available_from, available_till, place, num_of_persons, services, cost, free)
-values (1,DATE('2022-1-20'),DATE('2021-1-25'),'Ribarac',5,null,1000,TRUE);
+insert into favor_hot_offers (id, available_from, available_till, valid_until, place, num_of_persons, services, cost, free)
+values (1,DATE('2022-1-20'),DATE('2022-1-25'),DATE('2022-1-24'),'Ribarac',5,null,1000,TRUE);
 insert into favors_hot_offers(instructors_favor_id, hot_offers_id) values (1,1);
-insert into favor_hot_offers (id, available_from, available_till, place, num_of_persons, services, cost, free)
-values (2,DATE('2022-2-2'),DATE('2021-2-12'),'Ribarac',4,null,900,TRUE);
+insert into favor_hot_offers (id, available_from, available_till, valid_until, place, num_of_persons, services, cost, free)
+values (2,DATE('2022-2-2'),DATE('2022-2-12'),DATE('2022-2-4'),'Ribarac',4,null,900,TRUE);
 insert into favors_hot_offers(instructors_favor_id, hot_offers_id) values (1,2);
 
 insert into service_price (id, cost, service)
@@ -234,5 +234,3 @@ insert into favor_reservations (id, available_from, available_till, cost, client
 values (3, DATE('2022-2-24'), DATE('2022-2-24'), 600, 14, 2, null);
 
 insert into concurent_watcher (id, table_name, is_writing) values (1, 'CottageReservation', false);
-
-

@@ -1,9 +1,6 @@
 package com.izdajMe.izdajMe.services;
 
-import com.izdajMe.izdajMe.model.CottageReservation;
-import com.izdajMe.izdajMe.model.FavorReservation;
-import com.izdajMe.izdajMe.model.HotOffer;
-import com.izdajMe.izdajMe.model.InstructorsFavor;
+import com.izdajMe.izdajMe.model.*;
 import com.izdajMe.izdajMe.repository.FavorReservationRepository;
 import com.izdajMe.izdajMe.repository.InstructorsFavorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,8 +48,10 @@ public class FavorReservationServiceImpl implements FavorReservationService{
     public Boolean addReservationByOwner(FavorReservation favorReservation){
 
         List<FavorReservation> allFavorReservations = getReservationsById(favorReservation.getFavor().getId());
+        InstructorsFavor favor = instructorsFavorRepository.findById(favorReservation.getFavor().getId()).get();
+        List<FavorHotOffer> hotOffers = favor.getHotOffers();
 
-        boolean free = canAddReservation(allFavorReservations, favorReservation, new ArrayList<HotOffer>());
+        boolean free = canAddReservation(allFavorReservations, favorReservation, hotOffers);
         if(free) {
             favorReservationRepository.save(favorReservation);
             sendNotificationForReservation(favorReservation);
@@ -72,7 +71,7 @@ public class FavorReservationServiceImpl implements FavorReservationService{
         emailService.sendSimpleMessage(mail);
     }
 
-    public Boolean canAddReservation(List<FavorReservation> allThisFavorReservations, FavorReservation favorReservation, List<HotOffer> hotOffers){
+    public Boolean canAddReservation(List<FavorReservation> allThisFavorReservations, FavorReservation favorReservation, List<FavorHotOffer> hotOffers){
         boolean free = true;
         for(FavorReservation favorReservation1 : allThisFavorReservations) {
             if(favorReservation.getAvailableFrom().isBefore(favorReservation1.getAvailableFrom()) && favorReservation.getAvailableTill().isAfter(favorReservation1.getAvailableFrom())){
@@ -99,7 +98,7 @@ public class FavorReservationServiceImpl implements FavorReservationService{
             free = false;
         }
 
-        for(HotOffer hotOffer : hotOffers) {
+        for(FavorHotOffer hotOffer : hotOffers) {
             if(favorReservation.getAvailableFrom().isBefore(hotOffer.getAvailableFrom()) && favorReservation.getAvailableTill().isAfter(hotOffer.getAvailableFrom())){
                 free = false;
                 break;

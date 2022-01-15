@@ -390,4 +390,15 @@ public class UserServiceImpl implements UserService {
                 + "Reason: " + text);
         emailService.sendSimpleMessage(mail);
     }
+
+    public Boolean changePrepaid(long id) {
+        User user = userRepository.findById(id).get();
+        if(user.getPrepaid())
+            user.setPrepaid(false);
+        else
+            user.setPrepaid(true);
+        userRepository.save(user);
+
+        return true;
+    }
 }

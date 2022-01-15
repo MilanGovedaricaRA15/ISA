@@ -3,6 +3,7 @@ package com.izdajMe.izdajMe.controller;
 import com.izdajMe.izdajMe.dto.CottageDTO;
 import com.izdajMe.izdajMe.dto.InstructorsFavorDTO;
 import com.izdajMe.izdajMe.model.Cottage;
+import com.izdajMe.izdajMe.model.FavorHotOffer;
 import com.izdajMe.izdajMe.model.InstructorsFavor;
 import com.izdajMe.izdajMe.model.User;
 import com.izdajMe.izdajMe.services.InstructorsFavorService;
