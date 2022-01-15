@@ -13,8 +13,12 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.Month;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -146,10 +150,21 @@ public class InstructorsFavorServiceImpl implements InstructorsFavorService{
         boolean free = canAddHotOffer(hotOffersWithout,addedHotOffer,allThisFavorReservations);
 
         if(free){
-            instructorsFavorRepository.save(favor);
-            sendNotificationForNewHotOffer(favor);
+            InstructorsFavor updatedFavor = setValid(favor);
+            instructorsFavorRepository.save(updatedFavor);
+            sendNotificationForNewHotOffer(updatedFavor);
         }
         return free;
+    }
+
+    private InstructorsFavor setValid(InstructorsFavor favor){
+        for(FavorHotOffer hotOffer: favor.getHotOffers()){
+            if(hotOffer.getValidUntil() == null) {
+                hotOffer.setValidUntil(LocalDateTime.now().plusMonths(1));
+            }
+        }
+
+        return favor;
     }
 
     private void sendNotificationForNewHotOffer(InstructorsFavor favor){

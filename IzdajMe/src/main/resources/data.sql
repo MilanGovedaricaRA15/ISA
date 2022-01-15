@@ -135,11 +135,11 @@ insert into ship_hot_offers (id, available_from, available_till, cost, free, num
 values (2,DATE('2021-12-16'),DATE('2021-12-19'),28,TRUE,4,null);
 insert into ships_hot_offers(ship_id,hot_offers_id) values (1,2);
 
-insert into favor_hot_offers (id, available_from, available_till, valid_until, place, num_of_persons, services, cost, free)
-values (1,DATE('2022-1-20'),DATE('2022-1-25'),DATE('2022-1-24'),'Ribarac',5,null,1000,TRUE);
+insert into favor_hot_offers (id, available_from, available_till, valid_until, num_of_persons, services, cost, free)
+values (1,DATE('2022-1-20'),DATE('2022-1-25'),DATE('2022-1-24'),5,null,1000,TRUE);
 insert into favors_hot_offers(instructors_favor_id, hot_offers_id) values (1,1);
-insert into favor_hot_offers (id, available_from, available_till, valid_until, place, num_of_persons, services, cost, free)
-values (2,DATE('2022-2-2'),DATE('2022-2-12'),DATE('2022-2-4'),'Ribarac',4,null,900,TRUE);
+insert into favor_hot_offers (id, available_from, available_till, valid_until, num_of_persons, services, cost, free)
+values (2,DATE('2022-2-2'),DATE('2022-2-12'),DATE('2022-2-4'),4,null,900,TRUE);
 insert into favors_hot_offers(instructors_favor_id, hot_offers_id) values (1,2);
 
 insert into service_price (id, cost, service)
