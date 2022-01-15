@@ -4,20 +4,20 @@
     </div>
     <div class="column">
       <h1>Cottage informations</h1>
-      Name: {{cottage.name}} <br>
-      Address: {{cottage.address}} <br>
-      Owner: {{cottage.owner.firstName}} {{cottage.owner.lastName}} <br>
-      Description: {{cottage.description}} <br>
-      Grade: 0.0 <br>
-      Number of rooms: {{cottage.numOfRooms}} <br>
-      Number of beds: {{cottage.numOfBeds}} <br>
-      Rules: {{cottage.rules}} <br>
-      Cost per night: {{cottage.costPerNight}} <br>
-      Available from: {{cottage.availableFrom}} <br>
-      Available till: {{cottage.availableTill}} <br>
+      Name: {{cottage.cottage.name}} <br>
+      Address: {{cottage.cottage.address}} <br>
+      Owner: {{cottage.cottage.owner.firstName}} {{cottage.cottage.owner.lastName}} <br>
+      Description: {{cottage.cottage.description}} <br>
+      Grade: {{cottage.averageGrade}} <br>
+      Number of rooms: {{cottage.cottage.numOfRooms}} <br>
+      Number of beds: {{cottage.cottage.numOfBeds}} <br>
+      Rules: {{cottage.cottage.rules}} <br>
+      Cost per night: {{cottage.cottage.costPerNight}} <br>
+      Available from: {{cottage.cottage.availableFrom | date:'dd.MM.yyyy'}} <br>
+      Available till: {{cottage.cottage.availableTill | date:'dd.MM.yyyy'}} <br>
       Services:
-      <ul *ngFor='let s of cottage.services'>
-         <li>{{s}}</li>
+      <ul *ngFor='let s of cottage.cottage.priceList'>
+         <li>{{s.service}}</li>
       </ul>
     </div>
-  </div>
+</div>

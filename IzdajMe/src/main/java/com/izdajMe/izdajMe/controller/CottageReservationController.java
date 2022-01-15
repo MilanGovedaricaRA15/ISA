@@ -93,6 +93,20 @@ public class CottageReservationController {
         }
     }
 
+    @PostMapping("/cottageReservation/addHotOfferReservationByClient")
+    public ResponseEntity<Boolean> addHotOfferReservationByClient(@RequestBody CottageReservation cottageReservation, HttpServletRequest request) {
+        if (request.getSession(false).getAttribute("role") != null) {
+            if (request.getSession(false).getAttribute("role") == User.Role.client) {
+                return new ResponseEntity<Boolean>(cottageReservationService.addHotOfferReservationByClient(cottageReservation), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
+            }
+        }
+        else{
+            return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
+        }
+    }
+
     @PutMapping("/cottageReservation/changeReservationByOwner")
     public ResponseEntity<Boolean> changeReservationByOwner(@RequestBody CottageReservation cottageReservation, HttpServletRequest request) {
         if (request.getSession(false).getAttribute("role") != null) {
@@ -104,5 +118,15 @@ public class CottageReservationController {
         } else {
             return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
         }
+    }
+
+    @GetMapping("/cottageReservation/getCottageReservationsOfClient")
+    public ResponseEntity<List<CottageReservationDTO>> getCottageReservationsOfClient(@RequestParam("email") String email) {
+        List<CottageReservationDTO> clientCottageReservations = new ArrayList<CottageReservationDTO>();
+        for (CottageReservation c : cottageReservationService.getCottageReservationsOfClient(email)) {
+            clientCottageReservations.add(new CottageReservationDTO(c));
+        }
+
+        return new ResponseEntity<List<CottageReservationDTO>>(clientCottageReservations, HttpStatus.OK);
     }
 }

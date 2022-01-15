@@ -30,5 +30,5 @@ public interface CottageService {
     public boolean isReserved(Long id);
     public List<Cottage> searchCottagesByName(String name);
     public Boolean removeCottageByAdministrator(Long id);
-    public Boolean isCottageAvailable(Long id, LocalDateTime from, LocalDateTime to, int numOfGuests);
+    public Boolean deleteHotOffer(Cottage cottage);
 }

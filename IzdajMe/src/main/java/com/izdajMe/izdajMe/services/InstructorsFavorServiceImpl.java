@@ -254,8 +254,7 @@ public class InstructorsFavorServiceImpl implements InstructorsFavorService{
     }
 
     public List<InstructorsFavor> getAllFavorsOfInstructor(String email) {
-        List<InstructorsFavor> instructorFavors = instructorsFavorRepository.findAllByFavorEmail(email);
-        return instructorFavors;
+        return instructorsFavorRepository.findAllByFavorEmail(email);
     }
 
     public Boolean isFavorAvailable(Long id, LocalDateTime from, LocalDateTime to, int numOfGuests) {
@@ -285,6 +284,15 @@ public class InstructorsFavorServiceImpl implements InstructorsFavorService{
                     (from.compareTo(f.getAvailableFrom()) < 0 && to.compareTo(f.getAvailableTill()) > 0)) {
                 return true;
             }
+        }
+
+        return false;
+    }
+
+    public Boolean deleteFavorHotOffer(InstructorsFavor favor) {
+        if (instructorsFavorRepository.existsById(favor.getId())) {
+            instructorsFavorRepository.save(favor);
+            return true;
         }
 
         return false;

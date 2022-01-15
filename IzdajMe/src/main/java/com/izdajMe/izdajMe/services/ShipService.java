@@ -19,6 +19,7 @@ public interface ShipService {
     public Boolean changeShip(Ship ship);
     public Boolean checkIsReserved(Ship ship);
     public Boolean removeHotOffer(Ship ship);
+    public Boolean deleteShipHotOffer(Ship ship);
     public Boolean addHotOfferToShip(Ship ship);
     public Boolean uploadImg(MultipartFile file);
     public Ship addShip(Ship ship);

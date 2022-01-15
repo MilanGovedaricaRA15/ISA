@@ -31,8 +31,7 @@ public class CottageReservationServiceImpl implements CottageReservationService 
     private EmailService emailService;
 
     public List<CottageReservation> getAllReservationsOfCottage(Long id) {
-        List<CottageReservation> allThisCottageReservations = cottageReservationRepository.findAllByCottageId(id);
-        return allThisCottageReservations;
+        return cottageReservationRepository.findAllByCottageId(id);
     }
 
     public CottageReservation getById(Long id) {
@@ -163,6 +162,19 @@ public class CottageReservationServiceImpl implements CottageReservationService 
         }
     }
 
+    public Boolean addHotOfferReservationByClient(CottageReservation cottageReservation){
+        List<CottageReservation> allThisCottageReservations = cottageReservationRepository.findAllByCottageId(cottageReservation.getCottage().getId());
+
+        if(canAddReservation(allThisCottageReservations, cottageReservation, new ArrayList<HotOffer>())) {
+            cottageReservationRepository.save(cottageReservation);
+            sendNotificationForClientReservation(cottageReservation);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     public Boolean changeReservationByOwner(CottageReservation cottageReservation){
         CottageReservation thisReservation = cottageReservationRepository.getById(cottageReservation.getId());
         if (thisReservation.getAvailableTill().isBefore(LocalDateTime.now()) && thisReservation.getReport() == null && thisReservation.getPenalty() == null) {
@@ -198,5 +210,9 @@ public class CottageReservationServiceImpl implements CottageReservationService 
             if (cr.getClient().getId() == id)
                 cottageReservationRepository.deleteById(cr.getId());
         }
+    }
+
+    public List<CottageReservation> getCottageReservationsOfClient(String email) {
+        return cottageReservationRepository.findAllByClientEmail(email);
     }
 }

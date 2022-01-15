@@ -7,11 +7,12 @@
 <br><br>
 <table style="width: 100%;">
     <thead>
-        <th (click)="sortByName()">Name</th>
-        <th (click)="sortByAddress()">Address</th>
-        <th (click)="sortByType()">Type</th>
-        <th (click)="sortByCapacity()">Capacity</th>
-        <th (click)="sortByDescription()">Description</th>
+        <th (click)="sortByName()" style="cursor: pointer;">Name</th>
+        <th (click)="sortByAddress()" style="cursor: pointer;">Address</th>
+        <th (click)="sortByType()" style="cursor: pointer;">Type</th>
+        <th (click)="sortByCapacity()" style="cursor: pointer;">Capacity</th>
+        <th (click)="sortByDescription()" style="cursor: pointer;">Description</th>
+        <th>Cost per night</th>
         <th></th>
     </thead>
     <tbody>
@@ -21,6 +22,7 @@
             <td>{{s.type}}</td>
             <td>{{s.capacity}}</td>
             <td>{{s.description}}</td>
+            <td>{{s.costPerNight}}</td>
             <td><a href="#" (click)="goToShipProfile(s.id)">More details</a></td>
         </tr>
     </tbody>

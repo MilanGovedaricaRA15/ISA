@@ -13,4 +13,6 @@ public interface FavorReservationRepository extends JpaRepository<FavorReservati
     public List<FavorReservation> findAllByReservationId(Long id);
     @Query("Select f from FavorReservation f where f.favor.id = ?1")
     public List<FavorReservation> findAllByFavorId(Long id);
+    @Query("Select f from FavorReservation f where f.favor.instructor.email = ?1")
+    public List<FavorReservation> getAllReservationsOfInstructorFavors(String email);
 }

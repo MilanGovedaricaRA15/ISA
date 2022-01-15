@@ -1,10 +1,9 @@
 package com.izdajMe.izdajMe.controller;
 
 
-import com.izdajMe.izdajMe.model.Cottage;
+import com.izdajMe.izdajMe.dto.HotOfferDTO;
 import com.izdajMe.izdajMe.model.HotOffer;
 import com.izdajMe.izdajMe.model.User;
-import com.izdajMe.izdajMe.services.CottageService;
 import com.izdajMe.izdajMe.services.HotOfferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -47,5 +48,35 @@ public class HotOfferController {
         } else {
             return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
         }
+    }
+
+    @GetMapping("/hotOffers/getAllHotOffers")
+    public ResponseEntity<List<HotOfferDTO>> getAllHotOffers() {
+        List<HotOfferDTO> list = new ArrayList<HotOfferDTO>();
+        for (HotOffer ho : hotOfferService.getAllHotOffers()) {
+            list.add(new HotOfferDTO(ho));
+        }
+
+        return new ResponseEntity<List<HotOfferDTO>>(list, HttpStatus.OK);
+    }
+
+    @GetMapping("/hotOffers/getHotOffersByCottageId")
+    public ResponseEntity<List<HotOfferDTO>> getHotOffersByCottageId(@RequestParam("cottageId") Long cottageId) {
+        List<HotOfferDTO> list = new ArrayList<HotOfferDTO>();
+        for (HotOffer ho : hotOfferService.getHotOffersByCottageId(cottageId)) {
+            list.add(new HotOfferDTO(ho));
+        }
+
+        return new ResponseEntity<List<HotOfferDTO>>(list, HttpStatus.OK);
+    }
+
+    @GetMapping("/hotOffers/getFutureHotOffersByCottageId")
+    public ResponseEntity<List<HotOfferDTO>> getFutureHotOffersByCottageId(@RequestParam("cottageId") Long cottageId) {
+        List<HotOfferDTO> list = new ArrayList<HotOfferDTO>();
+        for (HotOffer ho : hotOfferService.getFutureHotOffersByCottageId(cottageId)) {
+            list.add(new HotOfferDTO(ho));
+        }
+
+        return new ResponseEntity<List<HotOfferDTO>>(list, HttpStatus.OK);
     }
 }

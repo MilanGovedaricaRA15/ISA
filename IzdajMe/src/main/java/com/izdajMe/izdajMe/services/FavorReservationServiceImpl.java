@@ -63,7 +63,7 @@ public class FavorReservationServiceImpl implements FavorReservationService{
         }
     }
 
-    public Boolean addReservationByClient(FavorReservation favorReservation){
+    public Boolean addReservationByClient(FavorReservation favorReservation) {
         List<FavorReservation> allFavorReservations = getReservationsById(favorReservation.getFavor().getId());
         InstructorsFavor thisFavor = instructorsFavorRepository.getById(favorReservation.getFavor().getId());
         List<FavorHotOffer> allThisFavorHotOffers = thisFavor.getHotOffers();
@@ -78,6 +78,19 @@ public class FavorReservationServiceImpl implements FavorReservationService{
         }
     }
 
+    public Boolean addFavorHotOfferReservationByClient(FavorReservation favorReservation) {
+        List<FavorReservation> allFavorReservations = getReservationsById(favorReservation.getFavor().getId());
+
+        if(canAddReservation(allFavorReservations, favorReservation, new ArrayList<FavorHotOffer>())) {
+            favorReservationRepository.save(favorReservation);
+            sendNotificationForClientReservation(favorReservation);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+	
     public Boolean canAddReservation(List<FavorReservation> allThisFavorReservations, FavorReservation favorReservation, List<FavorHotOffer> hotOffers){
         boolean free = true;
         for(FavorReservation favorReservation1 : allThisFavorReservations) {
@@ -163,5 +176,13 @@ public class FavorReservationServiceImpl implements FavorReservationService{
             if(fr.getClient().getId() == id)
                 favorReservationRepository.deleteById(fr.getId());
         }
+    }
+
+    public List<FavorReservation> getAllReservationsOfInstructorFavors(String email) {
+        Iterable<FavorReservation> allReservations = favorReservationRepository.getAllReservationsOfInstructorFavors(email);
+        ArrayList<FavorReservation> allReservationsList = new ArrayList<FavorReservation>();
+        allReservations.forEach(allReservationsList::add);
+
+        return allReservationsList;
     }
 }

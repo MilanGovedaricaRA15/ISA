@@ -3,10 +3,12 @@ import { Ship } from "../model/ship";
 export class ShipDTO {
     ship: Ship;
     averageGrade: number;
+    totalPrice: number;
 
-    constructor(ship: Ship, averageGrade: number) {
+    constructor(ship: Ship, averageGrade: number, totalPrice: number) {
         this.ship = ship;
         this.averageGrade = averageGrade;
+        this.totalPrice = totalPrice;
     }
 }
 

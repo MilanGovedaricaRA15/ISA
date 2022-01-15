@@ -317,4 +317,13 @@ public class CottageServiceImpl implements CottageService {
 
         return false;
     }
+
+    public Boolean deleteHotOffer(Cottage cottage) {
+        if (cottageRepository.existsById(cottage.getId())) {
+            cottageRepository.save(cottage);
+            return true;
+        }
+
+        return false;
+    }
 }

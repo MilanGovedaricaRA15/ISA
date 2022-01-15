@@ -55,7 +55,21 @@ public class FavorReservationController {
     public ResponseEntity<Boolean> addReservationByClient(@RequestBody FavorReservation favorReservation, HttpServletRequest request) {
         if (request.getSession(false).getAttribute("role") != null) {
             if (request.getSession(false).getAttribute("role") == User.Role.client) {
-                return new ResponseEntity<Boolean>(favorReservationService.addReservationByOwner(favorReservation), HttpStatus.OK);
+                return new ResponseEntity<Boolean>(favorReservationService.addReservationByClient(favorReservation), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
+            }
+        }
+        else {
+            return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
+        }
+    }
+
+    @PostMapping("/favorReservations/addFavorHotOfferReservationByClient")
+    public ResponseEntity<Boolean> addFavorHotOfferReservationByClient(@RequestBody FavorReservation favorReservation, HttpServletRequest request) {
+        if (request.getSession(false).getAttribute("role") != null) {
+            if (request.getSession(false).getAttribute("role") == User.Role.client) {
+                return new ResponseEntity<Boolean>(favorReservationService.addFavorHotOfferReservationByClient(favorReservation), HttpStatus.OK);
             } else {
                 return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
             }
@@ -77,5 +91,15 @@ public class FavorReservationController {
         else{
             return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
         }
+    }
+
+    @GetMapping("/favorReservations/getAllReservationsOfInstructorFavors")
+    public ResponseEntity<List<FavorReservation>> getAllReservationsOfInstructorFavors(@RequestParam("email") String email){
+        List<FavorReservation> allReservations = new ArrayList<>();
+        for(FavorReservation favorReservation : favorReservationService.getAllReservationsOfInstructorFavors(email)) {
+            allReservations.add(favorReservation);
+        }
+
+        return new ResponseEntity<List<FavorReservation>>(allReservations, HttpStatus.OK);
     }
 }

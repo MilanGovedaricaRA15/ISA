@@ -116,22 +116,13 @@
         <th></th>
     </thead>
     <tbody>
-        <tr>
-          <td>17.12.2021</td>
-            <td>23.12.2021</td>
-            <td>WiFi</td>
-            <td>300</td>
-            <td>Popici</td>
-            <td><button>Cancel</button></td>
-          </tr>
-          <tr>
-          <td>23.12.2021</td>
-            <td>25.12.2021</td>
-            <td>Pool</td>
-            <td>100</td>
-            <td>Micova</td>
-            <td><button>Cancel</button></td>
-          </tr>
+      <tr *ngFor='let cr of clientCottageReservations'>
+        <td>{{cr.availableFrom | date:'dd.MM.yyyy'}}</td>
+        <td>{{cr.availableTill | date:'dd.MM.yyyy'}}</td>
+        <td><div *ngFor='let s of cr.services'>{{s}}</div></td>
+        <td>{{cr.cost}}</td>
+        <td>{{cr.cottage.name}}</td>
+    </tr>
     </tbody>
   </table>
 </div>
