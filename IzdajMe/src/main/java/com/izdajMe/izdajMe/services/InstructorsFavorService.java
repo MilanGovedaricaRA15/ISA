@@ -1,6 +1,7 @@
 package com.izdajMe.izdajMe.services;
 
 import com.izdajMe.izdajMe.model.Cottage;
+import com.izdajMe.izdajMe.model.FavorHotOffer;
 import com.izdajMe.izdajMe.model.InstructorsFavor;
 import com.izdajMe.izdajMe.model.Ship;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,6 +23,8 @@ public interface InstructorsFavorService {
     public Boolean addHotOfferToFavor(InstructorsFavor favor);
     public InstructorsFavor addFavor(InstructorsFavor favor);
     public List<InstructorsFavor> getAllFavorsOfInstructor(String email);
+    public List<FavorHotOffer> checkFavorHotOffers(List<FavorHotOffer> favorHotOffers);
     public Boolean isFavorAvailable(Long id, LocalDateTime from, LocalDateTime to, int numOfGuests);
     public Boolean deleteFavorHotOffer(InstructorsFavor favor);
-    }
+
+}

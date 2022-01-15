@@ -1,17 +1,25 @@
 package com.izdajMe.izdajMe.services;
 
 import com.izdajMe.izdajMe.model.*;
+import com.izdajMe.izdajMe.repository.FavorHotOfferRepository;
 import com.izdajMe.izdajMe.repository.FavorReservationRepository;
 import com.izdajMe.izdajMe.repository.InstructorsFavorRepository;
+import com.izdajMe.izdajMe.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.Month;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -20,6 +28,12 @@ public class InstructorsFavorServiceImpl implements InstructorsFavorService{
     private InstructorsFavorRepository instructorsFavorRepository;
     @Autowired
     private FavorReservationRepository favorReservationRepository;
+    @Autowired
+    private EmailService emailService;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private FavorHotOfferRepository favorHotOfferRepository;
 
     public List<InstructorsFavor> getAllFavors() {
         Iterable<InstructorsFavor> allFavors = instructorsFavorRepository.findAll();
@@ -48,7 +62,21 @@ public class InstructorsFavorServiceImpl implements InstructorsFavorService{
     }
 
     public InstructorsFavor getFavorById(long id) {
-        return instructorsFavorRepository.findById(id).get();
+        InstructorsFavor favor = instructorsFavorRepository.findById(id).get();
+        favor.setHotOffers(checkFavorHotOffers(favor.getHotOffers()));
+        instructorsFavorRepository.save(favor);
+        return favor;
+    }
+
+    public List<FavorHotOffer> checkFavorHotOffers(List<FavorHotOffer> favorHotOffers) {
+        LocalDateTime now = LocalDateTime.now();
+        Iterator<FavorHotOffer> it = favorHotOffers.iterator();
+        while(it.hasNext()){
+            FavorHotOffer offer = it.next();
+            if(offer.getValidUntil().isBefore(now))
+                it.remove();
+        }
+        return favorHotOffers;
     }
 
     public Boolean checkIsReserved(InstructorsFavor favor){
@@ -117,16 +145,16 @@ public class InstructorsFavorServiceImpl implements InstructorsFavorService{
         List<FavorReservation> allThisFavorReservations = favorReservationRepository.findAllByReservationId(favor.getId());
 
         FavorHotOffer addedHotOffer = new FavorHotOffer();
-        boolean postoji = false;
+        boolean exists = false;
         for (FavorHotOffer offer : hotOffers){
-            postoji = false;
+            exists = false;
             for(FavorHotOffer offer1 : favor1.getHotOffers()){
                 if (offer1.getId() == offer.getId()){
-                    postoji = true;
+                    exists = true;
                     break;
                 }
             }
-            if(!postoji){
+            if(!exists){
                 addedHotOffer = offer;
                 break;
             }
@@ -134,9 +162,37 @@ public class InstructorsFavorServiceImpl implements InstructorsFavorService{
         boolean free = canAddHotOffer(hotOffersWithout,addedHotOffer,allThisFavorReservations);
 
         if(free){
-            instructorsFavorRepository.save(favor);
+            InstructorsFavor updatedFavor = setValid(favor);
+            instructorsFavorRepository.save(updatedFavor);
+            sendNotificationForNewHotOffer(updatedFavor);
         }
         return free;
+    }
+
+    private InstructorsFavor setValid(InstructorsFavor favor){
+        for(FavorHotOffer hotOffer: favor.getHotOffers()){
+            if(hotOffer.getValidUntil() == null) {
+                hotOffer.setValidUntil(LocalDateTime.now().plusMonths(1));
+            }
+        }
+
+        return favor;
+    }
+
+    private void sendNotificationForNewHotOffer(InstructorsFavor favor){
+        List<User> users = userRepository.findAll();
+        for(User user: users){
+            if(user.getPrepaid() && user.isVerified()) {
+                SimpleMailMessage mail = new SimpleMailMessage();
+                mail.setTo(user.getEmail());
+                mail.setFrom("rajkorajkeza@gmail.com");
+                mail.setSubject("New hot offer for favor");
+                mail.setText("There is a new hot offer for a favor: " + favor.getName() + "\n"
+                + "Instructor: " + favor.getInstructor().getFirstName() + " " + favor.getInstructor().getLastName() + "\n"
+                + "Cost: " + favor.getCost());
+                emailService.sendSimpleMessage(mail);
+            }
+        }
     }
 
     public Boolean canAddHotOffer(List<FavorHotOffer> hotOffers,FavorHotOffer addedHotOffer, List<FavorReservation> favorReservations){

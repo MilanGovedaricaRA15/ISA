@@ -141,6 +141,16 @@ public class UserController {
         }
     }
 
+    @PutMapping("/users/changePrepaid")
+    public ResponseEntity<Boolean> changePrepaid(@RequestBody long id) {
+        if(userService.changePrepaid(id)){
+            return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<Boolean>(false, HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
+
     @PostMapping("/users/deleteUser")
     public ResponseEntity<Boolean> deleteUser(@RequestBody Long id){
         return new ResponseEntity<Boolean>(userService.deleteUser(id), HttpStatus.OK);
@@ -199,4 +209,6 @@ public class UserController {
         userService.activate(id);
         return new ResponseEntity<UserDTO>((UserDTO) null, HttpStatus.OK);
     }
+
+
 }

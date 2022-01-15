@@ -30,8 +30,9 @@ public class User {
     protected String password;
     protected String reason;
     protected boolean verified;
+    protected Boolean prepaid;
 
-    public User(long id,String email, String firstName, String lastName, String mobileNumber, String address, String country, String city, Role role, String password, String reason) {
+    public User(long id,String email, String firstName, String lastName, String mobileNumber, String address, String country, String city, Role role, String password, String reason, Boolean prepaid) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -44,6 +45,7 @@ public class User {
         this.reason = reason;
         this.email = email;
         this.verified = false;
+        this.prepaid = prepaid;
     }
 
     public User(){
@@ -145,4 +147,8 @@ public class User {
     public void setVerified(boolean verified) {
         this.verified = verified;
     }
+
+    public Boolean getPrepaid() { return prepaid; }
+
+    public void setPrepaid(Boolean prepaid) { this.prepaid = prepaid; }
 }

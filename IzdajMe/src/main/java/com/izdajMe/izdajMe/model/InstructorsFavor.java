@@ -19,7 +19,7 @@ public class InstructorsFavor {
     private String description;
     private ArrayList<String> images;
     private int numOfPersons;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
+    @OneToMany(cascade = CascadeType.ALL)
     private List<FavorHotOffer> hotOffers;
     private String rules;
     private ArrayList<FavorServices> services;
