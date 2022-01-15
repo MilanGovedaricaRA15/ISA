@@ -55,7 +55,21 @@ public class FavorReservationController {
     public ResponseEntity<Boolean> addReservationByClient(@RequestBody FavorReservation favorReservation, HttpServletRequest request) {
         if (request.getSession(false).getAttribute("role") != null) {
             if (request.getSession(false).getAttribute("role") == User.Role.client) {
-                return new ResponseEntity<Boolean>(favorReservationService.addReservationByOwner(favorReservation), HttpStatus.OK);
+                return new ResponseEntity<Boolean>(favorReservationService.addReservationByClient(favorReservation), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
+            }
+        }
+        else {
+            return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
+        }
+    }
+
+    @PostMapping("/favorReservations/addFavorHotOfferReservationByClient")
+    public ResponseEntity<Boolean> addFavorHotOfferReservationByClient(@RequestBody FavorReservation favorReservation, HttpServletRequest request) {
+        if (request.getSession(false).getAttribute("role") != null) {
+            if (request.getSession(false).getAttribute("role") == User.Role.client) {
+                return new ResponseEntity<Boolean>(favorReservationService.addFavorHotOfferReservationByClient(favorReservation), HttpStatus.OK);
             } else {
                 return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
             }

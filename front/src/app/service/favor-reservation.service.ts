@@ -10,6 +10,7 @@ export class FavorReservationService {
   getAllReservationsUrl: string;
   addReservationByOwnerUrl: string;
   addReservationByClientUrl: string;
+  addFavorHotOfferReservationByClientUrl: string;
   getByIdUrl: string;
   changeReservationByInstructorUrl: string;
   getAllReservationsOfInstructorFavorsUrl: string;
@@ -18,6 +19,7 @@ export class FavorReservationService {
     this.getAllReservationsUrl = 'http://localhost:8080/favorReservations/getAllReservations';
     this.addReservationByOwnerUrl = 'http://localhost:8080/favorReservations/addReservationByOwner';
     this.addReservationByClientUrl = 'http://localhost:8080/favorReservations/addReservationByClient';
+    this.addFavorHotOfferReservationByClientUrl = 'http://localhost:8080/favorReservations/addFavorHotOfferReservationByClient';
     this.getByIdUrl = 'http://localhost:8080/favorReservations/getReservationById';
     this.changeReservationByInstructorUrl="http://localhost:8080/favorReservations/changeReservationByInstructor";
     this.getAllReservationsOfInstructorFavorsUrl = "http://localhost:8080/favorReservations/getAllReservationsOfInstructorFavors"
@@ -36,6 +38,10 @@ export class FavorReservationService {
 
   public addReservationByClient(favorReservation: FavorReservation) : Observable<boolean>{
     return this.http.post<boolean>(this.addReservationByClientUrl, favorReservation, {withCredentials: true});
+  }
+
+  public addFavorHotOfferReservationByClient(favorReservation: FavorReservation) : Observable<boolean>{
+    return this.http.post<boolean>(this.addFavorHotOfferReservationByClientUrl, favorReservation, {withCredentials: true});
   }
 
   public getById(id:number) {

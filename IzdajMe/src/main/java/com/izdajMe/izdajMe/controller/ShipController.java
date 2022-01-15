@@ -203,6 +203,23 @@ public class ShipController {
         }
     }
 
+    @PutMapping("/ships/deleteShipHotOffer")
+    public ResponseEntity<Boolean> deleteShipHotOffer(@RequestBody Ship ship, HttpServletRequest request) {
+        if (request.getSession(false).getAttribute("role") != null) {
+            if (request.getSession(false).getAttribute("role") == User.Role.client) {
+                if (shipService.deleteShipHotOffer(ship)) {
+                    return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+                } else {
+                    return new ResponseEntity<Boolean>(false, HttpStatus.NOT_ACCEPTABLE);
+                }
+            } else {
+                return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
+            }
+        } else {
+            return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
+        }
+    }
+
     @PutMapping("/ships/addHotOfferToShip")
     public ResponseEntity<Boolean> addHotOfferToShip(@RequestBody Ship ship, HttpServletRequest request) {
         if (request.getSession(false).getAttribute("role") != null) {

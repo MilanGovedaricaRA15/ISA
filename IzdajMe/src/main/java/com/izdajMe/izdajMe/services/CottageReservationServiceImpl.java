@@ -153,6 +153,19 @@ public class CottageReservationServiceImpl implements CottageReservationService 
         }
     }
 
+    public Boolean addHotOfferReservationByClient(CottageReservation cottageReservation){
+        List<CottageReservation> allThisCottageReservations = cottageReservationRepository.findAllByCottageId(cottageReservation.getCottage().getId());
+
+        if(canAddReservation(allThisCottageReservations, cottageReservation, new ArrayList<HotOffer>())) {
+            cottageReservationRepository.save(cottageReservation);
+            sendNotificationForClientReservation(cottageReservation);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     public Boolean changeReservationByOwner(CottageReservation cottageReservation){
         CottageReservation thisReservation = cottageReservationRepository.getById(cottageReservation.getId());
         if (thisReservation.getAvailableTill().isBefore(LocalDateTime.now()) && thisReservation.getReport() == null && thisReservation.getPenalty() == null) {

@@ -29,6 +29,31 @@
         Address: {{instructor.address}} <br>
     </div>
   </div>
+  <h1>Fast reservations</h1>
+  <table style="width: 100%;">
+    <thead>
+        <th>Starts</th>
+        <th>Ends</th>
+        <th>Place</th>
+        <th>Max people</th>
+        <th>Services</th>
+        <th>Cost</th>
+        <th>Action cost</th>
+        <th></th>
+    </thead>
+    <tbody>
+        <tr *ngFor='let ho of favorHotOffers; let index = index;'>
+          <td>{{ho.availableFrom | date:'dd.MM.yyyy'}}</td>
+          <td>{{ho.availableTill | date:'dd.MM.yyyy'}}</td>
+          <td>{{ho.place}}</td>
+          <td>{{ho.numOfPersons}}</td>
+          <td><div *ngFor='let s of ho.services'>{{s}}</div><div *ngIf='!ho.services'>-</div></td>
+          <td>{{costs[index]}}</td>
+          <td>{{ho.cost}}</td>
+          <td><a href="#" (click)="makeFastReservation(ho.id)">Reserve</a></td>
+        </tr>
+    </tbody>
+  </table>
   <h1>Reservations</h1>
   <table style="width: 100%;">
     <thead>

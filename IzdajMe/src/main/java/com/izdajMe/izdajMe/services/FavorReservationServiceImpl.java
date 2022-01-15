@@ -60,12 +60,25 @@ public class FavorReservationServiceImpl implements FavorReservationService{
         }
     }
 
-    public Boolean addReservationByClient(FavorReservation favorReservation){
+    public Boolean addReservationByClient(FavorReservation favorReservation) {
         List<FavorReservation> allFavorReservations = getReservationsById(favorReservation.getFavor().getId());
         InstructorsFavor thisFavor = instructorsFavorRepository.getById(favorReservation.getFavor().getId());
         List<FavorHotOffer> allThisFavorHotOffers = thisFavor.getHotOffers();
 
         if(canAddReservation(allFavorReservations, favorReservation, allThisFavorHotOffers)) {
+            favorReservationRepository.save(favorReservation);
+            sendNotificationForClientReservation(favorReservation);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public Boolean addFavorHotOfferReservationByClient(FavorReservation favorReservation) {
+        List<FavorReservation> allFavorReservations = getReservationsById(favorReservation.getFavor().getId());
+
+        if(canAddReservation(allFavorReservations, favorReservation, new ArrayList<FavorHotOffer>())) {
             favorReservationRepository.save(favorReservation);
             sendNotificationForClientReservation(favorReservation);
             return true;

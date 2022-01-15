@@ -93,6 +93,20 @@ public class CottageReservationController {
         }
     }
 
+    @PostMapping("/cottageReservation/addHotOfferReservationByClient")
+    public ResponseEntity<Boolean> addHotOfferReservationByClient(@RequestBody CottageReservation cottageReservation, HttpServletRequest request) {
+        if (request.getSession(false).getAttribute("role") != null) {
+            if (request.getSession(false).getAttribute("role") == User.Role.client) {
+                return new ResponseEntity<Boolean>(cottageReservationService.addHotOfferReservationByClient(cottageReservation), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
+            }
+        }
+        else{
+            return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
+        }
+    }
+
     @PutMapping("/cottageReservation/changeReservationByOwner")
     public ResponseEntity<Boolean> changeReservationByOwner(@RequestBody CottageReservation cottageReservation, HttpServletRequest request) {
         if (request.getSession(false).getAttribute("role") != null) {

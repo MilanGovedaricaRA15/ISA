@@ -232,4 +232,13 @@ public class InstructorsFavorServiceImpl implements InstructorsFavorService{
 
         return false;
     }
+
+    public Boolean deleteFavorHotOffer(InstructorsFavor favor) {
+        if (instructorsFavorRepository.existsById(favor.getId())) {
+            instructorsFavorRepository.save(favor);
+            return true;
+        }
+
+        return false;
+    }
 }

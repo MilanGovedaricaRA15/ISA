@@ -18,14 +18,38 @@
       Services:
       <ul *ngFor='let s of cottage.cottage.priceList'>
          <li>{{s.service}}</li>
-      </ul>
+      </ul>      
     </div>
   </div>
+  <h1>Fast reservations</h1>
+  <table style="width: 100%;">
+    <thead>
+        <th>Starts</th>
+        <th>Ends</th>
+        <th>Max people</th>
+        <th>Services</th>
+        <th>Cost</th>
+        <th>Action cost</th>
+        <th></th>
+    </thead>
+    <tbody>
+        <tr *ngFor='let ho of cottageHotOffers; let index = index;'>
+          <td>{{ho.availableFrom | date:'dd.MM.yyyy'}}</td>
+          <td>{{ho.availableTill | date:'dd.MM.yyyy'}}</td>
+          <td>{{ho.numOfPeople}}</td>
+          <td><div *ngFor='let s of ho.services'>{{s}}</div><div *ngIf='!ho.services'>-</div></td>
+          <td>{{costs[index]}}</td>
+          <td>{{ho.cost}}</td>
+          <td><a href="#" (click)="makeFastReservation(ho.id)">Reserve</a></td>
+        </tr>
+    </tbody>
+  </table>
+  <br>
   <h1>Reservations</h1>
   <table style="width: 100%;">
     <thead>
-        <th>Starts </th>
-        <th>Ends </th>
+        <th>Starts</th>
+        <th>Ends</th>
         <th>Services</th>
         <th>Cost</th>
         <th>User name</th>
@@ -33,11 +57,11 @@
     </thead>
     <tbody>
         <tr *ngFor='let cr of cottageReservations'>
-            <td>{{cr.availableFrom | date:'dd.MM.yyyy'}}</td>
-            <td>{{cr.availableTill | date:'dd.MM.yyyy'}}</td>
-            <td><div *ngFor='let s of cr.services'>{{s}}</div></td>
-            <td>{{cr.cost}}</td>
-            <td>{{cr.client.firstName}}</td>
+          <td>{{cr.availableFrom | date:'dd.MM.yyyy'}}</td>
+          <td>{{cr.availableTill | date:'dd.MM.yyyy'}}</td>
+          <td><div *ngFor='let s of cr.services'>{{s}}</div></td>
+          <td>{{cr.cost}}</td>
+          <td>{{cr.client.firstName}}</td>
         </tr>
     </tbody>
   </table>

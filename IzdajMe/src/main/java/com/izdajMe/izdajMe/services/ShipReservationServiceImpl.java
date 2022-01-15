@@ -144,12 +144,25 @@ public class ShipReservationServiceImpl implements ShipReservationService {
         }
     }
 
-    public Boolean addReservationByClient(ShipReservation shipReservation){
+    public Boolean addReservationByClient(ShipReservation shipReservation) {
         List<ShipReservation> allThisShipReservations = shipReservationRepository.findAllByShipId(shipReservation.getShip().getId());
         Ship thisShip = shipRepository.getById(shipReservation.getShip().getId());
         List<ShipHotOffer> allThisShipHotOffers = thisShip.getHotOffers();
 
         if(canAddReservation(allThisShipReservations, shipReservation, allThisShipHotOffers)) {
+            shipReservationRepository.save(shipReservation);
+            sendNotificationForClientReservation(shipReservation);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public Boolean addShipHotOfferReservationByClient(ShipReservation shipReservation) {
+        List<ShipReservation> allThisShipReservations = shipReservationRepository.findAllByShipId(shipReservation.getShip().getId());
+
+        if(canAddReservation(allThisShipReservations, shipReservation, new ArrayList<ShipHotOffer>())) {
             shipReservationRepository.save(shipReservation);
             sendNotificationForClientReservation(shipReservation);
             return true;

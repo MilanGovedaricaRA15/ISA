@@ -21,6 +21,7 @@ export class InstructorsFavorService {
   addFavorUrl: string;
   getAllFavorsOfInstructorUrl: string;
   getAllFavorsByInstructorsEmailUrl: string;
+  deleteFavorHotOfferUrl: string;
 
   constructor(private http: HttpClient) {
     this.getAllFavorsUrl = 'http://localhost:8080/favors/getAllFavors';
@@ -35,6 +36,7 @@ export class InstructorsFavorService {
     this.addFavorUrl = 'http://localhost:8080/favors/addFavor';
     this.getAllFavorsOfInstructorUrl = 'http://localhost:8080/favors/getAllFavorsOfInstructor';
     this.getAllFavorsByInstructorsEmailUrl = 'http://localhost:8080/favors/getAllFavorsByInstructorsEmail';
+    this.deleteFavorHotOfferUrl = 'http://localhost:8080/favors/deleteFavorHotOffer';
   }
 
   public getAllFavors(): Observable<Array<InstructorsFavor>> {
@@ -110,5 +112,9 @@ export class InstructorsFavorService {
     let params = new HttpParams().set("email", email);
   
     return this.http.get<Array<InstructorsFavor>>(this.getAllFavorsByInstructorsEmailUrl, {headers: headers, params: params, withCredentials: true});
+  }
+
+  public deleteFavorHotOffer(favorToChange: InstructorsFavor): Observable<Boolean>{
+    return this.http.put<Boolean>(this.deleteFavorHotOfferUrl, favorToChange, {withCredentials: true});
   }
 }
