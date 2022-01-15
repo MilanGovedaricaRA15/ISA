@@ -137,18 +137,27 @@ public class CottageReservationServiceImpl implements CottageReservationService 
             return false;
         }
     }
-
+    @Transactional(readOnly = false)
     public Boolean addReservationByClient(CottageReservation cottageReservation){
-        List<CottageReservation> allThisCottageReservations = cottageReservationRepository.findAllByCottageId(cottageReservation.getCottage().getId());
-        Cottage thisCottage = cottageRepository.getById(cottageReservation.getCottage().getId());
-        List<HotOffer> allThisCottageHotOffers = thisCottage.getHotOffers();
-
-        if(canAddReservation(allThisCottageReservations, cottageReservation, allThisCottageHotOffers)) {
-            cottageReservationRepository.save(cottageReservation);
-            sendNotificationForClientReservation(cottageReservation);
-            return true;
+        if (concurentWatcherRepository.findByTableName("CottageReservation").getWriting() == false&&concurentWatcherRepository.findByTableName("Cottage").getWriting() == false&&concurentWatcherRepository.findByTableName("CottageHotOffer").getWriting() == false) {
+            ConcurentWatcher cw = concurentWatcherRepository.findByTableName("CottageReservation");
+            cw.setWriting(true);
+            List<CottageReservation> allThisCottageReservations = cottageReservationRepository.findAllByCottageId(cottageReservation.getCottage().getId());
+            Cottage thisCottage = cottageRepository.getById(cottageReservation.getCottage().getId());
+            List<HotOffer> allThisCottageHotOffers = thisCottage.getHotOffers();
+            if (canAddReservation(allThisCottageReservations, cottageReservation, allThisCottageHotOffers)) {
+                cottageReservationRepository.save(cottageReservation);
+                cw.setWriting(false);
+                concurentWatcherRepository.save(cw);
+                sendNotificationForClientReservation(cottageReservation);
+                return true;
+            } else {
+                cw.setWriting(false);
+                concurentWatcherRepository.save(cw);
+                return false;
+            }
         }
-        else {
+        else{
             return false;
         }
     }

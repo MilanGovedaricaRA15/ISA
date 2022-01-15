@@ -32,7 +32,7 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {CottageReservation.class, Cottage.class, User.class})
-public class ReservationServiceTest {
+class ReservationServiceTest {
 
     @Mock
     private ConcurentWatcherRepository concurentWatcherRepositoryMock;
@@ -56,7 +56,7 @@ public class ReservationServiceTest {
     private CottageReservationServiceImpl cottageReservationService;
 
     @Test
-    public void changeReservationPositive() {
+    void changeReservationPositive() {
         when(cottageReservationRepositoryMock.getById(1L)).thenReturn(new CottageReservation(CottageReservationConstant.DB_ID,null,null,DB_AVAILABLEFROM,DB_AVAILABLETILL,DB_COST,null,new Cottage(CottageConstant.DB_ID,null,
                 null,DB_NAME,DB_ADDRESS,DB_DESCRIPTION,null,DB_NUMOFROOMS,DB_NUMOFBEDS,DB_RULES,null,
                 null, null,new ArrayList<HotOffer>(),DB_COSTPERNIGHT, null),null));
@@ -69,7 +69,7 @@ public class ReservationServiceTest {
     }
 
     @Test
-    public void changeReservationNegative() {
+    void changeReservationNegative() {
         when(cottageReservationRepositoryMock.getById(1L)).thenReturn(new CottageReservation(CottageReservationConstant.DB_ID,null,null,LocalDateTime.of(LocalDate.of(2022,06,13),LocalTime.of(00,00,00,00)),LocalDateTime.of(LocalDate.of(2022,06,01),LocalTime.of(00,00,00,00)),DB_COST,null,new Cottage(CottageConstant.DB_ID,null,
                 null,DB_NAME,DB_ADDRESS,DB_DESCRIPTION,null,DB_NUMOFROOMS,DB_NUMOFBEDS,DB_RULES,null,
                 null, null,new ArrayList<HotOffer>(),DB_COSTPERNIGHT, null),null));
