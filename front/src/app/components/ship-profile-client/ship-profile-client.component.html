@@ -17,10 +17,37 @@
       Description: {{ship.description}} <br>
       Grade: {{averageGrade}} <br>
       Rules: {{ship.rules}} <br>
-      Available from: 10.12.2021 17:00 <br>
-      Services: Minibar: 300, Pet friendly: 200 <br>
+      Available from: {{ship.availableFrom | date:'dd.MM.yyyy'}} <br>
+      Available till: {{ship.availableTill | date:'dd.MM.yyyy'}} <br>
+      Services: 
+      <ul *ngFor='let s of ship.priceList'>
+        <li>{{s.service}}</li>
+     </ul>    
     </div>
   </div>
+  <h1>Fast reservations</h1>
+  <table style="width: 100%;">
+    <thead>
+        <th>Starts</th>
+        <th>Ends</th>
+        <th>Max people</th>
+        <th>Services</th>
+        <th>Cost</th>
+        <th>Action cost</th>
+        <th></th>
+    </thead>
+    <tbody>
+        <tr *ngFor='let ho of shipHotOffers; let index = index;'>
+          <td>{{ho.availableFrom | date:'dd.MM.yyyy'}}</td>
+          <td>{{ho.availableTill | date:'dd.MM.yyyy'}}</td>
+          <td>{{ho.numOfPeople}}</td>
+          <td><div *ngFor='let s of ho.services'>{{s}}</div><div *ngIf='!ho.services'>-</div></td>
+          <td>{{costs[index]}}</td>
+          <td>{{ho.cost}}</td>
+          <td><a href="#" (click)="makeFastReservation(ho.id)">Reserve</a></td>
+        </tr>
+    </tbody>
+  </table>
   <h1>Reservations</h1>
   <table style="width: 100%;">
     <thead>
@@ -32,27 +59,12 @@
         <th></th>
     </thead>
     <tbody>
-        <tr>
-            <td>10.12.2021</td>
-            <td>16.12.2021</td>
-            <td>No services</td>
-            <td>300</td>
-            <td>Milan</td>
-        </tr>
-        <tr>
-          <td>17.12.2021</td>
-            <td>23.12.2021</td>
-            <td>Pet friendly</td>
-            <td>300</td>
-            <td>Miodrag</td>
-         </tr>
-         <tr>
-          <td>23.12.2021</td>
-            <td>25.12.2021</td>
-            <td>Minibar</td>
-            <td>100</td>
-            <td>Rajko</td>
-         </tr>
-
+      <tr *ngFor='let sr of shipReservations'>
+        <td>{{sr.availableFrom | date:'dd.MM.yyyy'}}</td>
+        <td>{{sr.availableTill | date:'dd.MM.yyyy'}}</td>
+        <td><div *ngFor='let sv of sr.services'>{{sv}}</div></td>
+        <td>{{sr.cost}}</td>
+        <td>{{sr.client.firstName}}</td>
+      </tr>
     </tbody>
 </table>

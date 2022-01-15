@@ -194,6 +194,23 @@ public class CottageController {
         }
     }
 
+    @PutMapping("/cottages/deleteHotOffer")
+    public ResponseEntity<Boolean> deleteHotOffer(@RequestBody Cottage cottage, HttpServletRequest request) {
+        if (request.getSession(false).getAttribute("role") != null) {
+            if (request.getSession(false).getAttribute("role") == User.Role.client) {
+                if (cottageService.deleteHotOffer(cottage)) {
+                    return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+                } else {
+                    return new ResponseEntity<Boolean>(false, HttpStatus.NOT_ACCEPTABLE);
+                }
+            } else {
+                return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
+            }
+        } else {
+            return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
+        }
+    }
+
     @PutMapping("/cottages/addHotOfferToCottage")
     public ResponseEntity<Boolean> addHotOfferToCottage(@RequestBody Cottage cottage, HttpServletRequest request) {
         if (request.getSession(false).getAttribute("role") != null) {

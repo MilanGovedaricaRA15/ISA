@@ -14,6 +14,7 @@ export class ShipReservationService {
   private getAllReservationsOfOwnerUrl: string;
   private addReservationByOwnerUrl: string;
   private addReservationByClientUrl: string;
+  private addShipHotOfferReservationByClientUrl: string;
   private changeReservationByOwnerUrl: string;
   private getByIdUrl: string;
 
@@ -23,6 +24,7 @@ export class ShipReservationService {
     this.getAllReservationsOfOwnerUrl="http://localhost:8080/shipReservation/getAllReservationsOfOwner";
     this.addReservationByOwnerUrl="http://localhost:8080/shipReservation/addReservationByOwner";
     this.addReservationByClientUrl="http://localhost:8080/shipReservation/addReservationByClient";
+    this.addShipHotOfferReservationByClientUrl="http://localhost:8080/shipReservation/addShipHotOfferReservationByClient";
     this.changeReservationByOwnerUrl="http://localhost:8080/shipReservation/changeReservationByOwner";
     this.getByIdUrl="http://localhost:8080/shipReservation/getById";
    }
@@ -61,6 +63,10 @@ export class ShipReservationService {
 
   public addReservationByClient(shipReservation: ShipReservation) : Observable<boolean> {
     return this.http.post<boolean>(this.addReservationByClientUrl, shipReservation, {withCredentials: true});
+  }
+
+  public addShipHotOfferReservationByClient(shipReservation: ShipReservation) : Observable<boolean>{
+    return this.http.post<boolean>(this.addShipHotOfferReservationByClientUrl, shipReservation, {withCredentials: true});
   }
 
   public changeReservationByOwner(shipReservation: ShipReservation):Observable<boolean>{

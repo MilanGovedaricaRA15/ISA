@@ -36,6 +36,7 @@ export class CreateAReservationClientComponent implements OnInit {
   entity: string;
   startDate: Date;
   endDate: Date;
+  numberOfDays: number;
   numberOfGuests: number;
   cottageServices: Array<Services>;
   shipServices: Array<ShipServices>;
@@ -47,10 +48,13 @@ export class CreateAReservationClientComponent implements OnInit {
 
   descendingCostCottage: boolean;
   descendingGradeCottage: boolean;
+  descendingTotalPriceCottage: boolean;
   descendingCostShip: boolean;
   descendingGradeShip: boolean;
+  descendingTotalPriceShip: boolean;
   descendingCostFavor: boolean;
   descendingGradeFavor: boolean;
+  descendingTotalPriceFavor: boolean;
 
   constructor(private userService: UserService, private cottageReservationService: CottageReservationService,
     private shipReservationService: ShipReservationService, private favorReservationService: FavorReservationService,
@@ -61,10 +65,13 @@ export class CreateAReservationClientComponent implements OnInit {
 
     this.descendingCostCottage = false;
     this.descendingGradeCottage = false;
+    this.descendingTotalPriceCottage = false;
     this.descendingCostShip = false;
     this.descendingGradeShip = false;
+    this.descendingTotalPriceShip = false;
     this.descendingCostFavor = false;
     this.descendingGradeFavor = false;
+    this.descendingTotalPriceFavor = false;
   }
   
   availableReservations() : void {
@@ -92,31 +99,71 @@ export class CreateAReservationClientComponent implements OnInit {
       this.endDate = end.valueAsDate;
       let guests = document.getElementById('numOfGuests') as HTMLInputElement
       this.numberOfGuests = guests.valueAsNumber;
+      this.numberOfDays = (this.endDate.valueOf() - this.startDate.valueOf()) / 86400000;
 
       if (this.entity === 'cottage') {
         this.cottageService.getAllAvailableCottages(this.startDate, this.endDate, this.numberOfGuests).subscribe(ret => {
           for (let cottage of ret){
-            let cottageDTO = new CottageDTO(cottage, getAverageCottageGrade(cottage));
+            let cottageDTO = new CottageDTO(cottage, getAverageCottageGrade(cottage), cottage.costPerNight * this.numberOfDays);
             this.cottages.push(cottageDTO);
           }
         });
       } else if (this.entity === 'ship') {
         this.shipService.getAllAvailableShips(this.startDate, this.endDate, this.numberOfGuests).subscribe(ret => {
           for (let ship of ret){
-            let shipDTO = new ShipDTO(ship, getAverageShipGrade(ship));
+            let shipDTO = new ShipDTO(ship, getAverageShipGrade(ship), ship.costPerNight * this.numberOfDays);
             this.ships.push(shipDTO);
           }
         });
       } else if (this.entity === 'fishing') {
         this.instructorsFavorService.getAllAvailableFavors(this.startDate, this.endDate, this.numberOfGuests).subscribe(ret => {
           for (let favor of ret){
-            let favorDTO = new InstructorsFavorDTO(favor, getAverageFavorGrade(favor));
+            let favorDTO = new InstructorsFavorDTO(favor, getAverageFavorGrade(favor), favor.cost * this.numberOfDays);
             this.instructorsFavors.push(favorDTO);
           }
         });
       }
     }
     
+  }
+
+  checkCottageService(cottageId: number, serviceId: number, servicePrice: number) : void {
+    for (let c of this.cottages) {
+      if (c.cottage.id === cottageId) {
+        let service = document.getElementById(serviceId.toString()) as HTMLInputElement;
+        if (service.checked) {
+          c.totalPrice += servicePrice * this.numberOfDays;
+        } else {
+          c.totalPrice -= servicePrice * this.numberOfDays;
+        }
+      }
+    }
+  }
+
+  checkShipService(shipId: number, serviceId: number, servicePrice: number) : void {
+    for (let s of this.ships) {
+      if (s.ship.id === shipId) {
+        let service = document.getElementById(serviceId.toString()) as HTMLInputElement;
+        if (service.checked) {
+          s.totalPrice += servicePrice * this.numberOfDays;
+        } else {
+          s.totalPrice -= servicePrice * this.numberOfDays;
+        }
+      }
+    }
+  }
+
+  checkFavorService(favorId: number, serviceId: number, servicePrice: number) : void {
+    for (let f of this.instructorsFavors) {
+      if (f.instructorsFavor.id === favorId) {
+        let service = document.getElementById(serviceId.toString()) as HTMLInputElement;
+        if (service.checked) {
+          f.totalPrice += servicePrice * this.numberOfDays;
+        } else {
+          f.totalPrice -= servicePrice * this.numberOfDays;
+        }
+      }
+    }
   }
 
   bookTheCottage(id: number): void {
@@ -130,8 +177,8 @@ export class CreateAReservationClientComponent implements OnInit {
           totalCost += s.cost;
         }
       }
-      let days = (this.endDate.valueOf() - this.startDate.valueOf()) / 86400000;
-      totalCost *= days;
+      this.numberOfDays = (this.endDate.valueOf() - this.startDate.valueOf()) / 86400000;
+      totalCost *= this.numberOfDays;
 
       this.cottageReservation = new CottageReservation();
       this.cottageReservation.availableFrom = this.startDate;
@@ -166,8 +213,8 @@ export class CreateAReservationClientComponent implements OnInit {
           totalCost += s.cost;
         }
       }
-      let days = (this.endDate.valueOf() - this.startDate.valueOf()) / 86400000;
-      totalCost *= days;
+      this.numberOfDays = (this.endDate.valueOf() - this.startDate.valueOf()) / 86400000;
+      totalCost *= this.numberOfDays;
 
       this.shipReservation = new ShipReservation();
       this.shipReservation.availableFrom = this.startDate;
@@ -202,8 +249,8 @@ export class CreateAReservationClientComponent implements OnInit {
           totalCost += s.cost;
         }
       }
-      let days = (this.endDate.valueOf() - this.startDate.valueOf()) / 86400000;
-      totalCost *= days;
+      this.numberOfDays = (this.endDate.valueOf() - this.startDate.valueOf()) / 86400000;
+      totalCost *= this.numberOfDays;
 
       this.instructorsFavorReservation = new FavorReservation();
       this.instructorsFavorReservation.availableFrom = this.startDate;
@@ -266,6 +313,17 @@ export class CreateAReservationClientComponent implements OnInit {
     }
   }
 
+  sortCottageByTotalPrice(){
+    if(this.descendingTotalPriceCottage){
+      this.cottages.sort((a,b) => (a.totalPrice < b.totalPrice) ? 1 : ((b.totalPrice < a.totalPrice) ? -1 : 0))
+      this.descendingTotalPriceCottage = false;
+    }
+    else {
+      this.cottages.sort((a,b) => (a.totalPrice > b.totalPrice) ? 1 : ((b.totalPrice > a.totalPrice) ? -1 : 0))
+      this.descendingTotalPriceCottage = true;
+    }
+  }
+
   sortShipByCost(){
     if(this.descendingCostShip){
       this.ships.sort((a,b) => (a.ship.costPerNight < b.ship.costPerNight) ? 1 : ((b.ship.costPerNight < a.ship.costPerNight) ? -1 : 0))
@@ -288,6 +346,17 @@ export class CreateAReservationClientComponent implements OnInit {
     }
   }
 
+  sortShipByTotalPrice(){
+    if(this.descendingTotalPriceShip){
+      this.ships.sort((a,b) => (a.totalPrice < b.totalPrice) ? 1 : ((b.totalPrice < a.totalPrice) ? -1 : 0))
+      this.descendingTotalPriceShip = false;
+    }
+    else {
+      this.ships.sort((a,b) => (a.totalPrice > b.totalPrice) ? 1 : ((b.totalPrice > a.totalPrice) ? -1 : 0))
+      this.descendingTotalPriceShip = true;
+    }
+  }
+
   sortFavorByCost(){
     if(this.descendingCostFavor){
       this.instructorsFavors.sort((a,b) => (a.instructorsFavor.cost < b.instructorsFavor.cost) ? 1 : ((b.instructorsFavor.cost < a.instructorsFavor.cost) ? -1 : 0))
@@ -307,6 +376,17 @@ export class CreateAReservationClientComponent implements OnInit {
     else {
       this.instructorsFavors.sort((a,b) => (a.averageGrade > b.averageGrade) ? 1 : ((b.averageGrade > a.averageGrade) ? -1 : 0))
       this.descendingGradeFavor = true;
+    }
+  }
+
+  sortFavorByTotalPrice(){
+    if(this.descendingTotalPriceFavor){
+      this.instructorsFavors.sort((a,b) => (a.totalPrice < b.totalPrice) ? 1 : ((b.totalPrice < a.totalPrice) ? -1 : 0))
+      this.descendingTotalPriceFavor = false;
+    }
+    else {
+      this.instructorsFavors.sort((a,b) => (a.totalPrice > b.totalPrice) ? 1 : ((b.totalPrice > a.totalPrice) ? -1 : 0))
+      this.descendingTotalPriceFavor = true;
     }
   }
 

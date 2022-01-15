@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { CottageReservation } from 'src/app/model/cottage-reservation';
 import { User } from 'src/app/model/user';
+import { CottageReservationService } from 'src/app/service/cottage-reservation-service.service';
 import { UserService } from 'src/app/service/user-service.service';
 
 @Component({
@@ -19,19 +21,33 @@ export class ClientProfileComponent implements OnInit {
   oldPasswordMatch: boolean = false;
   passwordTheSame: boolean = false;
 
+  clientCottageReservations: Array<CottageReservation>;
+
   registerForm: any;
   changePasswordForm: any;
 
-  constructor(private userService : UserService) { }
+  constructor(private userService : UserService, private cottageReservationService: CottageReservationService) { }
 
   ngOnInit(): void {
     if(this.clientAuthenticated == undefined){
       this.userService.getUserByEmail(sessionStorage.getItem("clientToShowAuthenticated")).subscribe(ret =>{
         this.client = ret;
+        this.cottageReservationService.getCottageReservationsOfClient(this.client.email).subscribe(ret => {
+          this.clientCottageReservations = new Array<CottageReservation>();
+          for (let cr of ret) {
+            this.clientCottageReservations.push(cr);
+          }
+        })
       })
     } else {
       this.userService.getUserByEmail(this.clientAuthenticated.email).subscribe(ret =>{
         this.client = ret;
+        this.cottageReservationService.getCottageReservationsOfClient(this.client.email).subscribe(ret => {
+          this.clientCottageReservations = new Array<CottageReservation>();
+          for (let cr of ret) {
+            this.clientCottageReservations.push(cr);
+          }
+        })
       })
     }
     this.registerForm = new FormGroup({

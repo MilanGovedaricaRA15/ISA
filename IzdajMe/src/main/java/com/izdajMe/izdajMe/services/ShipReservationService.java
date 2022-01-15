@@ -17,6 +17,7 @@ public interface ShipReservationService {
 
     public Boolean addReservationByOwner(ShipReservation shipReservation);
     public Boolean addReservationByClient(ShipReservation shipReservation);
+    public Boolean addShipHotOfferReservationByClient(ShipReservation shipReservation);
     public List<ShipReservation> getAllReservationsOfShipFromTill(Long id,String from,String to);
     public ShipReservation getById(Long id);
     public Boolean changeReservationByOwner(ShipReservation shipReservation);

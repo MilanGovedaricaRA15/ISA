@@ -12,6 +12,7 @@
         <th>Type</th>
         <th>Capacity</th>
         <th>Description</th>
+        <th>Cost per night</th>
         <th></th>
     </thead>
     <tbody>
@@ -21,6 +22,7 @@
             <td>{{s.type}}</td>
             <td>{{s.capacity}}</td>
             <td>{{s.description}}</td>
+            <td>{{s.costPerNight}}</td>
             <td><a href="#" (click)="goToShipProfile(s.id)">More details</a></td>
         </tr>
     </tbody>

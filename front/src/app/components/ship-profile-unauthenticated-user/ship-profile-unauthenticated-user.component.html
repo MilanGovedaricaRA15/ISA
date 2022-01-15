@@ -17,7 +17,11 @@
       Description: {{ship.description}} <br>
       Grade: {{averageGrade}} <br>
       Rules: {{ship.rules}} <br>
-      Available from: 10.12.2021 17:00 <br>
-      Services: Minibar: 300, Pet friendly: 200 <br>
+      Available from: {{ship.availableFrom | date:'dd.MM.yyyy'}} <br>
+      Available till: {{ship.availableTill | date:'dd.MM.yyyy'}} <br>
+      Services: 
+      <ul *ngFor='let s of ship.priceList'>
+        <li>{{s.service}}</li>
+     </ul>
     </div>
   </div> 

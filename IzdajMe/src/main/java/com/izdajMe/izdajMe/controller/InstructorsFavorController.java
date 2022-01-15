@@ -4,6 +4,7 @@ import com.izdajMe.izdajMe.dto.CottageDTO;
 import com.izdajMe.izdajMe.dto.InstructorsFavorDTO;
 import com.izdajMe.izdajMe.model.Cottage;
 import com.izdajMe.izdajMe.model.InstructorsFavor;
+import com.izdajMe.izdajMe.model.Ship;
 import com.izdajMe.izdajMe.model.User;
 import com.izdajMe.izdajMe.services.InstructorsFavorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -166,6 +167,11 @@ public class InstructorsFavorController {
         }
     }
 
+    @GetMapping("/favors/getAllFavorsByInstructorsEmail")
+    public ResponseEntity<List<InstructorsFavor>> getAllFavorsByInstructorsEmail(@RequestParam("email") String email, HttpServletRequest request) {
+        return new ResponseEntity<List<InstructorsFavor>>(instructorsFavorService.getAllFavorsOfInstructor(email), HttpStatus.OK);
+    }
+
     @PostMapping("/favors/addFavor")
     public ResponseEntity<InstructorsFavorDTO> addFavor(@RequestBody InstructorsFavor favor, HttpServletRequest request){
         if (request.getSession(false).getAttribute("role")!=null) {
@@ -177,6 +183,23 @@ public class InstructorsFavorController {
         }
         else{
             return new ResponseEntity<InstructorsFavorDTO>(new InstructorsFavorDTO(), HttpStatus.UNAUTHORIZED);
+        }
+    }
+
+    @PutMapping("/favors/deleteFavorHotOffer")
+    public ResponseEntity<Boolean> deleteFavorHotOffer(@RequestBody InstructorsFavor favor, HttpServletRequest request) {
+        if (request.getSession(false).getAttribute("role") != null) {
+            if (request.getSession(false).getAttribute("role") == User.Role.client) {
+                if (instructorsFavorService.deleteFavorHotOffer(favor)) {
+                    return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+                } else {
+                    return new ResponseEntity<Boolean>(false, HttpStatus.NOT_ACCEPTABLE);
+                }
+            } else {
+                return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
+            }
+        } else {
+            return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
         }
     }
 }

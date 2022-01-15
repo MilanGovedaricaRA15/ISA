@@ -170,6 +170,19 @@ public class ShipReservationServiceImpl implements ShipReservationService {
         }
     }
 
+    public Boolean addShipHotOfferReservationByClient(ShipReservation shipReservation) {
+        List<ShipReservation> allThisShipReservations = shipReservationRepository.findAllByShipId(shipReservation.getShip().getId());
+
+        if(canAddReservation(allThisShipReservations, shipReservation, new ArrayList<ShipHotOffer>())) {
+            shipReservationRepository.save(shipReservation);
+            sendNotificationForClientReservation(shipReservation);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     private void sendNotificationForReservation(ShipReservation shipReservation) throws MailException {
         SimpleMailMessage mail = new SimpleMailMessage();
         mail.setTo(shipReservation.getClient().getEmail());

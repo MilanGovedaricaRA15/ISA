@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { CottageDTO, getAverageCottageGrade } from 'src/app/dto/cottage-dto';
 import { Cottage } from 'src/app/model/cottage';
 import { CottageService } from 'src/app/service/cottage-service.service';
 
@@ -10,7 +11,7 @@ import { CottageService } from 'src/app/service/cottage-service.service';
 export class CottageProfileUnauthenticatedUserComponent implements OnInit {
 
   @Input() cottageUnauthenticated: Cottage;
-  cottage: Cottage;
+  cottage: CottageDTO;
   cottageImg: String;
   
   constructor(private cottageService: CottageService) { }
@@ -18,13 +19,13 @@ export class CottageProfileUnauthenticatedUserComponent implements OnInit {
   ngOnInit(): void {
     if(this.cottageUnauthenticated == undefined){
       this.cottageService.getCottageById(Number(sessionStorage.getItem("cottageToShowUnauthenticated"))).subscribe(ret =>{
-        this.cottage = ret;
+        this.cottage = new CottageDTO(ret, getAverageCottageGrade(ret), ret.costPerNight);
       })
     } else {
-      this.cottage = this.cottageUnauthenticated;
+      this.cottage = new CottageDTO(this.cottageUnauthenticated, getAverageCottageGrade(this.cottageUnauthenticated), this.cottageUnauthenticated.costPerNight);
     }
-    if(this.cottage.images != null){
-      this.cottageImg = this.cottage.images[0];
+    if(this.cottage.cottage.images != null){
+      this.cottageImg = this.cottage.cottage.images[0];
     }
   }
 

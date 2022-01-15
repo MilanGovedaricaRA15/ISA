@@ -7,19 +7,21 @@
 <br><br>
 <table style="width: 100%;">
     <thead>
-        <th (click)="sortByName()">Name</th>
-        <th (click)="sortByAddress()">Address</th>
-        <th (click)="sortByDescription()">Description</th>
-        <th>Grade</th>
+        <th (click)="sortByName()" style="cursor: pointer;">Name</th>
+        <th (click)="sortByAddress()" style="cursor: pointer;">Address</th>
+        <th (click)="sortByDescription()" style="cursor: pointer;">Description</th>
+        <th (click)="sortByCost()" style="cursor: pointer;">Cost per night</th>
+        <th (click)="sortByGrade()" style="cursor: pointer;">Grade</th>
         <th></th>
     </thead>
     <tbody>
         <tr *ngFor='let c of cottages'>
-            <td>{{c.name}}</td>
-            <td>{{c.address}}</td>
-            <td>{{c.description}}</td>
-            <td>0.0</td>
-            <td><a href="#" (click)="goToCottageProfile(c.id)">More details</a></td>
+            <td>{{c.cottage.name}}</td>
+            <td>{{c.cottage.address}}</td>
+            <td>{{c.cottage.description}}</td>
+            <td>{{c.cottage.costPerNight}}</td>
+            <td>{{c.averageGrade}}</td>
+            <td><a href="#" (click)="goToCottageProfile(c.cottage.id)">More details</a></td>
         </tr>
     </tbody>
 </table>

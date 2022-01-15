@@ -115,17 +115,17 @@ values (8, 'Futoska 15', DATE('2021-10-01'), DATE('2022-03-05'), 'Blizu jezera',
 insert into cottages (id, address, available_from, available_till, description, images, name, num_of_beds, num_of_rooms, rules, services, owner_id, cost_per_night)
 values (9, 'Fruskogorska 19', DATE('2021-11-01'), DATE('2022-01-01'), 'Na jezeru', null, 'Jezerska', 3, 3, 'Nisu dozvoljene zivotinje', null, 15, 50);
 insert into cottages (id, address, available_from, available_till, description, images, name, num_of_beds, num_of_rooms, rules, services, owner_id, cost_per_night)
-values (10, 'Dunavska 29', DATE('2021-12-01'), DATE('2022-01-28'), 'Blizu jezera', null, 'Smjestaj kod Loja', 3, 3, 'Nisu dozvoljene zivotinje', null, 16, 30);
+values (10, 'Dunavska 29', DATE('2021-12-01'), DATE('2022-02-28'), 'Blizu jezera', null, 'Smjestaj kod Loja', 3, 3, 'Nisu dozvoljene zivotinje', null, 16, 30);
 insert into cottages (id, address, available_from, available_till, description, images, name, num_of_beds, num_of_rooms, rules, services, owner_id, cost_per_night)
 values (11, 'Fruskogorska 30', DATE('2021-10-15'), DATE('2022-04-01'), 'Na jezeru', null, 'Vikendica 3', 20, 5, 'Nisu dozvoljene zivotinje', null, 18, 40);
 insert into cottages (id, address, available_from, available_till, description, images, name, num_of_beds, num_of_rooms, rules, services, owner_id, cost_per_night)
-values (12, 'Fruskogorska 40', DATE('2021-11-15'), DATE('2022-01-05'), 'Blizu jezera', null, 'Vikendica kod Gazde', 12, 4, 'Nisu dozvoljene zivotinje', null, 18, 25);
+values (12, 'Fruskogorska 40', DATE('2021-11-15'), DATE('2022-03-01'), 'Blizu jezera', null, 'Vikendica kod Gazde', 12, 4, 'Nisu dozvoljene zivotinje', null, 18, 25);
 insert into cottages (id, address, available_from, available_till, description, images, name, num_of_beds, num_of_rooms, rules, services, owner_id, cost_per_night)
-values (13, 'Futoska 10', DATE('2021-12-15'), DATE('2022-02-10'), 'Na jezeru', null, 'Skupa', 10, 6, 'Nisu dozvoljene zivotinje', null, 16, 200);
+values (13, 'Futoska 10', DATE('2021-12-15'), DATE('2022-03-10'), 'Na jezeru', null, 'Skupa', 10, 6, 'Nisu dozvoljene zivotinje', null, 16, 200);
 insert into cottages (id, address, available_from, available_till, description, images, name, num_of_beds, num_of_rooms, rules, services, owner_id, cost_per_night)
-values (14, 'Futoska 20', DATE('2022-01-15'), DATE('2022-03-10'), 'Blizu jezera', null, 'Jeftina', 50, 10, 'Nisu dozvoljene zivotinje', null, 17, 5);
+values (14, 'Futoska 20', DATE('2022-01-15'), DATE('2022-04-10'), 'Blizu jezera', null, 'Jeftina', 50, 10, 'Nisu dozvoljene zivotinje', null, 17, 5);
 insert into cottages (id, address, available_from, available_till, description, images, name, num_of_beds, num_of_rooms, rules, services, owner_id, cost_per_night)
-values (15, 'Fruskogorska 24', DATE('2021-10-10'), DATE('2022-01-12'), 'Na jezeru', null, 'Vikendica 4', 20, 5, 'Nisu dozvoljene zivotinje', null, 18, 40);
+values (15, 'Fruskogorska 24', DATE('2021-10-10'), DATE('2022-03-12'), 'Na jezeru', null, 'Vikendica 4', 20, 5, 'Nisu dozvoljene zivotinje', null, 18, 40);
 insert into cottages (id, address, available_from, available_till, description, images, name, num_of_beds, num_of_rooms, rules, services, owner_id, cost_per_night)
 values (16, 'Dunavska 17', DATE('2021-11-11'), DATE('2022-04-08'), 'Blizu jezera', null, 'Radnicka', 12, 4, 'Nisu dozvoljene zivotinje', null, 15, 25);
 insert into cottages (id, address, available_from, available_till, description, images, name, num_of_beds, num_of_rooms, rules, services, owner_id, cost_per_night)
@@ -142,21 +142,21 @@ values (1, 3,DATE('2021-09-01'),DATE('2022-02-01'), 'Shipfirst', 'typeone', 72, 
 insert into ships(id, owner_id, available_from, available_till, name, type, length, engine_number, engine_power, top_speed, navigation_equipment, address, description, images, capacity, rules,fishing_equipment,cancel_requirements,cost_per_night)
 values (2, 3,DATE('2021-09-01'),DATE('2022-02-01'), 'Shipsecond', 'typetwo', 49, '123b456', 164, 275, null, 'Nikole Tesle 2', 'Description', null, 10, 'pravila',null,'free',80);
 insert into ships(id, owner_id, available_from, available_till, name, type, length, engine_number, engine_power, top_speed, navigation_equipment, address, description, images, capacity, rules,fishing_equipment,cancel_requirements,cost_per_night)
-values (3, 3,DATE('2021-09-01'),DATE('2022-02-01'), 'Shipfifth', 'typethree', 67, '123c456', 130, 223, null, 'Nikole Tesle 3', 'Description', null, 30, 'pravila',null,'free',70);
+values (3, 3,DATE('2021-09-01'),DATE('2022-05-01'), 'Shipfifth', 'typethree', 67, '123c456', 130, 223, null, 'Nikole Tesle 3', 'Description', null, 30, 'pravila',null,'free',70);
 insert into ships(id, owner_id, available_from, available_till, name, type, length, engine_number, engine_power, top_speed, navigation_equipment, address, description, images, capacity, rules,fishing_equipment,cancel_requirements,cost_per_night)
-values (4, 3,DATE('2021-09-01'),DATE('2022-02-01'), 'Shipneki', 'typefourth', 113, '123d456', 172, 289, null, 'Nikole Tesle 4', 'Description', null, 25, 'pravila',null,'free',60);
+values (4, 3,DATE('2021-09-01'),DATE('2022-04-01'), 'Shipneki', 'typefourth', 113, '123d456', 172, 289, null, 'Nikole Tesle 4', 'Description', null, 25, 'pravila',null,'free',60);
 insert into ships(id, owner_id, available_from, available_till, name, type, length, engine_number, engine_power, top_speed, navigation_equipment, address, description, images, capacity, rules,fishing_equipment,cancel_requirements,cost_per_night)
-values (5, 3,DATE('2021-09-01'),DATE('2022-02-01'), 'Ship', 'typefifth', 84, '123e456', 117, 200, null, 'Nikole Tesle 5', 'Description', null, 15, 'pravila',null,'free',50);
+values (5, 3,DATE('2021-09-01'),DATE('2022-05-01'), 'Ship', 'typefifth', 84, '123e456', 117, 200, null, 'Nikole Tesle 5', 'Description', null, 15, 'pravila',null,'free',50);
 insert into ships(id, owner_id, available_from, available_till, name, type, length, engine_number, engine_power, top_speed, navigation_equipment, address, description, images, capacity, rules,fishing_equipment,cancel_requirements,cost_per_night)
-values (6, 19,DATE('2021-09-01'),DATE('2022-02-01'), 'Special', 'first', 72, '123a456', 157, 245, null, 'Andriceva 1', 'Description', null, 20, 'pravila',null,'free',90);
+values (6, 19,DATE('2021-09-01'),DATE('2022-03-01'), 'Special', 'first', 72, '123a456', 157, 245, null, 'Andriceva 1', 'Description', null, 20, 'pravila',null,'free',90);
 insert into ships(id, owner_id, available_from, available_till, name, type, length, engine_number, engine_power, top_speed, navigation_equipment, address, description, images, capacity, rules,fishing_equipment,cancel_requirements,cost_per_night)
-values (7, 21,DATE('2021-09-01'),DATE('2022-01-01'), 'Blender', 'second', 49, '123b456', 164, 275, null, 'Marka Kraljevica 2', 'Description', null, 10, 'pravila',null,'free',80);
+values (7, 21,DATE('2021-09-01'),DATE('2022-04-01'), 'Blender', 'second', 49, '123b456', 164, 275, null, 'Marka Kraljevica 2', 'Description', null, 10, 'pravila',null,'free',80);
 insert into ships(id, owner_id, available_from, available_till, name, type, length, engine_number, engine_power, top_speed, navigation_equipment, address, description, images, capacity, rules,fishing_equipment,cancel_requirements,cost_per_night)
-values (8, 20,DATE('2021-09-01'),DATE('2022-01-01'), 'Rafting', 'third', 67, '123c456', 130, 223, null, 'Andriceva 13', 'Description', null, 30, 'pravila',null,'free',70);
+values (8, 20,DATE('2021-09-01'),DATE('2022-05-01'), 'Rafting', 'third', 67, '123c456', 130, 223, null, 'Andriceva 13', 'Description', null, 30, 'pravila',null,'free',70);
 insert into ships(id, owner_id, available_from, available_till, name, type, length, engine_number, engine_power, top_speed, navigation_equipment, address, description, images, capacity, rules,fishing_equipment,cancel_requirements,cost_per_night)
-values (9, 22,DATE('2021-09-01'),DATE('2022-02-01'), 'Long', 'fourth', 200, '123d456', 172, 289, null, 'Andriceva 40', 'Description', null, 25, 'pravila',null,'free',60);
+values (9, 22,DATE('2021-09-01'),DATE('2022-06-01'), 'Long', 'fourth', 200, '123d456', 172, 289, null, 'Andriceva 40', 'Description', null, 25, 'pravila',null,'free',60);
 insert into ships(id, owner_id, available_from, available_till, name, type, length, engine_number, engine_power, top_speed, navigation_equipment, address, description, images, capacity, rules,fishing_equipment,cancel_requirements,cost_per_night)
-values (10, 20,DATE('2021-09-01'),DATE('2022-02-01'), 'Expensive', 'fifth', 84, '123e456', 117, 300, null, 'Nikole Tesle 6', 'Description', null, 15, 'pravila',null,'free',50);
+values (10, 20,DATE('2021-09-01'),DATE('2022-07-01'), 'Expensive', 'fifth', 84, '123e456', 117, 300, null, 'Nikole Tesle 6', 'Description', null, 15, 'pravila',null,'free',50);
 
 insert into grades(id, user_id, value, comment)
 values (1, 3, 7 , 'Not too bad');
@@ -300,21 +300,21 @@ insert into grades(id, user_id, value, comment)
 values (70, 27, 8, 'Good');
 
 insert into favors (id, instructor_id, name, address, description, images, num_of_persons, rules, services, cost, available_from, available_till, cancellation_condition)
-values (1, 4, 'Cas pecanja', 'Ribarac', 'Pecanje pecaljkom', null, 4, 'Samo punoletni mogu', null, 1200, DATE('2022-02-01'), DATE('2022-02-17'), 'Free');
+values (1, 4, 'Cas pecanja', 'Ribarac', 'Pecanje pecaljkom', null, 4, 'Samo punoletni mogu', null, 1200, DATE('2022-01-01'), DATE('2022-03-17'), 'Free');
 insert into favors (id, instructor_id, name, address, description, images, num_of_persons, rules, services, cost, available_from, available_till, cancellation_condition)
-values (2, 4, 'Cas pecanja', 'Ribarac', 'Pecanje mrezom', null, 10, 'Samo punoletni mogu', null, 1000, DATE('2022-01-04'), DATE('2022-01-26'), '5%');
+values (2, 4, 'Cas pecanja', 'Ribarac', 'Pecanje mrezom', null, 10, 'Samo punoletni mogu', null, 1000, DATE('2022-01-04'), DATE('2022-04-26'), '5%');
 insert into favors (id, instructor_id, name, address, description, images, num_of_persons, rules, services, cost, available_from, available_till, cancellation_condition)
-values (3, 4, 'Isplovljavanje', 'Ribarac', 'Plovidba camcom i pecanje', null, 2, 'Samo punoletni mogu', null, 2000, DATE('2022-02-01'), DATE('2022-02-27'), '10%');
+values (3, 4, 'Isplovljavanje', 'Ribarac', 'Plovidba camcom i pecanje', null, 2, 'Samo punoletni mogu', null, 2000, DATE('2022-01-01'), DATE('2022-05-27'), '10%');
 insert into favors (id, instructor_id, name, address, description, images, num_of_persons, rules, services, cost, available_from, available_till, cancellation_condition)
-values (4, 4, 'Pravljenje mamca', 'Ribarac', 'Mamac', null, 3, 'Samo punoletni mogu', null, 500, DATE('2022-01-01'), DATE('2022-02-1'), '15%');
+values (4, 4, 'Pravljenje mamca', 'Ribarac', 'Mamac', null, 3, 'Samo punoletni mogu', null, 500, DATE('2022-01-01'), DATE('2022-05-1'), '15%');
 insert into favors (id, instructor_id, name, address, description, images, num_of_persons, rules, services, cost, available_from, available_till, cancellation_condition)
-values (5, 23, 'Cas pecanja', 'Ribarsko ostrvo', 'Pecanje pecaljkom', null, 4, 'Samo punoletni mogu', null, 1200, DATE('2022-02-11'), DATE('2022-02-25'), 'Free');
+values (5, 23, 'Cas pecanja', 'Ribarsko ostrvo', 'Pecanje pecaljkom', null, 4, 'Samo punoletni mogu', null, 1200, DATE('2022-01-11'), DATE('2022-04-25'), 'Free');
 insert into favors (id, instructor_id, name, address, description, images, num_of_persons, rules, services, cost, available_from, available_till, cancellation_condition)
-values (6, 24, 'Cas pecanja', 'Ribarac', 'Pecanje mrezom', null, 10, 'Samo punoletni mogu', null, 1000, DATE('2022-01-08'), DATE('2022-02-20'), '5%');
+values (6, 24, 'Cas pecanja', 'Ribarac', 'Pecanje mrezom', null, 10, 'Samo punoletni mogu', null, 1000, DATE('2022-01-08'), DATE('2022-03-20'), '5%');
 insert into favors (id, instructor_id, name, address, description, images, num_of_persons, rules, services, cost, available_from, available_till, cancellation_condition)
 values (7, 25, 'Isplovljavanje', 'Ribarsko ostrvo', 'Plovidba camcom i pecanje', null, 2, 'Samo punoletni mogu', null, 2000, DATE('2022-01-01'), DATE('2022-03-01'), '10%');
 insert into favors (id, instructor_id, name, address, description, images, num_of_persons, rules, services, cost, available_from, available_till, cancellation_condition)
-values (8, 26, 'Pravljenje mamca', 'Ribarac', 'Mamac', null, 3, 'Samo punoletni mogu', null, 500, DATE('2022-01-01'), DATE('2022-03-1'), '15%');
+values (8, 26, 'Pravljenje mamca', 'Ribarac', 'Mamac', null, 3, 'Samo punoletni mogu', null, 500, DATE('2022-01-01'), DATE('2022-07-1'), '15%');
 
 insert into complaints (id, text, author_id, complaint_user_id, answer)
 values (1, 'Nova zalba', 14, 1, '');
@@ -375,24 +375,186 @@ insert into cottages_grades(cottage_id, grades_id) values (14, 50);
 
 insert into hot_offers (id, available_from, available_till, cost, free, num_of_people, services)
 values (1, DATE('2021-11-20'), DATE('2021-11-25'), 50, TRUE, 3, null);
-insert into cottages_hot_offers(cottage_id,hot_offers_id) values (1, 1);
 insert into hot_offers (id, available_from, available_till, cost, free, num_of_people, services)
 values (2, DATE('2021-12-16'), DATE('2021-12-19'), 28, TRUE, 4, null);
-insert into cottages_hot_offers(cottage_id,hot_offers_id) values (1, 2);
+insert into hot_offers (id, available_from, available_till, cost, free, num_of_people, services)
+values (3, DATE('2022-01-10'), DATE('2022-01-15'), 125, TRUE, 5, null);
+insert into hot_offers (id, available_from, available_till, cost, free, num_of_people, services)
+values (4, DATE('2022-02-11'), DATE('2022-02-14'), 73, TRUE, 6, null);
+insert into hot_offers (id, available_from, available_till, cost, free, num_of_people, services)
+values (5, DATE('2022-01-12'), DATE('2022-01-15'), 67, TRUE, 7, null);
+insert into hot_offers (id, available_from, available_till, cost, free, num_of_people, services)
+values (6, DATE('2022-02-13'), DATE('2022-02-15'), 52, TRUE, 6, null);
+insert into hot_offers (id, available_from, available_till, cost, free, num_of_people, services)
+values (7, DATE('2022-01-14'), DATE('2022-01-16'), 55, TRUE, 5, null);
+insert into hot_offers (id, available_from, available_till, cost, free, num_of_people, services)
+values (8, DATE('2022-02-15'), DATE('2022-02-17'), 45, TRUE, 4, null);
+insert into hot_offers (id, available_from, available_till, cost, free, num_of_people, services)
+values (9, DATE('2022-01-16'), DATE('2022-01-18'), 45, TRUE, 3, null);
+insert into hot_offers (id, available_from, available_till, cost, free, num_of_people, services)
+values (10, DATE('2022-02-17'), DATE('2022-02-19'), 40, TRUE, 4, null);
+insert into hot_offers (id, available_from, available_till, cost, free, num_of_people, services)
+values (11, DATE('2022-01-18'), DATE('2022-01-25'), 150, TRUE, 5, null);
+insert into hot_offers (id, available_from, available_till, cost, free, num_of_people, services)
+values (12, DATE('2022-02-19'), DATE('2022-02-22'), 60, TRUE, 6, null);
+insert into hot_offers (id, available_from, available_till, cost, free, num_of_people, services)
+values (13, DATE('2022-01-20'), DATE('2022-01-25'), 100, TRUE, 7, null);
+insert into hot_offers (id, available_from, available_till, cost, free, num_of_people, services)
+values (14, DATE('2022-02-16'), DATE('2022-02-19'), 80, TRUE, 8, null);
+insert into hot_offers (id, available_from, available_till, cost, free, num_of_people, services)
+values (15, DATE('2022-01-29'), DATE('2022-01-31'), 50, TRUE, 9, null);
+insert into hot_offers (id, available_from, available_till, cost, free, num_of_people, services)
+values (16, DATE('2022-02-08'), DATE('2022-02-11'), 65, TRUE, 8, null);
+insert into hot_offers (id, available_from, available_till, cost, free, num_of_people, services)
+values (17, DATE('2022-01-27'), DATE('2022-01-29'), 50, TRUE, 7, null);
+insert into hot_offers (id, available_from, available_till, cost, free, num_of_people, services)
+values (18, DATE('2022-02-06'), DATE('2022-02-09'), 70, TRUE, 6, null);
+insert into hot_offers (id, available_from, available_till, cost, free, num_of_people, services)
+values (19, DATE('2022-01-25'), DATE('2022-01-27'), 50, TRUE, 5, null);
+insert into hot_offers (id, available_from, available_till, cost, free, num_of_people, services)
+values (20, DATE('2022-02-04'), DATE('2022-02-08'), 90, TRUE, 4, null);
+insert into cottages_hot_offers(cottage_id, hot_offers_id) values (1, 1);
+insert into cottages_hot_offers(cottage_id, hot_offers_id) values (1, 2);
+insert into cottages_hot_offers(cottage_id, hot_offers_id) values (15, 3);
+insert into cottages_hot_offers(cottage_id, hot_offers_id) values (14, 4);
+insert into cottages_hot_offers(cottage_id, hot_offers_id) values (13, 5);
+insert into cottages_hot_offers(cottage_id, hot_offers_id) values (12, 6);
+insert into cottages_hot_offers(cottage_id, hot_offers_id) values (11, 7);
+insert into cottages_hot_offers(cottage_id, hot_offers_id) values (10, 8);
+insert into cottages_hot_offers(cottage_id, hot_offers_id) values (10, 9);
+insert into cottages_hot_offers(cottage_id, hot_offers_id) values (8, 10);
+insert into cottages_hot_offers(cottage_id, hot_offers_id) values (7, 11);
+insert into cottages_hot_offers(cottage_id, hot_offers_id) values (6, 12);
+insert into cottages_hot_offers(cottage_id, hot_offers_id) values (6, 13);
+insert into cottages_hot_offers(cottage_id, hot_offers_id) values (4, 14);
+insert into cottages_hot_offers(cottage_id, hot_offers_id) values (3, 15);
+insert into cottages_hot_offers(cottage_id, hot_offers_id) values (3, 16);
+insert into cottages_hot_offers(cottage_id, hot_offers_id) values (13, 17);
+insert into cottages_hot_offers(cottage_id, hot_offers_id) values (13, 18);
+insert into cottages_hot_offers(cottage_id, hot_offers_id) values (11, 19);
+insert into cottages_hot_offers(cottage_id, hot_offers_id) values (11, 20);
 
 insert into ship_hot_offers (id, available_from, available_till, cost, free, num_of_people, services)
 values (1, DATE('2021-11-20'), DATE('2021-11-25'), 50, TRUE, 3, null);
-insert into ships_hot_offers(ship_id,hot_offers_id) values (1, 1);
 insert into ship_hot_offers (id, available_from, available_till, cost, free, num_of_people, services)
 values (2, DATE('2021-12-16'), DATE('2021-12-19'), 28, TRUE, 4, null);
-insert into ships_hot_offers(ship_id,hot_offers_id) values (1, 2);
+insert into ship_hot_offers (id, available_from, available_till, cost, free, num_of_people, services)
+values (3, DATE('2022-01-10'), DATE('2022-01-12'), 50, TRUE, 9, null);
+insert into ship_hot_offers (id, available_from, available_till, cost, free, num_of_people, services)
+values (4, DATE('2022-01-11'), DATE('2022-01-13'), 55, TRUE, 8, null);
+insert into ship_hot_offers (id, available_from, available_till, cost, free, num_of_people, services)
+values (5, DATE('2022-01-12'), DATE('2022-01-14'), 45, TRUE, 7, null);
+insert into ship_hot_offers (id, available_from, available_till, cost, free, num_of_people, services)
+values (6, DATE('2022-01-13'), DATE('2022-01-15'), 40, TRUE, 6, null);
+insert into ship_hot_offers (id, available_from, available_till, cost, free, num_of_people, services)
+values (7, DATE('2022-01-14'), DATE('2022-01-16'), 45, TRUE, 5, null);
+insert into ship_hot_offers (id, available_from, available_till, cost, free, num_of_people, services)
+values (8, DATE('2022-01-15'), DATE('2022-01-18'), 60, TRUE, 4, null);
+insert into ship_hot_offers (id, available_from, available_till, cost, free, num_of_people, services)
+values (9, DATE('2022-01-16'), DATE('2022-01-19'), 65, TRUE, 3, null);
+insert into ship_hot_offers (id, available_from, available_till, cost, free, num_of_people, services)
+values (10, DATE('2022-01-17'), DATE('2022-01-20'), 70, TRUE, 4, null);
+insert into ship_hot_offers (id, available_from, available_till, cost, free, num_of_people, services)
+values (11, DATE('2022-01-18'), DATE('2022-01-21'), 75, TRUE, 5, null);
+insert into ship_hot_offers (id, available_from, available_till, cost, free, num_of_people, services)
+values (12, DATE('2022-02-01'), DATE('2022-02-03'), 35, TRUE, 6, null);
+insert into ship_hot_offers (id, available_from, available_till, cost, free, num_of_people, services)
+values (13, DATE('2022-02-02'), DATE('2022-02-04'), 40, TRUE, 7, null);
+insert into ship_hot_offers (id, available_from, available_till, cost, free, num_of_people, services)
+values (14, DATE('2022-02-03'), DATE('2022-02-05'), 45, TRUE, 8, null);
+insert into ship_hot_offers (id, available_from, available_till, cost, free, num_of_people, services)
+values (15, DATE('2022-02-04'), DATE('2022-02-06'), 50, TRUE, 9, null);
+insert into ship_hot_offers (id, available_from, available_till, cost, free, num_of_people, services)
+values (16, DATE('2022-02-05'), DATE('2022-02-07'), 55, TRUE, 8, null);
+insert into ship_hot_offers (id, available_from, available_till, cost, free, num_of_people, services)
+values (17, DATE('2022-02-06'), DATE('2022-02-09'), 60, TRUE, 7, null);
+insert into ship_hot_offers (id, available_from, available_till, cost, free, num_of_people, services)
+values (18, DATE('2022-02-07'), DATE('2022-02-10'), 65, TRUE, 6, null);
+insert into ship_hot_offers (id, available_from, available_till, cost, free, num_of_people, services)
+values (19, DATE('2022-02-08'), DATE('2022-02-11'), 70, TRUE, 5, null);
+insert into ship_hot_offers (id, available_from, available_till, cost, free, num_of_people, services)
+values (20, DATE('2022-02-09'), DATE('2022-02-12'), 75, TRUE, 4, null);
+insert into ships_hot_offers(ship_id, hot_offers_id) values (1, 1);
+insert into ships_hot_offers(ship_id, hot_offers_id) values (1, 2);
+insert into ships_hot_offers(ship_id, hot_offers_id) values (8, 3);
+insert into ships_hot_offers(ship_id, hot_offers_id) values (7, 4);
+insert into ships_hot_offers(ship_id, hot_offers_id) values (6, 5);
+insert into ships_hot_offers(ship_id, hot_offers_id) values (5, 6);
+insert into ships_hot_offers(ship_id, hot_offers_id) values (4, 7);
+insert into ships_hot_offers(ship_id, hot_offers_id) values (3, 8);
+insert into ships_hot_offers(ship_id, hot_offers_id) values (8, 9);
+insert into ships_hot_offers(ship_id, hot_offers_id) values (7, 10);
+insert into ships_hot_offers(ship_id, hot_offers_id) values (6, 11);
+insert into ships_hot_offers(ship_id, hot_offers_id) values (5, 12);
+insert into ships_hot_offers(ship_id, hot_offers_id) values (4, 13);
+insert into ships_hot_offers(ship_id, hot_offers_id) values (3, 14);
+insert into ships_hot_offers(ship_id, hot_offers_id) values (8, 15);
+insert into ships_hot_offers(ship_id, hot_offers_id) values (7, 16);
+insert into ships_hot_offers(ship_id, hot_offers_id) values (6, 17);
+insert into ships_hot_offers(ship_id, hot_offers_id) values (5, 18);
+insert into ships_hot_offers(ship_id, hot_offers_id) values (4, 19);
+insert into ships_hot_offers(ship_id, hot_offers_id) values (3, 20);
 
 insert into favor_hot_offers (id, available_from, available_till, place, num_of_persons, services, cost, free)
-values (1, DATE('2022-01-20'), DATE('2021-01-25'), 'Ribarac', 5, null, 1000, TRUE);
-insert into favors_hot_offers(instructors_favor_id, hot_offers_id) values (1, 1);
+values (1, DATE('2022-01-17'), DATE('2022-01-19'), 'Ribarac', 5, null, 700, TRUE);
 insert into favor_hot_offers (id, available_from, available_till, place, num_of_persons, services, cost, free)
-values (2, DATE('2022-02-02'), DATE('2021-02-12'), 'Ribarac', 4, null, 900, TRUE);
+values (2, DATE('2022-02-20'), DATE('2022-02-22'), 'Ribarac', 4, null, 400, TRUE);
+insert into favor_hot_offers (id, available_from, available_till, place, num_of_persons, services, cost, free)
+values (3, DATE('2022-01-23'), DATE('2022-01-25'), 'Ribarac', 7, null, 600, TRUE);
+insert into favor_hot_offers (id, available_from, available_till, place, num_of_persons, services, cost, free)
+values (4, DATE('2022-01-26'), DATE('2022-01-27'), 'Ribarac', 8, null, 500, TRUE);
+insert into favor_hot_offers (id, available_from, available_till, place, num_of_persons, services, cost, free)
+values (5, DATE('2022-01-24'), DATE('2022-01-28'), 'Ribarac', 7, null, 600, TRUE);
+insert into favor_hot_offers (id, available_from, available_till, place, num_of_persons, services, cost, free)
+values (6, DATE('2022-01-26'), DATE('2022-01-30'), 'Ribarac', 8, null, 500, TRUE);
+insert into favor_hot_offers (id, available_from, available_till, place, num_of_persons, services, cost, free)
+values (7, DATE('2022-01-28'), DATE('2022-02-01'), 'Ribarac', 7, null, 600, TRUE);
+insert into favor_hot_offers (id, available_from, available_till, place, num_of_persons, services, cost, free)
+values (8, DATE('2022-01-30'), DATE('2022-02-03'), 'Ribarac', 8, null, 500, TRUE);
+insert into favor_hot_offers (id, available_from, available_till, place, num_of_persons, services, cost, free)
+values (9, DATE('2022-02-01'), DATE('2022-02-05'), 'Ribarac', 7, null, 600, TRUE);
+insert into favor_hot_offers (id, available_from, available_till, place, num_of_persons, services, cost, free)
+values (10, DATE('2022-02-06'), DATE('2022-02-08'), 'Ribarac', 8, null, 400, TRUE);
+insert into favor_hot_offers (id, available_from, available_till, place, num_of_persons, services, cost, free)
+values (11, DATE('2022-02-05'), DATE('2022-02-09'), 'Ribarac', 7, null, 700, TRUE);
+insert into favor_hot_offers (id, available_from, available_till, place, num_of_persons, services, cost, free)
+values (12, DATE('2022-02-07'), DATE('2022-02-10'), 'Ribarac', 8, null, 800, TRUE);
+insert into favor_hot_offers (id, available_from, available_till, place, num_of_persons, services, cost, free)
+values (13, DATE('2022-02-09'), DATE('2022-02-12'), 'Ribarac', 7, null, 900, TRUE);
+insert into favor_hot_offers (id, available_from, available_till, place, num_of_persons, services, cost, free)
+values (14, DATE('2022-02-11'), DATE('2022-02-14'), 'Ribarac', 8, null, 1000, TRUE);
+insert into favor_hot_offers (id, available_from, available_till, place, num_of_persons, services, cost, free)
+values (15, DATE('2022-02-13'), DATE('2022-02-16'), 'Ribarac', 7, null, 1000, TRUE);
+insert into favor_hot_offers (id, available_from, available_till, place, num_of_persons, services, cost, free)
+values (16, DATE('2022-02-17'), DATE('2022-02-21'), 'Ribarac', 8, null, 1000, TRUE);
+insert into favor_hot_offers (id, available_from, available_till, place, num_of_persons, services, cost, free)
+values (17, DATE('2022-02-17'), DATE('2022-02-20'), 'Ribarac', 7, null, 1200, TRUE);
+insert into favor_hot_offers (id, available_from, available_till, place, num_of_persons, services, cost, free)
+values (18, DATE('2022-02-19'), DATE('2022-02-22'), 'Ribarac', 8, null, 1100, TRUE);
+insert into favor_hot_offers (id, available_from, available_till, place, num_of_persons, services, cost, free)
+values (19, DATE('2022-02-21'), DATE('2022-02-24'), 'Ribarac', 7, null, 1300, TRUE);
+insert into favor_hot_offers (id, available_from, available_till, place, num_of_persons, services, cost, free)
+values (20, DATE('2022-02-23'), DATE('2022-02-26'), 'Ribarac', 8, null, 1200, TRUE);
+insert into favors_hot_offers(instructors_favor_id, hot_offers_id) values (1, 1);
 insert into favors_hot_offers(instructors_favor_id, hot_offers_id) values (1, 2);
+insert into favors_hot_offers(instructors_favor_id, hot_offers_id) values (3, 3);
+insert into favors_hot_offers(instructors_favor_id, hot_offers_id) values (4, 4);
+insert into favors_hot_offers(instructors_favor_id, hot_offers_id) values (5, 5);
+insert into favors_hot_offers(instructors_favor_id, hot_offers_id) values (6, 6);
+insert into favors_hot_offers(instructors_favor_id, hot_offers_id) values (7, 7);
+insert into favors_hot_offers(instructors_favor_id, hot_offers_id) values (8, 8);
+insert into favors_hot_offers(instructors_favor_id, hot_offers_id) values (3, 9);
+insert into favors_hot_offers(instructors_favor_id, hot_offers_id) values (4, 10);
+insert into favors_hot_offers(instructors_favor_id, hot_offers_id) values (5, 11);
+insert into favors_hot_offers(instructors_favor_id, hot_offers_id) values (6, 12);
+insert into favors_hot_offers(instructors_favor_id, hot_offers_id) values (7, 13);
+insert into favors_hot_offers(instructors_favor_id, hot_offers_id) values (8, 14);
+insert into favors_hot_offers(instructors_favor_id, hot_offers_id) values (3, 15);
+insert into favors_hot_offers(instructors_favor_id, hot_offers_id) values (4, 16);
+insert into favors_hot_offers(instructors_favor_id, hot_offers_id) values (5, 17);
+insert into favors_hot_offers(instructors_favor_id, hot_offers_id) values (6, 18);
+insert into favors_hot_offers(instructors_favor_id, hot_offers_id) values (7, 19);
+insert into favors_hot_offers(instructors_favor_id, hot_offers_id) values (8, 20);
 
 insert into service_price (id, cost, service)
 values(1, 100, 0);
@@ -529,7 +691,11 @@ values (3, DATE('2022-01-04'), DATE('2022-01-23'), 500, 2, 1, null);
 insert into cottage_reservations (id, available_from, available_till, cost, client_id, cottage_id, services)
 values (4, DATE('2021-12-03'), DATE('2021-12-19'), 500, 2, 1, null);
 insert into cottage_reservations (id, available_from, available_till, cost, client_id, cottage_id, services)
-values (5, DATE('2022-01-23'), DATE('2022-01-25'), 500, 2, 10, null);
+values (5, DATE('2022-01-23'), DATE('2022-01-25'), 500, 31, 10, null);
+insert into cottage_reservations (id, available_from, available_till, cost, client_id, cottage_id, services)
+values (6, DATE('2021-10-03'), DATE('2021-10-09'), 780, 14, 7, null);
+insert into cottage_reservations (id, available_from, available_till, cost, client_id, cottage_id, services)
+values (7, DATE('2022-02-01'), DATE('2022-02-03'), 150, 14, 8, null);
 
 insert into ship_reservations (id, available_from, available_till, cost, client_id, ship_id, services)
 values (1, DATE('2021-12-20'), DATE('2021-12-23'), 233, 2, 1, null);

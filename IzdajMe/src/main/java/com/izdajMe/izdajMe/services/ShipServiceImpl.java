@@ -171,6 +171,15 @@ public class ShipServiceImpl implements ShipService {
         }
     }
 
+    public Boolean deleteShipHotOffer(Ship ship) {
+        if (shipRepository.existsById(ship.getId())) {
+            shipRepository.save(ship);
+            return true;
+        }
+
+        return false;
+    }
+
     public Boolean canAddHotOffer(List<ShipHotOffer> hotOffers, ShipHotOffer addedHotOffer, List<ShipReservation> shipReservations) {
         boolean slobodno = true;
         for (ShipHotOffer hotOffer1 : hotOffers) {

@@ -9,8 +9,10 @@ public interface FavorReservationService {
 
     List<FavorReservation> getAllReservations();
     Boolean addReservationByOwner(FavorReservation favorReservation);
-    Boolean addReservationByClient(FavorReservation favorReservation);
+    public Boolean addReservationByClient(FavorReservation favorReservation);
+    public Boolean addFavorHotOfferReservationByClient(FavorReservation favorReservation);
     FavorReservation getById(long id);
     public Boolean changeReservationByInstructor(FavorReservation favorReservation);
     public void deleteByClientId(long id);
+    List<FavorReservation> getAllReservationsOfInstructorFavors(String email);
 }
