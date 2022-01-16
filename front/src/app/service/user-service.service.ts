@@ -23,6 +23,7 @@ export class UserService {
   private declineUserUrl: string;
   private searchInstructorssByNameUrl: string;
   private acceptUserUrl: string;
+  private changePrepaidUrl: string;
   
 
   constructor(private http: HttpClient) {
@@ -42,6 +43,7 @@ export class UserService {
     this.declineUserUrl = 'http://localhost:8080/users/declineUser';
     this.searchInstructorssByNameUrl = 'http://localhost:8080/users/searchInstructorsByName';
     this.acceptUserUrl = 'http://localhost:8080/users/acceptUser';
+    this.changePrepaidUrl = 'http://localhost:8080/users/changePrepaid';
   }
 
   public getAllUsers(): Observable<Array<User>> {
@@ -90,6 +92,12 @@ export class UserService {
     return this.http.put<string>(this.changeAdministratorsPassword, user, {headers: headers});
   }
   
+  public changePrepaid(id: number) {
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+  
+    return this.http.put<boolean>(this.changePrepaidUrl, id, {headers: headers});
+  }
 
   public authenticate(email: string): void {
       sessionStorage.setItem('email', email); 

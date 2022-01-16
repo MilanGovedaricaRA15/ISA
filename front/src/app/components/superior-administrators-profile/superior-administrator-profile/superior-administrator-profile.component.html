@@ -125,7 +125,7 @@
                                 <th scope="col">Country</th>
                                 <th scope="col">Role</th>
                                 <th scope="col">Reason</th>
-                                <th scope="col">Verified</th>
+                                <th scope="col">Prepaid</th>
                             </tr>
                         </thead>
                         <tbody *ngFor="let item of allUsers;let indexOfelement=index;">
@@ -139,13 +139,16 @@
                                 <td scope="col">{{item.country}}</td>
                                 <td scope="col">{{item.role}}</td>
                                 <td scope="col">{{item.reason}}</td>
-                                <td scope="col">{{item.verified}}</td>
+                                <td scope="col">{{item.prepaid}}</td>
                                 <td scope="col" *ngIf="item.verified === false ">
                                     <button class="btn btn-success" style="margin-bottom: 2px;" (click)="acceptUser(indexOfelement)"> Accept </button>
                                     <button class="btn btn-danger" (click)="userDeclined(indexOfelement)"> Decline </button>
                                 </td>
                                 <td scope="col" *ngIf="item.verified">
                                     <button class="btn btn-danger" (click)="userDeleted(indexOfelement)"> Delete user </button>
+                                </td>
+                                <td *ngIf="item.verified">
+                                    <button class="btn btn-primary" (click)="changePrepaid(indexOfelement)"> Change prepaid </button>
                                 </td>
                             </tr>
                         </tbody>

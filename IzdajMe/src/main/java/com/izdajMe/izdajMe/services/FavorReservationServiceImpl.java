@@ -48,8 +48,11 @@ public class FavorReservationServiceImpl implements FavorReservationService{
 
     public Boolean addReservationByOwner(FavorReservation favorReservation){
         List<FavorReservation> allFavorReservations = getReservationsById(favorReservation.getFavor().getId());
+        InstructorsFavor favor = instructorsFavorRepository.findById(favorReservation.getFavor().getId()).get();
+        List<FavorHotOffer> hotOffers = favor.getHotOffers();
 
-        boolean free = canAddReservation(allFavorReservations, favorReservation, new ArrayList<FavorHotOffer>());
+        boolean free = canAddReservation(allFavorReservations, favorReservation, hotOffers);
+
         if(free) {
             favorReservationRepository.save(favorReservation);
             sendNotificationForReservation(favorReservation);

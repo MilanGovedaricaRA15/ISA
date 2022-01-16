@@ -24,7 +24,8 @@ public class FavorReservation {
 
     public FavorReservation() {}
 
-    public FavorReservation(long id, Report report, LocalDateTime availableFrom, LocalDateTime availableTill, ArrayList<InstructorsFavor.FavorServices> services, float cost, User client, InstructorsFavor favor) {
+    public FavorReservation(long id, Report report, LocalDateTime availableFrom, LocalDateTime availableTill,
+                            ArrayList<InstructorsFavor.FavorServices> services, float cost, User client, InstructorsFavor favor) {
         this.id = id;
         this.availableFrom = availableFrom;
         this.availableTill = availableTill;

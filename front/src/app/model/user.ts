@@ -12,6 +12,7 @@ export class User {
     password: string;
     reason: string;
     verified: boolean;
+    prepaid: boolean;
 
 }
 export enum Role {

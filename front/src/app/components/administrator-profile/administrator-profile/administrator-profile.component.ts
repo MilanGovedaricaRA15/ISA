@@ -196,6 +196,16 @@ export class AdministratorProfileComponent implements OnInit {
     this.decliningReason.emit(index.toString());
   }
 
+  changePrepaid(index:number){
+    let changeUser = this.allUsers[index]
+    this.userService.changePrepaid(changeUser.id).subscribe(ret => {
+      if(ret)
+        this.userService.getAllUsers().subscribe(ret => {
+          this.allUsers = ret;
+        });
+    });
+  }
+
   acceptUser(index: number) {
     this.acceptingUser = this.allUsers[index]
     this.userService.acceptUser(this.acceptingUser.id).subscribe(ret => {
