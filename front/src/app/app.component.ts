@@ -386,6 +386,11 @@ export class AppComponent {
     sessionStorage.setItem("page", '40');
   }
 
+  goToReservationsPageClient() {
+    this.changeNumber(42);
+    sessionStorage.setItem("page", '42');
+  }
+
   goToCreateReservationPageClient() {
     this.changeNumber(41);
     sessionStorage.setItem("page", '41');

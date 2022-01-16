@@ -185,4 +185,17 @@ public class FavorReservationServiceImpl implements FavorReservationService{
 
         return allReservationsList;
     }
+
+    public List<FavorReservation> getFavorReservationsOfClient(String email) {
+        return favorReservationRepository.findAllByClientEmail(email);
+    }
+
+    public Boolean cancelFavorReservationByClient(FavorReservation favorReservation) {
+        if (favorReservationRepository.existsById(favorReservation.getId())) {
+            favorReservationRepository.deleteById(favorReservation.getId());
+            return true;
+        }
+
+        return false;
+    }
 }

@@ -1,6 +1,8 @@
 package com.izdajMe.izdajMe.controller;
 
+import com.izdajMe.izdajMe.dto.CottageReservationDTO;
 import com.izdajMe.izdajMe.dto.FavorReservationDTO;
+import com.izdajMe.izdajMe.model.CottageReservation;
 import com.izdajMe.izdajMe.model.FavorReservation;
 import com.izdajMe.izdajMe.model.ShipReservation;
 import com.izdajMe.izdajMe.model.User;
@@ -101,5 +103,28 @@ public class FavorReservationController {
         }
 
         return new ResponseEntity<List<FavorReservation>>(allReservations, HttpStatus.OK);
+    }
+
+    @GetMapping("/favorReservations/getFavorReservationsOfClient")
+    public ResponseEntity<List<FavorReservationDTO>> getFavorReservationsOfClient(@RequestParam("email") String email) {
+        List<FavorReservationDTO> clientFavorReservations = new ArrayList<FavorReservationDTO>();
+        for (FavorReservation c : favorReservationService.getFavorReservationsOfClient(email)) {
+            clientFavorReservations.add(new FavorReservationDTO(c));
+        }
+
+        return new ResponseEntity<List<FavorReservationDTO>>(clientFavorReservations, HttpStatus.OK);
+    }
+
+    @PutMapping("/favorReservations/cancelFavorReservationByClient")
+    public ResponseEntity<Boolean> cancelFavorReservationByClient(@RequestBody FavorReservation favorReservation, HttpServletRequest request) {
+        if (request.getSession(false).getAttribute("role") != null) {
+            if (request.getSession(false).getAttribute("role") == User.Role.client) {
+                return new ResponseEntity<Boolean>(favorReservationService.cancelFavorReservationByClient(favorReservation), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
+            }
+        } else {
+            return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
+        }
     }
 }

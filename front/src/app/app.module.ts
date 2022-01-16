@@ -60,6 +60,7 @@ import { CreateAReservationClientComponent } from './components/create-a-reserva
 import { AddAnswerToComplaintComponent } from './components/add-answer-to-complaint/add-answer-to-complaint.component';
 import { AddReasonForDeletingRequestComponent } from './components/add-reason-for-deleting-request/add-reason-for-deleting-request.component';
 import { AddAnswerForDecliningRegistrationComponent } from './components/add-answer-for-declining-registration/add-answer-for-declining-registration.component';
+import { ReservationsPageClientComponent } from './components/reservations-page-client/reservations-page-client.component';
 
 @NgModule({
   declarations: [
@@ -118,7 +119,8 @@ import { AddAnswerForDecliningRegistrationComponent } from './components/add-ans
     CreateAReservationClientComponent,
     AddAnswerToComplaintComponent,
     AddReasonForDeletingRequestComponent,
-    AddAnswerForDecliningRegistrationComponent
+    AddAnswerForDecliningRegistrationComponent,
+    ReservationsPageClientComponent
   ],
   imports: [
     BrowserModule,
