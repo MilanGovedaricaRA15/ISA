@@ -696,6 +696,10 @@ insert into cottage_reservations (id, available_from, available_till, cost, clie
 values (6, DATE('2021-10-03'), DATE('2021-10-09'), 780, 14, 7, null);
 insert into cottage_reservations (id, available_from, available_till, cost, client_id, cottage_id, services)
 values (7, DATE('2022-02-01'), DATE('2022-02-03'), 150, 14, 8, null);
+insert into cottage_reservations (id, available_from, available_till, cost, client_id, cottage_id, services)
+values (8, DATE('2022-02-04'), DATE('2022-02-07'), 480, 14, 6, null);
+insert into cottage_reservations (id, available_from, available_till, cost, client_id, cottage_id, services)
+values (9, DATE('2022-02-11'), DATE('2022-02-13'), 250, 14, 7, null);
 
 insert into ship_reservations (id, available_from, available_till, cost, client_id, ship_id, services)
 values (1, DATE('2021-12-20'), DATE('2021-12-23'), 233, 2, 1, null);
@@ -706,14 +710,30 @@ values (3, DATE('2022-01-04'), DATE('2022-01-23'), 500, 2, 1, null);
 insert into ship_reservations (id, available_from, available_till, cost, client_id, ship_id, services)
 values (4, DATE('2021-12-03'), DATE('2021-12-19'), 500, 2, 1, null);
 insert into ship_reservations (id, available_from, available_till, cost, client_id, ship_id, services)
-values (5, DATE('2022-01-17'), DATE('2022-01-19'), 500, 2, 10, null);
+values (5, DATE('2022-01-17'), DATE('2022-01-19'), 500, 14, 10, null);
+insert into ship_reservations (id, available_from, available_till, cost, client_id, ship_id, services)
+values (6, DATE('2022-01-21'), DATE('2022-01-24'), 700, 14, 9, null);
+insert into ship_reservations (id, available_from, available_till, cost, client_id, ship_id, services)
+values (7, DATE('2022-01-29'), DATE('2022-01-31'), 500, 14, 8, null);
+insert into ship_reservations (id, available_from, available_till, cost, client_id, ship_id, services)
+values (8, DATE('2022-02-11'), DATE('2022-02-14'), 500, 14, 7, null);
+insert into ship_reservations (id, available_from, available_till, cost, client_id, ship_id, services)
+values (9, DATE('2021-11-01'), DATE('2021-11-04'), 450, 14, 9, null);
+insert into ship_reservations (id, available_from, available_till, cost, client_id, ship_id, services)
+values (10, DATE('2022-01-02'), DATE('2022-01-03'), 300, 14, 8, null);
 
 insert into favor_reservations (id, available_from, available_till, cost, client_id, favor_id, services)
-values (1, DATE('2021-12-24'), DATE('2021-12-24'), 500, 14, 1, null);
+values (1, DATE('2021-12-24'), DATE('2021-12-25'), 500, 14, 1, null);
 insert into favor_reservations (id, available_from, available_till, cost, client_id, favor_id, services)
-values (2, DATE('2022-01-01'), DATE('2022-01-15'), 900, 14, 3, null);
+values (2, DATE('2022-01-01'), DATE('2022-01-05'), 900, 14, 3, null);
 insert into favor_reservations (id, available_from, available_till, cost, client_id, favor_id, services)
-values (3, DATE('2022-02-24'), DATE('2022-02-24'), 600, 14, 2, null);
+values (3, DATE('2022-01-18'), DATE('2022-01-21'), 600, 14, 2, null);
+insert into favor_reservations (id, available_from, available_till, cost, client_id, favor_id, services)
+values (4, DATE('2022-02-12'), DATE('2022-02-15'), 900, 14, 7, null);
+insert into favor_reservations (id, available_from, available_till, cost, client_id, favor_id, services)
+values (5, DATE('2022-01-23'), DATE('2022-01-25'), 900, 14, 8, null);
+insert into favor_reservations (id, available_from, available_till, cost, client_id, favor_id, services)
+values (6, DATE('2022-02-01'), DATE('2022-02-03'), 600, 14, 6, null);
 
 insert into concurent_watcher (id, table_name, is_writing) values (1, 'CottageReservation', false);
 insert into concurent_watcher (id, table_name, is_writing) values (2, 'Cottage', false);

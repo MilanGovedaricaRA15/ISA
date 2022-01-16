@@ -215,4 +215,13 @@ public class CottageReservationServiceImpl implements CottageReservationService 
     public List<CottageReservation> getCottageReservationsOfClient(String email) {
         return cottageReservationRepository.findAllByClientEmail(email);
     }
+
+    public Boolean cancelCottageReservationByClient(CottageReservation cottageReservation) {
+        if (cottageReservationRepository.existsById(cottageReservation.getId())) {
+            cottageReservationRepository.deleteById(cottageReservation.getId());
+            return true;
+        }
+
+        return false;
+    }
 }

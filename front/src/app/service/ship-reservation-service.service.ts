@@ -12,21 +12,25 @@ export class ShipReservationService {
   private getAllReservationsOfShipUrl: string;
   private getAllReservationsOfShipFromTillUrl: string;
   private getAllReservationsOfOwnerUrl: string;
+  private getShipReservationsOfClientUrl: string;
   private addReservationByOwnerUrl: string;
   private addReservationByClientUrl: string;
   private addShipHotOfferReservationByClientUrl: string;
   private changeReservationByOwnerUrl: string;
   private getByIdUrl: string;
+  private cancelShipReservationByClientUrl: string;
 
   constructor(private http: HttpClient) {
     this.getAllReservationsOfShipFromTillUrl="http://localhost:8080/shipReservation/getAllReservationsOfShipFromTill";
     this.getAllReservationsOfShipUrl="http://localhost:8080/shipReservation/getAllReservationsOfShip";
     this.getAllReservationsOfOwnerUrl="http://localhost:8080/shipReservation/getAllReservationsOfOwner";
+    this.getShipReservationsOfClientUrl = "http://localhost:8080/shipReservation/getShipReservationsOfClient";
     this.addReservationByOwnerUrl="http://localhost:8080/shipReservation/addReservationByOwner";
     this.addReservationByClientUrl="http://localhost:8080/shipReservation/addReservationByClient";
     this.addShipHotOfferReservationByClientUrl="http://localhost:8080/shipReservation/addShipHotOfferReservationByClient";
     this.changeReservationByOwnerUrl="http://localhost:8080/shipReservation/changeReservationByOwner";
     this.getByIdUrl="http://localhost:8080/shipReservation/getById";
+    this.cancelShipReservationByClientUrl="http://localhost:8080/shipReservation/cancelShipReservationByClient";
    }
 
    public getAllReservationsOfShip(ship: Ship): Observable<Array<ShipReservation>> {
@@ -55,6 +59,14 @@ export class ShipReservationService {
     return this.http.get<Array<ShipReservation>>(this.getAllReservationsOfOwnerUrl, {headers: headers,params: params,withCredentials: true});
   }
 
+  public getShipReservationsOfClient(email: string) : Observable<Array<ShipReservation>> {
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+    let params = new HttpParams().set("email", email);
+  
+    return this.http.get<Array<ShipReservation>>(this.getShipReservationsOfClientUrl, {headers: headers, params: params, withCredentials: true});
+  }
+
   public addReservationByOwner(shipReservation: ShipReservation):Observable<boolean>{
     shipReservation.report = null;
     shipReservation.penalty = null;
@@ -78,5 +90,9 @@ export class ShipReservationService {
     headers.append('Content-Type', 'application/json');
     let params = new HttpParams().set("id",id.toString());
     return this.http.get<ShipReservation>(this.getByIdUrl,{headers: headers,params: params,withCredentials: true});
+  }
+
+  public cancelShipReservationByClient(shipReservation: ShipReservation) : Observable<Boolean> {
+    return this.http.put<Boolean>(this.cancelShipReservationByClientUrl, shipReservation, {withCredentials: true});
   }
 }

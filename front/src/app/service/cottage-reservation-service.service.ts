@@ -18,6 +18,7 @@ export class CottageReservationService {
   private changeReservationByOwnerUrl: string;
   private getByIdUrl: string;
   private getCottageReservationsOfClientUrl: string;
+  private cancelCottageReservationByClientUrl: string;
 
   constructor(private http: HttpClient) {
     this.getAllReservationsOfCottageUrl = "http://localhost:8080/cottageReservation/getAllReservationsOfCottage";
@@ -29,6 +30,7 @@ export class CottageReservationService {
     this.changeReservationByOwnerUrl = "http://localhost:8080/cottageReservation/changeReservationByOwner";
     this.getByIdUrl = "http://localhost:8080/cottageReservation/getById";
     this.getCottageReservationsOfClientUrl = "http://localhost:8080/cottageReservation/getCottageReservationsOfClient";
+    this.cancelCottageReservationByClientUrl = "http://localhost:8080/cottageReservation/cancelCottageReservationByClient";
    }
 
    public getAllReservationsOfCottage(cottage: Cottage): Observable<Array<CottageReservation>> {
@@ -88,6 +90,10 @@ export class CottageReservationService {
     let params = new HttpParams().set("email", email);
   
     return this.http.get<Array<CottageReservation>>(this.getCottageReservationsOfClientUrl, {headers: headers, params: params, withCredentials: true});
+  }
+
+  public cancelCottageReservationByClient(cottageReservation: CottageReservation) : Observable<Boolean> {
+    return this.http.put<Boolean>(this.cancelCottageReservationByClientUrl, cottageReservation, {withCredentials: true});
   }
 
 }

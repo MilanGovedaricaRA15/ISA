@@ -24,7 +24,7 @@ import { UserService } from 'src/app/service/user-service.service';
 })
 export class CreateAReservationClientComponent implements OnInit {
 
-  @Output() clientProfileAuthenticated = new EventEmitter<void>();
+  @Output() clientReservations = new EventEmitter<void>();
 
   user: User;
 
@@ -193,9 +193,9 @@ export class CreateAReservationClientComponent implements OnInit {
       this.cottageReservationService.addReservationByClient(this.cottageReservation).subscribe(ret => {
         if (ret) {
           alert('Reservation successfully created!');
-          this.clientProfileAuthenticated.emit();
+          this.clientReservations.emit();
         } else {
-          alert('Reservation could not be created!');
+          alert('Reservation could not be created because for selected interval, cottage is already booked!');
         }
       });
 
@@ -229,9 +229,9 @@ export class CreateAReservationClientComponent implements OnInit {
       this.shipReservationService.addReservationByClient(this.shipReservation).subscribe(ret => {
         if (ret) {
           alert('Reservation successfully created!');
-          this.clientProfileAuthenticated.emit();
+          this.clientReservations.emit();
         } else {
-          alert('Reservation could not be created!');
+          alert('Reservation could not be created because for selected interval, ship is already booked!');
         }
       });
 
@@ -265,9 +265,9 @@ export class CreateAReservationClientComponent implements OnInit {
       this.favorReservationService.addReservationByClient(this.instructorsFavorReservation).subscribe(ret => {
         if (ret) {
           alert('Reservation successfully created!');
-          this.clientProfileAuthenticated.emit();
+          this.clientReservations.emit();
         } else {
-          alert('Reservation could not be created!');
+          alert('Reservation could not be created because for selected interval, favor is already booked!');
         }
       });
 

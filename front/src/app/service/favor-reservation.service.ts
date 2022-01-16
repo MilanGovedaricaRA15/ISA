@@ -14,6 +14,8 @@ export class FavorReservationService {
   getByIdUrl: string;
   changeReservationByInstructorUrl: string;
   getAllReservationsOfInstructorFavorsUrl: string;
+  getFavorReservationsOfClientUrl: string;
+  cancelFavorReservationByClientUrl: string;
 
   constructor(private http: HttpClient) {
     this.getAllReservationsUrl = 'http://localhost:8080/favorReservations/getAllReservations';
@@ -22,7 +24,9 @@ export class FavorReservationService {
     this.addFavorHotOfferReservationByClientUrl = 'http://localhost:8080/favorReservations/addFavorHotOfferReservationByClient';
     this.getByIdUrl = 'http://localhost:8080/favorReservations/getReservationById';
     this.changeReservationByInstructorUrl="http://localhost:8080/favorReservations/changeReservationByInstructor";
-    this.getAllReservationsOfInstructorFavorsUrl = "http://localhost:8080/favorReservations/getAllReservationsOfInstructorFavors"
+    this.getAllReservationsOfInstructorFavorsUrl = "http://localhost:8080/favorReservations/getAllReservationsOfInstructorFavors";
+    this.getFavorReservationsOfClientUrl = "http://localhost:8080/favorReservations/getFavorReservationsOfClient";
+    this.cancelFavorReservationByClientUrl = "http://localhost:8080/favorReservations/cancelFavorReservationByClient";
   }
 
   public getAllReservations(): Observable<Array<FavorReservation>> {
@@ -61,5 +65,17 @@ export class FavorReservationService {
     let params = new HttpParams().set("email", email);
 
     return this.http.get<Array<FavorReservation>>(this.getAllReservationsOfInstructorFavorsUrl, {headers: headers, params: params});
+  }
+
+  public getFavorReservationsOfClient(email: string) : Observable<Array<FavorReservation>> {
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+    let params = new HttpParams().set("email", email);
+  
+    return this.http.get<Array<FavorReservation>>(this.getFavorReservationsOfClientUrl, {headers: headers, params: params, withCredentials: true});
+  }
+
+  public cancelFavorReservationByClient(favorReservation: FavorReservation) : Observable<Boolean> {
+    return this.http.put<Boolean>(this.cancelFavorReservationByClientUrl, favorReservation, {withCredentials: true});
   }
 }

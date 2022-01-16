@@ -1,0 +1,130 @@
+<div class="row">
+  <div class="column">
+    <h3>Past cottage reservations</h3>
+    <table style="width: 100%;">
+      <thead>
+          <th>Starts </th>
+          <th>Ends </th>
+          <th>Services</th>
+          <th>Cost</th>
+          <th>Cottage name</th>
+      </thead>
+      <tbody>
+        <tr *ngFor='let cr of pastCottageReservations'>
+          <td>{{cr.availableFrom | date:'dd.MM.yyyy'}}</td>
+          <td>{{cr.availableTill | date:'dd.MM.yyyy'}}</td>
+          <td><div *ngFor='let s of cr.services'>{{s}}</div></td>
+          <td>{{cr.cost}}</td>
+          <td>{{cr.cottage.name}}</td>
+      </tr>
+      </tbody>
+    </table>
+    <br><br>
+    <h3>Past ship reservations</h3>
+    <table style="width: 100%;">
+      <thead>
+          <th>Starts </th>
+          <th>Ends </th>
+          <th>Services</th>
+          <th>Cost</th>
+          <th>Ship name</th>
+      </thead>
+      <tbody>
+        <tr *ngFor='let sr of pastShipReservations'>
+          <td>{{sr.availableFrom | date:'dd.MM.yyyy'}}</td>
+          <td>{{sr.availableTill | date:'dd.MM.yyyy'}}</td>
+          <td><div *ngFor='let s of sr.services'>{{s}}</div></td>
+          <td>{{sr.cost}}</td>
+          <td>{{sr.ship.name}}</td>
+      </tr>
+      </tbody>
+    </table>
+    <br><br>
+    <h3>Past instructors favor reservations</h3>
+    <table style="width: 100%;">
+      <thead>
+          <th>Starts </th>
+          <th>Ends </th>
+          <th>Services</th>
+          <th>Cost</th>
+          <th>Favor name</th>
+      </thead>
+      <tbody>
+        <tr *ngFor='let fr of pastFavorReservations'>
+          <td>{{fr.availableFrom | date:'dd.MM.yyyy'}}</td>
+          <td>{{fr.availableTill | date:'dd.MM.yyyy'}}</td>
+          <td><div *ngFor='let s of fr.services'>{{s}}</div></td>
+          <td>{{fr.cost}}</td>
+          <td>{{fr.favor.name}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="column">
+    <h3>Future cottage reservations</h3>
+    <table style="width: 100%;">
+      <thead>
+          <th>Starts </th>
+          <th>Ends </th>
+          <th>Services</th>
+          <th>Cost</th>
+          <th>Cottage name</th>
+          <th></th>
+      </thead>
+      <tbody>
+        <tr *ngFor='let cr of clientCottageReservations'>
+          <td>{{cr.availableFrom | date:'dd.MM.yyyy'}}</td>
+          <td>{{cr.availableTill | date:'dd.MM.yyyy'}}</td>
+          <td><div *ngFor='let s of cr.services'>{{s}}</div></td>
+          <td>{{cr.cost}}</td>
+          <td>{{cr.cottage.name}}</td>
+          <td><button (click)='cancelCottageReservation(cr)'>Cancel</button></td>
+      </tr>
+      </tbody>
+    </table>
+    <br><br>
+    <h3>Future ship reservations</h3>
+    <table style="width: 100%;">
+      <thead>
+          <th>Starts </th>
+          <th>Ends </th>
+          <th>Services</th>
+          <th>Cost</th>
+          <th>Ship name</th>
+          <th></th>
+      </thead>
+      <tbody>
+        <tr *ngFor='let sr of clientShipReservations'>
+          <td>{{sr.availableFrom | date:'dd.MM.yyyy'}}</td>
+          <td>{{sr.availableTill | date:'dd.MM.yyyy'}}</td>
+          <td><div *ngFor='let s of sr.services'>{{s}}</div></td>
+          <td>{{sr.cost}}</td>
+          <td>{{sr.ship.name}}</td>
+          <td><button (click)='cancelShipReservation(sr)'>Cancel</button></td>
+      </tr>
+      </tbody>
+    </table>
+    <br><br>
+    <h3>Future instructors favor reservations</h3>
+    <table style="width: 100%;">
+      <thead>
+          <th>Starts </th>
+          <th>Ends </th>
+          <th>Services</th>
+          <th>Cost</th>
+          <th>Favor name</th>
+          <th></th>
+      </thead>
+      <tbody>
+        <tr *ngFor='let fr of clientFavorReservations'>
+          <td>{{fr.availableFrom | date:'dd.MM.yyyy'}}</td>
+          <td>{{fr.availableTill | date:'dd.MM.yyyy'}}</td>
+          <td><div *ngFor='let s of fr.services'>{{s}}</div></td>
+          <td>{{fr.cost}}</td>
+          <td>{{fr.favor.name}}</td>
+          <td><button (click)='cancelFavorReservation(fr)'>Cancel</button></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
