@@ -114,7 +114,9 @@ export class CottageReservationsComponent implements OnInit {
     
       this.cottageReservationService.addReservationByOwner(this.newReservation1).subscribe(ret => {
         if(ret){
-          this.cottageReservations.push(JSON.parse(JSON.stringify(this.newReservation1)));
+          this.cottageReservationService.getAllReservationsOfCottage(this.cottageForApp).subscribe(ret => {
+            this.cottageReservations = ret;
+          })
           this.isReserved1 = false;
         }
         else{

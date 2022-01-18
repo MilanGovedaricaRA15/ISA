@@ -13,6 +13,8 @@ export class User {
     reason: string;
     verified: boolean;
     prepaid: boolean;
+    type: Type;
+    points: number;
 
 }
 export enum Role {
@@ -23,4 +25,10 @@ export enum Role {
     administratorFirstLogged,
     administrator,
     client
+}
+
+export enum Type {
+    Regular,
+    Silver,
+    Gold
 }

@@ -89,9 +89,7 @@ public class CottageReservation {
         this.cost = cost;
     }
 
-    public User getClient() {
-        return client;
-    }
+    public User getClient() {return client;}
 
     public void setClient(User client) {
         this.client = client;

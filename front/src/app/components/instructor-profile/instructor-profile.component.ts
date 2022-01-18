@@ -106,7 +106,7 @@ export class InstructorProfileComponent implements OnInit {
 
   checkFavor(favorId: number): Boolean {
     for(let f of this.allFavors) {
-      if(f.id == favorId && f.instructor.id == this.instructor.id)
+      if(f.instructor.id == this.instructor.id)
         return true;
     }
 
@@ -133,14 +133,22 @@ export class InstructorProfileComponent implements OnInit {
 
         this.favorReservationService.addReservationByOwner(this.newReservation1).subscribe(ret => {
           if(ret){
-            this.allFavorReservations.push(JSON.parse(JSON.stringify(this.newReservation1)));
-            this.instructorReservations.push(JSON.parse(JSON.stringify(this.newReservation1)));
+            this.favorReservationService.getAllReservations().subscribe(ret => {
+              this.allFavorReservations = ret;
+              this.instructorReservations = new Array<FavorReservation>();
+              for(let fr of this.allFavorReservations){
+                if(this.checkFavor(fr.id))
+                  this.instructorReservations.push(fr);
+              }
+            });
             this.isReserved1 = false;
           }
           else{
             this.isReserved1 = true;
           }
           });
+      } else {
+        this.pickedUserError = true;
       }
     }
   }

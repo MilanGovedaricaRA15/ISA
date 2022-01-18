@@ -110,7 +110,9 @@ export class ShipOwnerReservationsComponent implements OnInit {
           this.availableTillError = false;
               this.shipReservationsService.addReservationByOwner(this.newReservation).subscribe(ret => {
                 if(ret){
-                  this.ownerReservations.push(JSON.parse(JSON.stringify(this.newReservation)));
+                  this.shipReservationsService.getAllReservationsOfOwner().subscribe(ret => {
+                    this.ownerReservations = ret;
+                  });
                   this.isReserved = false;
                 }
                 else{

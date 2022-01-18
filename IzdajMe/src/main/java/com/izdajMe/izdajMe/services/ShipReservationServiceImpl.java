@@ -26,6 +26,8 @@ public class ShipReservationServiceImpl implements ShipReservationService {
     private EmailService emailService;
     @Autowired
     private ConcurentWatcherRepository concurentWatcherRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     public List<ShipReservation> getAllReservationsOfShip(Long id) {
         List<ShipReservation> allThisShipReservations = shipReservationRepository.findAllByShipId(id);
@@ -129,6 +131,13 @@ public class ShipReservationServiceImpl implements ShipReservationService {
 
             boolean slobodno = canAddReservation(allThisShipReservations, shipReservation, allThisShipHotOffers);
             if (slobodno) {
+                addPointsToShipOwner(shipReservation);
+                addPointsToClient(shipReservation);
+                if(shipReservation.getClient().getType() == User.Type.Gold)
+                    shipReservation.setCost(shipReservation.getCost() * 80 / 100);
+                else if(shipReservation.getClient().getType() == User.Type.Silver)
+                    shipReservation.setCost(shipReservation.getCost() * 90 / 100);
+
                 shipReservationRepository.save(shipReservation);
                 cw.setWriting(false);
                 concurentWatcherRepository.save(cw);
@@ -144,6 +153,23 @@ public class ShipReservationServiceImpl implements ShipReservationService {
         }
     }
 
+    private void addPointsToShipOwner(ShipReservation shipReservation){
+        User user = shipReservation.getShip().getOwner();
+        if(user.getType() == User.Type.Gold)
+            user.setPoints(user.getPoints() + 6);
+        else if(user.getType() == User.Type.Silver){
+            user.setPoints(user.getPoints() + 4);
+            if(user.getPoints() > 600)
+                user.setType(User.Type.Gold);
+        }
+        else {
+            user.setPoints(user.getPoints() + 2);
+            if(user.getPoints() > 300)
+                user.setType(User.Type.Silver);
+        }
+        userRepository.save(user);
+    }
+
     @Transactional(readOnly = false)
     public Boolean addReservationByClient(ShipReservation shipReservation){
         if (concurentWatcherRepository.findByTableName("ShipReservation").getWriting() == false&&concurentWatcherRepository.findByTableName("Ship").getWriting() == false&&concurentWatcherRepository.findByTableName("ShipHotOffer").getWriting() == false) {
@@ -154,6 +180,13 @@ public class ShipReservationServiceImpl implements ShipReservationService {
             List<ShipHotOffer> allThisShipHotOffers = thisShip.getHotOffers();
 
             if (canAddReservation(allThisShipReservations, shipReservation, allThisShipHotOffers)) {
+                addPointsToShipOwner(shipReservation);
+                addPointsToClient(shipReservation);
+                if(shipReservation.getClient().getType() == User.Type.Gold)
+                    shipReservation.setCost(shipReservation.getCost() * 80 / 100);
+                else if(shipReservation.getClient().getType() == User.Type.Silver)
+                    shipReservation.setCost(shipReservation.getCost() * 90 / 100);
+
                 shipReservationRepository.save(shipReservation);
                 cw.setWriting(false);
                 concurentWatcherRepository.save(cw);
@@ -170,10 +203,34 @@ public class ShipReservationServiceImpl implements ShipReservationService {
         }
     }
 
+    private void addPointsToClient(ShipReservation shipReservation){
+        User user = shipReservation.getClient();
+        if(user.getType() == User.Type.Gold)
+            user.setPoints(user.getPoints() + 6);
+        else if(user.getType() == User.Type.Silver){
+            user.setPoints(user.getPoints() + 4);
+            if(user.getPoints() > 600)
+                user.setType(User.Type.Gold);
+        }
+        else {
+            user.setPoints(user.getPoints() + 2);
+            if(user.getPoints() > 300)
+                user.setType(User.Type.Silver);
+        }
+        userRepository.save(user);
+    }
+
     public Boolean addShipHotOfferReservationByClient(ShipReservation shipReservation) {
         List<ShipReservation> allThisShipReservations = shipReservationRepository.findAllByShipId(shipReservation.getShip().getId());
 
         if(canAddReservation(allThisShipReservations, shipReservation, new ArrayList<ShipHotOffer>())) {
+            addPointsToShipOwner(shipReservation);
+            addPointsToClient(shipReservation);
+            if(shipReservation.getClient().getType() == User.Type.Gold)
+                shipReservation.setCost(shipReservation.getCost() * 80 / 100);
+            else if(shipReservation.getClient().getType() == User.Type.Silver)
+                shipReservation.setCost(shipReservation.getCost() * 90 / 100);
+
             shipReservationRepository.save(shipReservation);
             sendNotificationForClientReservation(shipReservation);
             return true;
