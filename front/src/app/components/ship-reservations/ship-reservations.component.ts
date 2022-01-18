@@ -114,7 +114,9 @@ export class ShipReservationsComponent implements OnInit {
     
       this.shipReservationService.addReservationByOwner(this.newReservation1).subscribe(ret => {
         if(ret){
-          this.shipReservations.push(JSON.parse(JSON.stringify(this.newReservation1)));
+          this.shipReservationService.getAllReservationsOfShip(this.shipForApp).subscribe(ret => {
+            this.shipReservations = ret;
+          })
           this.isReserved1 = false;
         }
         else{

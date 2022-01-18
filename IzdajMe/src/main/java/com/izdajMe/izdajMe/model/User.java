@@ -26,13 +26,20 @@ public class User {
         administrator,
         client
     }
+    public enum Type {
+        Regular,
+        Silver,
+        Gold
+    }
     protected Role role;
     protected String password;
     protected String reason;
     protected boolean verified;
     protected Boolean prepaid;
+    protected Type type;
+    protected int points;
 
-    public User(long id,String email, String firstName, String lastName, String mobileNumber, String address, String country, String city, Role role, String password, String reason, Boolean prepaid) {
+    public User(long id,String email, String firstName, String lastName, String mobileNumber, String address, String country, String city, Role role, String password, String reason, Boolean prepaid, Type type) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -46,6 +53,8 @@ public class User {
         this.email = email;
         this.verified = false;
         this.prepaid = prepaid;
+        this.type = type;
+        this.points = 0;
     }
 
     public User(){
@@ -151,4 +160,12 @@ public class User {
     public Boolean getPrepaid() { return prepaid; }
 
     public void setPrepaid(Boolean prepaid) { this.prepaid = prepaid; }
+
+    public Type getType() { return type; }
+
+    public void setType(Type type) { this.type = type; }
+
+    public int getPoints() { return points; }
+
+    public void setPoints(int points) { this.points = points; }
 }

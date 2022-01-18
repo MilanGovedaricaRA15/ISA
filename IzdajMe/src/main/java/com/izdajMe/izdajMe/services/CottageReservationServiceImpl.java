@@ -4,6 +4,7 @@ import com.izdajMe.izdajMe.model.*;
 import com.izdajMe.izdajMe.repository.ConcurentWatcherRepository;
 import com.izdajMe.izdajMe.repository.CottageRepository;
 import com.izdajMe.izdajMe.repository.CottageReservationRepository;
+import com.izdajMe.izdajMe.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +30,8 @@ public class CottageReservationServiceImpl implements CottageReservationService 
     private ConcurentWatcherRepository concurentWatcherRepository;
     @Autowired
     private EmailService emailService;
+    @Autowired
+    private UserRepository userRepository;
 
     public List<CottageReservation> getAllReservationsOfCottage(Long id) {
         return cottageReservationRepository.findAllByCottageId(id);
@@ -123,6 +126,9 @@ public class CottageReservationServiceImpl implements CottageReservationService 
 
             boolean slobodno = canAddReservation(allThisCottageReservations, cottageReservation, allThisCottageHotOffers);
             if (slobodno) {
+                addPointsToCottageOwner(cottageReservation);
+                addPointsToClient(cottageReservation);
+                cottageReservation = returnReservation(cottageReservation);
                 cottageReservationRepository.save(cottageReservation);
                 cw.setWriting(false);
                 concurentWatcherRepository.save(cw);
@@ -137,6 +143,24 @@ public class CottageReservationServiceImpl implements CottageReservationService 
             return false;
         }
     }
+
+    private void addPointsToCottageOwner(CottageReservation cottageReservation){
+        User user = cottageReservation.getCottage().getOwner();
+        if(user.getType() == User.Type.Gold)
+            user.setPoints(user.getPoints() + 6);
+        else if(user.getType() == User.Type.Silver){
+            user.setPoints(user.getPoints() + 4);
+            if(user.getPoints() > 600)
+                user.setType(User.Type.Gold);
+        }
+        else {
+            user.setPoints(user.getPoints() + 2);
+            if(user.getPoints() > 300)
+                user.setType(User.Type.Silver);
+        }
+        userRepository.save(user);
+    }
+
     @Transactional(readOnly = false)
     public Boolean addReservationByClient(CottageReservation cottageReservation){
         if (concurentWatcherRepository.findByTableName("CottageReservation").getWriting() == false&&concurentWatcherRepository.findByTableName("Cottage").getWriting() == false&&concurentWatcherRepository.findByTableName("CottageHotOffer").getWriting() == false) {
@@ -146,6 +170,9 @@ public class CottageReservationServiceImpl implements CottageReservationService 
             Cottage thisCottage = cottageRepository.getById(cottageReservation.getCottage().getId());
             List<HotOffer> allThisCottageHotOffers = thisCottage.getHotOffers();
             if (canAddReservation(allThisCottageReservations, cottageReservation, allThisCottageHotOffers)) {
+                addPointsToCottageOwner(cottageReservation);
+                addPointsToClient(cottageReservation);
+                cottageReservation = returnReservation(cottageReservation);
                 cottageReservationRepository.save(cottageReservation);
                 cw.setWriting(false);
                 concurentWatcherRepository.save(cw);
@@ -162,10 +189,39 @@ public class CottageReservationServiceImpl implements CottageReservationService 
         }
     }
 
+    private CottageReservation returnReservation(CottageReservation cottageReservation) {
+        if(cottageReservation.getClient().getType() == User.Type.Gold)
+            cottageReservation.setCost(cottageReservation.getCost() * 80 / 100);
+        else if(cottageReservation.getClient().getType() == User.Type.Silver)
+            cottageReservation.setCost(cottageReservation.getCost() * 90 / 100);
+
+        return cottageReservation;
+    }
+
+    private void addPointsToClient(CottageReservation cottageReservation){
+        User user = cottageReservation.getClient();
+        if(user.getType() == User.Type.Gold)
+            user.setPoints(user.getPoints() + 6);
+        else if(user.getType() == User.Type.Silver){
+            user.setPoints(user.getPoints() + 4);
+            if(user.getPoints() > 600)
+                user.setType(User.Type.Gold);
+        }
+        else {
+            user.setPoints(user.getPoints() + 2);
+            if(user.getPoints() > 300)
+                user.setType(User.Type.Silver);
+        }
+        userRepository.save(user);
+    }
+
     public Boolean addHotOfferReservationByClient(CottageReservation cottageReservation){
         List<CottageReservation> allThisCottageReservations = cottageReservationRepository.findAllByCottageId(cottageReservation.getCottage().getId());
 
         if(canAddReservation(allThisCottageReservations, cottageReservation, new ArrayList<HotOffer>())) {
+            addPointsToCottageOwner(cottageReservation);
+            addPointsToClient(cottageReservation);
+            cottageReservation = returnReservation(cottageReservation);
             cottageReservationRepository.save(cottageReservation);
             sendNotificationForClientReservation(cottageReservation);
             return true;

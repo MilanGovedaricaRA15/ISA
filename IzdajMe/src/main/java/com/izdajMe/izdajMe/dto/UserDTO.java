@@ -16,6 +16,9 @@ public class UserDTO {
     protected String password;
     protected String reason;
     protected boolean verified;
+    protected Boolean prepaid;
+    protected User.Type type;
+    protected int points;
 
     public UserDTO(){}
 
@@ -32,6 +35,9 @@ public class UserDTO {
         this.password = user.getPassword();
         this.reason = user.getReason();
         this.verified = user.isVerified();
+        this.prepaid = user.getPrepaid();
+        this.type = user.getType();
+        this.points = user.getPoints();
     }
 
     public long getId() {
@@ -128,5 +134,29 @@ public class UserDTO {
 
     public void setVerified(boolean verified) {
         this.verified = verified;
+    }
+
+    public Boolean getPrepaid() {
+        return prepaid;
+    }
+
+    public void setPrepaid(Boolean prepaid) {
+        this.prepaid = prepaid;
+    }
+
+    public User.Type getType() {
+        return type;
+    }
+
+    public void setType(User.Type type) {
+        this.type = type;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
     }
 }

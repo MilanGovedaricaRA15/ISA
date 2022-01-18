@@ -132,6 +132,8 @@ public class UserServiceImpl implements UserService {
         }
 
         user.setVerified(false); //false
+        user.setPrepaid(false);
+        user.setType(User.Type.Regular);
         userRepository.save(user);
         return false;
     }
