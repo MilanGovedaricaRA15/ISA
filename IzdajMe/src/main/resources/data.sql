@@ -295,21 +295,21 @@ insert into grades(id, user_id, value, comment)
 values (70, 27, 8, 'Good');
 
 insert into favors (id, instructor_id, name, address, description, images, num_of_persons, rules, services, cost, available_from, available_till, cancellation_condition)
-values (1, 4, 'Cas pecanja', 'Ribarac', 'Pecanje pecaljkom', null, 4, 'Samo punoletni mogu', null, 1200, DATE('2022-01-01'), DATE('2022-03-17'), 'Free');
+values (1, 4, 'Cas pecanja', 'Dunavska 13', 'Pecanje pecaljkom', null, 4, 'Samo punoletni mogu', null, 1200, DATE('2022-01-01'), DATE('2022-03-17'), 'Free');
 insert into favors (id, instructor_id, name, address, description, images, num_of_persons, rules, services, cost, available_from, available_till, cancellation_condition)
-values (2, 4, 'Cas pecanja', 'Ribarac', 'Pecanje mrezom', null, 10, 'Samo punoletni mogu', null, 1000, DATE('2022-01-04'), DATE('2022-04-26'), '5%');
+values (2, 4, 'Cas pecanja', 'Dunavska 3', 'Pecanje mrezom', null, 10, 'Samo punoletni mogu', null, 1000, DATE('2022-01-04'), DATE('2022-04-26'), '5%');
 insert into favors (id, instructor_id, name, address, description, images, num_of_persons, rules, services, cost, available_from, available_till, cancellation_condition)
-values (3, 4, 'Isplovljavanje', 'Ribarac', 'Plovidba camcom i pecanje', null, 2, 'Samo punoletni mogu', null, 2000, DATE('2022-01-01'), DATE('2022-05-27'), '10%');
+values (3, 4, 'Isplovljavanje', 'Nikole Tesle 1', 'Plovidba camcom i pecanje', null, 2, 'Samo punoletni mogu', null, 2000, DATE('2022-01-01'), DATE('2022-05-27'), '10%');
 insert into favors (id, instructor_id, name, address, description, images, num_of_persons, rules, services, cost, available_from, available_till, cancellation_condition)
-values (4, 4, 'Pravljenje mamca', 'Ribarac', 'Mamac', null, 3, 'Samo punoletni mogu', null, 500, DATE('2022-01-01'), DATE('2022-05-1'), '15%');
+values (4, 4, 'Pravljenje mamca', 'Dunavska 33', 'Mamac', null, 3, 'Samo punoletni mogu', null, 500, DATE('2022-01-01'), DATE('2022-05-1'), '15%');
 insert into favors (id, instructor_id, name, address, description, images, num_of_persons, rules, services, cost, available_from, available_till, cancellation_condition)
 values (5, 23, 'Cas pecanja', 'Ribarsko ostrvo', 'Pecanje pecaljkom', null, 4, 'Samo punoletni mogu', null, 1200, DATE('2022-01-11'), DATE('2022-04-25'), 'Free');
 insert into favors (id, instructor_id, name, address, description, images, num_of_persons, rules, services, cost, available_from, available_till, cancellation_condition)
-values (6, 24, 'Cas pecanja', 'Ribarac', 'Pecanje mrezom', null, 10, 'Samo punoletni mogu', null, 1000, DATE('2022-01-08'), DATE('2022-03-20'), '5%');
+values (6, 24, 'Cas pecanja', 'Ribarsko ostrvo', 'Pecanje mrezom', null, 10, 'Samo punoletni mogu', null, 1000, DATE('2022-01-08'), DATE('2022-03-20'), '5%');
 insert into favors (id, instructor_id, name, address, description, images, num_of_persons, rules, services, cost, available_from, available_till, cancellation_condition)
 values (7, 25, 'Isplovljavanje', 'Ribarsko ostrvo', 'Plovidba camcom i pecanje', null, 2, 'Samo punoletni mogu', null, 2000, DATE('2022-01-01'), DATE('2022-03-01'), '10%');
 insert into favors (id, instructor_id, name, address, description, images, num_of_persons, rules, services, cost, available_from, available_till, cancellation_condition)
-values (8, 26, 'Pravljenje mamca', 'Ribarac', 'Mamac', null, 3, 'Samo punoletni mogu', null, 500, DATE('2022-01-01'), DATE('2022-07-1'), '15%');
+values (8, 26, 'Pravljenje mamca', 'Ribarsko ostrvo', 'Mamac', null, 3, 'Samo punoletni mogu', null, 500, DATE('2022-01-01'), DATE('2022-07-1'), '15%');
 
 insert into complaints (id, text, author_id, complaint_user_id, answer)
 values (1, 'Nova zalba', 14, 1, '');
@@ -682,7 +682,7 @@ values (1, DATE('2021-12-20'), DATE('2021-12-23'), 233, 2, 1, null);
 insert into cottage_reservations (id, available_from, available_till, cost, client_id, cottage_id, services)
 values (2, DATE('2021-12-24'), DATE('2022-01-04'), 150, 3, 1, null);
 insert into cottage_reservations (id, available_from, available_till, cost, client_id, cottage_id, services)
-values (3, DATE('2022-01-04'), DATE('2022-01-23'), 500, 2, 1, null);
+values (3, DATE('2022-01-05'), DATE('2022-01-23'), 500, 2, 1, null);
 insert into cottage_reservations (id, available_from, available_till, cost, client_id, cottage_id, services)
 values (4, DATE('2021-12-03'), DATE('2021-12-19'), 500, 2, 1, null);
 insert into cottage_reservations (id, available_from, available_till, cost, client_id, cottage_id, services)
