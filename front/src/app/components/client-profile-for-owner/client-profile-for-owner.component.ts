@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Type } from '@angular/core';
 import { User } from 'src/app/model/user';
 import { UserService } from 'src/app/service/user-service.service';
 
@@ -10,6 +10,7 @@ import { UserService } from 'src/app/service/user-service.service';
 export class ClientProfileForOwnerComponent implements OnInit {
   @Input() seeUser: User;
   client: User;
+  type: string;
 
   constructor(private userService : UserService) { }
 
@@ -17,10 +18,22 @@ export class ClientProfileForOwnerComponent implements OnInit {
     if(this.seeUser == undefined){
       this.userService.getUserByEmail(sessionStorage.getItem("userForOwner")).subscribe(ret =>{
         this.client = ret;
+        if(this.client.type.toString() == 'Regular')
+          this.type = '0%'
+        else if(this.client.type.toString() == 'Silver')
+          this.type = '10%'
+        else
+          this.type = '20%'
       })
     } else {
       this.userService.getUserByEmail(this.seeUser.email).subscribe(ret =>{
         this.client = ret;
+        if(this.client.type.toString() == 'Regular')
+          this.type = '0%'
+        else if(this.client.type.toString() == 'Silver')
+          this.type = '10%'
+        else
+          this.type = '20%'
       })
     }
   }

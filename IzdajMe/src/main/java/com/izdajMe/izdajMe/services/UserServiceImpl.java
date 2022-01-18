@@ -122,6 +122,28 @@ public class UserServiceImpl implements UserService {
         if(doz2 == 1) {
             shipRepository.save(s);
         }
+
+        ArrayList<InstructorsFavor.FavorServices> favorServices = new ArrayList<>();
+        favorServices.add(InstructorsFavor.FavorServices.Boat);
+        favorServices.add(InstructorsFavor.FavorServices.FishingRod);
+        InstructorsFavor favor = instructorsFavorRepository.getById(1L);
+        images = new ArrayList<String>();
+        images.add("pecanjepecaljkom1");
+        images.add("pecanjepecaljkom2");
+        images.add("pecanjepecaljkom3");
+        int doz3 = 0;
+        if(favor.getServices() == null || favor.getImages() == null){
+            doz3 = 1;
+        }
+        if(favor.getServices() == null) {
+            favor.setServices(favorServices);
+        }
+        if(favor.getImages() == null){
+            favor.setImages(images);
+        }
+        if(doz3 == 1) {
+            instructorsFavorRepository.save(favor);
+        }
     }
 
     public Boolean saveUser(User user) {
