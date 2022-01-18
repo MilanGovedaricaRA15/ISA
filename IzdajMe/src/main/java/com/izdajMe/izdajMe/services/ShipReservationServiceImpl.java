@@ -133,7 +133,11 @@ public class ShipReservationServiceImpl implements ShipReservationService {
             if (slobodno) {
                 addPointsToShipOwner(shipReservation);
                 addPointsToClient(shipReservation);
-                shipReservation = returnReservation(shipReservation);
+                if(shipReservation.getClient().getType() == User.Type.Gold)
+                    shipReservation.setCost(shipReservation.getCost() * 80 / 100);
+                else if(shipReservation.getClient().getType() == User.Type.Silver)
+                    shipReservation.setCost(shipReservation.getCost() * 90 / 100);
+
                 shipReservationRepository.save(shipReservation);
                 cw.setWriting(false);
                 concurentWatcherRepository.save(cw);
@@ -178,7 +182,11 @@ public class ShipReservationServiceImpl implements ShipReservationService {
             if (canAddReservation(allThisShipReservations, shipReservation, allThisShipHotOffers)) {
                 addPointsToShipOwner(shipReservation);
                 addPointsToClient(shipReservation);
-                shipReservation = returnReservation(shipReservation);
+                if(shipReservation.getClient().getType() == User.Type.Gold)
+                    shipReservation.setCost(shipReservation.getCost() * 80 / 100);
+                else if(shipReservation.getClient().getType() == User.Type.Silver)
+                    shipReservation.setCost(shipReservation.getCost() * 90 / 100);
+
                 shipReservationRepository.save(shipReservation);
                 cw.setWriting(false);
                 concurentWatcherRepository.save(cw);
@@ -193,15 +201,6 @@ public class ShipReservationServiceImpl implements ShipReservationService {
         else{
             return false;
         }
-    }
-
-    private ShipReservation returnReservation(ShipReservation shipReservation) {
-        if(shipReservation.getClient().getType() == User.Type.Gold)
-            shipReservation.setCost(shipReservation.getCost() * 80 / 100);
-        else if(shipReservation.getClient().getType() == User.Type.Silver)
-            shipReservation.setCost(shipReservation.getCost() * 90 / 100);
-
-        return shipReservation;
     }
 
     private void addPointsToClient(ShipReservation shipReservation){
@@ -227,7 +226,11 @@ public class ShipReservationServiceImpl implements ShipReservationService {
         if(canAddReservation(allThisShipReservations, shipReservation, new ArrayList<ShipHotOffer>())) {
             addPointsToShipOwner(shipReservation);
             addPointsToClient(shipReservation);
-            shipReservation = returnReservation(shipReservation);
+            if(shipReservation.getClient().getType() == User.Type.Gold)
+                shipReservation.setCost(shipReservation.getCost() * 80 / 100);
+            else if(shipReservation.getClient().getType() == User.Type.Silver)
+                shipReservation.setCost(shipReservation.getCost() * 90 / 100);
+
             shipReservationRepository.save(shipReservation);
             sendNotificationForClientReservation(shipReservation);
             return true;

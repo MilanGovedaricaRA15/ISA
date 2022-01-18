@@ -59,7 +59,11 @@ public class FavorReservationServiceImpl implements FavorReservationService{
         if(free) {
             addPointsToInstructor(favorReservation);
             addPointsToClient(favorReservation);
-            favorReservation = returnReservation(favorReservation);
+            if(favorReservation.getClient().getType() == User.Type.Gold)
+                favorReservation.setCost(favorReservation.getCost() * 80 / 100);
+            else if(favorReservation.getClient().getType() == User.Type.Silver)
+                favorReservation.setCost(favorReservation.getCost() * 90 / 100);
+            
             favorReservationRepository.save(favorReservation);
             sendNotificationForReservation(favorReservation);
             return true;
@@ -94,7 +98,11 @@ public class FavorReservationServiceImpl implements FavorReservationService{
         if(canAddReservation(allFavorReservations, favorReservation, allThisFavorHotOffers)) {
             addPointsToInstructor(favorReservation);
             addPointsToClient(favorReservation);
-            favorReservation = returnReservation(favorReservation);
+            if(favorReservation.getClient().getType() == User.Type.Gold)
+                favorReservation.setCost(favorReservation.getCost() * 80 / 100);
+            else if(favorReservation.getClient().getType() == User.Type.Silver)
+                favorReservation.setCost(favorReservation.getCost() * 90 / 100);
+
             favorReservationRepository.save(favorReservation);
             sendNotificationForClientReservation(favorReservation);
             return true;
@@ -102,15 +110,6 @@ public class FavorReservationServiceImpl implements FavorReservationService{
         else {
             return false;
         }
-    }
-
-    private FavorReservation returnReservation(FavorReservation favorReservation) {
-        if(favorReservation.getClient().getType() == User.Type.Gold)
-            favorReservation.setCost(favorReservation.getCost() * 80 / 100);
-        else if(favorReservation.getClient().getType() == User.Type.Silver)
-            favorReservation.setCost(favorReservation.getCost() * 90 / 100);
-
-        return favorReservation;
     }
 
     private void addPointsToClient(FavorReservation favorReservation){
@@ -136,7 +135,11 @@ public class FavorReservationServiceImpl implements FavorReservationService{
         if(canAddReservation(allFavorReservations, favorReservation, new ArrayList<FavorHotOffer>())) {
             addPointsToInstructor(favorReservation);
             addPointsToClient(favorReservation);
-            favorReservation = returnReservation(favorReservation);
+            if(favorReservation.getClient().getType() == User.Type.Gold)
+                favorReservation.setCost(favorReservation.getCost() * 80 / 100);
+            else if(favorReservation.getClient().getType() == User.Type.Silver)
+                favorReservation.setCost(favorReservation.getCost() * 90 / 100);
+
             favorReservationRepository.save(favorReservation);
             sendNotificationForClientReservation(favorReservation);
             return true;

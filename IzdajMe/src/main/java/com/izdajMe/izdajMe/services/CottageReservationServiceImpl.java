@@ -128,7 +128,11 @@ public class CottageReservationServiceImpl implements CottageReservationService 
             if (slobodno) {
                 addPointsToCottageOwner(cottageReservation);
                 addPointsToClient(cottageReservation);
-                cottageReservation = returnReservation(cottageReservation);
+                if(cottageReservation.getClient().getType() == User.Type.Gold)
+                    cottageReservation.setCost(cottageReservation.getCost() * 80 / 100);
+                else if(cottageReservation.getClient().getType() == User.Type.Silver)
+                    cottageReservation.setCost(cottageReservation.getCost() * 90 / 100);
+
                 cottageReservationRepository.save(cottageReservation);
                 cw.setWriting(false);
                 concurentWatcherRepository.save(cw);
@@ -172,7 +176,11 @@ public class CottageReservationServiceImpl implements CottageReservationService 
             if (canAddReservation(allThisCottageReservations, cottageReservation, allThisCottageHotOffers)) {
                 addPointsToCottageOwner(cottageReservation);
                 addPointsToClient(cottageReservation);
-                cottageReservation = returnReservation(cottageReservation);
+                if(cottageReservation.getClient().getType() == User.Type.Gold)
+                    cottageReservation.setCost(cottageReservation.getCost() * 80 / 100);
+                else if(cottageReservation.getClient().getType() == User.Type.Silver)
+                    cottageReservation.setCost(cottageReservation.getCost() * 90 / 100);
+
                 cottageReservationRepository.save(cottageReservation);
                 cw.setWriting(false);
                 concurentWatcherRepository.save(cw);
@@ -187,15 +195,6 @@ public class CottageReservationServiceImpl implements CottageReservationService 
         else{
             return false;
         }
-    }
-
-    private CottageReservation returnReservation(CottageReservation cottageReservation) {
-        if(cottageReservation.getClient().getType() == User.Type.Gold)
-            cottageReservation.setCost(cottageReservation.getCost() * 80 / 100);
-        else if(cottageReservation.getClient().getType() == User.Type.Silver)
-            cottageReservation.setCost(cottageReservation.getCost() * 90 / 100);
-
-        return cottageReservation;
     }
 
     private void addPointsToClient(CottageReservation cottageReservation){
@@ -221,7 +220,11 @@ public class CottageReservationServiceImpl implements CottageReservationService 
         if(canAddReservation(allThisCottageReservations, cottageReservation, new ArrayList<HotOffer>())) {
             addPointsToCottageOwner(cottageReservation);
             addPointsToClient(cottageReservation);
-            cottageReservation = returnReservation(cottageReservation);
+            if(cottageReservation.getClient().getType() == User.Type.Gold)
+                cottageReservation.setCost(cottageReservation.getCost() * 80 / 100);
+            else if(cottageReservation.getClient().getType() == User.Type.Silver)
+                cottageReservation.setCost(cottageReservation.getCost() * 90 / 100);
+
             cottageReservationRepository.save(cottageReservation);
             sendNotificationForClientReservation(cottageReservation);
             return true;
