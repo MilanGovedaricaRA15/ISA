@@ -1,8 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { CottageReservation } from 'src/app/model/cottage-reservation';
 import { User } from 'src/app/model/user';
-import { CottageReservationService } from 'src/app/service/cottage-reservation-service.service';
 import { UserService } from 'src/app/service/user-service.service';
 
 @Component({
@@ -17,38 +15,23 @@ export class ClientProfileComponent implements OnInit {
   viewInformation: boolean = true;
   editInformation: boolean = false;
   passwordChange: boolean = false;
-  viewCottageReservations: boolean = true;
   oldPasswordMatch: boolean = false;
   passwordTheSame: boolean = false;
-
-  clientCottageReservations: Array<CottageReservation>;
 
   registerForm: any;
   changePasswordForm: any;
 
-  constructor(private userService : UserService, private cottageReservationService: CottageReservationService) { }
+  constructor(private userService : UserService) { }
 
   ngOnInit(): void {
     if(this.clientAuthenticated == undefined){
       this.userService.getUserByEmail(sessionStorage.getItem("clientToShowAuthenticated")).subscribe(ret =>{
         this.client = ret;
-        this.cottageReservationService.getCottageReservationsOfClient(this.client.email).subscribe(ret => {
-          this.clientCottageReservations = new Array<CottageReservation>();
-          for (let cr of ret) {
-            this.clientCottageReservations.push(cr);
-          }
-        })
-      })
+      });
     } else {
       this.userService.getUserByEmail(this.clientAuthenticated.email).subscribe(ret =>{
         this.client = ret;
-        this.cottageReservationService.getCottageReservationsOfClient(this.client.email).subscribe(ret => {
-          this.clientCottageReservations = new Array<CottageReservation>();
-          for (let cr of ret) {
-            this.clientCottageReservations.push(cr);
-          }
-        })
-      })
+      });
     }
     this.registerForm = new FormGroup({
       "firstName": new FormControl(null, [Validators.required,Validators.pattern('[A-ZŠĐČĆŽ]{1}[a-zšđčćž]+')]),
@@ -69,13 +52,11 @@ export class ClientProfileComponent implements OnInit {
   editInformations() : void {
     this.viewInformation = false;
     this.editInformation = true;
-    this.viewCottageReservations = false;
   }
 
   editPassword() : void {
     this.viewInformation = false;
     this.passwordChange = true;
-    this.viewCottageReservations = false;
   }
 
   validatePass(){
@@ -112,7 +93,6 @@ export class ClientProfileComponent implements OnInit {
         if (ret) {
           this.passwordChange = false;
           this.viewInformation = true;
-          this.viewCottageReservations = true;
           this.oldPassword.value = "";
           this.newPassword.value = "";
           this.newPassword2.value = "";
@@ -133,7 +113,6 @@ export class ClientProfileComponent implements OnInit {
       })
       this.viewInformation = true;
       this.editInformation = false;
-      this.viewCottageReservations = true;
     } else {
       alert('Wrong password!');
     }

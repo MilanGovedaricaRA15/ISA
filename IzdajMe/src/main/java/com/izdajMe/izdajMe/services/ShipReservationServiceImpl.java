@@ -263,4 +263,17 @@ public class ShipReservationServiceImpl implements ShipReservationService {
                 shipReservationRepository.deleteById(sr.getId());
         }
     }
+
+    public List<ShipReservation> getShipReservationsOfClient(String email) {
+        return shipReservationRepository.findAllByClientEmail(email);
+    }
+
+    public Boolean cancelShipReservationByClient(ShipReservation shipReservation) {
+        if (shipReservationRepository.existsById(shipReservation.getId())) {
+            shipReservationRepository.deleteById(shipReservation.getId());
+            return true;
+        }
+
+        return false;
+    }
 }

@@ -22,4 +22,6 @@ public interface ShipReservationService {
     public ShipReservation getById(Long id);
     public Boolean changeReservationByOwner(ShipReservation shipReservation);
     public void deleteByClientId(long id);
+    public List<ShipReservation> getShipReservationsOfClient(String email);
+    public Boolean cancelShipReservationByClient(ShipReservation shipReservation);
 }

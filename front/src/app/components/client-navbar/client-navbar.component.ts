@@ -14,6 +14,7 @@ export class ClientNavbarComponent implements OnInit {
   @Output() cottagesReservationsPageClient = new EventEmitter<void>();
   @Output() shipsReservationsPageClient = new EventEmitter<void>();
   @Output() instructorsReservationsPageClient = new EventEmitter<void>();
+  @Output() reservationsPageClient = new EventEmitter<void>();
   @Output() createReservationPageClient = new EventEmitter<void>();
 
   constructor() { }
@@ -47,6 +48,10 @@ export class ClientNavbarComponent implements OnInit {
 
   goToInstructorsReservationsPageClient(): void {
     this.instructorsReservationsPageClient.emit();
+  }
+
+  goToReservationsPageClient(): void {
+    this.reservationsPageClient.emit();
   }
 
   goToCreateReservationPageClient(): void {

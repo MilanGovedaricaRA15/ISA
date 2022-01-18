@@ -103,26 +103,3 @@
     </div>
 
 </div>
-
-<div *ngIf="viewCottageReservations">
-  <h1>Cottage reservations</h1>
-  <table style="width: 100%;">
-    <thead>
-        <th>Starts </th>
-        <th>Ends </th>
-        <th>Services</th>
-        <th>Cost</th>
-        <th>Cottage name</th>
-        <th></th>
-    </thead>
-    <tbody>
-      <tr *ngFor='let cr of clientCottageReservations'>
-        <td>{{cr.availableFrom | date:'dd.MM.yyyy'}}</td>
-        <td>{{cr.availableTill | date:'dd.MM.yyyy'}}</td>
-        <td><div *ngFor='let s of cr.services'>{{s}}</div></td>
-        <td>{{cr.cost}}</td>
-        <td>{{cr.cottage.name}}</td>
-    </tr>
-    </tbody>
-  </table>
-</div>

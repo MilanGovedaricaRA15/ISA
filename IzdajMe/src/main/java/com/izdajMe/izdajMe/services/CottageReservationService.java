@@ -20,4 +20,5 @@ public interface CottageReservationService {
     public Boolean changeReservationByOwner(CottageReservation cottageReservation);
     public void deleteByClientId(long id);
     public List<CottageReservation> getCottageReservationsOfClient(String email);
+    public Boolean cancelCottageReservationByClient(CottageReservation cottageReservation);
 }

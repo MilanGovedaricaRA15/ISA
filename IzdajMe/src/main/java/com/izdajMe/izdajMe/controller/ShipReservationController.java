@@ -118,4 +118,27 @@ public class ShipReservationController {
             return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
         }
     }
+
+    @GetMapping("/shipReservation/getShipReservationsOfClient")
+    public ResponseEntity<List<ShipReservationDTO>> getShipReservationsOfClient(@RequestParam("email") String email) {
+        List<ShipReservationDTO> clientShipReservations = new ArrayList<ShipReservationDTO>();
+        for (ShipReservation s : shipReservationService.getShipReservationsOfClient(email)) {
+            clientShipReservations.add(new ShipReservationDTO(s));
+        }
+
+        return new ResponseEntity<List<ShipReservationDTO>>(clientShipReservations, HttpStatus.OK);
+    }
+
+    @PutMapping("/shipReservation/cancelShipReservationByClient")
+    public ResponseEntity<Boolean> cancelShipReservationByClient(@RequestBody ShipReservation shipReservation, HttpServletRequest request) {
+        if (request.getSession(false).getAttribute("role") != null) {
+            if (request.getSession(false).getAttribute("role") == User.Role.client) {
+                return new ResponseEntity<Boolean>(shipReservationService.cancelShipReservationByClient(shipReservation), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
+            }
+        } else {
+            return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
+        }
+    }
 }

@@ -129,4 +129,17 @@ public class CottageReservationController {
 
         return new ResponseEntity<List<CottageReservationDTO>>(clientCottageReservations, HttpStatus.OK);
     }
+
+    @PutMapping("/cottageReservation/cancelCottageReservationByClient")
+    public ResponseEntity<Boolean> cancelCottageReservationByClient(@RequestBody CottageReservation cottageReservation, HttpServletRequest request) {
+        if (request.getSession(false).getAttribute("role") != null) {
+            if (request.getSession(false).getAttribute("role") == User.Role.client) {
+                return new ResponseEntity<Boolean>(cottageReservationService.cancelCottageReservationByClient(cottageReservation), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
+            }
+        } else {
+            return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
+        }
+    }
 }
