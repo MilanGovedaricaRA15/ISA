@@ -1,40 +1,69 @@
+<div>
+  <h1>Instructor informations</h1>
+  First name: {{instructor.firstName}} <br>
+  Last name: {{instructor.lastName}} <br>
+  Email: {{instructor.email}} <br>
+  Mobile number: {{instructor.mobileNumber}} <br>
+  Country: {{instructor.country}} <br>
+  City: {{instructor.city}} <br>
+  Address: {{instructor.address}} <br>
+</div>
+
+<br><br>
+<h4>Search available favors</h4>
 <div class="row">
     <div class="column">
-      <h1>Adventure informations</h1>
-      <div *ngFor="let f of instructorsFavors; let i = index;">
-        <h4>Adventure {{i+1}}</h4>
-        Name: {{f.name}} <br>
-        Address: {{f.address}} <br>
-        Descriptions: {{f.description}} <br>
-        numOfPersons: {{f.numOfPersons}} <br>
-        Rules: {{f.rules}} <br>
-        Available from: {{f.availableFrom | date:'dd.MM.yyyy'}} <br>
-        Available till: {{f.availableTill | date:'dd.MM.yyyy'}} <br>
-        Cost: {{f.cost}} <br>
-        Cancellation condition: {{f.cancellationCondition}} <br>
-        Services:
-        <ul *ngFor='let s of f.priceList'>
-          <li>{{s.service}}</li>
-        </ul>
-      </div>
+        <form (ngSubmit)="searchFavors()">
+            <label style="min-width: 15%;">Start date:</label>
+            <input type="date" id="startDate" min="{{today}}" value={{today}} onkeydown="return false" style="min-width: 20%;" required><br>
+            
+            <label style="min-width: 15%;">End date:</label>
+            <input type="date" id="endDate" min="{{today}}" value={{today}} onkeydown="return false" style="min-width: 20%;" required><br>
+        
+            <button type="submit">Find available favors</button><br><br>
+        </form>
+        <button (click)='getAllFavors()'>Show all favors</button>
     </div>
-    <div class="column">
-        <h1>Instructor informations</h1>
-        First name: {{instructor.firstName}} <br>
-        Last name: {{instructor.lastName}} <br>
-        Email: {{instructor.email}} <br>
-        Mobile number: {{instructor.mobileNumber}} <br>
-        Country: {{instructor.country}} <br>
-        City: {{instructor.city}} <br>
-        Address: {{instructor.address}} <br>
+    <div class="column" *ngIf='canFilter'>
+        <label>Filter by cost:</label> <br>
+        <label style="min-width: 20%; text-align: center;">(Cost) From:</label><input type="number" id="filterCostFrom" min=0 max=10000 value=0 style="min-width: 15%;">
+        <label style="min-width: 5%; text-align: center;">To:</label><input type="number" id="filterCostTo" min=0 max=10000 value=10000 style="min-width: 15%;">
+        <button (click)='filterByCost()'>Filter</button>
     </div>
-  </div>
+</div>
+<br>
+<div>
+  <h1>Adventure informations</h1>
+  <table style="width: 100%;">
+    <thead>
+      <th>Name</th>
+      <th>Address</th>
+      <th>Description</th>
+      <th>Cost</th>
+      <th>Services</th>
+  </thead>
+  <tbody>
+      <tr *ngFor='let f of instructorsFavors'>
+          <td>{{f.name}}</td>
+          <td>{{f.address}}</td>
+          <td>{{f.description}}</td>
+          <td>{{f.cost}}</td>
+          <td><div *ngFor='let s of f.priceList'>{{s.service}}</div></td>
+      </tr>
+  </tbody>
+  </table>
+</div>
+
+<br>
+
+<div>
   <h1>Fast reservations</h1>
   <table style="width: 100%;">
     <thead>
         <th>Starts</th>
         <th>Ends</th>
-        <th>Place</th>
+        <th>Name</th>
+        <th>Address</th>
         <th>Max people</th>
         <th>Services</th>
         <th>Cost</th>
@@ -42,35 +71,45 @@
         <th></th>
     </thead>
     <tbody>
-        <tr *ngFor='let ho of favorHotOffers; let index = index;'>
-          <td>{{ho.availableFrom | date:'dd.MM.yyyy'}}</td>
-          <td>{{ho.availableTill | date:'dd.MM.yyyy'}}</td>
-          <td>{{ho.place}}</td>
-          <td>{{ho.numOfPersons}}</td>
-          <td><div *ngFor='let s of ho.services'>{{s}}</div><div *ngIf='!ho.services'>-</div></td>
-          <td>{{costs[index]}}</td>
-          <td>{{ho.cost}}</td>
-          <td><a href="#" (click)="makeFastReservation(ho.id)">Reserve</a></td>
+        <tr *ngFor='let f of favorHotOffersDTO'>
+          <td>{{f.favorHotOffer.availableFrom | date:'dd.MM.yyyy'}}</td>
+          <td>{{f.favorHotOffer.availableTill | date:'dd.MM.yyyy'}}</td>
+          <td>{{f.instructorsFavor.name}}</td>
+          <td>{{f.instructorsFavor.address}}</td>
+          <td>{{f.favorHotOffer.numOfPersons}}</td>
+          <td><div *ngFor='let s of f.favorHotOffer.services'>{{s}}</div><div *ngIf='!f.favorHotOffer.services'>-</div></td>
+          <td>{{f.totalPrice}}</td>
+          <td>{{f.favorHotOffer.cost}}</td>
+          <td><a href="#" (click)="makeFastReservation(f)">Reserve</a></td>
         </tr>
     </tbody>
   </table>
+</div>
+
+<br>
+
+<div>
   <h1>Reservations</h1>
   <table style="width: 100%;">
     <thead>
         <th>Starts </th>
         <th>Ends </th>
+        <th>Name</th>
+        <th>Address</th>
         <th>Services</th>
         <th>Cost</th>
         <th>User name</th>
-        <th></th>
     </thead>
     <tbody>
       <tr *ngFor='let fr of favorReservations'>
         <td>{{fr.availableFrom | date:'dd.MM.yyyy'}}</td>
         <td>{{fr.availableTill | date:'dd.MM.yyyy'}}</td>
+        <td>{{fr.favor.name}}</td>
+        <td>{{fr.favor.address}}</td>
         <td><div *ngFor='let s of fr.services'>{{s}}</div></td>
         <td>{{fr.cost}}</td>
         <td>{{fr.client.firstName}}</td>
       </tr>
     </tbody>
-</table>
+  </table>
+</div>

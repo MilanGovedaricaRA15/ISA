@@ -1,29 +1,48 @@
-<br><br>
-<form (ngSubmit)="searchShips()">
-    <label>Search ships by name: </label>
-    <input type="text" id="search-ships" name="search-ships" [(ngModel)]="searchText">
-    <button type="submit">Search</button>
-</form>
-<br><br>
+<h4>Search available ships</h4>
+<div class="row">
+    <div class="column">
+        <form (ngSubmit)="searchShips()">
+            <label style="min-width: 15%;">Start date:</label>
+            <input type="date" id="startDate" min="{{today}}" value={{today}} onkeydown="return false" style="min-width: 20%;" required><br>
+            
+            <label style="min-width: 15%;">End date:</label>
+            <input type="date" id="endDate" min="{{today}}" value={{today}} onkeydown="return false" style="min-width: 20%;" required><br>
+        
+            <button type="submit">Find available ships</button><br><br>
+        </form>
+        <button (click)='getAllShips()'>Show all ships</button>
+    </div>
+    <div class="column" *ngIf='canFilter'>
+        <label>Filter by cost and/or grade:</label> <br>
+        <label style="min-width: 20%; text-align: center;">(Cost) From:</label><input type="number" id="filterCostFrom" min=0 max=1000 value=0 style="min-width: 15%;">
+        <label style="min-width: 5%; text-align: center;">To:</label><input type="number" id="filterCostTo" min=0 max=1000 value=1000 style="min-width: 15%;">
+        <button (click)='filterByCostAndGrade()'>Filter</button>
+        <br>
+        <label style="min-width: 20%; text-align: center;">(Grade) From:</label><input type="number" id="filterGradeFrom" min=0 max=10 value=0 step="0.1" style="min-width: 15%;">
+        <label style="min-width: 5%; text-align: center;">To:</label><input type="number" id="filterGradeTo" min=0 max=10 value=10 step="0.1" style="min-width: 15%;">
+        <button (click)='filterByCostAndGrade()'>Filter</button>
+    </div>
+</div>
+<br>
 <table style="width: 100%;">
     <thead>
         <th (click)="sortByName()" style="cursor: pointer;">Name</th>
         <th (click)="sortByAddress()" style="cursor: pointer;">Address</th>
         <th (click)="sortByType()" style="cursor: pointer;">Type</th>
         <th (click)="sortByCapacity()" style="cursor: pointer;">Capacity</th>
-        <th (click)="sortByDescription()" style="cursor: pointer;">Description</th>
-        <th>Cost per night</th>
+        <th (click)="sortByCost()" style="cursor: pointer;">Cost per night</th>
+        <th (click)="sortByGrade()" style="cursor: pointer;">Grade</th>
         <th></th>
     </thead>
     <tbody>
         <tr *ngFor='let s of ships'>
-            <td>{{s.name}}</td>
-            <td>{{s.address}}</td>
-            <td>{{s.type}}</td>
-            <td>{{s.capacity}}</td>
-            <td>{{s.description}}</td>
-            <td>{{s.costPerNight}}</td>
-            <td><a href="#" (click)="goToShipProfile(s.id)">More details</a></td>
+            <td>{{s.ship.name}}</td>
+            <td>{{s.ship.address}}</td>
+            <td>{{s.ship.type}}</td>
+            <td>{{s.ship.capacity}}</td>
+            <td>{{s.ship.costPerNight}}</td>
+            <td>{{s.averageGrade}}</td>
+            <td><a href="#" (click)="goToShipProfile(s.ship.id)">More details</a></td>
         </tr>
     </tbody>
 </table>

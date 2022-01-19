@@ -81,7 +81,9 @@ export class CreateAReservationClientComponent implements OnInit {
     let end = document.getElementById('endDate') as HTMLInputElement
 
     let yesterday = new Date();
-    yesterday.setDate(new Date().getDate() - 1);
+    if (yesterday.getDate() != 1) {
+      yesterday.setDate(new Date().getDate() - 1);
+    }
     if (start.valueAsDate < yesterday) {
       alert('Start date should be later or equal to today!');
     }
