@@ -1,8 +1,10 @@
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
 import { Ship } from 'src/app/model/ship';
+import { Type } from 'src/app/model/user';
 import { ShipReservationService } from 'src/app/service/ship-reservation-service.service';
 import { ShipService } from 'src/app/service/ship-service';
+import { UserService } from 'src/app/service/user-service.service';
 
 @Component({
   selector: 'app-ship-owner-report',
@@ -13,7 +15,7 @@ export class ShipOwnerReportComponent implements OnInit {
 
   ships: Array<Ship>
   shipsToShow: Array<Ship>
-  constructor(private shipService: ShipService, private shipReservationService: ShipReservationService) { }
+  constructor(private shipService: ShipService,private userService:UserService, private shipReservationService: ShipReservationService) { }
   datum: Date
   avarageGrade: Array<Number>
   totalCostOfShips: Array<Number>
@@ -22,6 +24,7 @@ export class ShipOwnerReportComponent implements OnInit {
   datumToString: String
   datumFromString: String
   totalCostOfBoat: number;
+  dijeli: number;
 
   ngOnInit(): void {
     this.ships = new Array<Ship>();
@@ -31,6 +34,19 @@ export class ShipOwnerReportComponent implements OnInit {
     this.datumToString = new Date().toISOString().split('T')[0];
     this.datumFromString = new Date().toISOString().split('T')[0];
     this.totalCostOfShips = new Array<Number>();
+
+    this.userService.getLoggedUser().subscribe(userLogged => {
+      if (userLogged.type.toString() == 'Regular'){
+        this.dijeli = 35;
+      }
+      else if (userLogged.type.toString() == 'Silver'){
+        this.dijeli = 25;
+      }
+      else{
+        this.dijeli = 15;
+      }
+   
+
     this.shipService.getAllShipsOfOwner().subscribe(ret => {
       this.ships = ret;
       this.datum = new Date();
@@ -52,7 +68,7 @@ export class ShipOwnerReportComponent implements OnInit {
         this.shipReservationService.getAllReservationsOfShipFromTill(ship,this.datumFrom,this.datumTo).subscribe(ret =>{
           let totalCost = 0;
           for (let x of ret){
-            totalCost = totalCost + x.cost;
+            totalCost = totalCost + (x.cost - this.dijeli/100*x.cost);
           }
           this.totalCostOfShips.push(totalCost);
           this.avarageGrade.push(this.getAvarageGrade(ship));
@@ -62,6 +78,8 @@ export class ShipOwnerReportComponent implements OnInit {
      
       
     })
+  })
+
   }
 
   getAvarageGrade(ship: Ship):number{
@@ -87,7 +105,7 @@ export class ShipOwnerReportComponent implements OnInit {
       this.shipReservationService.getAllReservationsOfShipFromTill(ship,elementFrom.valueAsDate,elementTo.valueAsDate).subscribe(ret =>{
         let totalCost = 0;
         for (let x of ret){
-          totalCost = totalCost + x.cost;
+          totalCost = totalCost + (x.cost - this.dijeli/100*x.cost);
         }
         this.totalCostOfShips.push(totalCost);
         this.totalCostOfBoat = this.totalCostOfBoat + totalCost;

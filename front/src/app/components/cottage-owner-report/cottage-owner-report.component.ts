@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Cottage } from 'src/app/model/cottage';
+import { Type } from 'src/app/model/user';
 import { CottageReservationService } from 'src/app/service/cottage-reservation-service.service';
 import { CottageService } from 'src/app/service/cottage-service.service';
+import { UserService } from 'src/app/service/user-service.service';
 
 @Component({
   selector: 'app-cottage-owner-report',
@@ -12,7 +14,7 @@ export class CottageOwnerReportComponent implements OnInit {
 
   cottages: Array<Cottage>
   cottagesToShow: Array<Cottage>
-  constructor(private cottageService: CottageService, private cottageReservationService: CottageReservationService) { }
+  constructor(private cottageService: CottageService,private userService: UserService, private cottageReservationService: CottageReservationService) { }
   datum: Date
   avarageGrade: Array<Number>
   totalCostOfCottages: Array<Number>
@@ -21,6 +23,7 @@ export class CottageOwnerReportComponent implements OnInit {
   datumToString: String
   datumFromString: String
   totalCostOfCottage: number;
+  dijeli: number;
 
   ngOnInit(): void {
     this.cottages = new Array<Cottage>();
@@ -30,6 +33,16 @@ export class CottageOwnerReportComponent implements OnInit {
     this.datumToString = new Date().toISOString().split('T')[0];
     this.datumFromString = new Date().toISOString().split('T')[0];
     this.totalCostOfCottages = new Array<Number>();
+    this.userService.getLoggedUser().subscribe(userLogged => {
+      if (userLogged.type.toString() == 'Regular'){
+        this.dijeli = 35;
+      }
+      else if (userLogged.type.toString() == 'Silver'){
+        this.dijeli = 25;
+      }
+      else{
+        this.dijeli = 15;
+      }
     this.cottageService.getAllCottagesOfOwner().subscribe(ret => {
       this.cottages = ret;
       this.datum = new Date();
@@ -51,7 +64,7 @@ export class CottageOwnerReportComponent implements OnInit {
         this.cottageReservationService.getAllReservationsOfCottageFromTill(cottage,this.datumFrom,this.datumTo).subscribe(ret =>{
           let totalCost = 0;
           for (let x of ret){
-            totalCost = totalCost + x.cost;
+            totalCost = totalCost + (x.cost - this.dijeli/100*x.cost);
           }
           this.totalCostOfCottages.push(totalCost);
           this.avarageGrade.push(this.getAvarageGrade(cottage));
@@ -59,6 +72,7 @@ export class CottageOwnerReportComponent implements OnInit {
         })
       }
     })
+  })
   }
 
   getAvarageGrade(cottage: Cottage):number{
@@ -84,7 +98,7 @@ export class CottageOwnerReportComponent implements OnInit {
       this.cottageReservationService.getAllReservationsOfCottageFromTill(cottage,elementFrom.valueAsDate,elementTo.valueAsDate).subscribe(ret =>{
         let totalCost = 0;
         for (let x of ret){
-          totalCost = totalCost + x.cost;
+          totalCost = totalCost + (x.cost - this.dijeli/100*x.cost);
         }
         this.totalCostOfCottages.push(totalCost);
         this.totalCostOfCottage = this.totalCostOfCottage + totalCost;
