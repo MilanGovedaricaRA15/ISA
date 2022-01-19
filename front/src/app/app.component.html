@@ -90,6 +90,7 @@
           <app-add-reason-for-deleting-request (reasonSended)="reasonIsSended()" *ngIf="showCompNumber === 301"></app-add-reason-for-deleting-request>
           <app-add-answer-for-declining-registration (decliningReason)="registrationReasonIsSended()" *ngIf="showCompNumber === 302"></app-add-answer-for-declining-registration>
           <app-report-for-instructor *ngIf="showCompNumber === 303"></app-report-for-instructor>
+          <app-report-for-instructor-calendar (sendFavorReservation)="receiveFavorReservation($event)" *ngIf="showCompNumber === 303"></app-report-for-instructor-calendar>
         </div>
       </div>
     </div>

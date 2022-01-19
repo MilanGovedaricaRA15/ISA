@@ -63,6 +63,7 @@ import { AddAnswerForDecliningRegistrationComponent } from './components/add-ans
 import { ReservationsPageClientComponent } from './components/reservations-page-client/reservations-page-client.component';
 import { FavorCalendarComponent } from './components/favor-calendar/favor-calendar.component';
 import { ReportForInstructorComponent } from './components/report-for-instructor/report-for-instructor.component';
+import { ReportForInstructorCalendarComponent } from './components/report-for-instructor-calendar/report-for-instructor-calendar.component';
 
 @NgModule({
   declarations: [
@@ -124,7 +125,8 @@ import { ReportForInstructorComponent } from './components/report-for-instructor
     AddAnswerForDecliningRegistrationComponent,
     ReservationsPageClientComponent,
     FavorCalendarComponent,
-    ReportForInstructorComponent
+    ReportForInstructorComponent,
+    ReportForInstructorCalendarComponent
   ],
   imports: [
     BrowserModule,

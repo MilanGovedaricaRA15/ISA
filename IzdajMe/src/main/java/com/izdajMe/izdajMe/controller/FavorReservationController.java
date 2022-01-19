@@ -49,6 +49,16 @@ public class FavorReservationController {
         return new ResponseEntity<List<FavorReservationDTO>>(reservations, HttpStatus.OK);
     }
 
+    @GetMapping("/favorReservations/getAllReservationsFromTill")
+    public ResponseEntity<List<FavorReservationDTO>> getAllReservationsFromTill(@RequestParam("id") Long id,@RequestParam("from") String from, @RequestParam("to") String to) {
+
+        List<FavorReservationDTO> reservations = new ArrayList<FavorReservationDTO>();
+        for (FavorReservation fr : favorReservationService.getAllReservationsFromTill(id, from, to)) {
+            reservations.add(new FavorReservationDTO(fr));
+        }
+        return new ResponseEntity<List<FavorReservationDTO>>(reservations, HttpStatus.OK);
+    }
+
     @GetMapping("/favorReservations/getAllReservationsOfFavor")
     public ResponseEntity<List<FavorReservationDTO>> getAllReservationsOfFavor(@RequestParam("id") Long id) {
 
