@@ -29,12 +29,14 @@ public class InstructorsFavor {
     private LocalDateTime availableFrom;
     private LocalDateTime availableTill;
     private String cancellationCondition;
+    @OneToMany
+    private List<Grade> grades;
 
     public InstructorsFavor() {}
 
     public InstructorsFavor(long id, User instructor, String name, String address, String description, ArrayList<String> images,
                             int numOfPersons, String rules, ArrayList<FavorServices> services, float cost,
-                            LocalDateTime availableFrom, LocalDateTime availableTill, String cancellationCondition) {
+                            LocalDateTime availableFrom, LocalDateTime availableTill, String cancellationCondition, List<Grade> grades) {
         this.id = id;
         this.instructor = instructor;
         this.name = name;
@@ -48,6 +50,7 @@ public class InstructorsFavor {
         this.availableFrom = availableFrom;
         this.availableTill = availableTill;
         this.cancellationCondition = cancellationCondition;
+        this.grades = grades;
     }
 
     public long getId() { return this.id; }
@@ -121,5 +124,13 @@ public class InstructorsFavor {
     public enum FavorServices {
         Boat,
         FishingRod
+    }
+
+    public List<Grade> getGrades() {
+        return grades;
+    }
+
+    public void setGrades(List<Grade> grades) {
+        this.grades = grades;
     }
 }

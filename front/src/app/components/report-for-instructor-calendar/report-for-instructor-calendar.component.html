@@ -1,0 +1,933 @@
+<div class="container-fluid">
+    <header>
+      <div class="year-header"> 
+          <span class="left-button" id="prev" (click)="prev()"> &lang; </span> 
+          <span class="year" >{{monthYear}}</span> 
+          <span class="right-button" id="next" (click)="next()"> &rang; </span>
+        </div>
+      <div class="row d-none d-sm-flex p-1 bg-dark text-white">
+        <h5 class="col-sm p-1 text-center">Sunday</h5>
+        <h5 class="col-sm p-1 text-center">Monday</h5>
+        <h5 class="col-sm p-1 text-center">Tuesday</h5>
+        <h5 class="col-sm p-1 text-center">Wednesday</h5>
+        <h5 class="col-sm p-1 text-center">Thursday</h5>
+        <h5 class="col-sm p-1 text-center">Friday</h5>
+        <h5 class="col-sm p-1 text-center">Saturday</h5>
+      </div>
+    </header>
+    <div class="row border border-right-0 border-bottom-0">
+        <ng-container *ngFor="let day of daysOfMonth;let index = index">
+            <div *ngIf="index==0 && firstDayOfMonth =='Saturday' && daysOfMonthBeforeNumber!==31" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">25</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <div *ngFor="let item of isItTakenPrevMonth(25)">
+                <a *ngIf="item.split(' ')[0]=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
+
+                <a *ngIf="item.split(' ')[0]!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(25)">
+                    <a *ngIf="item.split(' ')[0]=='Reserved'" (click)='isItTakenPrevMonthReservationReport(25)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item.split(' ')[0]!='Reserved' && item!='free'" (click)='isItTakenPrevMonthReservationReport(25)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
+            </div>
+            <div *ngIf="index==0 && firstDayOfMonth =='Saturday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">26</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <div *ngFor="let item of isItTakenPrevMonth(26)">
+                <a *ngIf="item.split(' ')[0]=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
+
+                <a *ngIf="item.split(' ')[0]!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(26)">
+                    <a *ngIf="item.split(' ')[0]=='Reserved'" (click)='isItTakenPrevMonthReservationReport(26)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item.split(' ')[0]!='Reserved' && item!='free'" (click)='isItTakenPrevMonthReservationReport(26)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
+            </div> 
+            <div *ngIf="index==0 && firstDayOfMonth =='Saturday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">27</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <div *ngFor="let item of isItTakenPrevMonth(27)">
+                <a *ngIf="item.split(' ')[0]=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
+
+                <a *ngIf="item.split(' ')[0]!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(27)">
+                    <a *ngIf="item.split(' ')[0]=='Reserved'" (click)='isItTakenPrevMonthReservationReport(27)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item.split(' ')[0]!='Reserved' && item!='free'" (click)='isItTakenPrevMonthReservationReport(27)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
+            </div>
+            <div *ngIf="index==0 && firstDayOfMonth =='Saturday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">28</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <div *ngFor="let item of isItTakenPrevMonth(28)">
+                <a *ngIf="item.split(' ')[0]=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
+
+                <a *ngIf="item.split(' ')[0]!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(28)">
+                    <a *ngIf="item.split(' ')[0]=='Reserved'" (click)='isItTakenPrevMonthReservationReport(28)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item.split(' ')[0]!='Reserved' && item!='free'" (click)='isItTakenPrevMonthReservationReport(28)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
+            </div>
+
+            <div *ngIf="index==0 && firstDayOfMonth =='Saturday' && daysOfMonthBeforeNumber!=28" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">29</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <div *ngFor="let item of isItTakenPrevMonth(29)">
+                <a *ngIf="item.split(' ')[0]=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
+
+                <a *ngIf="item.split(' ')[0]!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(29)">
+                    <a *ngIf="item.split(' ')[0]=='Reserved'" (click)='isItTakenPrevMonthReservationReport(29)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item.split(' ')[0]!='Reserved' && item!='free'" (click)='isItTakenPrevMonthReservationReport(29)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
+            </div>
+            <div *ngIf="index==0 && firstDayOfMonth =='Saturday' && daysOfMonthBeforeNumber!=28" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">30</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <div *ngFor="let item of isItTakenPrevMonth(30)">
+                <a *ngIf="item.split(' ')[0]=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
+
+                <a *ngIf="item.split(' ')[0]!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(30)">
+                    <a *ngIf="item.split(' ')[0]=='Reserved'" (click)='isItTakenPrevMonthReservationReport(30)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item.split(' ')[0]!='Reserved' && item!='free'" (click)='isItTakenPrevMonthReservationReport(30)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
+            </div>
+            <div *ngIf="index==0 && firstDayOfMonth =='Saturday' && daysOfMonthBeforeNumber==31" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">31</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <div *ngFor="let item of isItTakenPrevMonth(31)">
+                <a *ngIf="item.split(' ')[0]=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
+
+                <a *ngIf="item.split(' ')[0]!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(31)">
+                    <a *ngIf="item.split(' ')[0]=='Reserved'" (click)='isItTakenPrevMonthReservationReport(31)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item.split(' ')[0]!='Reserved' && item!='free'" (click)='isItTakenPrevMonthReservationReport(31)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
+            </div>
+            <div *ngIf="index==0 && firstDayOfMonth =='Friday' && daysOfMonthBeforeNumber!==31" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">26</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <div *ngFor="let item of isItTakenPrevMonth(26)">
+                <a *ngIf="item.split(' ')[0]=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
+
+                <a *ngIf="item.split(' ')[0]!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(26)">
+                    <a *ngIf="item.split(' ')[0]=='Reserved'" (click)='isItTakenPrevMonthReservationReport(26)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item.split(' ')[0]!='Reserved' && item!='free'" (click)='isItTakenPrevMonthReservationReport(26)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
+            </div> 
+            <div *ngIf="index==0 && firstDayOfMonth =='Friday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">27</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <div *ngFor="let item of isItTakenPrevMonth(27)">
+                <a *ngIf="item.split(' ')[0]=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
+
+                <a *ngIf="item.split(' ')[0]!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(27)">
+                    <a *ngIf="item.split(' ')[0]=='Reserved'" (click)='isItTakenPrevMonthReservationReport(27)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item.split(' ')[0]!='Reserved' && item!='free'" (click)='isItTakenPrevMonthReservationReport(27)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
+            </div>
+            <div *ngIf="index==0 && firstDayOfMonth =='Friday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">28</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <div *ngFor="let item of isItTakenPrevMonth(28)">
+                <a *ngIf="item.split(' ')[0]=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
+
+                <a *ngIf="item.split(' ')[0]!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(28)">
+                    <a *ngIf="item.split(' ')[0]=='Reserved'" (click)='isItTakenPrevMonthReservationReport(28)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item.split(' ')[0]!='Reserved' && item!='free'" (click)='isItTakenPrevMonthReservationReport(28)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
+            </div>
+
+            <div *ngIf="index==0 && firstDayOfMonth =='Friday' && daysOfMonthBeforeNumber!=28" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">29</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <div *ngFor="let item of isItTakenPrevMonth(29)">
+                <a *ngIf="item.split(' ')[0]=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
+
+                <a *ngIf="item.split(' ')[0]!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(29)">
+                    <a *ngIf="item.split(' ')[0]=='Reserved'" (click)='isItTakenPrevMonthReservationReport(29)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item.split(' ')[0]!='Reserved' && item!='free'" (click)='isItTakenPrevMonthReservationReport(29)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
+            </div>
+            <div *ngIf="index==0 && firstDayOfMonth =='Friday' && daysOfMonthBeforeNumber!=28" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">30</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <div *ngFor="let item of isItTakenPrevMonth(30)">
+                <a *ngIf="item.split(' ')[0]=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
+
+                <a *ngIf="item.split(' ')[0]!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(30)">
+                    <a *ngIf="item.split(' ')[0]=='Reserved'" (click)='isItTakenPrevMonthReservationReport(30)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item.split(' ')[0]!='Reserved' && item!='free'" (click)='isItTakenPrevMonthReservationReport(30)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
+            </div>
+
+            <div *ngIf="index==0 && firstDayOfMonth =='Friday' && daysOfMonthBeforeNumber==31" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">31</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <div *ngFor="let item of isItTakenPrevMonth(31)">
+                <a *ngIf="item.split(' ')[0]=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
+
+                <a *ngIf="item.split(' ')[0]!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(31)">
+                    <a *ngIf="item.split(' ')[0]=='Reserved'" (click)='isItTakenPrevMonthReservationReport(31)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item.split(' ')[0]!='Reserved' && item!='free'" (click)='isItTakenPrevMonthReservationReport(31)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
+            </div>
+            <div *ngIf="index==0 && firstDayOfMonth =='Thursday' && daysOfMonthBeforeNumber!==31" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">27</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <div *ngFor="let item of isItTakenPrevMonth(27)">
+                <a *ngIf="item.split(' ')[0]=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
+
+                <a *ngIf="item.split(' ')[0]!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(27)">
+                    <a *ngIf="item.split(' ')[0]=='Reserved'" (click)='isItTakenPrevMonthReservationReport(27)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item.split(' ')[0]!='Reserved' && item!='free'" (click)='isItTakenPrevMonthReservationReport(27)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
+            </div>
+            <div *ngIf="index==0 && firstDayOfMonth =='Thursday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">28</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <div *ngFor="let item of isItTakenPrevMonth(28)">
+                <a *ngIf="item.split(' ')[0]=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
+
+                <a *ngIf="item.split(' ')[0]!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(28)">
+                    <a *ngIf="item.split(' ')[0]=='Reserved'" (click)='isItTakenPrevMonthReservationReport(28)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item.split(' ')[0]!='Reserved' && item!='free'" (click)='isItTakenPrevMonthReservationReport(28)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
+            </div>
+
+            <div *ngIf="index==0 && firstDayOfMonth =='Thursday' && daysOfMonthBeforeNumber!=28" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">29</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <div *ngFor="let item of isItTakenPrevMonth(29)">
+                <a *ngIf="item.split(' ')[0]=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
+
+                <a *ngIf="item.split(' ')[0]!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(29)">
+                    <a *ngIf="item.split(' ')[0]=='Reserved'" (click)='isItTakenPrevMonthReservationReport(29)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item.split(' ')[0]!='Reserved' && item!='free'" (click)='isItTakenPrevMonthReservationReport(29)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
+            </div>
+            <div *ngIf="index==0 && firstDayOfMonth =='Thursday' && daysOfMonthBeforeNumber!=28" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">30</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <div *ngFor="let item of isItTakenPrevMonth(30)">
+                <a *ngIf="item.split(' ')[0]=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
+
+                <a *ngIf="item.split(' ')[0]!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(30)">
+                    <a *ngIf="item.split(' ')[0]=='Reserved'" (click)='isItTakenPrevMonthReservationReport(30)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item.split(' ')[0]!='Reserved' && item!='free'" (click)='isItTakenPrevMonthReservationReport(30)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
+            </div>
+
+            <div *ngIf="index==0 && firstDayOfMonth =='Thursday' && daysOfMonthBeforeNumber==31" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">31</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <div *ngFor="let item of isItTakenPrevMonth(31)">
+                <a *ngIf="item.split(' ')[0]=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
+
+                <a *ngIf="item.split(' ')[0]!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(31)">
+                    <a *ngIf="item.split(' ')[0]=='Reserved'" (click)='isItTakenPrevMonthReservationReport(31)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item.split(' ')[0]!='Reserved' && item!='free'" (click)='isItTakenPrevMonthReservationReport(31)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
+            </div>
+
+            <div *ngIf="index==0 && firstDayOfMonth =='Wednesday' && daysOfMonthBeforeNumber!==31" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">28</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <div *ngFor="let item of isItTakenPrevMonth(28)">
+                <a *ngIf="item.split(' ')[0]=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
+
+                <a *ngIf="item.split(' ')[0]!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(28)">
+                    <a *ngIf="item.split(' ')[0]=='Reserved'" (click)='isItTakenPrevMonthReservationReport(28)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item.split(' ')[0]!='Reserved' && item!='free'" (click)='isItTakenPrevMonthReservationReport(28)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
+            </div>
+
+            <div *ngIf="index==0 && firstDayOfMonth =='Wednesday' && daysOfMonthBeforeNumber!=28" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">29</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <div *ngFor="let item of isItTakenPrevMonth(29)">
+                <a *ngIf="item.split(' ')[0]=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
+
+                <a *ngIf="item.split(' ')[0]!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(29)">
+                    <a *ngIf="item.split(' ')[0]=='Reserved'" (click)='isItTakenPrevMonthReservationReport(29)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item.split(' ')[0]!='Reserved' && item!='free'" (click)='isItTakenPrevMonthReservationReport(29)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
+            </div>
+            <div *ngIf="index==0 && firstDayOfMonth =='Wednesday' && daysOfMonthBeforeNumber!=28" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">30</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <div *ngFor="let item of isItTakenPrevMonth(30)">
+                <a *ngIf="item.split(' ')[0]=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
+
+                <a *ngIf="item.split(' ')[0]!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(30)">
+                    <a *ngIf="item.split(' ')[0]=='Reserved'" (click)='isItTakenPrevMonthReservationReport(30)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item.split(' ')[0]!='Reserved' && item!='free'" (click)='isItTakenPrevMonthReservationReport(30)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
+            </div>
+
+            <div *ngIf="index==0 && firstDayOfMonth =='Wednesday' && daysOfMonthBeforeNumber==31" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">31</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <div *ngFor="let item of isItTakenPrevMonth(31)">
+                <a *ngIf="item.split(' ')[0]=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
+
+                <a *ngIf="item.split(' ')[0]!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(31)">
+                    <a *ngIf="item.split(' ')[0]=='Reserved'" (click)='isItTakenPrevMonthReservationReport(31)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item.split(' ')[0]!='Reserved' && item!='free'" (click)='isItTakenPrevMonthReservationReport(31)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
+            </div>
+
+            <div *ngIf="index==0 && firstDayOfMonth =='Tuesday' && daysOfMonthBeforeNumber==28 " class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">27</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <div *ngFor="let item of isItTakenPrevMonth(27)">
+                <a *ngIf="item.split(' ')[0]=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
+
+                <a *ngIf="item.split(' ')[0]!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(27)">
+                    <a *ngIf="item.split(' ')[0]=='Reserved'" (click)='isItTakenPrevMonthReservationReport(27)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item.split(' ')[0]!='Reserved' && item!='free'" (click)='isItTakenPrevMonthReservationReport(27)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
+            </div>
+
+            <div *ngIf="index==0 && firstDayOfMonth =='Tuesday' && daysOfMonthBeforeNumber==28 " class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">28</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <div *ngFor="let item of isItTakenPrevMonth(28)">
+                <a *ngIf="item.split(' ')[0]=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
+
+                <a *ngIf="item.split(' ')[0]!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(28)">
+                    <a *ngIf="item.split(' ')[0]=='Reserved'" (click)='isItTakenPrevMonthReservationReport(28)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item.split(' ')[0]!='Reserved' && item!='free'" (click)='isItTakenPrevMonthReservationReport(28)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
+            </div>
+
+            <div *ngIf="index==0 && firstDayOfMonth =='Tuesday' && daysOfMonthBeforeNumber!=28 && daysOfMonthBeforeNumber!==31" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">29</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <div *ngFor="let item of isItTakenPrevMonth(29)">
+                <a *ngIf="item.split(' ')[0]=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
+
+                <a *ngIf="item.split(' ')[0]!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(29)">
+                    <a *ngIf="item.split(' ')[0]=='Reserved'" (click)='isItTakenPrevMonthReservationReport(29)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item.split(' ')[0]!='Reserved' && item!='free'" (click)='isItTakenPrevMonthReservationReport(29)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
+            </div>
+            <div *ngIf="index==0 && firstDayOfMonth =='Tuesday' && daysOfMonthBeforeNumber!=28" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">30</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <div *ngFor="let item of isItTakenPrevMonth(30)">
+                <a *ngIf="item.split(' ')[0]=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
+
+                <a *ngIf="item.split(' ')[0]!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(30)">
+                    <a *ngIf="item.split(' ')[0]=='Reserved'" (click)='isItTakenPrevMonthReservationReport(30)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item.split(' ')[0]!='Reserved' && item!='free'" (click)='isItTakenPrevMonthReservationReport(30)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
+            </div>
+
+            <div *ngIf="index==0 && firstDayOfMonth =='Tuesday' && daysOfMonthBeforeNumber==31" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">31</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <div *ngFor="let item of isItTakenPrevMonth(31)">
+                <a *ngIf="item.split(' ')[0]=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
+
+                <a *ngIf="item.split(' ')[0]!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(31)">
+                    <a *ngIf="item.split(' ')[0]=='Reserved'" (click)='isItTakenPrevMonthReservationReport(31)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item.split(' ')[0]!='Reserved' && item!='free'" (click)='isItTakenPrevMonthReservationReport(31)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
+            </div>
+
+            <div *ngIf="index==0 && firstDayOfMonth =='Monday' && daysOfMonthBeforeNumber==28 " class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">28</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <div *ngFor="let item of isItTakenPrevMonth(28)">
+                <a *ngIf="item.split(' ')[0]=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
+
+                <a *ngIf="item.split(' ')[0]!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(28)">
+                    <a *ngIf="item.split(' ')[0]=='Reserved'" (click)='isItTakenPrevMonthReservationReport(28)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item.split(' ')[0]!='Reserved' && item!='free'" (click)='isItTakenPrevMonthReservationReport(28)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
+            </div>
+            
+            <div *ngIf="index==0 && firstDayOfMonth =='Monday' && daysOfMonthBeforeNumber!=28 && daysOfMonthBeforeNumber!==31" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">30</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <div *ngFor="let item of isItTakenPrevMonth(30)">
+                <a *ngIf="item.split(' ')[0]=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
+
+                <a *ngIf="item.split(' ')[0]!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(30)">
+                    <a *ngIf="item.split(' ')[0]=='Reserved'" (click)='isItTakenPrevMonthReservationReport(30)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item.split(' ')[0]!='Reserved' && item!='free'" (click)='isItTakenPrevMonthReservationReport(30)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
+            </div>
+
+            <div *ngIf="index==0 && firstDayOfMonth =='Monday' && daysOfMonthBeforeNumber===31" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">31</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <div *ngFor="let item of isItTakenPrevMonth(31)">
+                <a *ngIf="item.split(' ')[0]=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
+
+                <a *ngIf="item.split(' ')[0]!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenPrevMonthReservation(31)">
+                    <a *ngIf="item.split(' ')[0]=='Reserved'" (click)='isItTakenPrevMonthReservationReport(31)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item.split(' ')[0]!='Reserved' && item!='free'" (click)='isItTakenPrevMonthReservationReport(31)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
+            </div>
+
+            <div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate bg-white">
+                <h5 class="row align-items-center">
+                <span class="date col-1">{{index+1}}</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <div *ngFor="let item of isItTaken(index+1)">
+                <a *ngIf="item.split(' ')[0]=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
+
+                <a *ngIf="item.split(' ')[0]!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenReservation(index+1)">
+                    <a *ngIf="item.split(' ')[0]=='Reserved'" (click)='isItTakenReservationReport(index+1)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item.split(' ')[0]!='Reserved' && item!='free'" (click)='isItTakenReservationReport(index+1)'  class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
+            </div>
+
+            <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Sunday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">1</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <div *ngFor="let item of isItTakenNextMonth(1)">
+                <a *ngIf="item.split(' ')[0]=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
+
+                <a *ngIf="item.split(' ')[0]!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenNextMonthReservation(1)">
+                    <a *ngIf="item.split(' ')[0]=='Reserved'" (click)='isItTakenNextMonthReservationReport(1)'  class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item.split(' ')[0]!='Reserved' && item!='free'" (click)='isItTakenNextMonthReservationReport(1)'  class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
+            </div>
+            <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Sunday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">2</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <div *ngFor="let item of isItTakenNextMonth(2)">
+                <a *ngIf="item.split(' ')[0]=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
+
+                <a *ngIf="item.split(' ')[0]!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenNextMonthReservation(2)">
+                    <a *ngIf="item.split(' ')[0]=='Reserved'" (click)='isItTakenNextMonthReservationReport(2)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item.split(' ')[0]!='Reserved' && item!='free'" (click)='isItTakenNextMonthReservationReport(2)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
+            </div> 
+            <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Sunday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">3</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <div *ngFor="let item of isItTakenNextMonth(3)">
+                <a *ngIf="item.split(' ')[0]=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
+
+                <a *ngIf="item.split(' ')[0]!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenNextMonthReservation(3)">
+                    <a *ngIf="item.split(' ')[0]=='Reserved'" (click)='isItTakenNextMonthReservationReport(3)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item.split(' ')[0]!='Reserved' && item!='free'" (click)='isItTakenNextMonthReservationReport(3)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
+            </div>
+            <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Sunday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">4</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <div *ngFor="let item of isItTakenNextMonth(4)">
+                <a *ngIf="item.split(' ')[0]=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
+
+                <a *ngIf="item.split(' ')[0]!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenNextMonthReservation(4)">
+                    <a *ngIf="item.split(' ')[0]=='Reserved'" (click)='isItTakenNextMonthReservationReport(4)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item.split(' ')[0]!='Reserved' && item!='free'" (click)='isItTakenNextMonthReservationReport(4)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
+            </div>
+
+            <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Sunday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">5</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <div *ngFor="let item of isItTakenNextMonth(5)">
+                <a *ngIf="item.split(' ')[0]=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
+
+                <a *ngIf="item.split(' ')[0]!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenNextMonthReservation(5)">
+                    <a *ngIf="item.split(' ')[0]=='Reserved'" (click)='isItTakenNextMonthReservationReport(5)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item.split(' ')[0]!='Reserved' && item!='free'" (click)='isItTakenNextMonthReservationReport(5)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
+            </div>
+            <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Sunday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">6</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <div *ngFor="let item of isItTakenNextMonth(6)">
+                <a *ngIf="item.split(' ')[0]=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
+
+                <a *ngIf="item.split(' ')[0]!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenNextMonthReservation(6)">
+                    <a *ngIf="item.split(' ')[0]=='Reserved'" (click)='isItTakenNextMonthReservationReport(6)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item.split(' ')[0]!='Reserved' && item!='free'" (click)='isItTakenNextMonthReservationReport(6)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
+            </div>
+            <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Monday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">1</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <div *ngFor="let item of isItTakenNextMonth(1)">
+                <a *ngIf="item.split(' ')[0]=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
+
+                <a *ngIf="item.split(' ')[0]!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenNextMonthReservation(1)">
+                    <a *ngIf="item.split(' ')[0]=='Reserved'" (click)='isItTakenNextMonthReservationReport(1)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item.split(' ')[0]!='Reserved' && item!='free'" (click)='isItTakenNextMonthReservationReport(1)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
+            </div> 
+            <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Monday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">2</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <div *ngFor="let item of isItTakenNextMonth(2)">
+                <a *ngIf="item.split(' ')[0]=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
+
+                <a *ngIf="item.split(' ')[0]!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenNextMonthReservation(2)">
+                    <a *ngIf="item.split(' ')[0]=='Reserved'" (click)='isItTakenNextMonthReservationReport(2)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item.split(' ')[0]!='Reserved' && item!='free'" (click)='isItTakenNextMonthReservationReport(2)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
+            </div>
+            <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Monday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">3</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <div *ngFor="let item of isItTakenNextMonth(3)">
+                <a *ngIf="item.split(' ')[0]=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white">{{item}}</a>
+
+                <a *ngIf="item.split(' ')[0]!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white">{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenNextMonthReservation(3)">
+                    <a *ngIf="item.split(' ')[0]=='Reserved'" (click)='isItTakenNextMonthReservationReport(3)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item.split(' ')[0]!='Reserved' && item!='free'" (click)='isItTakenNextMonthReservationReport(3)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
+            </div>
+
+            <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Monday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">4</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <div *ngFor="let item of isItTakenNextMonth(4)">
+                <a *ngIf="item.split(' ')[0]=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
+
+                <a *ngIf="item.split(' ')[0]!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white">{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenNextMonthReservation(4)">
+                    <a *ngIf="item.split(' ')[0]=='Reserved'" (click)='isItTakenNextMonthReservationReport(4)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item.split(' ')[0]!='Reserved' && item!='free'" (click)='isItTakenNextMonthReservationReport(4)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
+            </div>
+            <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Monday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">5</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <div *ngFor="let item of isItTakenNextMonth(5)">
+                <a *ngIf="item.split(' ')[0]=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
+
+                <a *ngIf="item.split(' ')[0]!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenNextMonthReservation(5)">
+                    <a *ngIf="item.split(' ')[0]=='Reserved'" (click)='isItTakenNextMonthReservationReport(5)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item.split(' ')[0]!='Reserved' && item!='free'" (click)='isItTakenNextMonthReservationReport(5)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
+            </div>
+            <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Tuesday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">1</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <div *ngFor="let item of isItTakenNextMonth(1)">
+                <a *ngIf="item.split(' ')[0]=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white">{{item}}</a>
+
+                <a *ngIf="item.split(' ')[0]!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white">{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenNextMonthReservation(1)">
+                    <a *ngIf="item.split(' ')[0]=='Reserved'" (click)='isItTakenNextMonthReservationReport(1)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item.split(' ')[0]!='Reserved' && item!='free'" (click)='isItTakenNextMonthReservationReport(1)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
+            </div>
+            <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Tuesday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">2</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <div *ngFor="let item of isItTakenNextMonth(2)">
+                <a *ngIf="item.split(' ')[0]=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white">{{item}}</a>
+
+                <a *ngIf="item.split(' ')[0]!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white">{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenNextMonthReservation(2)">
+                    <a *ngIf="item.split(' ')[0]=='Reserved'" (click)='isItTakenNextMonthReservationReport(2)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item.split(' ')[0]!='Reserved' && item!='free'" (click)='isItTakenNextMonthReservationReport(2)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
+            </div>
+
+            <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Tuesday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">3</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <div *ngFor="let item of isItTakenNextMonth(3)">
+                <a *ngIf="item.split(' ')[0]=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white">{{item}}</a>
+
+                <a *ngIf="item.split(' ')[0]!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white">{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenNextMonthReservation(3)">
+                    <a *ngIf="item.split(' ')[0]=='Reserved'" (click)='isItTakenNextMonthReservationReport(3)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item.split(' ')[0]!='Reserved' && item!='free'" (click)='isItTakenNextMonthReservationReport(3)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
+            </div>
+            <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Tuesday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">4</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <div *ngFor="let item of isItTakenNextMonth(4)">
+                <a *ngIf="item.split(' ')[0]=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white">{{item}}</a>
+
+                <a *ngIf="item.split(' ')[0]!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white">{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenNextMonthReservation(4)">
+                    <a *ngIf="item.split(' ')[0]=='Reserved'" (click)='isItTakenNextMonthReservationReport(4)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item.split(' ')[0]!='Reserved' && item!='free'" (click)='isItTakenNextMonthReservationReport(4)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
+            </div>
+
+            <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Wednesday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">1</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <div *ngFor="let item of isItTakenNextMonth(1)">
+                <a *ngIf="item.split(' ')[0]=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
+
+                <a *ngIf="item.split(' ')[0]!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white">{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenNextMonthReservation(1)">
+                    <a *ngIf="item.split(' ')[0]=='Reserved'" (click)='isItTakenNextMonthReservationReport(1)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item.split(' ')[0]!='Reserved' && item!='free'" (click)='isItTakenNextMonthReservationReport(1)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
+            </div>
+
+            <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Wednesday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">2</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <div *ngFor="let item of isItTakenNextMonth(2)">
+                <a *ngIf="item.split(' ')[0]=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
+
+                <a *ngIf="item.split(' ')[0]!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenNextMonthReservation(2)">
+                    <a *ngIf="item.split(' ')[0]=='Reserved'" (click)='isItTakenNextMonthReservationReport(2)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item.split(' ')[0]!='Reserved' && item!='free'" (click)='isItTakenNextMonthReservationReport(2)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
+            </div>
+            <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Wednesday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">3</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <div *ngFor="let item of isItTakenNextMonth(3)">
+                <a *ngIf="item.split(' ')[0]=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
+
+                <a *ngIf="item.split(' ')[0]!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenNextMonthReservation(3)">
+                    <a *ngIf="item.split(' ')[0]=='Reserved'" (click)='isItTakenNextMonthReservationReport(3)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item.split(' ')[0]!='Reserved' && item!='free'" (click)='isItTakenNextMonthReservationReport(3)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
+            </div>
+
+            <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Thursday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">1</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <div *ngFor="let item of isItTakenNextMonth(1)">
+                <a *ngIf="item.split(' ')[0]=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white">{{item}}</a>
+                <a *ngIf="item.split(' ')[0]!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white">{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenNextMonthReservation(1)">
+                    <a *ngIf="item.split(' ')[0]=='Reserved'" (click)='isItTakenNextMonthReservationReport(1)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item.split(' ')[0]!='Reserved' && item!='free'" (click)='isItTakenNextMonthReservationReport(1)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
+            </div>
+            <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Thursday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">2</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <div *ngFor="let item of isItTakenNextMonth(2)">
+                <a *ngIf="item.split(' ')[0]=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
+                <a *ngIf="item.split(' ')[0]!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+
+                </div>
+                <div *ngFor="let item of isItTakenNextMonthReservation(2)">
+                    <a *ngIf="item.split(' ')[0]=='Reserved'" (click)='isItTakenNextMonthReservationReport(2)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item.split(' ')[0]!='Reserved' && item!='free'" (click)='isItTakenNextMonthReservationReport(2)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
+            </div>
+            
+            <div *ngIf="index+1==lastDayOfMonthNumber && lastDayOfMonth =='Friday'" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                <h5 class="row align-items-center">
+                <span class="date col-1">1</span>
+                <small class="col d-sm-none text-center text-muted">Thursday</small>
+                <span class="col-1"></span>
+                </h5>
+                <div *ngFor="let item of isItTakenNextMonth(1)">
+                <a *ngIf="item.split(' ')[0]=='Hot'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" >{{item}}</a>
+                <a *ngIf="item.split(' ')[0]!='Hot' && item!='free'" class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" >{{item}}</a>
+                </div>
+                <div *ngFor="let item of isItTakenNextMonthReservation(1)">
+                    <a *ngIf="item.split(' ')[0]=='Reserved'" (click)='isItTakenNextMonthReservationReport(1)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-warning text-white" >{{item}}</a>
+    
+                    <a *ngIf="item.split(' ')[0]!='Reserved' && item!='free'" (click)='isItTakenNextMonthReservationReport(1)' class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" >{{item}}</a>
+                </div>
+            </div>
+            
+            <div *ngIf="((index+1)-saturday===0) || ((index+1)-saturday-7===0) || ((index+1)-saturday-14===0) || ((index+1)-saturday-21===0) || ((index+1)-saturday-28===0)" class="w-100"></div>
+        </ng-container>
+      
+     
+    </div>
+  </div>
+

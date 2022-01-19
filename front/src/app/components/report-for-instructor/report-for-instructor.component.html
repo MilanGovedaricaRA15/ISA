@@ -1,0 +1,31 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title m-b-0" style="font-size: 28px;">Report</h5>
+                </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Grade</th>
+                                <th scope="col-6">Total Revenue</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngFor="let item of instructorFavors;let index = index;">
+                            <tr>
+                                <td scope="col">{{item.name}} ({{item.description}})</td>
+                                <td scope="col">{{averageGrade[index]}}</td>
+                                <td scope="col-6">{{totalCostOfFavors[index]}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h1 style="text-align: center;">Total Revenue: {{totalCostOfFavor}}</h1>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

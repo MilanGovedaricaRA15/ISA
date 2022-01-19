@@ -39,6 +39,36 @@ public class FavorReservationController {
         return new ResponseEntity<FavorReservationDTO>(new FavorReservationDTO(favorReservationService.getById(id)), HttpStatus.OK);
     }
 
+    @GetMapping("/favorReservations/getAllReservationsOfFavorFromTill")
+    public ResponseEntity<List<FavorReservationDTO>> getAllReservationsOfFavorFromTill(@RequestParam("id") Long id, @RequestParam("from") String from, @RequestParam("to") String to) {
+
+        List<FavorReservationDTO> reservations = new ArrayList<FavorReservationDTO>();
+        for (FavorReservation fr : favorReservationService.getAllReservationsOfFavorFromTill(id, from, to)) {
+            reservations.add(new FavorReservationDTO(fr));
+        }
+        return new ResponseEntity<List<FavorReservationDTO>>(reservations, HttpStatus.OK);
+    }
+
+    @GetMapping("/favorReservations/getAllReservationsFromTill")
+    public ResponseEntity<List<FavorReservationDTO>> getAllReservationsFromTill(@RequestParam("id") Long id,@RequestParam("from") String from, @RequestParam("to") String to) {
+
+        List<FavorReservationDTO> reservations = new ArrayList<FavorReservationDTO>();
+        for (FavorReservation fr : favorReservationService.getAllReservationsFromTill(id, from, to)) {
+            reservations.add(new FavorReservationDTO(fr));
+        }
+        return new ResponseEntity<List<FavorReservationDTO>>(reservations, HttpStatus.OK);
+    }
+
+    @GetMapping("/favorReservations/getAllReservationsOfFavor")
+    public ResponseEntity<List<FavorReservationDTO>> getAllReservationsOfFavor(@RequestParam("id") Long id) {
+
+        List<FavorReservationDTO> favorsList = new ArrayList<FavorReservationDTO>();
+        for (FavorReservation fr : favorReservationService.getAllReservationsOfFavor(id)) {
+            favorsList.add(new FavorReservationDTO(fr));
+        }
+        return new ResponseEntity<List<FavorReservationDTO>>(favorsList, HttpStatus.OK);
+    }
+
     @PostMapping("/favorReservations/addReservationByOwner")
     public ResponseEntity<Boolean> addReservationByOwner(@RequestBody FavorReservation favorReservation, HttpServletRequest request) {
         if (request.getSession(false).getAttribute("role")!=null) {

@@ -61,6 +61,9 @@ import { AddAnswerToComplaintComponent } from './components/add-answer-to-compla
 import { AddReasonForDeletingRequestComponent } from './components/add-reason-for-deleting-request/add-reason-for-deleting-request.component';
 import { AddAnswerForDecliningRegistrationComponent } from './components/add-answer-for-declining-registration/add-answer-for-declining-registration.component';
 import { ReservationsPageClientComponent } from './components/reservations-page-client/reservations-page-client.component';
+import { FavorCalendarComponent } from './components/favor-calendar/favor-calendar.component';
+import { ReportForInstructorComponent } from './components/report-for-instructor/report-for-instructor.component';
+import { ReportForInstructorCalendarComponent } from './components/report-for-instructor-calendar/report-for-instructor-calendar.component';
 import { GradeEntityClientComponent } from './components/grade-entity-client/grade-entity-client.component';
 import { GradeShipClientComponent } from './components/grade-ship-client/grade-ship-client.component';
 import { GradeInstructorClientComponent } from './components/grade-instructor-client/grade-instructor-client.component';
@@ -124,6 +127,9 @@ import { GradeInstructorClientComponent } from './components/grade-instructor-cl
     AddReasonForDeletingRequestComponent,
     AddAnswerForDecliningRegistrationComponent,
     ReservationsPageClientComponent,
+    FavorCalendarComponent,
+    ReportForInstructorComponent,
+    ReportForInstructorCalendarComponent,
     GradeEntityClientComponent,
     GradeShipClientComponent,
     GradeInstructorClientComponent

@@ -66,7 +66,7 @@
           <app-owner-navbar (profile)="goToProfile()" *ngIf="showCompNumber === 3 || showCompNumber === 4 || showCompNumber === 205 || showCompNumber === 5 
                                       || showCompNumber === 6 || showCompNumber === 50 || showCompNumber === 52 || showCompNumber === 210 || showCompNumber === 211 
                                       || showCompNumber === 61 || showCompNumber === 62 || showCompNumber === 63 || showCompNumber === 64 
-                                      || showCompNumber === 300 || showCompNumber === 301 || showCompNumber === 302" ></app-owner-navbar>
+                                      || showCompNumber === 300 || showCompNumber === 301 || showCompNumber === 302 || showCompNumber === 303" ></app-owner-navbar>
           <app-register-form-client (registerClient)="onRegisterClient($event)" *ngIf="showCompNumber === 21"></app-register-form-client>
           <app-registerForm (register)="onRegister($event)" *ngIf="showCompNumber === 1"></app-registerForm>
           <app-login-form (login)="onLogin($event)" (clientToShowAuthenticated)="onClientLogin($event)" (profileAdministrator)="showAdministratorProfile($event)" *ngIf="showCompNumber === 2"></app-login-form>
@@ -94,13 +94,16 @@
           <app-add-new-administrator (adminAdded)="adminAdded($event)" *ngIf="showCompNumber === 50"> </app-add-new-administrator>
           <app-add-new-ship (shipToShow)="onShipClick($event)" *ngIf="showCompNumber === 206"></app-add-new-ship>
           <app-client-profile [clientAuthenticated]="clientToShowAuthenticated" *ngIf="showCompNumber === 31"></app-client-profile>
-          <app-instructor-profile *ngIf="showCompNumber === 61" (seeUser)="seeUserOwner($event)" (sendFavorReservation)="receiveFavorReservation($event)" (addNewFavorEmiter)="addNewFavor($event)" (favorToShow)="onFavorClick($event)"></app-instructor-profile>
-          <app-favor-profile *ngIf="showCompNumber === 62"></app-favor-profile>
+          <app-instructor-profile *ngIf="showCompNumber === 61" (showInstructorReport)="showReport()" (seeUser)="seeUserOwner($event)" (sendFavorReservation)="receiveFavorReservation($event)" (addNewFavorEmiter)="addNewFavor($event)" (favorToShow)="onFavorClick($event)"></app-instructor-profile>
+          <app-favor-profile [favor]="favorToShow" (favorHotOffersForHotOffer)="updateFavorHotOffers($event)" *ngIf="showCompNumber === 62"></app-favor-profile>
+          <app-favor-calendar (sendFavorReservation)="receiveFavorReservation($event)" [favorForApp]="favorForHotOffers" *ngIf="showCompNumber === 62"></app-favor-calendar>
           <app-add-new-favor (favorToShow)="onFavorClick($event)" *ngIf="showCompNumber === 63"></app-add-new-favor>
           <app-add-favor-reservation-report (goToProfile)="goToProfile()" [favorReservation]="favorReservationReceive" *ngIf="showCompNumber === 64"></app-add-favor-reservation-report>
           <app-add-answer-to-complaint (answerSended)="answerIsSended()" *ngIf="showCompNumber === 300"></app-add-answer-to-complaint>
           <app-add-reason-for-deleting-request (reasonSended)="reasonIsSended()" *ngIf="showCompNumber === 301"></app-add-reason-for-deleting-request>
           <app-add-answer-for-declining-registration (decliningReason)="registrationReasonIsSended()" *ngIf="showCompNumber === 302"></app-add-answer-for-declining-registration>
+          <app-report-for-instructor *ngIf="showCompNumber === 303"></app-report-for-instructor>
+          <app-report-for-instructor-calendar (sendFavorReservation)="receiveFavorReservation($event)" *ngIf="showCompNumber === 303"></app-report-for-instructor-calendar>
         </div>
       </div>
     </div>

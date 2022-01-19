@@ -18,6 +18,7 @@ delete from ship_service_price where id!=0;
 delete from favor_service_price where id!=0;
 delete from ships_grades where ship_id!=0;
 delete from cottages_grades where cottage_id!=0;
+delete from favors_grades where instructors_favor_id!=0;
 delete from users_grades where user_id!=0;
 delete from grades where id!=0;
 delete from cottages where id!=0;
@@ -368,6 +369,38 @@ insert into cottages_grades(cottage_id, grades_id) values (7, 47);
 insert into cottages_grades(cottage_id, grades_id) values (7, 48);
 insert into cottages_grades(cottage_id, grades_id) values (6, 49);
 insert into cottages_grades(cottage_id, grades_id) values (14, 50);
+
+insert into favors_grades(grades_id, instructors_favor_id) values (21, 1);
+insert into favors_grades(grades_id, instructors_favor_id) values (22, 2);
+insert into favors_grades(grades_id, instructors_favor_id) values (23, 3);
+insert into favors_grades(grades_id, instructors_favor_id) values (24, 4);
+insert into favors_grades(grades_id, instructors_favor_id) values (25, 3);
+insert into favors_grades(grades_id, instructors_favor_id) values (26, 1);
+insert into favors_grades(grades_id, instructors_favor_id) values (27, 2);
+insert into favors_grades(grades_id, instructors_favor_id) values (28, 5);
+insert into favors_grades(grades_id, instructors_favor_id) values (29, 6);
+insert into favors_grades(grades_id, instructors_favor_id) values (30, 7);
+insert into favors_grades(grades_id, instructors_favor_id) values (31, 8);
+insert into favors_grades(grades_id, instructors_favor_id) values (32, 7);
+insert into favors_grades(grades_id, instructors_favor_id) values (33, 8);
+insert into favors_grades(grades_id, instructors_favor_id) values (34, 4);
+insert into favors_grades(grades_id, instructors_favor_id) values (35, 3);
+insert into favors_grades(grades_id, instructors_favor_id) values (36, 1);
+insert into favors_grades(grades_id, instructors_favor_id) values (37, 2);
+insert into favors_grades(grades_id, instructors_favor_id) values (38, 1);
+insert into favors_grades(grades_id, instructors_favor_id) values (39, 4);
+insert into favors_grades(grades_id, instructors_favor_id) values (40, 4);
+insert into favors_grades(grades_id, instructors_favor_id) values (41, 3);
+insert into favors_grades(grades_id, instructors_favor_id) values (42, 2);
+insert into favors_grades(grades_id, instructors_favor_id) values (43, 2);
+insert into favors_grades(grades_id, instructors_favor_id) values (44, 1);
+insert into favors_grades(grades_id, instructors_favor_id) values (45, 1);
+insert into favors_grades(grades_id, instructors_favor_id) values (46, 4);
+insert into favors_grades(grades_id, instructors_favor_id) values (47, 7);
+insert into favors_grades(grades_id, instructors_favor_id) values (48, 7);
+insert into favors_grades(grades_id, instructors_favor_id) values (49, 6);
+insert into favors_grades(grades_id, instructors_favor_id) values (50, 2);
+insert into favors_grades(grades_id, instructors_favor_id) values (51, 8);
 
 insert into users_grades(user_id, grades_id) values (1, 51);
 insert into users_grades(user_id, grades_id) values (2, 52);
@@ -753,6 +786,18 @@ insert into favor_reservations (id, available_from, available_till, cost, client
 values (5, DATE('2022-01-23'), DATE('2022-01-25'), 900, 14, 8, null);
 insert into favor_reservations (id, available_from, available_till, cost, client_id, favor_id, services)
 values (6, DATE('2022-02-01'), DATE('2022-02-03'), 600, 14, 6, null);
+insert into favor_reservations (id, available_from, available_till, cost, client_id, favor_id, services)
+values (7, DATE('2022-01-02'), DATE('2022-01-12'), 1600, 14, 1, null);
+insert into favor_reservations (id, available_from, available_till, cost, client_id, favor_id, services)
+values (8, DATE('2022-01-17'), DATE('2022-01-25'), 1400, 14, 3, null);
+insert into favor_reservations (id, available_from, available_till, cost, client_id, favor_id, services)
+values (9, DATE('2022-01-01'), DATE('2022-01-06'), 800, 14, 2, null);
+insert into favor_reservations (id, available_from, available_till, cost, client_id, favor_id, services)
+values (10, DATE('2021-12-29'), DATE('2022-01-02'), 1000, 14, 4, null);
+insert into favor_reservations (id, available_from, available_till, cost, client_id, favor_id, services)
+values (11, DATE('2022-01-20'), DATE('2022-01-25'), 900, 14, 4, null);
+insert into favor_reservations (id, available_from, available_till, cost, client_id, favor_id, services)
+values (12, DATE('2022-03-01'), DATE('2022-03-03'), 600, 14, 4, null);
 
 insert into concurent_watcher (id, table_name, is_writing) values (1, 'CottageReservation', false);
 insert into concurent_watcher (id, table_name, is_writing) values (2, 'Cottage', false);

@@ -17,4 +17,7 @@ public interface FavorReservationService {
     List<FavorReservation> getAllReservationsOfInstructorFavors(String email);
     public List<FavorReservation> getFavorReservationsOfClient(String email);
     public Boolean cancelFavorReservationByClient(FavorReservation favorReservation);
+    public List<FavorReservation> getAllReservationsOfFavorFromTill(Long id, String from, String to);
+    public List<FavorReservation> getAllReservationsOfFavor(Long id);
+    public List<FavorReservation> getAllReservationsFromTill(Long id, String from, String to);
 }
