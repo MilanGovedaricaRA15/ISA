@@ -40,7 +40,10 @@
                             <span class="error" *ngIf="country.errors?.pattern">Only letters allowed.First letter must be capital.</span>
                         </div>
                     </div>
-                    <div class="col-md-12"><label class="labels">E-mail:</label><input type="text"  [value]="ownerChange.email" class="form-control" placeholder="E-mail" disabled/>
+                    <div class="col-md-12"><label class="labels">E-mail:</label><input type="text"  [value]="ownerChange.email" class="form-control" placeholder="E-mail" disabled/></div>
+                    <div class="col-md-12"><label class="labels">Points:</label><input type="text"  [value]="ownerChange.points" class="form-control" placeholder="Points" disabled/></div>
+                    <div class="col-md-12"><label class="labels">Type:</label><input type="text"  [value]="ownerChange.type" class="form-control" placeholder="Type" disabled/></div>
+                    <div class="col-md-12"><label class="labels">Loyalty:</label><input type="text"  [value]="type" class="form-control" placeholder="Loyalty" disabled/>
                         
                     </div>
                     <div class="col-md-12"><label class="labels">City:</label><input type="text" formControlName="city" [(ngModel)]="ownerChange.city"  class="form-control" placeholder="City"/>

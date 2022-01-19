@@ -27,6 +27,7 @@ export class ShipOwnerProfileComponent implements OnInit {
   wrongPassword: Boolean;
   alreadySent: Boolean;
   nameForSearch: String;
+  type: String;
   ships: Array<Ship>;
   @Output() shipToShow = new EventEmitter<Ship>();
   @Output() addNewShipEmiter = new EventEmitter<boolean>();
@@ -51,6 +52,12 @@ export class ShipOwnerProfileComponent implements OnInit {
         this.ships = ret;
         
       })
+      if(this.owner.type.toString() == 'Regular')
+        this.type = '0%'
+      else if(this.owner.type.toString() == 'Silver')
+        this.type = '10%'
+      else
+        this.type = '20%'
     })
     this.editOwnerForm = new FormGroup({
       "firstName": new FormControl(null,[Validators.required,Validators.pattern('[A-Z]{1}[a-z]+')]),

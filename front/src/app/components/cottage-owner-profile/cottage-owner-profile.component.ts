@@ -26,6 +26,7 @@ export class CottageOwnerProfileComponent implements OnInit {
   wrongPassword: Boolean;
   alreadySent: Boolean;
   nameForSearch: String;
+  type:String;
   cottages: Array<Cottage>;
   @Output() cottageToShow = new EventEmitter<Cottage>();
   @Output() addNewCottageEmiter = new EventEmitter<boolean>();
@@ -50,6 +51,13 @@ export class CottageOwnerProfileComponent implements OnInit {
         this.cottages = ret;
         
       })
+      if(this.owner.type.toString() == 'Regular')
+        this.type = '0%'
+      else if(this.owner.type.toString() == 'Silver')
+        this.type = '10%'
+      else
+        this.type = '20%'
+     
     })
     this.editOwnerForm = new FormGroup({
       "firstName": new FormControl(null,[Validators.required,Validators.pattern('[A-Z]{1}[a-z]+')]),
