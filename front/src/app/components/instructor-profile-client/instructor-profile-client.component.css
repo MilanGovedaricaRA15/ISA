@@ -8,3 +8,7 @@
     display: table;
     clear: both;
 }
+
+table, th, tr, td {
+    border: solid black 1px;
+}
