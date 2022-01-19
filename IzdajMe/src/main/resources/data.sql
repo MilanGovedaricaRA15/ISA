@@ -18,6 +18,7 @@ delete from ship_service_price where id!=0;
 delete from favor_service_price where id!=0;
 delete from ships_grades where ship_id!=0;
 delete from cottages_grades where cottage_id!=0;
+delete from users_grades where user_id!=0;
 delete from grades where id!=0;
 delete from cottages where id!=0;
 delete from favors where id!=0;
@@ -153,146 +154,146 @@ values (9, 22,DATE('2021-09-01'),DATE('2022-06-01'), 'Long', 'fourth', 200, '123
 insert into ships(id, owner_id, available_from, available_till, name, type, length, engine_number, engine_power, top_speed, navigation_equipment, address, description, images, capacity, rules,fishing_equipment,cancel_requirements,cost_per_night)
 values (10, 20,DATE('2021-09-01'),DATE('2022-07-01'), 'Expensive', 'fifth', 84, '123e456', 117, 300, null, 'Nikole Tesle 6', 'Description', null, 15, 'pravila',null,'free',50);
 
-insert into grades(id, user_id, value, comment)
-values (1, 3, 7 , 'Not too bad');
-insert into grades(id, user_id, value, comment)
-values (2, 3, 7, 'Not too baaad');
-insert into grades(id, user_id, value, comment)
-values (3, 3, 6, 'Bad');
-insert into grades(id, user_id, value, comment)
-values (4, 3, 9, 'Very good');
-insert into grades(id, user_id, value, comment)
-values (5, 3, 8, 'Good');
-insert into grades(id, user_id, value, comment)
-values (6, 3, 7 , 'Not too bad');
-insert into grades(id, user_id, value, comment)
-values (7, 3, 7, 'Not too baaad');
-insert into grades(id, user_id, value, comment)
-values (8, 3, 6, 'Bad');
-insert into grades(id, user_id, value, comment)
-values (9, 3, 9, 'Very good');
-insert into grades(id, user_id, value, comment)
-values (10, 3, 8, 'Good');
-insert into grades(id, user_id, value, comment)
-values (11, 27, 7 , 'Not too bad');
-insert into grades(id, user_id, value, comment)
-values (12, 28, 7, 'Not too baaad');
-insert into grades(id, user_id, value, comment)
-values (13, 29, 6, 'Bad');
-insert into grades(id, user_id, value, comment)
-values (14, 30, 9, 'Very good');
-insert into grades(id, user_id, value, comment)
-values (15, 30, 8, 'Good');
-insert into grades(id, user_id, value, comment)
-values (16, 30, 7 , 'Not too bad');
-insert into grades(id, user_id, value, comment)
-values (17, 30, 7, 'Not too baaad');
-insert into grades(id, user_id, value, comment)
-values (18, 30, 6, 'Bad');
-insert into grades(id, user_id, value, comment)
-values (19, 30, 9, 'Very good');
-insert into grades(id, user_id, value, comment)
-values (20, 30, 8, 'Good');
-insert into grades(id, user_id, value, comment)
-values (21, 30, 7 , 'Not too bad');
-insert into grades(id, user_id, value, comment)
-values (22, 30, 7, 'Not too baaad');
-insert into grades(id, user_id, value, comment)
-values (23, 30, 6, 'Bad');
-insert into grades(id, user_id, value, comment)
-values (24, 30, 9, 'Very good');
-insert into grades(id, user_id, value, comment)
-values (25, 30, 10, 'Great');
-insert into grades(id, user_id, value, comment)
-values (26, 27, 7 , 'Not too bad');
-insert into grades(id, user_id, value, comment)
-values (27, 27, 7, 'Not too baaad');
-insert into grades(id, user_id, value, comment)
-values (28, 27, 6, 'Bad');
-insert into grades(id, user_id, value, comment)
-values (29, 27, 9, 'Very good');
-insert into grades(id, user_id, value, comment)
-values (30, 28, 8, 'Good');
-insert into grades(id, user_id, value, comment)
-values (31, 28, 7 , 'Not too bad');
-insert into grades(id, user_id, value, comment)
-values (32, 28, 7, 'Not too baaad');
-insert into grades(id, user_id, value, comment)
-values (33, 28, 6, 'Bad');
-insert into grades(id, user_id, value, comment)
-values (34, 28, 9, 'Very good');
-insert into grades(id, user_id, value, comment)
-values (35, 28, 8, 'Good');
-insert into grades(id, user_id, value, comment)
-values (36, 29, 10, 'Great');
-insert into grades(id, user_id, value, comment)
-values (37, 29, 7, 'Not too baaad');
-insert into grades(id, user_id, value, comment)
-values (38, 29, 6, 'Bad');
-insert into grades(id, user_id, value, comment)
-values (39, 29, 9, 'Very good');
-insert into grades(id, user_id, value, comment)
-values (40, 29, 8, 'Good');
-insert into grades(id, user_id, value, comment)
-values (41, 29, 7, 'Not too bad');
-insert into grades(id, user_id, value, comment)
-values (42, 29, 7, 'Not too baaad');
-insert into grades(id, user_id, value, comment)
-values (43, 29, 6, 'Bad');
-insert into grades(id, user_id, value, comment)
-values (44, 28, 10, 'Great');
-insert into grades(id, user_id, value, comment)
-values (45, 28, 8, 'Good');
-insert into grades(id, user_id, value, comment)
-values (46, 28, 7 , 'Not too bad');
-insert into grades(id, user_id, value, comment)
-values (47, 28, 7, 'Not too baaad');
-insert into grades(id, user_id, value, comment)
-values (48, 28, 6, 'Bad');
-insert into grades(id, user_id, value, comment)
-values (49, 28, 9, 'Very good');
-insert into grades(id, user_id, value, comment)
-values (50, 28, 8, 'Good');
-insert into grades(id, user_id, value, comment)
-values (51, 27, 7 , 'Not too bad');
-insert into grades(id, user_id, value, comment)
-values (52, 27, 7, 'Not too baaad');
-insert into grades(id, user_id, value, comment)
-values (53, 27, 6, 'Bad');
-insert into grades(id, user_id, value, comment)
-values (54, 27, 10, 'Great');
-insert into grades(id, user_id, value, comment)
-values (55, 27, 8, 'Good');
-insert into grades(id, user_id, value, comment)
-values (56, 30, 7 , 'Not too bad');
-insert into grades(id, user_id, value, comment)
-values (57, 30, 7, 'Not too baaad');
-insert into grades(id, user_id, value, comment)
-values (58, 30, 6, 'Bad');
-insert into grades(id, user_id, value, comment)
-values (59, 29, 9, 'Very good');
-insert into grades(id, user_id, value, comment)
-values (60, 29, 8, 'Good');
-insert into grades(id, user_id, value, comment)
-values (61, 30, 7 , 'Not too bad');
-insert into grades(id, user_id, value, comment)
-values (62, 30, 7, 'Not too baaad');
-insert into grades(id, user_id, value, comment)
-values (63, 30, 6, 'Bad');
-insert into grades(id, user_id, value, comment)
-values (64, 27, 9, 'Very good');
-insert into grades(id, user_id, value, comment)
-values (65, 27, 10, 'Great');
-insert into grades(id, user_id, value, comment)
-values (66, 27, 10, 'Great');
-insert into grades(id, user_id, value, comment)
-values (67, 28, 7, 'Not too baaad');
-insert into grades(id, user_id, value, comment)
-values (68, 28, 10, 'Great');
-insert into grades(id, user_id, value, comment)
-values (69, 29, 9, 'Very good');
-insert into grades(id, user_id, value, comment)
-values (70, 27, 8, 'Good');
+insert into grades(id, user_id, value, comment, seen)
+values (1, 3, 7 , 'Not too bad', true);
+insert into grades(id, user_id, value, comment, seen)
+values (2, 3, 7, 'Not too baaad', true);
+insert into grades(id, user_id, value, comment, seen)
+values (3, 3, 6, 'Bad', true);
+insert into grades(id, user_id, value, comment, seen)
+values (4, 3, 9, 'Very good', true);
+insert into grades(id, user_id, value, comment, seen)
+values (5, 3, 8, 'Good', true);
+insert into grades(id, user_id, value, comment, seen)
+values (6, 3, 7 , 'Not too bad', true);
+insert into grades(id, user_id, value, comment, seen)
+values (7, 3, 7, 'Not too baaad', true);
+insert into grades(id, user_id, value, comment, seen)
+values (8, 3, 6, 'Bad', true);
+insert into grades(id, user_id, value, comment, seen)
+values (9, 3, 9, 'Very good', true);
+insert into grades(id, user_id, value, comment, seen)
+values (10, 3, 8, 'Good', true);
+insert into grades(id, user_id, value, comment, seen)
+values (11, 27, 7 , 'Not too bad', true);
+insert into grades(id, user_id, value, comment, seen)
+values (12, 28, 7, 'Not too baaad', true);
+insert into grades(id, user_id, value, comment, seen)
+values (13, 29, 6, 'Bad', true);
+insert into grades(id, user_id, value, comment, seen)
+values (14, 30, 9, 'Very good', true);
+insert into grades(id, user_id, value, comment, seen)
+values (15, 30, 8, 'Good', true);
+insert into grades(id, user_id, value, comment, seen)
+values (16, 30, 7 , 'Not too bad', true);
+insert into grades(id, user_id, value, comment, seen)
+values (17, 30, 7, 'Not too baaad', true);
+insert into grades(id, user_id, value, comment, seen)
+values (18, 30, 6, 'Bad', true);
+insert into grades(id, user_id, value, comment, seen)
+values (19, 30, 9, 'Very good', true);
+insert into grades(id, user_id, value, comment, seen)
+values (20, 30, 8, 'Good', true);
+insert into grades(id, user_id, value, comment, seen)
+values (21, 30, 7 , 'Not too bad', true);
+insert into grades(id, user_id, value, comment, seen)
+values (22, 30, 7, 'Not too baaad', true);
+insert into grades(id, user_id, value, comment, seen)
+values (23, 30, 6, 'Bad', true);
+insert into grades(id, user_id, value, comment, seen)
+values (24, 30, 9, 'Very good', true);
+insert into grades(id, user_id, value, comment, seen)
+values (25, 30, 10, 'Great', true);
+insert into grades(id, user_id, value, comment, seen)
+values (26, 27, 7 , 'Not too bad', true);
+insert into grades(id, user_id, value, comment, seen)
+values (27, 27, 7, 'Not too baaad', true);
+insert into grades(id, user_id, value, comment, seen)
+values (28, 27, 6, 'Bad', true);
+insert into grades(id, user_id, value, comment, seen)
+values (29, 27, 9, 'Very good', true);
+insert into grades(id, user_id, value, comment, seen)
+values (30, 28, 8, 'Good', true);
+insert into grades(id, user_id, value, comment, seen)
+values (31, 28, 7 , 'Not too bad', true);
+insert into grades(id, user_id, value, comment, seen)
+values (32, 28, 7, 'Not too baaad', true);
+insert into grades(id, user_id, value, comment, seen)
+values (33, 28, 6, 'Bad', true);
+insert into grades(id, user_id, value, comment, seen)
+values (34, 28, 9, 'Very good', true);
+insert into grades(id, user_id, value, comment, seen)
+values (35, 28, 8, 'Good', true);
+insert into grades(id, user_id, value, comment, seen)
+values (36, 29, 10, 'Great', true);
+insert into grades(id, user_id, value, comment, seen)
+values (37, 29, 7, 'Not too baaad', true);
+insert into grades(id, user_id, value, comment, seen)
+values (38, 29, 6, 'Bad', true);
+insert into grades(id, user_id, value, comment, seen)
+values (39, 29, 9, 'Very good', true);
+insert into grades(id, user_id, value, comment, seen)
+values (40, 29, 8, 'Good', true);
+insert into grades(id, user_id, value, comment, seen)
+values (41, 29, 7, 'Not too bad', true);
+insert into grades(id, user_id, value, comment, seen)
+values (42, 29, 7, 'Not too baaad', true);
+insert into grades(id, user_id, value, comment, seen)
+values (43, 29, 6, 'Bad', true);
+insert into grades(id, user_id, value, comment, seen)
+values (44, 28, 10, 'Great', true);
+insert into grades(id, user_id, value, comment, seen)
+values (45, 28, 8, 'Good', true);
+insert into grades(id, user_id, value, comment, seen)
+values (46, 28, 7 , 'Not too bad', true);
+insert into grades(id, user_id, value, comment, seen)
+values (47, 28, 7, 'Not too baaad', true);
+insert into grades(id, user_id, value, comment, seen)
+values (48, 28, 6, 'Bad', true);
+insert into grades(id, user_id, value, comment, seen)
+values (49, 28, 9, 'Very good', true);
+insert into grades(id, user_id, value, comment, seen)
+values (50, 28, 8, 'Good', true);
+insert into grades(id, user_id, value, comment, seen)
+values (51, 27, 7 , 'Not too bad', true);
+insert into grades(id, user_id, value, comment, seen)
+values (52, 27, 7, 'Not too baaad', true);
+insert into grades(id, user_id, value, comment, seen)
+values (53, 27, 6, 'Bad', true);
+insert into grades(id, user_id, value, comment, seen)
+values (54, 27, 10, 'Great', true);
+insert into grades(id, user_id, value, comment, seen)
+values (55, 27, 8, 'Good', true);
+insert into grades(id, user_id, value, comment, seen)
+values (56, 30, 7 , 'Not too bad', true);
+insert into grades(id, user_id, value, comment, seen)
+values (57, 30, 7, 'Not too baaad', true);
+insert into grades(id, user_id, value, comment, seen)
+values (58, 30, 6, 'Bad', true);
+insert into grades(id, user_id, value, comment, seen)
+values (59, 29, 9, 'Very good', true);
+insert into grades(id, user_id, value, comment, seen)
+values (60, 29, 8, 'Good', true);
+insert into grades(id, user_id, value, comment, seen)
+values (61, 30, 7 , 'Not too bad', true);
+insert into grades(id, user_id, value, comment, seen)
+values (62, 30, 7, 'Not too baaad', true);
+insert into grades(id, user_id, value, comment, seen)
+values (63, 30, 6, 'Bad', true);
+insert into grades(id, user_id, value, comment, seen)
+values (64, 27, 9, 'Very good', true);
+insert into grades(id, user_id, value, comment, seen)
+values (65, 27, 10, 'Great', true);
+insert into grades(id, user_id, value, comment, seen)
+values (66, 27, 10, 'Great', true);
+insert into grades(id, user_id, value, comment, seen)
+values (67, 28, 7, 'Not too baaad', true);
+insert into grades(id, user_id, value, comment, seen)
+values (68, 28, 10, 'Great', true);
+insert into grades(id, user_id, value, comment, seen)
+values (69, 29, 9, 'Very good', true);
+insert into grades(id, user_id, value, comment, seen)
+values (70, 27, 8, 'Good', true);
 
 insert into favors (id, instructor_id, name, address, description, images, num_of_persons, rules, services, cost, available_from, available_till, cancellation_condition)
 values (1, 4, 'Cas pecanja', 'Dunavska 13', 'Pecanje pecaljkom', null, 4, 'Samo punoletni mogu', null, 1200, DATE('2022-01-01'), DATE('2022-03-17'), 'Free');
@@ -367,6 +368,27 @@ insert into cottages_grades(cottage_id, grades_id) values (7, 47);
 insert into cottages_grades(cottage_id, grades_id) values (7, 48);
 insert into cottages_grades(cottage_id, grades_id) values (6, 49);
 insert into cottages_grades(cottage_id, grades_id) values (14, 50);
+
+insert into users_grades(user_id, grades_id) values (1, 51);
+insert into users_grades(user_id, grades_id) values (2, 52);
+insert into users_grades(user_id, grades_id) values (3, 53);
+insert into users_grades(user_id, grades_id) values (4, 54);
+insert into users_grades(user_id, grades_id) values (5, 55);
+insert into users_grades(user_id, grades_id) values (6, 56);
+insert into users_grades(user_id, grades_id) values (7, 57);
+insert into users_grades(user_id, grades_id) values (8, 58);
+insert into users_grades(user_id, grades_id) values (1, 59);
+insert into users_grades(user_id, grades_id) values (2, 60);
+insert into users_grades(user_id, grades_id) values (3, 61);
+insert into users_grades(user_id, grades_id) values (4, 62);
+insert into users_grades(user_id, grades_id) values (5, 63);
+insert into users_grades(user_id, grades_id) values (6, 64);
+insert into users_grades(user_id, grades_id) values (7, 65);
+insert into users_grades(user_id, grades_id) values (8, 66);
+insert into users_grades(user_id, grades_id) values (1, 67);
+insert into users_grades(user_id, grades_id) values (2, 68);
+insert into users_grades(user_id, grades_id) values (3, 69);
+insert into users_grades(user_id, grades_id) values (4, 70);
 
 insert into hot_offers (id, available_from, available_till, cost, free, num_of_people, services)
 values (1, DATE('2021-11-20'), DATE('2021-11-25'), 50, TRUE, 3, null);
@@ -695,6 +717,8 @@ insert into cottage_reservations (id, available_from, available_till, cost, clie
 values (8, DATE('2022-02-04'), DATE('2022-02-07'), 480, 14, 6, null);
 insert into cottage_reservations (id, available_from, available_till, cost, client_id, cottage_id, services)
 values (9, DATE('2022-02-11'), DATE('2022-02-13'), 250, 14, 7, null);
+insert into cottage_reservations (id, available_from, available_till, cost, client_id, cottage_id, services)
+values (10, DATE('2021-08-02'), DATE('2021-08-05'), 250, 14, 1, null);
 
 insert into ship_reservations (id, available_from, available_till, cost, client_id, ship_id, services)
 values (1, DATE('2021-12-20'), DATE('2021-12-23'), 233, 2, 1, null);

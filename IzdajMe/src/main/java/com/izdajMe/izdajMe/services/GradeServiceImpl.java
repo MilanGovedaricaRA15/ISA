@@ -1,10 +1,7 @@
 package com.izdajMe.izdajMe.services;
 
 import com.izdajMe.izdajMe.model.*;
-import com.izdajMe.izdajMe.repository.CottageRepository;
-import com.izdajMe.izdajMe.repository.GradeRepository;
-import com.izdajMe.izdajMe.repository.InstructorsFavorRepository;
-import com.izdajMe.izdajMe.repository.ShipRepository;
+import com.izdajMe.izdajMe.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
@@ -20,6 +17,8 @@ public class GradeServiceImpl implements GradeService{
     private CottageRepository cottageRepository;
     @Autowired
     private ShipRepository shipRepository;
+    @Autowired
+    private UserRepository userRepository;
     @Autowired
     private InstructorsFavorRepository instructorsFavorRepository;
     @Autowired
@@ -87,5 +86,29 @@ public class GradeServiceImpl implements GradeService{
         }
 
         return newGrades;
+    }
+
+    @Override
+    public Boolean addGrade(Grade grade) {
+        gradeRepository.save(grade);
+        return true;
+    }
+
+    @Override
+    public Boolean addGradeToCottage(Cottage cottage) {
+        cottageRepository.save(cottage);
+        return true;
+    }
+
+    @Override
+    public Boolean addGradeToShip(Ship ship) {
+        shipRepository.save(ship);
+        return true;
+    }
+
+    @Override
+    public Boolean addGradeToUser(User user) {
+        userRepository.save(user);
+        return true;
     }
 }

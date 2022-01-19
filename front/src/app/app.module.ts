@@ -61,6 +61,9 @@ import { AddAnswerToComplaintComponent } from './components/add-answer-to-compla
 import { AddReasonForDeletingRequestComponent } from './components/add-reason-for-deleting-request/add-reason-for-deleting-request.component';
 import { AddAnswerForDecliningRegistrationComponent } from './components/add-answer-for-declining-registration/add-answer-for-declining-registration.component';
 import { ReservationsPageClientComponent } from './components/reservations-page-client/reservations-page-client.component';
+import { GradeEntityClientComponent } from './components/grade-entity-client/grade-entity-client.component';
+import { GradeShipClientComponent } from './components/grade-ship-client/grade-ship-client.component';
+import { GradeInstructorClientComponent } from './components/grade-instructor-client/grade-instructor-client.component';
 
 @NgModule({
   declarations: [
@@ -120,7 +123,10 @@ import { ReservationsPageClientComponent } from './components/reservations-page-
     AddAnswerToComplaintComponent,
     AddReasonForDeletingRequestComponent,
     AddAnswerForDecliningRegistrationComponent,
-    ReservationsPageClientComponent
+    ReservationsPageClientComponent,
+    GradeEntityClientComponent,
+    GradeShipClientComponent,
+    GradeInstructorClientComponent
   ],
   imports: [
     BrowserModule,

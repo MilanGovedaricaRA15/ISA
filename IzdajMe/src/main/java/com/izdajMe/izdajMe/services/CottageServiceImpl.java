@@ -1,6 +1,5 @@
 package com.izdajMe.izdajMe.services;
 
-import com.izdajMe.izdajMe.dto.CottageDTO;
 import com.izdajMe.izdajMe.model.Cottage;
 import com.izdajMe.izdajMe.model.CottageReservation;
 import com.izdajMe.izdajMe.model.HotOffer;

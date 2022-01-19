@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Cottage } from 'src/app/model/cottage';
 import { CottageReservation } from 'src/app/model/cottage-reservation';
 import { FavorReservation } from 'src/app/model/favor-reservation';
+import { Ship } from 'src/app/model/ship';
 import { ShipReservation } from 'src/app/model/ship-reservation';
+import { User } from 'src/app/model/user';
 import { CottageReservationService } from 'src/app/service/cottage-reservation-service.service';
 import { FavorReservationService } from 'src/app/service/favor-reservation.service';
 import { ShipReservationService } from 'src/app/service/ship-reservation-service.service';
@@ -13,6 +16,10 @@ import { UserService } from 'src/app/service/user-service.service';
   styleUrls: ['./reservations-page-client.component.css']
 })
 export class ReservationsPageClientComponent implements OnInit {
+  @Output() gradeCottage = new EventEmitter<Cottage>();
+  @Output() gradeShip = new EventEmitter<Ship>();
+  @Output() gradeInstructor = new EventEmitter<User>();
+
   clientCottageReservations: Array<CottageReservation>;
   clientShipReservations: Array<ShipReservation>;
   clientFavorReservations: Array<FavorReservation>;
@@ -60,6 +67,18 @@ export class ReservationsPageClientComponent implements OnInit {
         }
       });
     });
+  }
+
+  gradeCottageOrOwner(cottage: Cottage): void {
+    this.gradeCottage.emit(cottage);
+  }
+
+  gradeShipOrOwner(ship: Ship): void {
+    this.gradeShip.emit(ship);
+  }
+
+  gradeOneInstructor(instructor: User): void {
+    this.gradeInstructor.emit(instructor);
   }
 
   cancelCottageReservation(cottageReservation: CottageReservation) : void {

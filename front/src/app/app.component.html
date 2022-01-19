@@ -7,7 +7,8 @@
           *ngIf="showCompNumber === 31 || showCompNumber === 32 || showCompNumber === 33 || showCompNumber === 34
           || showCompNumber === 35 || showCompNumber === 36 || showCompNumber === 37
           || showCompNumber === 38 || showCompNumber === 39 || showCompNumber === 40
-          || showCompNumber === 41 || showCompNumber === 42"></app-client-navbar>
+          || showCompNumber === 41 || showCompNumber === 42 || showCompNumber === 43
+          || showCompNumber === 44 || showCompNumber === 45"></app-client-navbar>
 <div class="container">
   <div class="row">
     <div class="col-md-12">
@@ -48,7 +49,19 @@
           <app-instructors-reservations-page-client *ngIf="showCompNumber === 40"></app-instructors-reservations-page-client>
 
           <app-create-a-reservation-client (clientReservations)="goToReservationsPageClient()" *ngIf="showCompNumber === 41"></app-create-a-reservation-client>
-          <app-reservations-page-client *ngIf="showCompNumber === 42"></app-reservations-page-client>
+          <app-reservations-page-client (gradeCottage)="gradeCottage($event)" 
+                                        (gradeShip)="gradeShip($event)"
+                                        (gradeInstructor)="gradeInstructor($event)"
+                                        *ngIf="showCompNumber === 42"></app-reservations-page-client>
+          <app-grade-entity-client (allClientReservations)="goToReservationsPageClient()" 
+                                      [cottageToGrade]="cottageToGradeClient"
+                                      *ngIf="showCompNumber === 43"></app-grade-entity-client>
+          <app-grade-ship-client (allClientReservations)="goToReservationsPageClient()" 
+                                      [shipToGrade]="shipToGradeClient"
+                                      *ngIf="showCompNumber === 44"></app-grade-ship-client>
+          <app-grade-instructor-client (allClientReservations)="goToReservationsPageClient()" 
+                                      [instructorToGrade]="instructorToGradeClient"
+                                      *ngIf="showCompNumber === 45"></app-grade-instructor-client>
 
           <app-owner-navbar (profile)="goToProfile()" *ngIf="showCompNumber === 3 || showCompNumber === 4 || showCompNumber === 205 || showCompNumber === 5 
                                       || showCompNumber === 6 || showCompNumber === 50 || showCompNumber === 52 || showCompNumber === 210 || showCompNumber === 211 
