@@ -33,7 +33,7 @@ export class CottageOwnerReportComponent implements OnInit {
     this.cottageService.getAllCottagesOfOwner().subscribe(ret => {
       this.cottages = ret;
       this.datum = new Date();
-      this.datumTo = this.datum;
+      this.datumTo = new Date(this.datum);
       this.datumToString = this.datumTo.toISOString().split('T')[0];
       
       if(this.datum.getMonth()!=0){
@@ -44,22 +44,20 @@ export class CottageOwnerReportComponent implements OnInit {
           this.datum.setMonth(11);
       }
       this.datumFrom = this.datum;
-      this.datumFromString = this.datumTo.toISOString().split('T')[0];
+      this.datumFromString = this.datumFrom.toISOString().split('T')[0];
       
       
-      for (let ship of ret){
-        this.cottageReservationService.getAllReservationsOfCottageFromTill(ship,this.datumFrom,this.datumTo).subscribe(ret =>{
+      for (let cottage of ret){
+        this.cottageReservationService.getAllReservationsOfCottageFromTill(cottage,this.datumFrom,this.datumTo).subscribe(ret =>{
           let totalCost = 0;
           for (let x of ret){
             totalCost = totalCost + x.cost;
           }
           this.totalCostOfCottages.push(totalCost);
-          this.avarageGrade.push(this.getAvarageGrade(ship));
-          this.cottagesToShow.push(ship);
+          this.avarageGrade.push(this.getAvarageGrade(cottage));
+          this.cottagesToShow.push(cottage);
         })
       }
-     
-      
     })
   }
 

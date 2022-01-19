@@ -34,7 +34,7 @@ export class ShipOwnerReportComponent implements OnInit {
     this.shipService.getAllShipsOfOwner().subscribe(ret => {
       this.ships = ret;
       this.datum = new Date();
-      this.datumTo = this.datum;
+      this.datumTo = new Date(this.datum);
       this.datumToString = this.datumTo.toISOString().split('T')[0];
       
       if(this.datum.getMonth()!=0){
@@ -45,7 +45,7 @@ export class ShipOwnerReportComponent implements OnInit {
           this.datum.setMonth(11);
       }
       this.datumFrom = this.datum;
-      this.datumFromString = this.datumTo.toISOString().split('T')[0];
+      this.datumFromString = this.datumFrom.toISOString().split('T')[0];
       
 
       for (let ship of ret){
