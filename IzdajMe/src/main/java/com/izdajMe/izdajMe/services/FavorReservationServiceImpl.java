@@ -9,6 +9,7 @@ import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +48,21 @@ public class FavorReservationServiceImpl implements FavorReservationService{
         }
 
         return reservationsById;
+    }
+
+    public List<FavorReservation> getAllReservationsOfFavor(Long id) {
+        return favorReservationRepository.findAllByFavorId(id);
+    }
+
+    public List<FavorReservation> getAllReservationsOfFavorFromTill(Long id, String from, String to) {
+        Timestamp fromDateTs = new Timestamp(Long.parseLong(from));
+        Timestamp toDateTs = new Timestamp(Long.parseLong(to));
+        LocalDateTime fromDate = fromDateTs.toLocalDateTime();
+        LocalDateTime toDate = toDateTs.toLocalDateTime();
+
+
+        List<FavorReservation> allFavorReservations = favorReservationRepository.findAllByFavorIdFromTill(id, fromDate, toDate);
+        return allFavorReservations;
     }
 
     public Boolean addReservationByOwner(FavorReservation favorReservation){

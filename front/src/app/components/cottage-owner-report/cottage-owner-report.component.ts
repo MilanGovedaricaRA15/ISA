@@ -59,7 +59,6 @@ export class CottageOwnerReportComponent implements OnInit {
       this.datumFrom = this.datum;
       this.datumFromString = this.datumFrom.toISOString().split('T')[0];
       
-      
       for (let cottage of ret){
         this.cottageReservationService.getAllReservationsOfCottageFromTill(cottage,this.datumFrom,this.datumTo).subscribe(ret =>{
           let totalCost = 0;

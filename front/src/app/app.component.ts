@@ -36,6 +36,7 @@ export class AppComponent {
   favorToShow: InstructorsFavor;
   favorReservation: FavorReservation;
   favorReservationReceive: FavorReservation;
+  favorForHotOffers: InstructorsFavor;
 
   /**
    *
@@ -241,12 +242,21 @@ export class AppComponent {
     });
   }
 
+  showReport() {
+    this.changeNumber(303);
+    sessionStorage.setItem("page",'303');
+  }
+
   changeNumber(index: number) {
     this.showCompNumber = index;
   }
 
   updateHotOffers(fromCottageComponent: Cottage){
     this.cottageForHotOffers = fromCottageComponent;
+  }
+
+  updateFavorHotOffers(fromFavorComponent: InstructorsFavor) {
+    this.favorForHotOffers = fromFavorComponent;
   }
 
   changeProfile(message: string){

@@ -30,6 +30,7 @@ export class InstructorProfileComponent implements OnInit {
   instructorReservations: Array<FavorReservation> = new Array<FavorReservation>();
   allFavors: Array<InstructorsFavor> = new Array<InstructorsFavor>();
   instructorFavors: Array<InstructorsFavor> = new Array<InstructorsFavor>();
+  favorsForReport: Array<InstructorsFavor> = new Array<InstructorsFavor>();
   errorMessage: Boolean = false;
   newReservation1: FavorReservation;
   addReservationForm1:any;
@@ -37,10 +38,15 @@ export class InstructorProfileComponent implements OnInit {
   isReserved1:boolean;
   availableTillError:boolean;
   pickedUser:boolean;
+  datumTo: Date
+  datumFrom: Date
+  datumToString: String = new Date().toISOString().split('T')[0];
+  datumFromString: String = new Date().toISOString().split('T')[0];
   @Output() seeUser = new EventEmitter<User>();
   @Output() favorToShow = new EventEmitter<InstructorsFavor>();
   @Output() addNewFavorEmiter = new EventEmitter<boolean>();
   @Output() sendFavorReservation = new EventEmitter<FavorReservation>();
+  @Output() showInstructorReport = new EventEmitter<string>();
 
   constructor(private userService: UserService, private favorReservationService: FavorReservationService, private instructorsFavorService: InstructorsFavorService, 
               private accountDeleteRequestService: AccountDeleteRequestService) { }
@@ -71,7 +77,7 @@ export class InstructorProfileComponent implements OnInit {
       for(let f of this.allFavors){
         if(f.instructor.id == this.instructor.id)
           this.instructorFavors.push(f);
-      }
+      } 
     });
     
     this.favorReservationService.getAllReservations().subscribe(ret => {
@@ -102,6 +108,7 @@ export class InstructorProfileComponent implements OnInit {
       "newPassword": new FormControl(null,[Validators.required,Validators.pattern('[a-zA-Z ]*')]),
       "newPassword1": new FormControl(null,[Validators.required,Validators.pattern('[a-zA-Z ]*')])
     });
+     
   }
 
   checkFavor(favorId: number): Boolean {
@@ -415,5 +422,13 @@ export class InstructorProfileComponent implements OnInit {
   }
   get cost1() {
     return this.addReservationForm1.get('cost1');
+  }
+
+  showReport(){
+    let elementFrom = <HTMLInputElement> document.getElementById("from");
+    let elementTo = <HTMLInputElement> document.getElementById("to");
+    sessionStorage.setItem("dateFrom", elementFrom.valueAsDate.toString());
+    sessionStorage.setItem("dateTo", elementTo.valueAsDate.toString());
+    this.showInstructorReport.emit();
   }
 }
