@@ -1,6 +1,7 @@
 package com.izdajMe.izdajMe.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 
 @Entity
@@ -38,8 +39,10 @@ public class User {
     protected Boolean prepaid;
     protected Type type;
     protected int points;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Grade> grades;
 
-    public User(long id,String email, String firstName, String lastName, String mobileNumber, String address, String country, String city, Role role, String password, String reason, Boolean prepaid, Type type) {
+    public User(long id,String email, String firstName, String lastName, String mobileNumber, String address, String country, String city, Role role, String password, String reason, Boolean prepaid, Type type, List<Grade> grades) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -55,6 +58,7 @@ public class User {
         this.prepaid = prepaid;
         this.type = type;
         this.points = 0;
+        this.grades = grades;
     }
 
     public User(){
@@ -168,4 +172,12 @@ public class User {
     public int getPoints() { return points; }
 
     public void setPoints(int points) { this.points = points; }
+
+    public List<Grade> getGrades() {
+        return grades;
+    }
+
+    public void setGrades(List<Grade> grades) {
+        this.grades = grades;
+    }
 }

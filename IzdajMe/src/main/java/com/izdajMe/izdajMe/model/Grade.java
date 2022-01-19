@@ -25,6 +25,14 @@ public class Grade {
         seen = false;
     }
 
+    public Grade(long id, User user, int value, String comment, boolean seen) {
+        this.id = id;
+        this.user = user;
+        this.value = value;
+        this.comment = comment;
+        this.seen = seen;
+    }
+
     public long getId() {
         return id;
     }

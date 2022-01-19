@@ -36,6 +36,9 @@ export class AppComponent {
   favorToShow: InstructorsFavor;
   favorReservation: FavorReservation;
   favorReservationReceive: FavorReservation;
+  cottageToGradeClient: Cottage;
+  shipToGradeClient: Ship;
+  instructorToGradeClient: User;
 
   /**
    *
@@ -394,6 +397,27 @@ export class AppComponent {
   goToCreateReservationPageClient() {
     this.changeNumber(41);
     sessionStorage.setItem("page", '41');
+  }
+
+  gradeCottage(cottage: Cottage) {
+    this.cottageToGradeClient = cottage;
+    this.changeNumber(43);
+    sessionStorage.setItem("page", "43");
+    sessionStorage.setItem("cottageToGradeClient", cottage.id.toString());
+  }
+
+  gradeShip(ship: Ship) {
+    this.shipToGradeClient = ship;
+    this.changeNumber(44);
+    sessionStorage.setItem("page", "44");
+    sessionStorage.setItem("shipToGradeClient", ship.id.toString());
+  }
+
+  gradeInstructor(instructor: User) {
+    this.instructorToGradeClient = instructor;
+    this.changeNumber(45);
+    sessionStorage.setItem("page", "45");
+    sessionStorage.setItem("instructorToGradeClient", instructor.email);
   }
 
   seeUserOwner(user: User){

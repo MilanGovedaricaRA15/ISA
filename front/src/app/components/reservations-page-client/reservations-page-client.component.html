@@ -8,6 +8,7 @@
           <th>Services</th>
           <th>Cost</th>
           <th>Cottage name</th>
+          <th></th>
       </thead>
       <tbody>
         <tr *ngFor='let cr of pastCottageReservations'>
@@ -16,6 +17,7 @@
           <td><div *ngFor='let s of cr.services'>{{s}}</div></td>
           <td>{{cr.cost}}</td>
           <td>{{cr.cottage.name}}</td>
+          <td><button (click)='gradeCottageOrOwner(cr.cottage)'>Grade</button></td>
       </tr>
       </tbody>
     </table>
@@ -28,6 +30,7 @@
           <th>Services</th>
           <th>Cost</th>
           <th>Ship name</th>
+          <th></th>
       </thead>
       <tbody>
         <tr *ngFor='let sr of pastShipReservations'>
@@ -36,6 +39,7 @@
           <td><div *ngFor='let s of sr.services'>{{s}}</div></td>
           <td>{{sr.cost}}</td>
           <td>{{sr.ship.name}}</td>
+          <td><button (click)='gradeShipOrOwner(sr.ship)'>Grade</button></td>
       </tr>
       </tbody>
     </table>
@@ -48,6 +52,7 @@
           <th>Services</th>
           <th>Cost</th>
           <th>Favor name</th>
+          <th></th>
       </thead>
       <tbody>
         <tr *ngFor='let fr of pastFavorReservations'>
@@ -56,6 +61,7 @@
           <td><div *ngFor='let s of fr.services'>{{s}}</div></td>
           <td>{{fr.cost}}</td>
           <td>{{fr.favor.name}}</td>
+          <td><button (click)='gradeOneInstructor(fr.favor.instructor)'>Grade</button></td>
       </tr>
       </tbody>
     </table>

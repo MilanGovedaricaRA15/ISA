@@ -5,4 +5,5 @@ export class Grade {
     user: User;
     value: number;
     comment: String;
+    seen: boolean;
 }
