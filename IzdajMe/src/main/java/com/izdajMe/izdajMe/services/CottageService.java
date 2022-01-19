@@ -1,16 +1,9 @@
 package com.izdajMe.izdajMe.services;
 
 import com.izdajMe.izdajMe.model.Cottage;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-
-import java.io.File;
-import java.io.InputStream;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 

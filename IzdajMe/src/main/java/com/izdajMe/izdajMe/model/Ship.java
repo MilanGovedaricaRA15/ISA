@@ -30,7 +30,7 @@ public class Ship {
     private String cancelRequirements;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ShipServicePrice> priceList;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Grade> grades;
     private float costPerNight;
     private LocalDateTime availableFrom;

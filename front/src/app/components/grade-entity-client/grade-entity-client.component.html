@@ -1,0 +1,31 @@
+<div *ngIf="cottage">
+    Do you want to grade cottage
+    <b>{{cottage.name}}</b> or cottage owner
+    <b>{{cottage.owner.firstName}} {{cottage.owner.lastName}}</b>?<br>
+    <form (ngSubmit)="chooseCottageOrOwner()" ngNativeValidate>
+        <input type="radio" id="gradeCottage" name="gradeRadio" value="cottage" required>Cottage
+        <input type="radio" id="gradeOwner" name="gradeRadio" value="owner" required>Owner
+        <button type="submit">Next</button>
+    </form>
+</div>
+<div *ngIf="cottageChecked">
+    Add your revision on cottage <b>{{cottage.name}}</b>
+</div>
+<div *ngIf="cottageOwnerChecked">
+    Add your revision on cottage owner <b>{{cottage.owner.firstName}} {{cottage.owner.lastName}}</b>
+</div>
+<div *ngIf="cottageChecked || cottageOwnerChecked">
+    <form (ngSubmit)="addGrade()" ngNativeValidate>
+        Select grade value:
+        <input type="radio" id="grade5" name="gradeValue" value="5" required>5
+        <input type="radio" id="grade6" name="gradeValue" value="6" required>6
+        <input type="radio" id="grade7" name="gradeValue" value="7" required>7
+        <input type="radio" id="grade8" name="gradeValue" value="8" required>8
+        <input type="radio" id="grade9" name="gradeValue" value="9" required>9
+        <input type="radio" id="grade10" name="gradeValue" value="10" required>10
+        <br>
+        Add a comment:
+        <textarea id="gradeCommentText" required></textarea>
+        <button type="submit">Finish</button>
+    </form>
+</div>

@@ -1,5 +1,6 @@
+import { Grade } from "./grade";
+
 export class User {
-    
     id: number;
     firstName: string;
     lastName: string;
@@ -15,8 +16,9 @@ export class User {
     prepaid: boolean;
     type: Type;
     points: number;
-
+    grades: Array<Grade>;
 }
+
 export enum Role {
     cottageAdvertiser,
     boatAdvertiser,
