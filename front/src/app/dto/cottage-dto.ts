@@ -17,12 +17,18 @@ export function getAverageCottageGrade(cottage : Cottage) : number {
         
     if (cottage.grades.length > 0) {
         let totalGrades = 0.0;
+        let numOfGrades = 0;
 
         for (let grade of cottage.grades) {
-            totalGrades += grade.value;
+            if (grade.seen) {
+                totalGrades += grade.value;
+                numOfGrades += 1;
+            }
         }
 
-        averageGrade = totalGrades / cottage.grades.length;
+        if (numOfGrades > 0) {
+            averageGrade = totalGrades / numOfGrades;
+        }
     }
 
     return averageGrade;

@@ -17,12 +17,18 @@ export function getAverageShipGrade(ship : Ship) : number {
         
     if (ship.grades.length > 0) {
         let totalGrades = 0.0;
+        let numOfGrades = 0;
 
         for (let grade of ship.grades) {
-            totalGrades += grade.value;
+            if (grade.seen) {
+                totalGrades += grade.value;
+                numOfGrades += 1;
+            }
         }
 
-        averageGrade = totalGrades / ship.grades.length;
+        if (numOfGrades > 0) {
+            averageGrade = totalGrades / numOfGrades;
+        }
     }
 
     return averageGrade;

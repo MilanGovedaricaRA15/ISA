@@ -11,7 +11,6 @@ public interface GradeService {
     public List<Grade> getAllGrades();
     public Boolean acceptGrade(long id);
     public Boolean deleteGrade(long id);
-    public Boolean addGrade(Grade grade);
     public Boolean addGradeToCottage(Cottage cottage);
     public Boolean addGradeToShip(Ship ship);
     public Boolean addGradeToUser(User user);

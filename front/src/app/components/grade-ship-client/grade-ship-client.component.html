@@ -1,31 +1,71 @@
-<div *ngIf="ship">
-    Do you want to grade ship
-    <b>{{ship.name}}</b> or ship owner
+<div>
+    Do you want to add your grade or to add your complaint about 
+    ship <b>{{ship.name}}</b> or ship owner
     <b>{{ship.owner.firstName}} {{ship.owner.lastName}}</b>?<br>
-    <form (ngSubmit)="chooseShipOrOwner()" ngNativeValidate>
-        <input type="radio" id="gradeShip" name="gradeShipRadio" value="ship" required>Ship
-        <input type="radio" id="gradeShipOwner" name="gradeShipRadio" value="shipOwner" required>Owner
+    <form (ngSubmit)="chooseGradeOrComplain()" ngNativeValidate>
+        <input type="radio" id="grade" name="gradeComplaint" value="grade" required>Grade
+        <input type="radio" id="complaint" name="gradeComplaint" value="complaint" required>Complaint
         <button type="submit">Next</button>
     </form>
 </div>
-<div *ngIf="shipChecked">
-    Add your revision on ship <b>{{ship.name}}</b>
+
+<div *ngIf="grading">
+    <div *ngIf="ship">
+        Do you want to grade ship
+        <b>{{ship.name}}</b> or ship owner
+        <b>{{ship.owner.firstName}} {{ship.owner.lastName}}</b>?<br>
+        <form (ngSubmit)="chooseShipOrOwner()" ngNativeValidate>
+            <input type="radio" id="gradeShip" name="gradeShipRadio" value="ship" required>Ship
+            <input type="radio" id="gradeShipOwner" name="gradeShipRadio" value="shipOwner" required>Owner
+            <button type="submit">Next</button>
+        </form>
+    </div>
+    <div *ngIf="shipChecked">
+        Add your revision on ship <b>{{ship.name}}</b>
+    </div>
+    <div *ngIf="shipOwnerChecked">
+        Add your revision on ship owner <b>{{ship.owner.firstName}} {{ship.owner.lastName}}</b>
+    </div>
+    <div *ngIf="shipChecked || shipOwnerChecked">
+        <form (ngSubmit)="addGrade()" ngNativeValidate>
+            Select grade value:
+            <input type="radio" id="grade5" name="gradeValue" value="5" required>5
+            <input type="radio" id="grade6" name="gradeValue" value="6" required>6
+            <input type="radio" id="grade7" name="gradeValue" value="7" required>7
+            <input type="radio" id="grade8" name="gradeValue" value="8" required>8
+            <input type="radio" id="grade9" name="gradeValue" value="9" required>9
+            <input type="radio" id="grade10" name="gradeValue" value="10" required>10
+            <br>
+            Add a comment:
+            <textarea id="gradeCommentText" required></textarea>
+            <button type="submit">Finish</button>
+        </form>
+    </div>
 </div>
-<div *ngIf="shipOwnerChecked">
-    Add your revision on ship owner <b>{{ship.owner.firstName}} {{ship.owner.lastName}}</b>
+
+<div *ngIf="complaining">
+    <div *ngIf="ship">
+        Do you want to complain about ship
+        <b>{{ship.name}}</b> or cottage owner
+        <b>{{ship.owner.firstName}} {{ship.owner.lastName}}</b>?<br>
+        <form (ngSubmit)="chooseShipOrOwnerComplaint()" ngNativeValidate>
+            <input type="radio" id="complaintShip" name="complaintRadio" value="ship" required>Ship
+            <input type="radio" id="complaintShipOwner" name="complaintRadio" value="shipOwner" required>Owner
+            <button type="submit">Next</button>
+        </form>
+    </div>
+    <div *ngIf="shipChecked">
+        Add your complaint on ship <b>{{ship.name}}</b>
+    </div>
+    <div *ngIf="shipOwnerChecked">
+        Add your complaint on ship owner <b>{{ship.owner.firstName}} {{ship.owner.lastName}}</b>
+    </div>
+    <div *ngIf="shipChecked || shipOwnerChecked">
+        <form (ngSubmit)="addComplaint()" ngNativeValidate>
+            Add a comment as a complaint:
+            <textarea id="complaintCommentText" required></textarea>
+            <button type="submit">Finish</button>
+        </form>
+    </div>
 </div>
-<div *ngIf="shipChecked || shipOwnerChecked">
-    <form (ngSubmit)="addGrade()" ngNativeValidate>
-        Select grade value:
-        <input type="radio" id="grade5" name="gradeValue" value="5" required>5
-        <input type="radio" id="grade6" name="gradeValue" value="6" required>6
-        <input type="radio" id="grade7" name="gradeValue" value="7" required>7
-        <input type="radio" id="grade8" name="gradeValue" value="8" required>8
-        <input type="radio" id="grade9" name="gradeValue" value="9" required>9
-        <input type="radio" id="grade10" name="gradeValue" value="10" required>10
-        <br>
-        Add a comment:
-        <textarea id="gradeCommentText" required></textarea>
-        <button type="submit">Finish</button>
-    </form>
-</div>
+

@@ -7,4 +7,5 @@ import java.util.List;
 public interface ComplaintService {
     public List<Complaint> getAllComplaints();
     public Boolean sendAnswer(Complaint complaint);
+    public Boolean addComplaint(Complaint complaint);
 }
