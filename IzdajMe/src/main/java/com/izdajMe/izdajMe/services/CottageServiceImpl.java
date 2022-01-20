@@ -325,4 +325,46 @@ public class CottageServiceImpl implements CottageService {
 
         return false;
     }
+
+    @Override
+    public Boolean addSubscribedUserToCottage(Cottage cottage) {
+        cottageRepository.save(cottage);
+        return true;
+    }
+
+    @Override
+    public Boolean removeSubscribedUserFromCottage(Cottage cottage) {
+        cottageRepository.save(cottage);
+        return true;
+    }
+
+    @Override
+    public List<Cottage> getUsersSubscribedCottages(String email) {
+        List<Cottage> usersSubscribedCottages = new ArrayList<Cottage>();
+        List<Cottage> allCottages = cottageRepository.findAll();
+
+        for (Cottage c : allCottages) {
+            for (User u : c.getSubscribedUsers()) {
+                if (u.getEmail().equals(email)) {
+                    usersSubscribedCottages.add(c);
+                    break;
+                }
+            }
+        }
+
+        return usersSubscribedCottages;
+    }
+
+    @Override
+    public Boolean isUserSubscribedToCottage(String email, Long cottageId) {
+        List<Cottage> usersSubscribedCottages = getUsersSubscribedCottages(email);
+
+        for (Cottage c : usersSubscribedCottages) {
+            if (c.getId() == cottageId) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

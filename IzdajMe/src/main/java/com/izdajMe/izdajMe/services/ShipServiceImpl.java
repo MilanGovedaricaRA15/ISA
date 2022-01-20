@@ -339,4 +339,46 @@ public class ShipServiceImpl implements ShipService {
 
         return false;
     }
+
+    @Override
+    public Boolean addSubscribedUserToShip(Ship ship) {
+        shipRepository.save(ship);
+        return true;
+    }
+
+    @Override
+    public Boolean removeSubscribedUserFromShip(Ship ship) {
+        shipRepository.save(ship);
+        return true;
+    }
+
+    @Override
+    public List<Ship> getUsersSubscribedShips(String email) {
+        List<Ship> usersSubscribedShips = new ArrayList<Ship>();
+        List<Ship> allShips = shipRepository.findAll();
+
+        for (Ship s : allShips) {
+            for (User u : s.getSubscribedUsers()) {
+                if (u.getEmail().equals(email)) {
+                    usersSubscribedShips.add(s);
+                    break;
+                }
+            }
+        }
+
+        return usersSubscribedShips;
+    }
+
+    @Override
+    public Boolean isUserSubscribedToShip(String email, Long shipId) {
+        List<Ship> usersSubscribedShips = getUsersSubscribedShips(email);
+
+        for (Ship s : usersSubscribedShips) {
+            if (s.getId() == shipId) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

@@ -384,17 +384,17 @@ export class AppComponent {
     sessionStorage.setItem("page", '34');
   }
 
-  goToCottagesReservationsPageClient(){
+  goToFaultsPageClient(){
     this.changeNumber(38);
     sessionStorage.setItem("page", '38');
   }
 
-  goToShipsReservationsPageClient(){
+  goToSubscribedEntitiesPageClient(){
     this.changeNumber(39);
     sessionStorage.setItem("page", '39');
   }
 
-  goToInstructorsReservationsPageClient(){
+  goToComplaintsPageClient(){
     this.changeNumber(40);
     sessionStorage.setItem("page", '40');
   }

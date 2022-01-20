@@ -1,0 +1,16 @@
+<h3 *ngIf="complaints">Your complaints:</h3>
+<ul *ngFor="let c of complaints">
+    <li>
+        <div *ngIf="c.complaintCottage">Cottage: {{c.complaintCottage.name}}</div>
+        <div *ngIf="c.complaintShip">Ship: {{c.complaintShip.name}}</div>
+        <div *ngIf="c.complaintUser">User: {{c.complaintUser.firstName}} {{c.complaintUser.lastName}}</div>
+        Text: {{c.text}}
+    </li>
+</ul>
+
+<br><br><br>
+
+<div>
+    <h5>If you want to add new complaint about some cottage, ship or user, 
+        go to page 'Reservations' and then select one of the your previous reserved entities.</h5>
+</div>

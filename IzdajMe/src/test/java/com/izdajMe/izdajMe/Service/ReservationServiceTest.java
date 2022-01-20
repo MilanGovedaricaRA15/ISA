@@ -57,26 +57,26 @@ class ReservationServiceTest {
 
     @Test
     void changeReservationPositive() {
-        when(cottageReservationRepositoryMock.getById(1L)).thenReturn(new CottageReservation(CottageReservationConstant.DB_ID,null,null,DB_AVAILABLEFROM,DB_AVAILABLETILL,DB_COST,null,new Cottage(CottageConstant.DB_ID,null,
+        when(cottageReservationRepositoryMock.getById(1L)).thenReturn(new CottageReservation(CottageReservationConstant.DB_ID,null,null,DB_AVAILABLEFROM,DB_AVAILABLETILL,DB_COST,null,new Cottage(CottageConstant.DB_ID,
                 null,DB_NAME,DB_ADDRESS,DB_DESCRIPTION,null,DB_NUMOFROOMS,DB_NUMOFBEDS,DB_RULES,null,
-                null, null,new ArrayList<HotOffer>(),DB_COSTPERNIGHT, null),null));
+                null, null,new ArrayList<HotOffer>(),DB_COSTPERNIGHT, null, null, null),null));
 
-        Boolean changed = cottageReservationService.changeReservationByOwner(new CottageReservation(CottageReservationConstant.DB_ID,null,null,DB_AVAILABLEFROM,DB_AVAILABLETILL,DB_COST,null,new Cottage(CottageConstant.DB_ID,null,
+        Boolean changed = cottageReservationService.changeReservationByOwner(new CottageReservation(CottageReservationConstant.DB_ID,null,null,DB_AVAILABLEFROM,DB_AVAILABLETILL,DB_COST,null,new Cottage(CottageConstant.DB_ID,
                 null,DB_NAME,DB_ADDRESS,DB_DESCRIPTION,null,DB_NUMOFROOMS,DB_NUMOFBEDS,DB_RULES,null,
-                null, null,new ArrayList<HotOffer>(),DB_COSTPERNIGHT, null),null));
+                null, null,new ArrayList<HotOffer>(),DB_COSTPERNIGHT, null, null, null),null));
 
         assertThat(changed).isEqualTo(true);
     }
 
     @Test
     void changeReservationNegative() {
-        when(cottageReservationRepositoryMock.getById(1L)).thenReturn(new CottageReservation(CottageReservationConstant.DB_ID,null,null,LocalDateTime.of(LocalDate.of(2022,06,13),LocalTime.of(00,00,00,00)),LocalDateTime.of(LocalDate.of(2022,06,01),LocalTime.of(00,00,00,00)),DB_COST,null,new Cottage(CottageConstant.DB_ID,null,
+        when(cottageReservationRepositoryMock.getById(1L)).thenReturn(new CottageReservation(CottageReservationConstant.DB_ID,null,null,LocalDateTime.of(LocalDate.of(2022,06,13),LocalTime.of(00,00,00,00)),LocalDateTime.of(LocalDate.of(2022,06,01),LocalTime.of(00,00,00,00)),DB_COST,null,new Cottage(CottageConstant.DB_ID,
                 null,DB_NAME,DB_ADDRESS,DB_DESCRIPTION,null,DB_NUMOFROOMS,DB_NUMOFBEDS,DB_RULES,null,
-                null, null,new ArrayList<HotOffer>(),DB_COSTPERNIGHT, null),null));
+                null, null,new ArrayList<HotOffer>(),DB_COSTPERNIGHT, null, null, null),null));
 
-        Boolean changed = cottageReservationService.changeReservationByOwner(new CottageReservation(CottageReservationConstant.DB_ID,null,null,LocalDateTime.of(LocalDate.of(2022,06,13),LocalTime.of(00,00,00,00)), LocalDateTime.of(LocalDate.of(2022,06,01), LocalTime.of(00,00,00,00)),DB_COST,null,new Cottage(CottageConstant.DB_ID,null,
+        Boolean changed = cottageReservationService.changeReservationByOwner(new CottageReservation(CottageReservationConstant.DB_ID,null,null,LocalDateTime.of(LocalDate.of(2022,06,13),LocalTime.of(00,00,00,00)), LocalDateTime.of(LocalDate.of(2022,06,01), LocalTime.of(00,00,00,00)),DB_COST,null,new Cottage(CottageConstant.DB_ID,
                 null,DB_NAME,DB_ADDRESS,DB_DESCRIPTION,null,DB_NUMOFROOMS,DB_NUMOFBEDS,DB_RULES,null,
-                null, null,new ArrayList<HotOffer>(),DB_COSTPERNIGHT, null),null));
+                null, null,new ArrayList<HotOffer>(),DB_COSTPERNIGHT, null, null, null),null));
 
         assertThat(changed).isEqualTo(false);
     }

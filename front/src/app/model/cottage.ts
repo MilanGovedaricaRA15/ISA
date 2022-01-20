@@ -15,11 +15,12 @@ export class Cottage {
     services:Array<Services>;
     availableFrom:Date;
     availableTill:Date;
-    grades: Array<Grade>;
     hotOffers:Array<HotOffer>;
     costPerNight:number;
     owner:User;
     priceList:Array<ServicePrice>;
+    grades: Array<Grade>;
+    subscribedUsers: Array<User>;
 }
 
 export enum Services {

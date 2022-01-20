@@ -24,6 +24,8 @@ export class ShipProfileClientComponent implements OnInit {
   user: User;
   costs: Array<number>;
 
+  isSubscribed: boolean;
+
   constructor(private shipService : ShipService, private shipReservationService: ShipReservationService, 
     private shipHotOfferService: ShipHotOfferService, private userService: UserService) { }
 
@@ -31,6 +33,14 @@ export class ShipProfileClientComponent implements OnInit {
     if(this.shipClient == undefined){
       this.shipService.getShipById(Number(sessionStorage.getItem("shipToShowClient"))).subscribe(ret =>{
         this.ship = new ShipDTO(ret, getAverageShipGrade(ret), ret.costPerNight);
+
+        this.userService.getLoggedUser().subscribe(ret => {
+          this.user = ret;
+          this.shipService.isUserSubscribedToShip(this.user.email, this.ship.ship.id).subscribe(ret => {
+            this.isSubscribed = ret;
+          });
+        });
+
         this.shipReservationService.getAllReservationsOfShip(this.ship.ship).subscribe(ret => {
           this.shipReservations = new Array<ShipReservation>();
           for (let cr of ret) {
@@ -62,6 +72,14 @@ export class ShipProfileClientComponent implements OnInit {
       });
     } else {
       this.ship = new ShipDTO(this.shipClient, getAverageShipGrade(this.shipClient), this.shipClient.costPerNight);
+
+      this.userService.getLoggedUser().subscribe(ret => {
+        this.user = ret;
+        this.shipService.isUserSubscribedToShip(this.user.email, this.ship.ship.id).subscribe(ret => {
+          this.isSubscribed = ret;
+        });
+      });
+
       this.shipReservationService.getAllReservationsOfShip(this.ship.ship).subscribe(ret => {
         this.shipReservations = new Array<ShipReservation>();
         for (let cr of ret) {
@@ -94,9 +112,58 @@ export class ShipProfileClientComponent implements OnInit {
     if(this.ship.ship.images != null){
       this.shipImg = this.ship.ship.images[0];
     }
+  }
 
+  subscribeToShip(): void {
     this.userService.getLoggedUser().subscribe(ret => {
       this.user = ret;
+      this.shipService.isUserSubscribedToShip(this.user.email, this.ship.ship.id).subscribe(ret => {
+        if (ret) {
+          alert("You are already subscribed on ship '" + this.ship.ship.name + "'!");
+          this.isSubscribed = true;
+        } else {
+          this.ship.ship.subscribedUsers.push(this.user);
+          this.shipService.addSubscribedUserToShip(this.ship.ship).subscribe(ret => {
+            if(ret) {
+              alert("You have successfully subscribed on ship '" + this.ship.ship.name + "'!");
+              this.isSubscribed = true;
+            } else {
+              alert("Can't subscribe to ship!");
+            }
+          });
+        }
+      });
+    });
+  }
+
+  cancelSubscriptionOfShip(): void {
+    this.userService.getLoggedUser().subscribe(ret => {
+      this.user = ret;
+      this.shipService.isUserSubscribedToShip(this.user.email, this.ship.ship.id).subscribe(ret => {
+        if (ret) {
+          if (this.ship.ship.subscribedUsers != null) {
+            let i = 0;
+            for (let su of this.ship.ship.subscribedUsers) {
+              if (su.email === this.user.email) {
+                this.ship.ship.subscribedUsers.splice(i, 1);
+                break;
+              }
+              i += 1;
+            }
+          }
+          this.shipService.removeSubscribedUserFromShip(this.ship.ship).subscribe(ret => {
+            if(ret) {
+              alert("You have successfully canceled your subscription on ship '" + this.ship.ship.name + "'!");
+              this.isSubscribed = false;
+            } else {
+              alert("Can't cancel subscription to ship!");
+            }
+          });
+        } else {
+          alert("You were not subscribed on ship '" + this.ship.ship.name + "', so you stay unsubscribed!");
+          this.isSubscribed = false;
+        }
+      });
     });
   }
 

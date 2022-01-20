@@ -11,9 +11,9 @@ export class ClientNavbarComponent implements OnInit {
   @Output() cottagesPageClient = new EventEmitter<void>();
   @Output() shipsPageClient = new EventEmitter<void>();
   @Output() instructorsPageClient = new EventEmitter<void>();
-  @Output() cottagesReservationsPageClient = new EventEmitter<void>();
-  @Output() shipsReservationsPageClient = new EventEmitter<void>();
-  @Output() instructorsReservationsPageClient = new EventEmitter<void>();
+  @Output() faultsPageClient = new EventEmitter<void>();
+  @Output() subscribedEntitiesPageClient = new EventEmitter<void>();
+  @Output() complaintsPageClient = new EventEmitter<void>();
   @Output() reservationsPageClient = new EventEmitter<void>();
   @Output() createReservationPageClient = new EventEmitter<void>();
 
@@ -38,16 +38,16 @@ export class ClientNavbarComponent implements OnInit {
     this.instructorsPageClient.emit();
   }
 
-  goToCottagesReservationsPageClient(): void {
-    this.cottagesReservationsPageClient.emit();
+  goToFaultsPageClient(): void {
+    this.faultsPageClient.emit();
   }
 
-  goToShipsReservationsPageClient(): void {
-    this.shipsReservationsPageClient.emit();
+  goToSubscribedEntitiesPageClient(): void {
+    this.subscribedEntitiesPageClient.emit();
   }
 
-  goToInstructorsReservationsPageClient(): void {
-    this.instructorsReservationsPageClient.emit();
+  goToComplaintsPageClient(): void {
+    this.complaintsPageClient.emit();
   }
 
   goToReservationsPageClient(): void {

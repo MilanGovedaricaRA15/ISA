@@ -30,18 +30,18 @@ public class Ship {
     private String cancelRequirements;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ShipServicePrice> priceList;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Grade> grades;
     private float costPerNight;
     private LocalDateTime availableFrom;
     private LocalDateTime availableTill;
     private ArrayList<Services> services;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ShipHotOffer> hotOffers;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Grade> grades;
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<User> subscribedUsers;
 
-
-    public Ship() {
-    }
+    public Ship() {}
 
     public enum Services {
         PetFriendly,
@@ -49,7 +49,11 @@ public class Ship {
         HairDryer
     }
 
-    public Ship(long id, List<ShipHotOffer> hotOffers, ArrayList<Services> services, User owner, String name, String type, float length, String engineNumber, float enginePower, float topSpeed, ArrayList<NavigationEquipment> navigationEquipment, String address, String description, ArrayList<String> images, int capacity, String rules, ArrayList<FishingEquipment> fishingEquipment, String cancelRequirements, List<ShipServicePrice> priceList, List<Grade> grades, float costPerNight, LocalDateTime availableFrom, LocalDateTime availableTill) {
+    public Ship(long id, List<ShipHotOffer> hotOffers, ArrayList<Services> services, User owner, String name, String type, float length,
+                String engineNumber, float enginePower, float topSpeed, ArrayList<NavigationEquipment> navigationEquipment, String address,
+                String description, ArrayList<String> images, int capacity, String rules, ArrayList<FishingEquipment> fishingEquipment,
+                String cancelRequirements, List<ShipServicePrice> priceList, float costPerNight, LocalDateTime availableFrom, LocalDateTime availableTill,
+                List<Grade> grades, List<User> subscribedUsers) {
         this.id = id;
         this.owner = owner;
         this.name = name;
@@ -67,12 +71,13 @@ public class Ship {
         this.fishingEquipment = fishingEquipment;
         this.cancelRequirements = cancelRequirements;
         this.priceList = priceList;
-        this.grades = grades;
         this.costPerNight = costPerNight;
         this.availableFrom = availableFrom;
         this.availableTill = availableTill;
         this.services = services;
         this.hotOffers = hotOffers;
+        this.grades = grades;
+        this.subscribedUsers = subscribedUsers;
     }
 
     public List<ShipHotOffer> getHotOffers() {
@@ -243,6 +248,14 @@ public class Ship {
         this.priceList = priceList;
     }
 
+    public float getCostPerNight() {
+        return costPerNight;
+    }
+
+    public void setCostPerNight(float costPerNight) {
+        this.costPerNight = costPerNight;
+    }
+
     public List<Grade> getGrades() {
         return grades;
     }
@@ -251,11 +264,11 @@ public class Ship {
         this.grades = grades;
     }
 
-    public float getCostPerNight() {
-        return costPerNight;
+    public List<User> getSubscribedUsers() {
+        return subscribedUsers;
     }
 
-    public void setCostPerNight(float costPerNight) {
-        this.costPerNight = costPerNight;
+    public void setSubscribedUsers(List<User> subscribedUsers) {
+        this.subscribedUsers = subscribedUsers;
     }
 }

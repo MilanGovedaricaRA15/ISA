@@ -1,9 +1,12 @@
 <div class="row">
+
+  <div class="column">
+    <img style="width: 100%; height: 100%;" [src]="('../../assets/images/' + cottageImg + '.jpg')" class="img-fluid z-depth-1"/>
+  </div>
+  
+  <div class="column">
+    <h1>Cottage informations</h1>
     <div class="column">
-      <img style="width: 100%; height: 100%;" [src]="('../../assets/images/' + cottageImg + '.jpg')" class="img-fluid z-depth-1"/>
-    </div>
-    <div class="column">
-      <h1>Cottage informations</h1>
       Name: {{cottage.cottage.name}} <br>
       Address: {{cottage.cottage.address}} <br>
       Owner: {{cottage.cottage.owner.firstName}} {{cottage.cottage.owner.lastName}} <br>
@@ -17,10 +20,23 @@
       Available till: {{cottage.cottage.availableTill | date:'dd.MM.yyyy'}} <br>
       Services:
       <ul *ngFor='let s of cottage.cottage.priceList'>
-         <li>{{s.service}}</li>
-      </ul>      
+          <li>{{s.service}}</li>
+      </ul>
+
     </div>
+    <div class="column">
+      <div *ngIf="isSubscribed">
+        <b>Subscribed to this cottage!</b> <br>
+        <button (click)="cancelSubscriptionOfCottage()">Cancel subscription</button>
+      </div>
+      <div *ngIf="!isSubscribed">
+        <button (click)="subscribeToCottage()">Subscribe</button>
+      </div>
+    </div>
+    
   </div>
+</div>
+  
   <h1>Fast reservations</h1>
   <table style="width: 100%;">
     <thead>
@@ -44,7 +60,9 @@
         </tr>
     </tbody>
   </table>
+  
   <br>
+
   <h1>Reservations</h1>
   <table style="width: 100%;">
     <thead>
