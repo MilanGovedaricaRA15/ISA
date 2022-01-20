@@ -233,4 +233,57 @@ public class ShipController {
         }
     }
 
+    @PostMapping("/ships/addSubscribedUserToShip")
+    public ResponseEntity<Boolean> addSubscribedUserToShip(@RequestBody Ship ship, HttpServletRequest request) {
+        if (request.getSession(false).getAttribute("role") != null) {
+            if (request.getSession(false).getAttribute("role") == User.Role.client) {
+                return new ResponseEntity<Boolean>(shipService.addSubscribedUserToShip(ship), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
+            }
+        } else {
+            return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
+        }
+    }
+
+    @PutMapping("/ships/removeSubscribedUserFromShip")
+    public ResponseEntity<Boolean> removeSubscribedUserFromShip(@RequestBody Ship ship, HttpServletRequest request) {
+        if (request.getSession(false).getAttribute("role") != null) {
+            if (request.getSession(false).getAttribute("role") == User.Role.client) {
+                return new ResponseEntity<Boolean>(shipService.removeSubscribedUserFromShip(ship), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
+            }
+        } else {
+            return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
+        }
+    }
+
+    @GetMapping("/ships/getUsersSubscribedShips")
+    public ResponseEntity<List<Ship>> getUsersSubscribedShips(@RequestParam("email") String email, HttpServletRequest request) {
+        if (request.getSession(false).getAttribute("role") != null) {
+            if (request.getSession(false).getAttribute("role") == User.Role.client) {
+                return new ResponseEntity<List<Ship>>(shipService.getUsersSubscribedShips(email), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<List<Ship>>((List<Ship>) null, HttpStatus.UNAUTHORIZED);
+            }
+        }
+        else {
+            return new ResponseEntity<List<Ship>>((List<Ship>) null, HttpStatus.UNAUTHORIZED);
+        }
+    }
+
+    @GetMapping("/ships/isUserSubscribedToShip")
+    public ResponseEntity<Boolean> isUserSubscribedToShip(@RequestParam("email") String email, @RequestParam("shipId") Long shipId, HttpServletRequest request) {
+        if (request.getSession(false).getAttribute("role") != null) {
+            if (request.getSession(false).getAttribute("role") == User.Role.client) {
+                return new ResponseEntity<Boolean>(shipService.isUserSubscribedToShip(email, shipId), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
+            }
+        }
+        else {
+            return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
+        }
+    }
 }

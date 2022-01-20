@@ -25,16 +25,15 @@ public class ShipDTO {
     private ArrayList<FishingEquipment> fishingEquipment;
     private String cancelRequirements;
     private List<ShipServicePrice> priceList;
-    private List<Grade> grades;
     private float costPerNight;
     private LocalDateTime availableFrom;
     private LocalDateTime availableTill;
     private ArrayList<Ship.Services> services;
     private List<ShipHotOffer> hotOffers;
+    private List<Grade> grades;
+    private List<User> subscribedUsers;
 
-    public ShipDTO(){
-
-    }
+    public ShipDTO(){}
 
     public ShipDTO(Ship ship) {
         this.id = ship.getId();
@@ -54,12 +53,13 @@ public class ShipDTO {
         this.fishingEquipment = ship.getFishingEquipment();
         this.cancelRequirements = ship.getCancelRequirements();
         this.priceList = ship.getPriceList();
-        this.grades = ship.getGrades();
         this.costPerNight = ship.getCostPerNight();
         this.availableFrom = ship.getAvailableFrom();
         this.availableTill = ship.getAvailableTill();
         this.services = ship.getServices();
         this.hotOffers = ship.getHotOffers();
+        this.grades = ship.getGrades();
+        this.subscribedUsers = ship.getSubscribedUsers();
     }
 
     public List<ShipHotOffer> getHotOffers() {
@@ -230,6 +230,14 @@ public class ShipDTO {
         this.priceList = priceList;
     }
 
+    public float getCostPerNight() {
+        return costPerNight;
+    }
+
+    public void setCostPerNight(float costPerNight) {
+        this.costPerNight = costPerNight;
+    }
+
     public List<Grade> getGrades() {
         return grades;
     }
@@ -238,11 +246,11 @@ public class ShipDTO {
         this.grades = grades;
     }
 
-    public float getCostPerNight() {
-        return costPerNight;
+    public List<User> getSubscribedUsers() {
+        return subscribedUsers;
     }
 
-    public void setCostPerNight(float costPerNight) {
-        this.costPerNight = costPerNight;
+    public void setSubscribedUsers(List<User> subscribedUsers) {
+        this.subscribedUsers = subscribedUsers;
     }
 }

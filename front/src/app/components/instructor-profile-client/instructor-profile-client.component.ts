@@ -32,6 +32,8 @@ export class InstructorProfileClientComponent implements OnInit {
   today: string;
   canFilter: boolean;
 
+  isSubscribed: boolean;
+
   constructor(private userService : UserService, private favorService: InstructorsFavorService, 
     private favorReservationService: FavorReservationService, private favorHotOfferService: FavorHotOfferService) { }
 
@@ -39,6 +41,14 @@ export class InstructorProfileClientComponent implements OnInit {
     if(this.instructorClient == undefined){
       this.userService.getUserByEmail(sessionStorage.getItem("instructorToShowClient")).subscribe(ret =>{
         this.instructor = ret;
+
+        this.userService.getLoggedUser().subscribe(ret => {
+          this.user = ret;
+          this.userService.isUserSubscribedToInstructor(this.user.email, this.instructor.email).subscribe(ret => {
+            this.isSubscribed = ret;
+          });
+        });
+
         this.favorService.getAllFavorsByInstructorsEmail(this.instructor.email).subscribe(ret => {
           this.instructorsFavors = ret;
           this.availableInstructorsFavors = ret;
@@ -64,6 +74,14 @@ export class InstructorProfileClientComponent implements OnInit {
       });
     } else {
       this.instructor = this.instructorClient;
+
+      this.userService.getLoggedUser().subscribe(ret => {
+        this.user = ret;
+        this.userService.isUserSubscribedToInstructor(this.user.email, this.instructor.email).subscribe(ret => {
+          this.isSubscribed = ret;
+        });
+      });
+
       this.favorService.getAllFavorsByInstructorsEmail(this.instructor.email).subscribe(ret => {
         this.instructorsFavors = ret;
         this.availableInstructorsFavors = ret;
@@ -88,12 +106,61 @@ export class InstructorProfileClientComponent implements OnInit {
       });
     }
 
-    this.userService.getLoggedUser().subscribe(ret => {
-      this.user = ret;
-    });
-
     this.today = this.getTodayStringDate();
     this.canFilter = false;
+  }
+
+  subscribeToInstructor(): void {
+    this.userService.getLoggedUser().subscribe(ret => {
+      this.user = ret;
+      this.userService.isUserSubscribedToInstructor(this.user.email, this.instructor.email).subscribe(ret => {
+        if (ret) {
+          alert("You are already subscribed on instructor '" + this.instructor.firstName + " " + this.instructor.lastName + "'!");
+          this.isSubscribed = true;
+        } else {
+            this.instructor.subscribedUsers.push(this.user);
+            this.userService.addSubscribedUserToInstructor(this.instructor).subscribe(ret => {
+              if(ret) {
+                alert("You have successfully subscribed on instructor '" + this.instructor.firstName + " " + this.instructor.lastName + "'!");
+                this.isSubscribed = ret;
+              } else {
+                alert("Can't subscribe to instructor!");
+              }
+            });
+          }
+      });
+    });      
+  }
+
+  cancelSubscriptionOfInstructor(): void {
+    this.userService.getLoggedUser().subscribe(ret => {
+      this.user = ret;
+      this.userService.isUserSubscribedToInstructor(this.user.email, this.instructor.email).subscribe(ret => {
+        if (ret) {
+          if (this.instructor.subscribedUsers != null) {
+            let i = 0;
+            for (let su of this.instructor.subscribedUsers) {
+              if (su.email === this.user.email) {
+                this.instructor.subscribedUsers.splice(i, 1);
+                break;
+              }
+              i += 1;
+            }
+          }
+          this.userService.removeSubscribedUserFromInstructor(this.instructor).subscribe(ret => {
+            if(ret) {
+              alert("You have successfully canceled your subscription on instructor '" + this.instructor.firstName + " " + this.instructor.lastName + "'!");
+              this.isSubscribed = false;
+            } else {
+              alert("Can't cancel subscription to instructor!");
+            }
+          });
+        } else {
+          alert("You were not subscribed on instructor '" + this.instructor.firstName + " " +  this.instructor.lastName + "', so you stay unsubscribed!");
+          this.isSubscribed = false;
+        }
+      });
+    });
   }
 
   searchFavors(): void {

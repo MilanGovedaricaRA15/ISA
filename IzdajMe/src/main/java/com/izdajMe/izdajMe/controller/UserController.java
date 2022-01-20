@@ -1,6 +1,7 @@
 package com.izdajMe.izdajMe.controller;
 
 import com.izdajMe.izdajMe.dto.UserDTO;
+import com.izdajMe.izdajMe.model.Ship;
 import com.izdajMe.izdajMe.model.User;
 import com.izdajMe.izdajMe.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -210,5 +211,57 @@ public class UserController {
         return new ResponseEntity<UserDTO>((UserDTO) null, HttpStatus.OK);
     }
 
+    @PostMapping("/users/addSubscribedUserToInstructor")
+    public ResponseEntity<Boolean> addSubscribedUserToInstructor(@RequestBody User user, HttpServletRequest request) {
+        if (request.getSession(false).getAttribute("role") != null) {
+            if (request.getSession(false).getAttribute("role") == User.Role.client) {
+                return new ResponseEntity<Boolean>(userService.addSubscribedUserToInstructor(user), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
+            }
+        } else {
+            return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
+        }
+    }
 
+    @PutMapping("/users/removeSubscribedUserFromInstructor")
+    public ResponseEntity<Boolean> removeSubscribedUserFromInstructor(@RequestBody User user, HttpServletRequest request) {
+        if (request.getSession(false).getAttribute("role") != null) {
+            if (request.getSession(false).getAttribute("role") == User.Role.client) {
+                return new ResponseEntity<Boolean>(userService.removeSubscribedUserFromInstructor(user), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
+            }
+        } else {
+            return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
+        }
+    }
+
+    @GetMapping("/users/getUsersSubscribedInstructors")
+    public ResponseEntity<List<User>> getUsersSubscribedInstructors(@RequestParam("email") String email, HttpServletRequest request) {
+        if (request.getSession(false).getAttribute("role") != null) {
+            if (request.getSession(false).getAttribute("role") == User.Role.client) {
+                return new ResponseEntity<List<User>>(userService.getUsersSubscribedInstructors(email), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<List<User>>((List<User>) null, HttpStatus.UNAUTHORIZED);
+            }
+        }
+        else {
+            return new ResponseEntity<List<User>>((List<User>) null, HttpStatus.UNAUTHORIZED);
+        }
+    }
+
+    @GetMapping("/users/isUserSubscribedToInstructor")
+    public ResponseEntity<Boolean> isUserSubscribedToInstructor(@RequestParam("email") String email, @RequestParam("instructorEmail") String instructorEmail, HttpServletRequest request) {
+        if (request.getSession(false).getAttribute("role") != null) {
+            if (request.getSession(false).getAttribute("role") == User.Role.client) {
+                return new ResponseEntity<Boolean>(userService.isUserSubscribedToInstructor(email, instructorEmail), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
+            }
+        }
+        else {
+            return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
+        }
+    }
 }

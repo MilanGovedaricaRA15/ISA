@@ -21,6 +21,9 @@ delete from cottages_grades where cottage_id!=0;
 delete from favors_grades where instructors_favor_id!=0;
 delete from users_grades where user_id!=0;
 delete from grades where id!=0;
+delete from cottages_subscribed_users where cottage_id!=0;
+delete from ships_subscribed_users where ship_id!=0;
+delete from users_subscribed_users where user_id!=0;
 delete from cottages where id!=0;
 delete from favors where id!=0;
 delete from spring_session where primary_id!='0';
@@ -809,3 +812,15 @@ insert into concurent_watcher (id, table_name, is_writing) values (3, 'ShipReser
 insert into concurent_watcher (id, table_name, is_writing) values (4, 'Ship', false);
 insert into concurent_watcher (id, table_name, is_writing) values (5, 'ShipHotOffer', false);
 insert into concurent_watcher (id, table_name, is_writing) values (6, 'CottageHotOffer', false);
+
+insert into cottages_subscribed_users (cottage_id, subscribed_users_id) values (1, 14);
+insert into cottages_subscribed_users (cottage_id, subscribed_users_id) values (1, 27);
+insert into cottages_subscribed_users (cottage_id, subscribed_users_id) values (1, 28);
+
+insert into ships_subscribed_users (ship_id, subscribed_users_id) values (1, 14);
+insert into ships_subscribed_users (ship_id, subscribed_users_id) values (1, 29);
+insert into ships_subscribed_users (ship_id, subscribed_users_id) values (1, 30);
+
+insert into users_subscribed_users (user_id, subscribed_users_id) values (4, 14);
+insert into users_subscribed_users (user_id, subscribed_users_id) values (5, 31);
+insert into users_subscribed_users (user_id, subscribed_users_id) values (6, 14);

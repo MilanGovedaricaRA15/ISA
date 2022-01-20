@@ -23,6 +23,7 @@ export class CottageProfileClientComponent implements OnInit {
   cottageHotOffers: Array<HotOffer>;
   costs: Array<number>;
   user: User;
+  isSubscribed: boolean;
   
   constructor(private cottageService: CottageService, private cottageReservationService: CottageReservationService, 
     private hotOfferService: HotOfferService, private userService: UserService) { }
@@ -31,6 +32,14 @@ export class CottageProfileClientComponent implements OnInit {
     if(this.cottageClient == undefined){
       this.cottageService.getCottageById(Number(sessionStorage.getItem("cottageToShowClient"))).subscribe(ret =>{
         this.cottage = new CottageDTO(ret, getAverageCottageGrade(ret), ret.costPerNight);
+
+        this.userService.getLoggedUser().subscribe(ret => {
+          this.user = ret;
+          this.cottageService.isUserSubscribedToCottage(this.user.email, this.cottage.cottage.id).subscribe(ret => {
+            this.isSubscribed = ret;
+          });
+        });
+
         this.cottageReservationService.getAllReservationsOfCottage(this.cottage.cottage).subscribe(ret => {
           this.cottageReservations = new Array<CottageReservation>();
           for (let cr of ret) {
@@ -62,6 +71,14 @@ export class CottageProfileClientComponent implements OnInit {
       });
     } else {
       this.cottage = new CottageDTO(this.cottageClient, getAverageCottageGrade(this.cottageClient), this.cottageClient.costPerNight);
+
+      this.userService.getLoggedUser().subscribe(ret => {
+        this.user = ret;
+        this.cottageService.isUserSubscribedToCottage(this.user.email, this.cottage.cottage.id).subscribe(ret => {
+          this.isSubscribed = ret;
+        });
+      });
+
       this.cottageReservationService.getAllReservationsOfCottage(this.cottage.cottage).subscribe(ret => {
         this.cottageReservations = new Array<CottageReservation>();
         for (let cr of ret) {
@@ -94,8 +111,58 @@ export class CottageProfileClientComponent implements OnInit {
     if(this.cottage.cottage.images != null){
       this.cottageImg = this.cottage.cottage.images[0];
     }
+  }
+
+  subscribeToCottage(): void {
     this.userService.getLoggedUser().subscribe(ret => {
       this.user = ret;
+      this.cottageService.isUserSubscribedToCottage(this.user.email, this.cottage.cottage.id).subscribe(ret => {
+        if (ret) {
+          alert("You are already subscribed on cottage '" + this.cottage.cottage.name + "'!");
+          this.isSubscribed = true;
+        } else {
+          this.cottage.cottage.subscribedUsers.push(this.user);
+          this.cottageService.addSubscribedUserToCottage(this.cottage.cottage).subscribe(ret => {
+            if(ret) {
+              alert("You have successfully subscribed on cottage '" + this.cottage.cottage.name + "'!");
+              this.isSubscribed = true;
+            } else {
+              alert("Can't subscribe to cottage!");
+            }
+          });
+        }
+      });
+    });
+  }
+
+  cancelSubscriptionOfCottage(): void {
+    this.userService.getLoggedUser().subscribe(ret => {
+      this.user = ret;
+      this.cottageService.isUserSubscribedToCottage(this.user.email, this.cottage.cottage.id).subscribe(ret => {
+        if (ret) {
+          if (this.cottage.cottage.subscribedUsers != null) {
+            let i = 0;
+            for (let su of this.cottage.cottage.subscribedUsers) {
+              if (su.email === this.user.email) {
+                this.cottage.cottage.subscribedUsers.splice(i, 1);
+                break;
+              }
+              i += 1;
+            }
+          }
+          this.cottageService.removeSubscribedUserFromCottage(this.cottage.cottage).subscribe(ret => {
+            if(ret) {
+              alert("You have successfully canceled your subscription on cottage '" + this.cottage.cottage.name + "'!");
+              this.isSubscribed = false;
+            } else {
+              alert("Can't cancel subscription to cottage!");
+            }
+          });
+        } else {
+          alert("You were not subscribed on cottage '" + this.cottage.cottage.name + "', so you stay unsubscribed!");
+          this.isSubscribed = false;
+        }
+      });
     });
   }
 

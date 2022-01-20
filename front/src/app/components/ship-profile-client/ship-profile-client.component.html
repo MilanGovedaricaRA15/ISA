@@ -4,25 +4,36 @@
     </div>
     <div class="column">
       <h1>Ship informations</h1>
-      Name: {{ship.ship.name}} <br>
-      Owner: {{ship.ship.owner.firstName}} {{ship.ship.owner.lastName}} <br>
-      Length: {{ship.ship.length}} <br>
-      Type: {{ship.ship.type}} <br>
-      Engine number: {{ship.ship.engineNumber}} <br>
-      Engine power: {{ship.ship.enginePower}} <br>
-      Top speed: {{ship.ship.topSpeed}} <br>
-      Navigation equipment: {{ship.ship.navigationEquipment}} <br>
-      Capacity: {{ship.ship.capacity}} <br>
-      Address: {{ship.ship.address}} <br>
-      Description: {{ship.ship.description}} <br>
-      Grade: {{ship.averageGrade}} <br>
-      Rules: {{ship.ship.rules}} <br>
-      Available from: {{ship.ship.availableFrom | date:'dd.MM.yyyy'}} <br>
-      Available till: {{ship.ship.availableTill | date:'dd.MM.yyyy'}} <br>
-      Services: 
-      <ul *ngFor='let s of ship.ship.priceList'>
-        <li>{{s.service}}</li>
-     </ul>    
+      <div class="column">
+        Name: {{ship.ship.name}} <br>
+        Owner: {{ship.ship.owner.firstName}} {{ship.ship.owner.lastName}} <br>
+        Length: {{ship.ship.length}} <br>
+        Type: {{ship.ship.type}} <br>
+        Engine number: {{ship.ship.engineNumber}} <br>
+        Engine power: {{ship.ship.enginePower}} <br>
+        Top speed: {{ship.ship.topSpeed}} <br>
+        Navigation equipment: {{ship.ship.navigationEquipment}} <br>
+        Capacity: {{ship.ship.capacity}} <br>
+        Address: {{ship.ship.address}} <br>
+        Description: {{ship.ship.description}} <br>
+        Grade: {{ship.averageGrade}} <br>
+        Rules: {{ship.ship.rules}} <br>
+        Available from: {{ship.ship.availableFrom | date:'dd.MM.yyyy'}} <br>
+        Available till: {{ship.ship.availableTill | date:'dd.MM.yyyy'}} <br>
+        Services: 
+        <ul *ngFor='let s of ship.ship.priceList'>
+          <li>{{s.service}}</li>
+      </ul>
+      </div>
+     <div class="column">
+      <div *ngIf="isSubscribed">
+        <b>Subscribed to this ship!</b> <br>
+        <button (click)="cancelSubscriptionOfShip()">Cancel subscription</button>
+      </div>
+      <div *ngIf="!isSubscribed">
+        <button (click)="subscribeToShip()">Subscribe</button>
+      </div>
+    </div>
     </div>
   </div>
   <h1>Fast reservations</h1>

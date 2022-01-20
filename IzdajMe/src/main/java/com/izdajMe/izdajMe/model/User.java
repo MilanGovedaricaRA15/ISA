@@ -41,8 +41,11 @@ public class User {
     protected int points;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Grade> grades;
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<User> subscribedUsers;
 
-    public User(long id,String email, String firstName, String lastName, String mobileNumber, String address, String country, String city, Role role, String password, String reason, Boolean prepaid, Type type, List<Grade> grades) {
+    public User(long id,String email, String firstName, String lastName, String mobileNumber, String address, String country, String city,
+                Role role, String password, String reason, Boolean prepaid, Type type, List<Grade> grades, List<User> subscribedUsers) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -59,11 +62,10 @@ public class User {
         this.type = type;
         this.points = 0;
         this.grades = grades;
+        this.subscribedUsers = subscribedUsers;
     }
 
-    public User(){
-
-    }
+    public User(){}
 
     public long getId() {
         return id;
@@ -176,4 +178,12 @@ public class User {
     public List<Grade> getGrades() { return grades; }
 
     public void setGrades(List<Grade> grades) { this.grades = grades; }
+
+    public List<User> getSubscribedUsers() {
+        return subscribedUsers;
+    }
+
+    public void setSubscribedUsers(List<User> subscribedUsers) {
+        this.subscribedUsers = subscribedUsers;
+    }
 }

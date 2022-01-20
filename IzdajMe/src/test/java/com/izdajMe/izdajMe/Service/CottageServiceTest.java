@@ -37,9 +37,9 @@ class CottageServiceTest {
 
     @Test
     void testFindAllCottage() {
-        when(cottageRepositoryMock.findAll()).thenReturn(Arrays.asList(new Cottage(DB_ID,null,
+        when(cottageRepositoryMock.findAll()).thenReturn(Arrays.asList(new Cottage(DB_ID,
                 null,DB_NAME,DB_ADDRESS,DB_DESCRIPTION,null,DB_NUMOFROOMS,DB_NUMOFBEDS,DB_RULES,null,
-                null, null,null,DB_COSTPERNIGHT, null)));
+                null, null,null,DB_COSTPERNIGHT, null, null, null)));
 
         List<Cottage> cottages = cottageService.getAllCottages();
 

@@ -37,9 +37,9 @@ import { InstructorsPageClientComponent } from './components/instructors-page-cl
 import { CottageProfileClientComponent } from './components/cottage-profile-client/cottage-profile-client.component';
 import { ShipProfileClientComponent } from './components/ship-profile-client/ship-profile-client.component';
 import { InstructorProfileClientComponent } from './components/instructor-profile-client/instructor-profile-client.component';
-import { CottagesReservationsPageClientComponent } from './components/cottages-reservations-page-client/cottages-reservations-page-client.component';
-import { ShipsReservationsPageClientComponent } from './components/ships-reservations-page-client/ships-reservations-page-client.component';
-import { InstructorsReservationsPageClientComponent } from './components/instructors-reservations-page-client/instructors-reservations-page-client.component';
+import { FaultsPageClientComponent } from './components/faults-page-client/faults-page-client.component';
+import { SubscribedEntitiesPageClientComponent } from './components/subscribed-entities-page-client/subscribed-entities-page-client.component';
+import { ComplaintsPageClientComponent } from './components/complaints-page-client/complaints-page-client.component';
 import { ShipProfileComponent } from './components/ship-profile/ship-profile.component';
 import { ShipOwnerProfileComponent } from './components/ship-owner-profile/ship-owner-profile.component';
 import { ShipHotOfferComponent } from './components/ship-hot-offer/ship-hot-offer.component';
@@ -103,9 +103,9 @@ import { GradeInstructorClientComponent } from './components/grade-instructor-cl
     CottageProfileClientComponent,
     ShipProfileClientComponent,
     InstructorProfileClientComponent,
-    CottagesReservationsPageClientComponent,
-    ShipsReservationsPageClientComponent,
-    InstructorsReservationsPageClientComponent,
+    FaultsPageClientComponent,
+    SubscribedEntitiesPageClientComponent,
+    ComplaintsPageClientComponent,
     ShipProfileComponent,
     ShipOwnerProfileComponent,
     ShipHotOfferComponent,

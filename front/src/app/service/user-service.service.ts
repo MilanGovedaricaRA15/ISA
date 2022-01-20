@@ -24,7 +24,10 @@ export class UserService {
   private searchInstructorssByNameUrl: string;
   private acceptUserUrl: string;
   private changePrepaidUrl: string;
-  
+  private addSubscribedUserToInstructorUrl: string;
+  private removeSubscribedUserFromInstructorUrl: string;
+  private getUsersSubscribedInstructorsUrl: string;
+  private isUserSubscribedToInstructorUrl: string;
 
   constructor(private http: HttpClient) {
     this.getAllUsersUrl = 'http://localhost:8080/users/getAllUsers';
@@ -44,6 +47,10 @@ export class UserService {
     this.searchInstructorssByNameUrl = 'http://localhost:8080/users/searchInstructorsByName';
     this.acceptUserUrl = 'http://localhost:8080/users/acceptUser';
     this.changePrepaidUrl = 'http://localhost:8080/users/changePrepaid';
+    this.addSubscribedUserToInstructorUrl = 'http://localhost:8080/users/addSubscribedUserToInstructor';
+    this.removeSubscribedUserFromInstructorUrl = 'http://localhost:8080/users/removeSubscribedUserFromInstructor';
+    this.getUsersSubscribedInstructorsUrl = 'http://localhost:8080/users/getUsersSubscribedInstructors';
+    this.isUserSubscribedToInstructorUrl = 'http://localhost:8080/users/isUserSubscribedToInstructor';
   }
 
   public getAllUsers(): Observable<Array<User>> {
@@ -227,6 +234,30 @@ export class UserService {
     let params = new HttpParams().set("firstName", firstName).set("lastName", lastName);
 
     return this.http.get<Array<User>>(this.searchInstructorssByNameUrl, {headers: headers, params: params});
-}
+  }
+
+  public addSubscribedUserToInstructor(instructor: User): Observable<boolean> {
+    return this.http.post<boolean>(this.addSubscribedUserToInstructorUrl, instructor, { withCredentials: true });
+  }
+
+  public removeSubscribedUserFromInstructor(instructor: User): Observable<boolean> {
+    return this.http.put<boolean>(this.removeSubscribedUserFromInstructorUrl, instructor, { withCredentials: true });
+  }
+
+  public getUsersSubscribedInstructors(email: string): Observable<Array<User>> {
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+    let params = new HttpParams().set("email", email);
+  
+    return this.http.get<Array<User>>(this.getUsersSubscribedInstructorsUrl, {headers: headers, params: params, withCredentials: true});
+  }
+
+  public isUserSubscribedToInstructor(email: string, instructorEmail: string): Observable<boolean> {
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+    let params = new HttpParams().set("email", email).set("instructorEmail", instructorEmail);
+  
+    return this.http.get<boolean>(this.isUserSubscribedToInstructorUrl, {headers: headers, params: params, withCredentials: true});
+  }
 
 }

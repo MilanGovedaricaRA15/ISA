@@ -17,6 +17,7 @@ export class User {
     type: Type;
     points: number;
     grades: Array<Grade>;
+    subscribedUsers: Array<User>;
 }
 
 export enum Role {

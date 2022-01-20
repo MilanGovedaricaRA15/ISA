@@ -1,7 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { Cottage } from '../model/cottage';
 
 @Injectable({
@@ -23,6 +22,10 @@ export class CottageService {
   private checkIsReservedUrl: string;
   private searchCottagesByNameUrl: string;
   private removeCottageByAdministratorUrl: string;
+  private addSubscribedUserToCottageUrl: string;
+  private removeSubscribedUserFromCottageUrl: string;
+  private getUsersSubscribedCottagesUrl: string;
+  private isUserSubscribedToCottageUrl: string;
 
   constructor(private http: HttpClient) { 
     this.getAllCottagesUrl = "http://localhost:8080/cottages/getAllCottages";
@@ -40,6 +43,10 @@ export class CottageService {
     this.checkIsReservedUrl = 'http://localhost:8080/cottages/checkIsReserved';
     this.searchCottagesByNameUrl = 'http://localhost:8080/cottages/searchCottagesByName';
     this.removeCottageByAdministratorUrl = 'http://localhost:8080/cottages/removeCottageByAdministrator';
+    this.addSubscribedUserToCottageUrl = 'http://localhost:8080/cottages/addSubscribedUserToCottage';
+    this.removeSubscribedUserFromCottageUrl = 'http://localhost:8080/cottages/removeSubscribedUserFromCottage';
+    this.getUsersSubscribedCottagesUrl = 'http://localhost:8080/cottages/getUsersSubscribedCottages';
+    this.isUserSubscribedToCottageUrl = 'http://localhost:8080/cottages/isUserSubscribedToCottage';
   }
 
   public getAllCottages(): Observable<Array<Cottage>> {
@@ -126,6 +133,30 @@ export class CottageService {
     let params = new HttpParams().set("name", cottage);
   
     return this.http.get<Array<Cottage>>(this.searchCottagesByNameUrl, {headers: headers, params: params});
+  }
+
+  public addSubscribedUserToCottage(cottage: Cottage): Observable<boolean> {
+    return this.http.post<boolean>(this.addSubscribedUserToCottageUrl, cottage, { withCredentials: true });
+  }
+
+  public removeSubscribedUserFromCottage(cottage: Cottage): Observable<boolean> {
+    return this.http.put<boolean>(this.removeSubscribedUserFromCottageUrl, cottage, { withCredentials: true });
+  }
+
+  public getUsersSubscribedCottages(email: string): Observable<Array<Cottage>> {
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+    let params = new HttpParams().set("email", email);
+  
+    return this.http.get<Array<Cottage>>(this.getUsersSubscribedCottagesUrl, {headers: headers, params: params, withCredentials: true});
+  }
+
+  public isUserSubscribedToCottage(email: string, cottageId: number): Observable<boolean> {
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+    let params = new HttpParams().set("email", email).set("cottageId", cottageId);
+  
+    return this.http.get<boolean>(this.isUserSubscribedToCottageUrl, {headers: headers, params: params, withCredentials: true});
   }
 
 }

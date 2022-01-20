@@ -1,6 +1,5 @@
 package com.izdajMe.izdajMe.services;
 
-import com.izdajMe.izdajMe.model.Cottage;
 import com.izdajMe.izdajMe.model.Ship;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,4 +26,8 @@ public interface ShipService {
     public Boolean removeShipByAdministrator(Long id);
     public boolean isShipAvailable(long id, LocalDateTime from, LocalDateTime to, int numOfGuests);
     public boolean isReservedFromTill(long id, LocalDateTime from, LocalDateTime to);
-    }
+    public Boolean addSubscribedUserToShip(Ship ship);
+    public Boolean removeSubscribedUserFromShip(Ship ship);
+    public List<Ship> getUsersSubscribedShips(String email);
+    public Boolean isUserSubscribedToShip(String email, Long shipId);
+}

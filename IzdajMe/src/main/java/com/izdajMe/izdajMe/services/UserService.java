@@ -22,4 +22,8 @@ public interface UserService {
     public void activate(Long id);
     public Boolean acceptUser(long id);
     public Boolean changePrepaid(long id);
+    public Boolean addSubscribedUserToInstructor(User user);
+    public Boolean removeSubscribedUserFromInstructor(User user);
+    public List<User> getUsersSubscribedInstructors(String email);
+    public Boolean isUserSubscribedToInstructor(String email, String instructorEmail);
 }

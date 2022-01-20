@@ -228,4 +228,58 @@ public class CottageController {
     public ResponseEntity<List<Cottage>> searchCottagesByName(@RequestParam("name") String name) {
         return new ResponseEntity<List<Cottage>>(cottageService.searchCottagesByName(name), HttpStatus.OK);
     }
+
+    @PostMapping("/cottages/addSubscribedUserToCottage")
+    public ResponseEntity<Boolean> addSubscribedUserToCottage(@RequestBody Cottage cottage, HttpServletRequest request) {
+        if (request.getSession(false).getAttribute("role") != null) {
+            if (request.getSession(false).getAttribute("role") == User.Role.client) {
+                return new ResponseEntity<Boolean>(cottageService.addSubscribedUserToCottage(cottage), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
+            }
+        } else {
+            return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
+        }
+    }
+
+    @PutMapping("/cottages/removeSubscribedUserFromCottage")
+    public ResponseEntity<Boolean> removeSubscribedUserFromCottage(@RequestBody Cottage cottage, HttpServletRequest request) {
+        if (request.getSession(false).getAttribute("role") != null) {
+            if (request.getSession(false).getAttribute("role") == User.Role.client) {
+                return new ResponseEntity<Boolean>(cottageService.removeSubscribedUserFromCottage(cottage), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
+            }
+        } else {
+            return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
+        }
+    }
+
+    @GetMapping("/cottages/getUsersSubscribedCottages")
+    public ResponseEntity<List<Cottage>> getUsersSubscribedCottages(@RequestParam("email") String email, HttpServletRequest request) {
+        if (request.getSession(false).getAttribute("role") != null) {
+            if (request.getSession(false).getAttribute("role") == User.Role.client) {
+                return new ResponseEntity<List<Cottage>>(cottageService.getUsersSubscribedCottages(email), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<List<Cottage>>((List<Cottage>) null, HttpStatus.UNAUTHORIZED);
+            }
+        }
+        else {
+            return new ResponseEntity<List<Cottage>>((List<Cottage>) null, HttpStatus.UNAUTHORIZED);
+        }
+    }
+
+    @GetMapping("/cottages/isUserSubscribedToCottage")
+    public ResponseEntity<Boolean> isUserSubscribedToCottage(@RequestParam("email") String email, @RequestParam("cottageId") Long cottageId, HttpServletRequest request) {
+        if (request.getSession(false).getAttribute("role") != null) {
+            if (request.getSession(false).getAttribute("role") == User.Role.client) {
+                return new ResponseEntity<Boolean>(cottageService.isUserSubscribedToCottage(email, cottageId), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
+            }
+        }
+        else {
+            return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
+        }
+    }
 }
