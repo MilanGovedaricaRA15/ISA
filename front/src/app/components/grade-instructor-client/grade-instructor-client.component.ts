@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Complaint } from 'src/app/model/complaint';
 import { Grade } from 'src/app/model/grade';
 import { User } from 'src/app/model/user';
+import { ComplaintServiceService } from 'src/app/service/complaint-service.service';
 import { GradeService } from 'src/app/service/grade-service.service';
 import { UserService } from 'src/app/service/user-service.service';
 
@@ -14,12 +16,19 @@ export class GradeInstructorClientComponent implements OnInit {
 
   @Output() allClientReservations = new EventEmitter<void>();
 
+  grading: boolean;
+  complaining: boolean;
+
   instructor: User;
+
   gradeValue: number;
   gradeComment: string;
+
+  complaintComment: string;
+
   user: User;
 
-  constructor(private userService: UserService, private gradeService: GradeService) { }
+  constructor(private userService: UserService, private gradeService: GradeService, private complaintService: ComplaintServiceService) { }
 
   ngOnInit(): void {
     if (this.instructorToGrade == undefined) {
@@ -33,6 +42,25 @@ export class GradeInstructorClientComponent implements OnInit {
     this.userService.getLoggedUser().subscribe(ret => {
       this.user = ret;
     });
+
+    this.grading = false;
+    this.complaining = false;
+  }
+
+  chooseGradeOrComplain(): void {
+    let gradeEl = document.getElementById('grade') as HTMLInputElement;
+    let complaintEl = document.getElementById('complaint') as HTMLInputElement;
+    if (!gradeEl.checked && !complaintEl.checked) {
+      alert('You must select one option!');
+    } else {
+      if (gradeEl.checked) {
+        this.grading = true;
+        this.complaining = false;
+      } else {
+        this.grading = false;
+        this.complaining = true;
+      }
+    }
   }
 
   addGrade(): void {
@@ -90,6 +118,38 @@ export class GradeInstructorClientComponent implements OnInit {
       alert('Grade successfully created!');
     } else {
       alert('We run into a problem! Grade could not be created!');
+    }
+  }
+
+  addComplaint(): void {
+    let commentEl = document.getElementById('complaintCommentText') as HTMLTextAreaElement;
+
+    this.complaintComment = commentEl.value;
+
+    this.userService.getLoggedUser().subscribe(ret => {
+      this.user = ret;
+
+      let complaint = new Complaint();
+      complaint.text = this.complaintComment;
+      complaint.author = this.user;
+      complaint.complaintCottage = null;
+      complaint.complaintShip = null;
+      complaint.answer = "";
+
+      complaint.complaintUser = this.instructor;
+      this.complaintService.addComplaint(complaint).subscribe(ret => {
+        this.showComplaintSaveStatus(ret);
+        this.allClientReservations.emit();
+      });
+    });
+      
+  }
+
+  private showComplaintSaveStatus(ret: boolean) {
+    if (ret) {
+      alert('Complaint successfully created!');
+    } else {
+      alert('We run into a problem! Complaint could not be created!');
     }
   }
 

@@ -32,6 +32,12 @@ public class ComplaintServiceImpl implements ComplaintService{
         return true;
     }
 
+    @Override
+    public Boolean addComplaint(Complaint complaint) {
+        complaintRepository.save(complaint);
+        return true;
+    }
+
     private void sendNotificationToAuthor(Complaint complaint) {
         SimpleMailMessage mail = new SimpleMailMessage();
         mail.setTo(complaint.getAuthor().getEmail());

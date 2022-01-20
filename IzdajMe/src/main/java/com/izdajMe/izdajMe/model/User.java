@@ -39,7 +39,7 @@ public class User {
     protected Boolean prepaid;
     protected Type type;
     protected int points;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Grade> grades;
 
     public User(long id,String email, String firstName, String lastName, String mobileNumber, String address, String country, String city, Role role, String password, String reason, Boolean prepaid, Type type, List<Grade> grades) {
@@ -173,11 +173,7 @@ public class User {
 
     public void setPoints(int points) { this.points = points; }
 
-    public List<Grade> getGrades() {
-        return grades;
-    }
+    public List<Grade> getGrades() { return grades; }
 
-    public void setGrades(List<Grade> grades) {
-        this.grades = grades;
-    }
+    public void setGrades(List<Grade> grades) { this.grades = grades; }
 }

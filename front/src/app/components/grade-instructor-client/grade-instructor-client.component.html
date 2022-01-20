@@ -1,4 +1,14 @@
 <div>
+    Do you want to add your grade or to add your complaint about 
+    instructor <b>{{instructor.firstName}} {{instructor.lastName}}</b>?<br>
+    <form (ngSubmit)="chooseGradeOrComplain()" ngNativeValidate>
+        <input type="radio" id="grade" name="gradeComplaint" value="grade" required>Grade
+        <input type="radio" id="complaint" name="gradeComplaint" value="complaint" required>Complaint
+        <button type="submit">Next</button>
+    </form>
+</div>
+
+<div *ngIf="grading">
     Add your revision on instructor <b>{{instructor.firstName}} {{instructor.lastName}}</b>
     <form (ngSubmit)="addGrade()" ngNativeValidate>
         Select grade value:
@@ -11,6 +21,15 @@
         <br>
         Add a comment:
         <textarea id="gradeCommentText" required></textarea>
+        <button type="submit">Finish</button>
+    </form>
+</div>
+
+<div *ngIf="complaining">
+    Add your complint on instructor <b>{{instructor.firstName}} {{instructor.lastName}}</b>
+    <form (ngSubmit)="addComplaint()" ngNativeValidate>
+        Add a comment as a complaint:
+        <textarea id="complaintCommentText" required></textarea>
         <button type="submit">Finish</button>
     </form>
 </div>

@@ -313,10 +313,14 @@ values (7, 25, 'Isplovljavanje', 'Ribarsko ostrvo', 'Plovidba camcom i pecanje',
 insert into favors (id, instructor_id, name, address, description, images, num_of_persons, rules, services, cost, available_from, available_till, cancellation_condition)
 values (8, 26, 'Pravljenje mamca', 'Ribarsko ostrvo', 'Mamac', null, 3, 'Samo punoletni mogu', null, 500, DATE('2022-01-01'), DATE('2022-07-1'), '15%');
 
-insert into complaints (id, text, author_id, complaint_user_id, answer)
-values (1, 'Nova zalba', 14, 1, '');
-insert into complaints (id, text, author_id, complaint_user_id, answer)
-values (2, 'Nova zalbaaaaaa', 14, 2, '');
+insert into complaints (id, text, author_id, complaint_user_id, complaint_cottage_id, complaint_ship_id, answer)
+values (1, 'Nova zalba', 14, 1, null, null, '');
+insert into complaints (id, text, author_id, complaint_user_id, complaint_cottage_id, complaint_ship_id, answer)
+values (2, 'Nova zalbaaaaaa', 14, 2, null, null, '');
+insert into complaints (id, text, author_id, complaint_user_id, complaint_cottage_id, complaint_ship_id, answer)
+values (3, 'Zalba za vikendicu', 14, null, 1, null, '');
+insert into complaints (id, text, author_id, complaint_user_id, complaint_cottage_id, complaint_ship_id, answer)
+values (4, 'Zalba za brod', 14, null, null, 1, '');
 
 insert into ships_grades(ship_id, grades_id) values (1, 1);
 insert into ships_grades(ship_id, grades_id) values (1, 2);

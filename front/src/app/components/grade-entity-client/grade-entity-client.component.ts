@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Complaint } from 'src/app/model/complaint';
 import { Cottage } from 'src/app/model/cottage';
 import { Grade } from 'src/app/model/grade';
-import { Ship } from 'src/app/model/ship';
 import { User } from 'src/app/model/user';
+import { ComplaintServiceService } from 'src/app/service/complaint-service.service';
 import { CottageService } from 'src/app/service/cottage-service.service';
 import { GradeService } from 'src/app/service/grade-service.service';
-import { ShipService } from 'src/app/service/ship-service';
 import { UserService } from 'src/app/service/user-service.service';
 
 @Component({
@@ -18,19 +18,22 @@ export class GradeEntityClientComponent implements OnInit {
 
   @Output() allClientReservations = new EventEmitter<void>();
 
+  grading: boolean;
+  complaining: boolean;
+
   cottage: Cottage;
+
   cottageChecked: boolean;
   cottageOwnerChecked: boolean;
 
-  ship: Ship;
-  shipChecked: boolean;
-  shipOwnerChecked: boolean;
-
   gradeValue: number;
   gradeComment: string;
+
+  complaintComment: string;
+
   user: User;
 
-  constructor(private userService: UserService, private gradeService: GradeService, private cottageService: CottageService) { }
+  constructor(private userService: UserService, private gradeService: GradeService, private complaintService: ComplaintServiceService, private cottageService: CottageService) { }
 
   ngOnInit(): void {
     if (this.cottageToGrade == undefined) {
@@ -45,6 +48,27 @@ export class GradeEntityClientComponent implements OnInit {
       this.user = ret;
     });
 
+    this.grading = false;
+    this.complaining = false;
+
+    this.cottageChecked = false;
+    this.cottageOwnerChecked = false;
+  }
+
+  chooseGradeOrComplain(): void {
+    let gradeEl = document.getElementById('grade') as HTMLInputElement;
+    let complaintEl = document.getElementById('complaint') as HTMLInputElement;
+    if (!gradeEl.checked && !complaintEl.checked) {
+      alert('You must select one option!');
+    } else {
+      if (gradeEl.checked) {
+        this.grading = true;
+        this.complaining = false;
+      } else {
+        this.grading = false;
+        this.complaining = true;
+      }
+    }
     this.cottageChecked = false;
     this.cottageOwnerChecked = false;
   }
@@ -56,6 +80,22 @@ export class GradeEntityClientComponent implements OnInit {
       alert('You must select one option!');
     } else {
       if (gradeCotEl.checked) {
+        this.cottageChecked = true;
+        this.cottageOwnerChecked = false;
+      } else {
+        this.cottageChecked = false;
+        this.cottageOwnerChecked = true;
+      }
+    }
+  }
+
+  chooseCottageOrOwnerComplaint(): void {
+    let complaintCotEl = document.getElementById('complaintCottage') as HTMLInputElement;
+    let complaintOwnEl = document.getElementById('complaintOwner') as HTMLInputElement;
+    if (!complaintCotEl.checked && !complaintOwnEl.checked) {
+      alert('You must select one option!');
+    } else {
+      if (complaintCotEl.checked) {
         this.cottageChecked = true;
         this.cottageOwnerChecked = false;
       } else {
@@ -129,6 +169,47 @@ export class GradeEntityClientComponent implements OnInit {
       alert('Grade successfully created!');
     } else {
       alert('We run into a problem! Grade could not be created!');
+    }
+  }
+
+  addComplaint(): void {
+    let commentEl = document.getElementById('complaintCommentText') as HTMLTextAreaElement;
+
+    this.complaintComment = commentEl.value;
+
+    this.userService.getLoggedUser().subscribe(ret => {
+      this.user = ret;
+
+      let complaint = new Complaint();
+      complaint.text = this.complaintComment;
+      complaint.author = this.user;
+      complaint.complaintShip = null;
+      complaint.answer = "";
+
+      if (this.cottageChecked) {
+        complaint.complaintUser = null;
+        complaint.complaintCottage = this.cottage;
+        this.complaintService.addComplaint(complaint).subscribe(ret => {
+          this.showComplaintSaveStatus(ret);
+          this.allClientReservations.emit();
+        });
+      } else if (this.cottageOwnerChecked) {
+        complaint.complaintUser = this.cottage.owner;
+        complaint.complaintCottage = null;
+        this.complaintService.addComplaint(complaint).subscribe(ret => {
+          this.showComplaintSaveStatus(ret);
+          this.allClientReservations.emit();
+        });
+      }
+    });
+      
+  }
+
+  private showComplaintSaveStatus(ret: boolean) {
+    if (ret) {
+      alert('Complaint successfully created!');
+    } else {
+      alert('We run into a problem! Complaint could not be created!');
     }
   }
 }

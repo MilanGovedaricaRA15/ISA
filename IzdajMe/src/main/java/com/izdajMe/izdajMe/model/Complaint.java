@@ -14,6 +14,10 @@ public class Complaint {
     private User complaintUser;
     private String text;
     private String answer;
+    @ManyToOne
+    private Cottage complaintCottage;
+    @ManyToOne
+    private Ship complaintShip;
 
     public Complaint() {}
 
@@ -37,6 +41,22 @@ public class Complaint {
     public User getComplaintUser() { return complaintUser; }
 
     public void setComplaintUser(User complaintUser) { this.complaintUser = complaintUser; }
+
+    public Cottage getComplaintCottage() {
+        return complaintCottage;
+    }
+
+    public void setComplaintCottage(Cottage complaintCottage) {
+        this.complaintCottage = complaintCottage;
+    }
+
+    public Ship getComplaintShip() {
+        return complaintShip;
+    }
+
+    public void setComplaintShip(Ship complaintShip) {
+        this.complaintShip = complaintShip;
+    }
 
     public String getText() {
         return text;

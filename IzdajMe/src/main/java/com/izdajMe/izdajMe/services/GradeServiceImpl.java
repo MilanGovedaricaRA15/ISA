@@ -89,12 +89,6 @@ public class GradeServiceImpl implements GradeService{
     }
 
     @Override
-    public Boolean addGrade(Grade grade) {
-        gradeRepository.save(grade);
-        return true;
-    }
-
-    @Override
     public Boolean addGradeToCottage(Cottage cottage) {
         cottageRepository.save(cottage);
         return true;
