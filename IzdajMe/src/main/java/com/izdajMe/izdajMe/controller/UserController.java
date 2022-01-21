@@ -11,6 +11,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -54,13 +55,16 @@ public class UserController {
             else{
                 request.getSession(false).setAttribute("role",userRole);
             }
-            HttpCookie cookie = ResponseCookie.from("SESSION", request.getSession().getId())
-                    .httpOnly(true)
-                    .sameSite("None")
-                    .secure(true)
-                    .path("/")
-                    .build();
-           response.addHeader("SET_COOKIE",cookie.toString());
+            Collection<String> headers = response.getHeaders(HttpHeaders.SET_COOKIE);
+            boolean firstHeader = true;
+            for (String header : headers) { // there can be multiple Set-Cookie attributes
+                if (firstHeader) {
+                    response.setHeader(HttpHeaders.SET_COOKIE, String.format("%s; %s", header, "SameSite=None")); // set
+                    firstHeader = false;
+                    continue;
+                }
+                response.addHeader(HttpHeaders.SET_COOKIE, String.format("%s; %s", header, "SameSite=None")); // add
+            }
            return "user_found";
         }
         else {
