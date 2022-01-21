@@ -24,6 +24,10 @@ export class ShipService {
     private addShipHotOfferToShipUrl: string;
     private checkIsReservedUrl: string;
     private removeShipByAdministratorUrl: string;
+	private addSubscribedUserToShipUrl: string;
+	private removeSubscribedUserFromShipUrl: string;
+	private getUsersSubscribedShipsUrl: string;
+	private isUserSubscribedToShipUrl: string;
 
     constructor(private http: HttpClient) { 
         this.getAllShipsUrl = environment.baseUrl+"ships/getAllShips";
@@ -41,7 +45,11 @@ export class ShipService {
         this.addShipUrl = environment.baseUrl+'ships/addShip';
         this.addShipHotOfferToShipUrl = environment.baseUrl+'ships/addHotOfferToShip';
         this.checkIsReservedUrl = environment.baseUrl+'ships/checkIsReserved';
-        this.removeShipByAdministratorUrl = environment.baseUrl+'ships/removeShipByAdministrator'
+        this.removeShipByAdministratorUrl = environment.baseUrl+'ships/removeShipByAdministrator';
+		this.addSubscribedUserToShipUrl = environment.baseUrl + 'ships/addSubscribedUserToShip';
+		this.removeSubscribedUserFromShipUrl = environment.baseUrl + 'ships/removeSubscribedUserFromShip';
+		this.getUsersSubscribedShipsUrl = environment.baseUrl + 'ships/getUsersSubscribedShips';
+		this.isUserSubscribedToShipUrl = environment.baseUrl + 'ships/isUserSubscribedToShip';
     }
 
     public getAllShips(): Observable<Array<Ship>> {
@@ -79,67 +87,124 @@ export class ShipService {
         return this.http.get<Array<Ship>>(this.searchShipsByNameUrl, {headers: headers, params: params});
     }
 
-    public getShipAverageGrade(id: number): Observable<number> {
-        let headers = new HttpHeaders();
-        headers.append('Content-Type', 'application/json');
-        let params = new HttpParams().set("id", id);
+  public getAllShips(): Observable<Array<Ship>> {
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
 
-        return this.http.get<number>(this.getShipAverageGradeUrl, {headers: headers, params: params});
-    }
+    return this.http.get<Array<Ship>>(this.getAllShipsUrl, {headers: headers});
+  }
 
-    public addShip(ship: Ship):Observable<Ship>{
-        return this.http.post<Ship>(this.addShipUrl,ship,{withCredentials: true});
-      }
-    
-    public upload(file:File):Observable<boolean> {
-        const formData:FormData = new FormData();
-    
-         formData.append('file', file);
-    
-        return this.http.post<boolean>(this.uploadImgUrl, formData,{withCredentials: true});
-    } 
-    
-    public getAllShipsOfOwner(): Observable<Array<Ship>> {
-      let user = sessionStorage.getItem('email');
-      let headers = new HttpHeaders();
-      headers.append('Content-Type', 'application/json');
-      let params = new HttpParams().set("email",user);
-    
-      return this.http.get<Array<Ship>>(this.getAllShipsOfOwnerUrl, {headers: headers,params: params,withCredentials: true});
-    }
-      
-    public removeShipImg(shipToRemove:Ship ): Observable<any>{
-      return this.http.put(this.removeShipImgUrl,shipToRemove,{withCredentials: true});
-    }
+  public getAllAvailableShips(from: Date, to: Date, numOfGuests: number): Observable<Array<Ship>> {
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+    let stringFrom = from.getTime().toString();
+    let stringTo = to.getTime().toString();
+    let params = new HttpParams().set("from", stringFrom).set("to", stringTo).set("numOfGuests", numOfGuests);  
+
+    return this.http.get<Array<Ship>>(this.getAllAvailableShipsUrl, {headers: headers, params: params});
+  }
+
+  public getShipById(id: number): Observable<Ship> {
+    let ship = id;
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+    let params = new HttpParams().set("ship", ship);
+
+    return this.http.get<Ship>(this.getShipByIdUrl, {headers: headers, params: params});
+  }
+
+  public searchShipsByName(name: string): Observable<Array<Ship>> {
+    let ship = name;
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+    let params = new HttpParams().set("name", ship);
+
+    return this.http.get<Array<Ship>>(this.searchShipsByNameUrl, {headers: headers, params: params});
+  }
+
+  public getShipAverageGrade(id: number): Observable<number> {
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+    let params = new HttpParams().set("id", id);
+
+    return this.http.get<number>(this.getShipAverageGradeUrl, {headers: headers, params: params});
+  }
+
+  public addShip(ship: Ship):Observable<Ship>{
+    return this.http.post<Ship>(this.addShipUrl,ship,{withCredentials: true});
+  }
   
-    public removeShip(shipToRemove:number ): Observable<any>{
-      return this.http.post(this.removeShipUrl,shipToRemove,{withCredentials: true});
-    }
+  public upload(file:File):Observable<boolean> {
+    const formData:FormData = new FormData();
 
-    public removeShipByAdministrator(shipId: number): Observable<Boolean>{
-      return this.http.post<Boolean>(this.removeShipByAdministratorUrl,shipId,{withCredentials: true});
-    }
-    
-    public changeShip(shipToChange:Ship): Observable<Boolean>{
-      return this.http.put<Boolean>(this.changeShipUrl,shipToChange,{withCredentials: true});
-    }
-    
-    public removeShipHotOffer(shipToChange:Ship): Observable<Boolean>{
-      return this.http.put<Boolean>(this.removeShipHotOfferUrl,shipToChange,{withCredentials: true});
-    }
+    formData.append('file', file);
 
-    public deleteShipHotOffer(shipToChange: Ship): Observable<Boolean>{
-      return this.http.put<Boolean>(this.deleteShipHotOfferUrl, shipToChange, {withCredentials: true});
-    }
+    return this.http.post<boolean>(this.uploadImgUrl, formData,{withCredentials: true});
+  } 
+  
+  public getAllShipsOfOwner(): Observable<Array<Ship>> {
+    let user = sessionStorage.getItem('email');
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+    let params = new HttpParams().set("email",user);
+  
+    return this.http.get<Array<Ship>>(this.getAllShipsOfOwnerUrl, {headers: headers,params: params,withCredentials: true});
+  }
     
-    public addShipHotOfferToShip(shipToChange:Ship): Observable<boolean>{
-      return this.http.put<boolean>(this.addShipHotOfferToShipUrl,shipToChange,{withCredentials: true});
-    }
+  public removeShipImg(shipToRemove:Ship ): Observable<any>{
+    return this.http.put(this.removeShipImgUrl,shipToRemove,{withCredentials: true});
+  }
 
-    public checkIsReserved(shipToChange:Ship): Observable<boolean>{
-      return this.http.post<boolean>(this.checkIsReservedUrl,shipToChange,{withCredentials: true});
-    }
-    
+  public removeShip(shipToRemove:number ): Observable<any>{
+    return this.http.post(this.removeShipUrl,shipToRemove,{withCredentials: true});
+  }
 
-    
+  public removeShipByAdministrator(shipId: number): Observable<Boolean>{
+    return this.http.post<Boolean>(this.removeShipByAdministratorUrl,shipId,{withCredentials: true});
+  }
+  
+  public changeShip(shipToChange:Ship): Observable<Boolean>{
+    return this.http.put<Boolean>(this.changeShipUrl,shipToChange,{withCredentials: true});
+  }
+  
+  public removeShipHotOffer(shipToChange:Ship): Observable<Boolean>{
+    return this.http.put<Boolean>(this.removeShipHotOfferUrl,shipToChange,{withCredentials: true});
+  }
+
+  public deleteShipHotOffer(shipToChange: Ship): Observable<Boolean>{
+    return this.http.put<Boolean>(this.deleteShipHotOfferUrl, shipToChange, {withCredentials: true});
+  }
+  
+  public addShipHotOfferToShip(shipToChange:Ship): Observable<boolean>{
+    return this.http.put<boolean>(this.addShipHotOfferToShipUrl,shipToChange,{withCredentials: true});
+  }
+
+  public checkIsReserved(shipToChange:Ship): Observable<boolean>{
+    return this.http.post<boolean>(this.checkIsReservedUrl,shipToChange,{withCredentials: true});
+  }
+  
+  public addSubscribedUserToShip(ship: Ship): Observable<boolean> {
+    return this.http.post<boolean>(this.addSubscribedUserToShipUrl, ship, { withCredentials: true });
+  }
+
+  public removeSubscribedUserFromShip(ship: Ship): Observable<boolean> {
+    return this.http.put<boolean>(this.removeSubscribedUserFromShipUrl, ship, { withCredentials: true });
+  }
+
+  public getUsersSubscribedShips(email: string): Observable<Array<Ship>> {
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+    let params = new HttpParams().set("email", email);
+  
+    return this.http.get<Array<Ship>>(this.getUsersSubscribedShipsUrl, {headers: headers, params: params, withCredentials: true});
+  }
+
+  public isUserSubscribedToShip(email: string, shipId: number): Observable<boolean> {
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+    let params = new HttpParams().set("email", email).set("shipId", shipId);
+  
+    return this.http.get<boolean>(this.isUserSubscribedToShipUrl, {headers: headers, params: params, withCredentials: true});
+  }
+  
 }

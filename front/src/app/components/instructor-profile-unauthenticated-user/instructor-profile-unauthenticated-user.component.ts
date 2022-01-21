@@ -1,4 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { getAverageInstructorGrade, InstructorDTO } from 'src/app/dto/instructor-dto';
+import { getAverageFavorGrade, InstructorsFavorDTO } from 'src/app/dto/instructors-favor-dto';
+import { getAverageShipGrade } from 'src/app/dto/ship-dto';
 import { User } from 'src/app/model/user';
 import { InstructorsFavorService } from 'src/app/service/instructors-favor.service';
 import { UserService } from 'src/app/service/user-service.service';
@@ -11,25 +14,31 @@ import { UserService } from 'src/app/service/user-service.service';
 export class InstructorProfileUnauthenticatedUserComponent implements OnInit {
 
   @Input() instructorUnauthenticated: User;
-  instructor: User;
-  instructorsFavors: any;
+  instructorDTO: InstructorDTO;
+  instructorsFavors: Array<InstructorsFavorDTO>;
 
   constructor(private userService : UserService, private favorService: InstructorsFavorService) { }
 
   ngOnInit(): void {
     if(this.instructorUnauthenticated == undefined){
       this.userService.getUserByEmail(sessionStorage.getItem("instructorToShowUnauthenticated")).subscribe(ret =>{
-        this.instructor = ret;
-        this.favorService.getAllFavorsByInstructorsEmail(this.instructor.email).subscribe(ret => {
-          this.instructorsFavors = ret;
-        })
-      })
+        this.instructorDTO = new InstructorDTO(ret, getAverageInstructorGrade(ret));
+        this.favorService.getAllFavorsByInstructorsEmail(this.instructorDTO.instructor.email).subscribe(ret => {
+          this.instructorsFavors = new Array<InstructorsFavorDTO>();
+          for (let f of ret) {
+            this.instructorsFavors.push(new InstructorsFavorDTO(f, getAverageFavorGrade(f), f.cost));
+          }
+        });
+      });
     } else {
-      this.instructor = this.instructorUnauthenticated;
-      this.favorService.getAllFavorsByInstructorsEmail(this.instructor.email).subscribe(ret => {
-        this.instructorsFavors = ret;
-      })
+      this.instructorDTO = new InstructorDTO(this.instructorUnauthenticated, getAverageInstructorGrade(this.instructorUnauthenticated));
+      this.favorService.getAllFavorsByInstructorsEmail(this.instructorDTO.instructor.email).subscribe(ret => {
+        this.instructorsFavors = new Array<InstructorsFavorDTO>();
+        for (let f of ret) {
+          this.instructorsFavors.push(new InstructorsFavorDTO(f, getAverageFavorGrade(f), f.cost));
+        }
+      });
     }
   }
-
 }
+

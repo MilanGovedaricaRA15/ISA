@@ -28,10 +28,14 @@ public class Cottage {
     private float costPerNight;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ServicePrice> priceList;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Grade> grades;
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<User> subscribedUsers;
 
-    public Cottage(long id, List<Grade> grades, User owner, String name, String address, String description, ArrayList<String> images, int numOfRooms, int numOfBeds, String rules, ArrayList<Services> services, LocalDateTime availableFrom, LocalDateTime availableTill, List<HotOffer> hotOffers, float costPerNight, List<ServicePrice> priceList) {
+    public Cottage(long id, User owner, String name, String address, String description, ArrayList<String> images, int numOfRooms,
+                   int numOfBeds, String rules, ArrayList<Services> services, LocalDateTime availableFrom, LocalDateTime availableTill,
+                   List<HotOffer> hotOffers, float costPerNight, List<ServicePrice> priceList, List<Grade> grades, List<User> subscribedUsers) {
         this.id = id;
         this.owner = owner;
         this.name = name;
@@ -48,18 +52,10 @@ public class Cottage {
         this.costPerNight = costPerNight;
         this.priceList = priceList;
         this.grades = grades;
+        this.subscribedUsers = subscribedUsers;
     }
 
-    public List<Grade> getGrades() {
-        return grades;
-    }
-
-    public void setGrades(List<Grade> grades) {
-        this.grades = grades;
-    }
-
-    public Cottage() {
-    }
+    public Cottage() {}
 
     public long getId() {
         return id;
@@ -179,6 +175,22 @@ public class Cottage {
 
     public void setPriceList(List<ServicePrice> priceList) {
         this.priceList = priceList;
+    }
+
+    public List<Grade> getGrades() {
+        return grades;
+    }
+
+    public void setGrades(List<Grade> grades) {
+        this.grades = grades;
+    }
+
+    public List<User> getSubscribedUsers() {
+        return subscribedUsers;
+    }
+
+    public void setSubscribedUsers(List<User> subscribedUsers) {
+        this.subscribedUsers = subscribedUsers;
     }
 
     public enum Services {

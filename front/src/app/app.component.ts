@@ -4,11 +4,9 @@ import { User } from './model/user';
 import { CottageReservation } from './model/cottage-reservation';
 import { Ship } from './model/ship';
 import { ShipReservation } from './model/ship-reservation';
-import { CottageReservationService } from './service/cottage-reservation-service.service';
 import { UserService } from './service/user-service.service';
 import { InstructorsFavor } from './model/instructors-favor';
 import { FavorReservation } from './model/favor-reservation';
-import { Complaint } from './model/complaint';
 
 @Component({
   selector: 'app-root',
@@ -40,6 +38,7 @@ export class AppComponent {
   cottageToGradeClient: Cottage;
   shipToGradeClient: Ship;
   instructorToGradeClient: User;
+  clientToDeleteAccount: User;
 
   /**
    *
@@ -384,17 +383,17 @@ export class AppComponent {
     sessionStorage.setItem("page", '34');
   }
 
-  goToCottagesReservationsPageClient(){
+  goToFaultsPageClient(){
     this.changeNumber(38);
     sessionStorage.setItem("page", '38');
   }
 
-  goToShipsReservationsPageClient(){
+  goToSubscribedEntitiesPageClient(){
     this.changeNumber(39);
     sessionStorage.setItem("page", '39');
   }
 
-  goToInstructorsReservationsPageClient(){
+  goToComplaintsPageClient(){
     this.changeNumber(40);
     sessionStorage.setItem("page", '40');
   }
@@ -428,6 +427,13 @@ export class AppComponent {
     this.changeNumber(45);
     sessionStorage.setItem("page", "45");
     sessionStorage.setItem("instructorToGradeClient", instructor.email);
+  }
+
+  goToAccountDeleteRequestClient(user: User) {
+    this.clientToDeleteAccount = user;
+    this.changeNumber(46);
+    sessionStorage.setItem("page", "46");
+    sessionStorage.setItem("clientToDeleteAccount", user.email);
   }
 
   seeUserOwner(user: User){

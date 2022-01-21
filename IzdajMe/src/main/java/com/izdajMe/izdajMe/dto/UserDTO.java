@@ -1,6 +1,9 @@
 package com.izdajMe.izdajMe.dto;
 
+import com.izdajMe.izdajMe.model.Grade;
 import com.izdajMe.izdajMe.model.User;
+
+import java.util.List;
 
 public class UserDTO {
 
@@ -19,6 +22,8 @@ public class UserDTO {
     protected Boolean prepaid;
     protected User.Type type;
     protected int points;
+    private List<Grade> grades;
+    private List<User> subscribedUsers;
 
     public UserDTO(){}
 
@@ -38,6 +43,8 @@ public class UserDTO {
         this.prepaid = user.getPrepaid();
         this.type = user.getType();
         this.points = user.getPoints();
+        this.grades = user.getGrades();
+        this.subscribedUsers = user.getSubscribedUsers();
     }
 
     public long getId() {
@@ -158,5 +165,21 @@ public class UserDTO {
 
     public void setPoints(int points) {
         this.points = points;
+    }
+
+    public List<Grade> getGrades() {
+        return grades;
+    }
+
+    public void setGrades(List<Grade> grades) {
+        this.grades = grades;
+    }
+
+    public List<User> getSubscribedUsers() {
+        return subscribedUsers;
+    }
+
+    public void setSubscribedUsers(List<User> subscribedUsers) {
+        this.subscribedUsers = subscribedUsers;
     }
 }

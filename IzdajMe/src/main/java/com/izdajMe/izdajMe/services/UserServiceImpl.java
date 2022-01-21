@@ -423,4 +423,48 @@ public class UserServiceImpl implements UserService {
 
         return true;
     }
+
+    @Override
+    public Boolean addSubscribedUserToInstructor(User user) {
+        userRepository.save(user);
+        return true;
+    }
+
+    @Override
+    public Boolean removeSubscribedUserFromInstructor(User user) {
+        userRepository.save(user);
+        return true;
+    }
+
+    @Override
+    public List<User> getUsersSubscribedInstructors(String email) {
+        List<User> usersSubscribedInstructors = new ArrayList<User>();
+        List<User> allUsers = userRepository.findAll();
+
+        for (User u : allUsers) {
+            if (u.getRole().equals(User.Role.instructor)) {
+                for (User i : u.getSubscribedUsers()) {
+                    if (i.getEmail().equals(email)) {
+                        usersSubscribedInstructors.add(u);
+                        break;
+                    }
+                }
+            }
+        }
+
+        return usersSubscribedInstructors;
+    }
+
+    @Override
+    public Boolean isUserSubscribedToInstructor(String email, String instructorEmail) {
+        List<User> usersSubscribedInstructors = getUsersSubscribedInstructors(email);
+
+        for (User i : usersSubscribedInstructors) {
+            if (i.getEmail().equals(instructorEmail)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

@@ -15,17 +15,19 @@
         <th>Email</th>
         <th>Mobile number</th>
         <th>Country</th>
+        <th>Grade</th>
         <th></th>
     </thead>
     <tbody>
-        <tr *ngFor='let i of instructors'>
-            <td>{{i.firstName}}</td>
-            <td>{{i.lastName}}</td>
-            <td>{{i.address}}</td>
-            <td>{{i.email}}</td>
-            <td>{{i.mobileNumber}}</td>
-            <td>{{i.country}}</td>
-            <td><a href="#" (click)="goToInstructorProfile(i.email)">More details</a></td>
+        <tr *ngFor='let i of instructorsDTO'>
+            <td>{{i.instructor.firstName}}</td>
+            <td>{{i.instructor.lastName}}</td>
+            <td>{{i.instructor.address}}</td>
+            <td>{{i.instructor.email}}</td>
+            <td>{{i.instructor.mobileNumber}}</td>
+            <td>{{i.instructor.country}}</td>
+            <td>{{i.averageGrade}}</td>
+            <td><a href="#" (click)="goToInstructorProfile(i.instructor.email)">More details</a></td>
         </tr>
     </tbody>
 </table>

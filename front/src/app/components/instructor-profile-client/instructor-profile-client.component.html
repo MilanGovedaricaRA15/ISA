@@ -1,12 +1,23 @@
-<div>
+<div class="row">
   <h1>Instructor informations</h1>
-  First name: {{instructor.firstName}} <br>
+  <div class="column">
+    First name: {{instructor.firstName}} <br>
   Last name: {{instructor.lastName}} <br>
   Email: {{instructor.email}} <br>
   Mobile number: {{instructor.mobileNumber}} <br>
   Country: {{instructor.country}} <br>
   City: {{instructor.city}} <br>
   Address: {{instructor.address}} <br>
+  </div>
+  <div class="column">
+    <div *ngIf="isSubscribed">
+      <b>Subscribed to this instructor!</b> <br>
+      <button (click)="cancelSubscriptionOfInstructor()">Cancel subscription</button>
+    </div>
+    <div *ngIf="!isSubscribed">
+      <button (click)="subscribeToInstructor()">Subscribe</button>
+    </div>
+  </div>
 </div>
 
 <br><br>

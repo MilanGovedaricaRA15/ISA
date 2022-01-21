@@ -5,6 +5,7 @@ import com.izdajMe.izdajMe.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,8 @@ public class GradeServiceImpl implements GradeService{
     private InstructorsFavorRepository instructorsFavorRepository;
     @Autowired
     private EmailService emailService;
+    @Autowired
+    private ConcurentWatcherRepository concurentWatcherRepository;
 
     public List<Grade> getAllGrades() {
         Iterable<Grade> allGrades = gradeRepository.findAll();
@@ -89,15 +92,41 @@ public class GradeServiceImpl implements GradeService{
     }
 
     @Override
+    @Transactional(readOnly = false)
     public Boolean addGradeToCottage(Cottage cottage) {
-        cottageRepository.save(cottage);
-        return true;
+        if (!concurentWatcherRepository.findByTableName("Cottage").getWriting()) {
+            ConcurentWatcher cw = concurentWatcherRepository.findByTableName("Grade");
+            cw.setWriting(true);
+            concurentWatcherRepository.save(cw);
+
+            cottageRepository.save(cottage);
+
+            cw.setWriting(false);
+            concurentWatcherRepository.save(cw);
+
+            return true;
+        } else {
+            return  false;
+        }
     }
 
     @Override
+    @Transactional(readOnly = false)
     public Boolean addGradeToShip(Ship ship) {
-        shipRepository.save(ship);
-        return true;
+        if (!concurentWatcherRepository.findByTableName("Ship").getWriting()) {
+            ConcurentWatcher cw = concurentWatcherRepository.findByTableName("Grade");
+            cw.setWriting(true);
+            concurentWatcherRepository.save(cw);
+
+            shipRepository.save(ship);
+
+            cw.setWriting(false);
+            concurentWatcherRepository.save(cw);
+
+            return true;
+        } else {
+            return  false;
+        }
     }
 
     @Override

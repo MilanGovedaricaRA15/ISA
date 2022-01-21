@@ -24,6 +24,10 @@ export class CottageService {
   private checkIsReservedUrl: string;
   private searchCottagesByNameUrl: string;
   private removeCottageByAdministratorUrl: string;
+  private addSubscribedUserToCottageUrl: string;
+  private removeSubscribedUserFromCottageUrl: string;
+  private getUsersSubscribedCottagesUrl: string;
+  private isUserSubscribedToCottageUrl: string;
 
   constructor(private http: HttpClient) { 
     this.getAllCottagesUrl = environment.baseUrl+"cottages/getAllCottages";
@@ -41,6 +45,10 @@ export class CottageService {
     this.checkIsReservedUrl = environment.baseUrl+'cottages/checkIsReserved';
     this.searchCottagesByNameUrl = environment.baseUrl+'cottages/searchCottagesByName';
     this.removeCottageByAdministratorUrl = environment.baseUrl+'cottages/removeCottageByAdministrator';
+	this.addSubscribedUserToCottageUrl = environment.baseUrl + 'cottages/addSubscribedUserToCottage';
+    this.removeSubscribedUserFromCottageUrl = environment.baseUrl + 'cottages/removeSubscribedUserFromCottage';
+    this.getUsersSubscribedCottagesUrl = environment.baseUrl + 'cottages/getUsersSubscribedCottages';
+    this.isUserSubscribedToCottageUrl = environment.baseUrl + 'cottages/isUserSubscribedToCottage';
   }
 
   public getAllCottages(): Observable<Array<Cottage>> {
@@ -127,6 +135,30 @@ export class CottageService {
     let params = new HttpParams().set("name", cottage);
   
     return this.http.get<Array<Cottage>>(this.searchCottagesByNameUrl, {headers: headers, params: params});
+  }
+
+  public addSubscribedUserToCottage(cottage: Cottage): Observable<boolean> {
+    return this.http.post<boolean>(this.addSubscribedUserToCottageUrl, cottage, { withCredentials: true });
+  }
+
+  public removeSubscribedUserFromCottage(cottage: Cottage): Observable<boolean> {
+    return this.http.put<boolean>(this.removeSubscribedUserFromCottageUrl, cottage, { withCredentials: true });
+  }
+
+  public getUsersSubscribedCottages(email: string): Observable<Array<Cottage>> {
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+    let params = new HttpParams().set("email", email);
+  
+    return this.http.get<Array<Cottage>>(this.getUsersSubscribedCottagesUrl, {headers: headers, params: params, withCredentials: true});
+  }
+
+  public isUserSubscribedToCottage(email: string, cottageId: number): Observable<boolean> {
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+    let params = new HttpParams().set("email", email).set("cottageId", cottageId);
+  
+    return this.http.get<boolean>(this.isUserSubscribedToCottageUrl, {headers: headers, params: params, withCredentials: true});
   }
 
 }

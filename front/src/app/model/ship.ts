@@ -20,13 +20,14 @@ export class Ship {
     images: Array<String>;
     capacity: number;
     rules: String;
-    grades: Array<Grade>;
     fishingEquipment: Array<FishingEquipment>;
     cancelRequirements: String;
     costPerNight: number;
-    priceList: Array<ShipServicePrice>
-    services: Array<ShipServices>
-    hotOffers: Array<ShipHotOffer>
+    priceList: Array<ShipServicePrice>;
+    services: Array<ShipServices>;
+    hotOffers: Array<ShipHotOffer>;
+    grades: Array<Grade>;
+    subscribedUsers: Array<User>;
 }
 
 export enum NavigationEquipment{

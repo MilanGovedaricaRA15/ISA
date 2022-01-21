@@ -27,6 +27,7 @@ public class CottageDTO {
     private float costPerNight;
     private List<ServicePrice> priceList;
     private List<Grade> grades;
+    private List<User> subscribedUsers;
 
     public CottageDTO(){}
     public CottageDTO(Cottage cottage){
@@ -46,14 +47,7 @@ public class CottageDTO {
         this.costPerNight = cottage.getCostPerNight();
         this.priceList = cottage.getPriceList();
         this.grades = cottage.getGrades();
-    }
-
-    public List<Grade> getGrades() {
-        return grades;
-    }
-
-    public void setGrades(List<Grade> grades) {
-        this.grades = grades;
+        this.subscribedUsers = cottage.getSubscribedUsers();
     }
 
     public long getId() {
@@ -172,9 +166,23 @@ public class CottageDTO {
         return priceList;
     }
 
-
-
     public void setPriceList(List<ServicePrice> priceList) {
         this.priceList = priceList;
+    }
+
+    public List<Grade> getGrades() {
+        return grades;
+    }
+
+    public void setGrades(List<Grade> grades) {
+        this.grades = grades;
+    }
+
+    public List<User> getSubscribedUsers() {
+        return subscribedUsers;
+    }
+
+    public void setSubscribedUsers(List<User> subscribedUsers) {
+        this.subscribedUsers = subscribedUsers;
     }
 }

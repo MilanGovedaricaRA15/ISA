@@ -3,29 +3,31 @@
       <h1>Adventure informations</h1>
       <div *ngFor="let f of instructorsFavors; let i = index;">
         <h4>Adventure {{i+1}}</h4>
-        Name: {{f.name}} <br>
-        Address: {{f.address}} <br>
-        Descriptions: {{f.description}} <br>
-        numOfPersons: {{f.numOfPersons}} <br>
-        Rules: {{f.rules}} <br>
-        Available from: {{f.availableFrom | date:'dd.MM.yyyy'}} <br>
-        Available till: {{f.availableTill | date:'dd.MM.yyyy'}} <br>
-        Cost: {{f.cost}} <br>
-        Cancellation condition: {{f.cancellationCondition}} <br>
+        Name: {{f.instructorsFavor.name}} <br>
+        Address: {{f.instructorsFavor.address}} <br>
+        Descriptions: {{f.instructorsFavor.description}} <br>
+        Number of persons: {{f.instructorsFavor.numOfPersons}} <br>
+        Rules: {{f.instructorsFavor.rules}} <br>
+        Available from: {{f.instructorsFavor.availableFrom | date:'dd.MM.yyyy'}} <br>
+        Available till: {{f.instructorsFavor.availableTill | date:'dd.MM.yyyy'}} <br>
+        Cost: {{f.instructorsFavor.cost}} <br>
+        Average grade: {{f.averageGrade}} <br>
+        Cancellation condition: {{f.instructorsFavor.cancellationCondition}} <br>
         Services:
-        <ul *ngFor='let s of f.priceList'>
+        <ul *ngFor='let s of f.instructorsFavor.priceList'>
           <li>{{s.service}}</li>
         </ul>
       </div>
     </div>
     <div class="column">
         <h1>Instructor informations</h1>
-        First name: {{instructor.firstName}} <br>
-        Last name: {{instructor.lastName}} <br>
-        Email: {{instructor.email}} <br>
-        Mobile number: {{instructor.mobileNumber}} <br>
-        Country: {{instructor.country}} <br>
-        City: {{instructor.city}} <br>
-        Address: {{instructor.address}} <br>
+        First name: {{instructorDTO.instructor.firstName}} <br>
+        Last name: {{instructorDTO.instructor.lastName}} <br>
+        Email: {{instructorDTO.instructor.email}} <br>
+        Mobile number: {{instructorDTO.instructor.mobileNumber}} <br>
+        Country: {{instructorDTO.instructor.country}} <br>
+        City: {{instructorDTO.instructor.city}} <br>
+        Address: {{instructorDTO.instructor.address}} <br>
+        Average grade: {{instructorDTO.averageGrade}} <br>
     </div>
   </div> 

@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { getAverageInstructorGrade, InstructorDTO } from 'src/app/dto/instructor-dto';
 import { User } from 'src/app/model/user';
 import { UserService } from 'src/app/service/user-service.service';
 
@@ -10,7 +11,7 @@ import { UserService } from 'src/app/service/user-service.service';
 export class InstructorsPageComponent implements OnInit {
 
   @Output() instructorToShowUnauthenticated = new EventEmitter<User>();
-  instructors: Array<User>;
+  instructorsDTO: Array<InstructorDTO>;
   searchTextFirstName: string;
   searchTextLastName: string;
 
@@ -18,8 +19,11 @@ export class InstructorsPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.userService.getAllInstructors().subscribe(ret => {
-      this.instructors = ret;
-    })
+      this.instructorsDTO = new Array<InstructorDTO>();
+      for (let i of ret) {
+        this.instructorsDTO.push(new InstructorDTO(i, getAverageInstructorGrade(i)));
+      }
+    });
   }
 
   goToInstructorProfile(email: string): void {
@@ -32,7 +36,10 @@ export class InstructorsPageComponent implements OnInit {
     let firstName = this.searchTextFirstName;
     let lastName = this.searchTextLastName;
     this.userService.searchInstructorssByName(firstName, lastName).subscribe(ret => {
-      this.instructors = ret;
+      this.instructorsDTO = new Array<InstructorDTO>();
+      for (let i of ret) {
+        this.instructorsDTO.push(new InstructorDTO(i, getAverageInstructorGrade(i)));
+      }
     })
   }
 

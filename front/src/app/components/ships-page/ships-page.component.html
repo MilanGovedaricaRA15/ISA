@@ -13,17 +13,19 @@
         <th>Capacity</th>
         <th>Description</th>
         <th>Cost per night</th>
+        <th>Grade</th>
         <th></th>
     </thead>
     <tbody>
         <tr *ngFor='let s of ships'>
-            <td>{{s.name}}</td>
-            <td>{{s.address}}</td>
-            <td>{{s.type}}</td>
-            <td>{{s.capacity}}</td>
-            <td>{{s.description}}</td>
-            <td>{{s.costPerNight}}</td>
-            <td><a href="#" (click)="goToShipProfile(s.id)">More details</a></td>
+            <td>{{s.ship.name}}</td>
+            <td>{{s.ship.address}}</td>
+            <td>{{s.ship.type}}</td>
+            <td>{{s.ship.capacity}}</td>
+            <td>{{s.ship.description}}</td>
+            <td>{{s.ship.costPerNight}}</td>
+            <td>{{s.averageGrade}}</td>
+            <td><a href="#" (click)="goToShipProfile(s.ship.id)">More details</a></td>
         </tr>
     </tbody>
 </table>

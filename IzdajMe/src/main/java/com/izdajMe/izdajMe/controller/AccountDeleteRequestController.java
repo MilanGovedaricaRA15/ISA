@@ -36,7 +36,7 @@ public class AccountDeleteRequestController {
     public ResponseEntity<Boolean> addAccountDeleteRequest(@RequestBody AccountDeleteRequest accountDeleteRequest, HttpServletRequest request) {
         if (request.getSession(false).getAttribute("role") != null) {
             if (request.getSession(false).getAttribute("role") == User.Role.cottageAdvertiser || request.getSession(false).getAttribute("role") == User.Role.boatAdvertiser
-                    || request.getSession(false).getAttribute("role") == User.Role.instructor) {
+                    || request.getSession(false).getAttribute("role") == User.Role.instructor || request.getSession(false).getAttribute("role") == User.Role.client) {
                 return new ResponseEntity<Boolean>(accountDeleteRequestService.addAccountDeleteRequest(accountDeleteRequest), HttpStatus.OK);
             } else {
                 return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
