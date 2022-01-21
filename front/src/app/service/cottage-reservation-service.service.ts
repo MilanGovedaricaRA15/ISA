@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { Cottage } from '../model/cottage';
 import { CottageReservation } from '../model/cottage-reservation';
 import { User } from '../model/user';
