@@ -67,6 +67,7 @@ import { ReportForInstructorCalendarComponent } from './components/report-for-in
 import { GradeEntityClientComponent } from './components/grade-entity-client/grade-entity-client.component';
 import { GradeShipClientComponent } from './components/grade-ship-client/grade-ship-client.component';
 import { GradeInstructorClientComponent } from './components/grade-instructor-client/grade-instructor-client.component';
+import { AccountDeleteRequestClientComponent } from './components/account-delete-request-client/account-delete-request-client.component';
 
 @NgModule({
   declarations: [
@@ -132,7 +133,8 @@ import { GradeInstructorClientComponent } from './components/grade-instructor-cl
     ReportForInstructorCalendarComponent,
     GradeEntityClientComponent,
     GradeShipClientComponent,
-    GradeInstructorClientComponent
+    GradeInstructorClientComponent,
+    AccountDeleteRequestClientComponent
   ],
   imports: [
     BrowserModule,

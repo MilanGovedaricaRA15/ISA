@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/model/user';
 import { UserService } from 'src/app/service/user-service.service';
@@ -9,6 +9,7 @@ import { UserService } from 'src/app/service/user-service.service';
   styleUrls: ['./client-profile.component.css']
 })
 export class ClientProfileComponent implements OnInit {
+  @Output() accountDeleteRequestClient = new EventEmitter<User>();
 
   @Input() clientAuthenticated: User;
   client: User;
@@ -149,6 +150,10 @@ export class ClientProfileComponent implements OnInit {
   }
   get newPassword2() {
     return this.changePasswordForm.get('newPassword2');
+  }
+
+  accountDeleteRequest(): void {
+    this.accountDeleteRequestClient.emit(this.client);
   }
 
 }
