@@ -69,6 +69,17 @@ public class FavorReservationServiceImpl implements FavorReservationService{
         return allFavorReservations;
     }
 
+    public List<FavorReservation> getAllReservationsFromBaseFromTill(String from, String to) {
+        Timestamp fromDateTs = new Timestamp(Long.parseLong(from));
+        Timestamp toDateTs = new Timestamp(Long.parseLong(to));
+        LocalDateTime fromDate = fromDateTs.toLocalDateTime();
+        LocalDateTime toDate = toDateTs.toLocalDateTime();
+
+
+        List<FavorReservation> allFavorReservations = favorReservationRepository.findAllFromBaseFromTill(fromDate, toDate);
+        return allFavorReservations;
+    }
+
     public List<FavorReservation> getAllReservationsFromTill(Long id, String from, String to) {
         Timestamp fromDateTs = new Timestamp(Long.parseLong(from));
         Timestamp toDateTs = new Timestamp(Long.parseLong(to));

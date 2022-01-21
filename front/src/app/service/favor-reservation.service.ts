@@ -20,6 +20,7 @@ export class FavorReservationService {
   getAllReservationsOfFavorFromTillUrl: string;
   getAllReservationsOfFavorUrl: string;
   getAllReservationsFromTillUrl: string;
+  getAllReservationsFromBaseFromTillUrl: string;
 
   constructor(private http: HttpClient) {
     this.getAllReservationsUrl = 'http://localhost:8080/favorReservations/getAllReservations';
@@ -33,7 +34,8 @@ export class FavorReservationService {
     this.cancelFavorReservationByClientUrl = "http://localhost:8080/favorReservations/cancelFavorReservationByClient";
     this.getAllReservationsOfFavorFromTillUrl = "http://localhost:8080/favorReservations/getAllReservationsOfFavorFromTill";
     this.getAllReservationsOfFavorUrl = "http://localhost:8080/favorReservations/getAllReservationsOfFavor";
-    this.getAllReservationsFromTillUrl = "http://localhost:8080/favorReservations/getAllReservationsFromTill"
+    this.getAllReservationsFromTillUrl = "http://localhost:8080/favorReservations/getAllReservationsFromTill";
+    this.getAllReservationsFromBaseFromTillUrl = 'http://localhost:8080/favorReservations/getAllReservationsFromBaseFromTill'
   }
 
   public getAllReservations(): Observable<Array<FavorReservation>> {
@@ -41,6 +43,15 @@ export class FavorReservationService {
     headers.append('Content-Type', 'application/json');
 
     return this.http.get<Array<FavorReservation>>(this.getAllReservationsUrl, {headers: headers});
+  }
+
+  public getAllReservationsFromBaseFromTill(from: Date, to: Date): Observable<Array<FavorReservation>> {
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+    let numberFrom = from.getTime();
+    let numberTo = to.getTime();
+    let params = new HttpParams().set("from",numberFrom.toString()).set("to",numberTo.toString());  
+    return this.http.get<Array<FavorReservation>>(this.getAllReservationsFromBaseFromTillUrl, {headers: headers,params: params,withCredentials: true});
   }
 
   public addReservationByOwner(favorReservation: FavorReservation):Observable<boolean>{

@@ -1,11 +1,13 @@
 package com.izdajMe.izdajMe.services;
 
+import com.izdajMe.izdajMe.model.FavorHotOffer;
 import com.izdajMe.izdajMe.model.ShipHotOffer;
 import com.izdajMe.izdajMe.repository.ShipHotOfferRepository;
 import com.izdajMe.izdajMe.repository.ShipRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;

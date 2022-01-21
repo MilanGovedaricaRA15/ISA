@@ -32,6 +32,26 @@ public class ShipReservationController {
         return new ResponseEntity<List<ShipReservationDTO>>(list, HttpStatus.OK);
     }
 
+    @GetMapping("/shipReservation/getAllReservations")
+    public ResponseEntity<List<ShipReservation>> getAllReservations(){
+        List<ShipReservation> allReservations = new ArrayList<>();
+        for(ShipReservation shipReservation : shipReservationService.getAllReservations()) {
+            allReservations.add(shipReservation);
+        }
+
+        return new ResponseEntity<List<ShipReservation>>(allReservations, HttpStatus.OK);
+    }
+
+    @GetMapping("/shipReservation/getAllReservationsFromBaseFromTill")
+    public ResponseEntity<List<ShipReservationDTO>> getAllReservationsFromBaseFromTill(@RequestParam("from") String from, @RequestParam("to") String to) {
+
+        List<ShipReservationDTO> reservations = new ArrayList<>();
+        for (ShipReservation sr : shipReservationService.getAllReservationsFromBaseFromTill(from, to)) {
+            reservations.add(new ShipReservationDTO(sr));
+        }
+        return new ResponseEntity<List<ShipReservationDTO>>(reservations, HttpStatus.OK);
+    }
+
     @GetMapping("/shipReservation/getAllReservationsOfShipFromTill")
     public ResponseEntity<List<ShipReservationDTO>> getAllReservationsOfShipFromTill(@RequestParam("id") Long id, @RequestParam("from") String from, @RequestParam("to") String to) {
 
