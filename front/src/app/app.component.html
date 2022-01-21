@@ -8,7 +8,7 @@
           || showCompNumber === 35 || showCompNumber === 36 || showCompNumber === 37
           || showCompNumber === 38 || showCompNumber === 39 || showCompNumber === 40
           || showCompNumber === 41 || showCompNumber === 42 || showCompNumber === 43
-          || showCompNumber === 44 || showCompNumber === 45"></app-client-navbar>
+          || showCompNumber === 44 || showCompNumber === 45 || showCompNumber === 46"></app-client-navbar>
 <div class="container">
   <div class="row">
     <div class="col-md-12">
@@ -36,6 +36,10 @@
           <app-ship-profile-unauthenticated-user [shipUnauthenticated]="shipToShowUnauthenticated" *ngIf="showCompNumber === 16"></app-ship-profile-unauthenticated-user>
           <app-instructor-profile-unauthenticated-user [instructorUnauthenticated]="instructorToShowUnauthenticated" *ngIf="showCompNumber === 17"></app-instructor-profile-unauthenticated-user>
           
+          <app-client-profile [clientAuthenticated]="clientToShowAuthenticated"
+                              (accountDeleteRequestClient)="goToAccountDeleteRequestClient($event)"
+                              *ngIf="showCompNumber === 31"></app-client-profile>
+
           <app-cottages-page-client (cottageToShowClient)="onCottageClientClick($event)" *ngIf="showCompNumber === 32"></app-cottages-page-client>
           <app-ships-page-client (shipToShowClient)="onShipClientClick($event)" *ngIf="showCompNumber === 33"></app-ships-page-client>
           <app-instructors-page-client (instructorToShowClient)="onInstructorClientClick($event)" *ngIf="showCompNumber === 34"></app-instructors-page-client>
@@ -62,6 +66,10 @@
           <app-grade-instructor-client (allClientReservations)="goToReservationsPageClient()" 
                                       [instructorToGrade]="instructorToGradeClient"
                                       *ngIf="showCompNumber === 45"></app-grade-instructor-client>
+                      
+          <app-account-delete-request-client [clientToDeleteAccount]="clientToDeleteAccount"
+                                              (clientProfile)="goToClientProfile()"
+                                              *ngIf="showCompNumber === 46"></app-account-delete-request-client>
 
           <app-owner-navbar (profile)="goToProfile()" *ngIf="showCompNumber === 3 || showCompNumber === 4 || showCompNumber === 205 || showCompNumber === 5 
                                       || showCompNumber === 6 || showCompNumber === 50 || showCompNumber === 52 || showCompNumber === 210 || showCompNumber === 211 
@@ -93,7 +101,6 @@
           <app-superior-administrator-profile (addAdmin)="addAdministrator()" (addAnswer)="addAnswer($event)" (addReason)="addReason($event)" (decliningReason)="decliningUserReason($event)" *ngIf="showCompNumber === 8"></app-superior-administrator-profile>
           <app-add-new-administrator (adminAdded)="adminAdded($event)" *ngIf="showCompNumber === 50"> </app-add-new-administrator>
           <app-add-new-ship (shipToShow)="onShipClick($event)" *ngIf="showCompNumber === 206"></app-add-new-ship>
-          <app-client-profile [clientAuthenticated]="clientToShowAuthenticated" *ngIf="showCompNumber === 31"></app-client-profile>
           <app-instructor-profile *ngIf="showCompNumber === 61" (showInstructorReport)="showReport()" (seeUser)="seeUserOwner($event)" (sendFavorReservation)="receiveFavorReservation($event)" (addNewFavorEmiter)="addNewFavor($event)" (favorToShow)="onFavorClick($event)"></app-instructor-profile>
           <app-favor-profile [favor]="favorToShow" (favorHotOffersForHotOffer)="updateFavorHotOffers($event)" *ngIf="showCompNumber === 62"></app-favor-profile>
           <app-favor-calendar (sendFavorReservation)="receiveFavorReservation($event)" [favorForApp]="favorForHotOffers" *ngIf="showCompNumber === 62"></app-favor-calendar>

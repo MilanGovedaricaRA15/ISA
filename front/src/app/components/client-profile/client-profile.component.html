@@ -10,12 +10,13 @@
         <label style="width: 40%;">Country:</label>{{client.country}} <br>
         <label style="width: 40%;">City:</label>{{client.city}} <br>
         <label style="width: 40%;">Address:</label>{{client.address}} <br>
-        <label style="width: 40%;">Points:</label>25 <br>
-        <label style="width: 40%;">Type:</label>Bronze <br>
+        <label style="width: 40%;">Points:</label>{{client.points}}<br>
+        <label style="width: 40%;">Type:</label>{{client.type}}<br>
         <label style="width: 40%;">Loyalty:</label>20% off<br>
 
         <a href="#" (click)="editInformations()">Edit informations</a> <br>
         <a href="#" (click)="editPassword()">Change password</a> <br>
+        <a href="#" (click)="accountDeleteRequest()">Send request to delete account</a> <br>
 
     </div>
 
