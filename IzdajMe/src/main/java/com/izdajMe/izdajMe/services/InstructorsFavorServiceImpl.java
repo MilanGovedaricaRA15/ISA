@@ -1,13 +1,11 @@
 package com.izdajMe.izdajMe.services;
 
 import com.izdajMe.izdajMe.model.*;
-import com.izdajMe.izdajMe.repository.FavorHotOfferRepository;
-import com.izdajMe.izdajMe.repository.FavorReservationRepository;
-import com.izdajMe.izdajMe.repository.InstructorsFavorRepository;
-import com.izdajMe.izdajMe.repository.UserRepository;
+import com.izdajMe.izdajMe.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -34,6 +32,8 @@ public class InstructorsFavorServiceImpl implements InstructorsFavorService{
     private UserRepository userRepository;
     @Autowired
     private FavorHotOfferRepository favorHotOfferRepository;
+    @Autowired
+    private ConcurentWatcherRepository concurentWatcherRepository;
 
     public List<InstructorsFavor> getAllFavors() {
         Iterable<InstructorsFavor> allFavors = instructorsFavorRepository.findAll();
@@ -56,9 +56,22 @@ public class InstructorsFavorServiceImpl implements InstructorsFavorService{
         return allAvailableFavors;
     }
 
-    public Boolean deleteFavor(long id){
-        instructorsFavorRepository.deleteById(id);
-        return true;
+    @Transactional(readOnly = false)
+    public Boolean deleteFavor(long id) {
+        if (!concurentWatcherRepository.findByTableName("FavorReservation").getWriting()) {
+            ConcurentWatcher cw = concurentWatcherRepository.findByTableName("Favor");
+            cw.setWriting(true);
+            concurentWatcherRepository.save(cw);
+
+            instructorsFavorRepository.deleteById(id);
+
+            cw.setWriting(false);
+            concurentWatcherRepository.save(cw);
+
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public InstructorsFavor getFavorById(long id) {
@@ -88,12 +101,28 @@ public class InstructorsFavorServiceImpl implements InstructorsFavorService{
         }
     }
 
-    public Boolean changeFavor(InstructorsFavor favor){
-        if(!isReserved(favor.getId())) {
-            instructorsFavorRepository.save(favor);
-            return true;
-        }
-        else{
+    @Transactional(readOnly = false)
+    public Boolean changeFavor(InstructorsFavor favor) {
+        if (!concurentWatcherRepository.findByTableName("FavorReservation").getWriting()) {
+            ConcurentWatcher cw = concurentWatcherRepository.findByTableName("Favor");
+            cw.setWriting(true);
+            concurentWatcherRepository.save(cw);
+
+            if(!isReserved(favor.getId())) {
+                instructorsFavorRepository.save(favor);
+
+                cw.setWriting(false);
+                concurentWatcherRepository.save(cw);
+
+                return true;
+            }
+            else {
+                cw.setWriting(false);
+                concurentWatcherRepository.save(cw);
+
+                return false;
+            }
+        } else {
             return false;
         }
     }
@@ -138,35 +167,49 @@ public class InstructorsFavorServiceImpl implements InstructorsFavorService{
         }
     }
 
+    @Transactional(readOnly = false)
     public Boolean addHotOfferToFavor(InstructorsFavor favor){
-        List<FavorHotOffer> hotOffers = favor.getHotOffers();
-        InstructorsFavor favor1 = instructorsFavorRepository.findById(favor.getId()).get();
-        List<FavorHotOffer> hotOffersWithout = favor1.getHotOffers();
-        List<FavorReservation> allThisFavorReservations = favorReservationRepository.findAllByReservationId(favor.getId());
+        if (!concurentWatcherRepository.findByTableName("FavorReservation").getWriting()) {
+            ConcurentWatcher cw = concurentWatcherRepository.findByTableName("FavorHotOffer");
+            cw.setWriting(true);
+            concurentWatcherRepository.save(cw);
 
-        FavorHotOffer addedHotOffer = new FavorHotOffer();
-        boolean exists = false;
-        for (FavorHotOffer offer : hotOffers){
-            exists = false;
-            for(FavorHotOffer offer1 : favor1.getHotOffers()){
-                if (offer1.getId() == offer.getId()){
-                    exists = true;
+            List<FavorHotOffer> hotOffers = favor.getHotOffers();
+            InstructorsFavor favor1 = instructorsFavorRepository.findById(favor.getId()).get();
+            List<FavorHotOffer> hotOffersWithout = favor1.getHotOffers();
+            List<FavorReservation> allThisFavorReservations = favorReservationRepository.findAllByReservationId(favor.getId());
+
+            FavorHotOffer addedHotOffer = new FavorHotOffer();
+            boolean exists = false;
+            for (FavorHotOffer offer : hotOffers){
+                exists = false;
+                for(FavorHotOffer offer1 : favor1.getHotOffers()){
+                    if (offer1.getId() == offer.getId()){
+                        exists = true;
+                        break;
+                    }
+                }
+                if(!exists){
+                    addedHotOffer = offer;
                     break;
                 }
             }
-            if(!exists){
-                addedHotOffer = offer;
-                break;
-            }
-        }
-        boolean free = canAddHotOffer(hotOffersWithout,addedHotOffer,allThisFavorReservations);
+            boolean free = canAddHotOffer(hotOffersWithout,addedHotOffer,allThisFavorReservations);
 
-        if(free){
-            InstructorsFavor updatedFavor = setValid(favor);
-            instructorsFavorRepository.save(updatedFavor);
-            sendNotificationForNewHotOffer(updatedFavor);
+            if(free){
+                InstructorsFavor updatedFavor = setValid(favor);
+                instructorsFavorRepository.save(updatedFavor);
+                sendNotificationForNewHotOffer(updatedFavor);
+            }
+
+            cw.setWriting(false);
+            concurentWatcherRepository.save(cw);
+
+            return free;
         }
-        return free;
+        else {
+            return false;
+        }
     }
 
     private InstructorsFavor setValid(InstructorsFavor favor){
@@ -289,12 +332,28 @@ public class InstructorsFavorServiceImpl implements InstructorsFavorService{
         return false;
     }
 
+    @Transactional(readOnly = false)
     public Boolean deleteFavorHotOffer(InstructorsFavor favor) {
-        if (instructorsFavorRepository.existsById(favor.getId())) {
-            instructorsFavorRepository.save(favor);
-            return true;
-        }
+        if (!concurentWatcherRepository.findByTableName("FavorReservation").getWriting()) {
+            ConcurentWatcher cw = concurentWatcherRepository.findByTableName("FavorHotOffer");
+            cw.setWriting(true);
+            concurentWatcherRepository.save(cw);
 
-        return false;
+            if (instructorsFavorRepository.existsById(favor.getId())) {
+                instructorsFavorRepository.save(favor);
+
+                cw.setWriting(false);
+                concurentWatcherRepository.save(cw);
+
+                return true;
+            } else {
+                cw.setWriting(false);
+                concurentWatcherRepository.save(cw);
+
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 }

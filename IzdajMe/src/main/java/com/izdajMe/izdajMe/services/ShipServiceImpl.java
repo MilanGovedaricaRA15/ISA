@@ -95,10 +95,26 @@ public class ShipServiceImpl implements ShipService {
         }
     }
 
+    @Transactional(readOnly = false)
     public Boolean removeShip(Long id) {
-        if (!isReserved(id)) {
-            shipRepository.deleteById(id);
-            return true;
+        if (!concurentWatcherRepository.findByTableName("ShipReservation").getWriting()) {
+            ConcurentWatcher cw = concurentWatcherRepository.findByTableName("Ship");
+            cw.setWriting(true);
+            concurentWatcherRepository.save(cw);
+
+            if (!isReserved(id)) {
+                shipRepository.deleteById(id);
+
+                cw.setWriting(false);
+                concurentWatcherRepository.save(cw);
+
+                return true;
+            } else {
+                cw.setWriting(false);
+                concurentWatcherRepository.save(cw);
+
+                return false;
+            }
         } else {
             return false;
         }
@@ -133,17 +149,22 @@ public class ShipServiceImpl implements ShipService {
 
     @Transactional(readOnly = false)
     public Boolean changeShip(Ship ship) {
-        if (concurentWatcherRepository.findByTableName("ShipReservation").getWriting() == false) {
+        if (!concurentWatcherRepository.findByTableName("ShipReservation").getWriting()) {
             ConcurentWatcher cw = concurentWatcherRepository.findByTableName("Ship");
             cw.setWriting(true);
+            concurentWatcherRepository.save(cw);
+
             if (!isReserved(ship.getId())) {
                 shipRepository.save(ship);
+
                 cw.setWriting(false);
                 concurentWatcherRepository.save(cw);
+
                 return true;
             } else {
                 cw.setWriting(false);
                 concurentWatcherRepository.save(cw);
+
                 return false;
             }
         } else {
@@ -153,17 +174,22 @@ public class ShipServiceImpl implements ShipService {
 
     @Transactional(readOnly = false)
     public Boolean removeHotOffer(Ship ship) {
-        if (concurentWatcherRepository.findByTableName("ShipReservation").getWriting() == false) {
+        if (!concurentWatcherRepository.findByTableName("ShipReservation").getWriting()) {
             ConcurentWatcher cw = concurentWatcherRepository.findByTableName("ShipHotOffer");
             cw.setWriting(true);
+            concurentWatcherRepository.save(cw);
+
             if (shipRepository.existsById(ship.getId())) {
                 shipRepository.save(ship);
+
                 cw.setWriting(false);
                 concurentWatcherRepository.save(cw);
+
                 return true;
             } else {
                 cw.setWriting(false);
                 concurentWatcherRepository.save(cw);
+
                 return false;
             }
         } else {
@@ -232,9 +258,12 @@ public class ShipServiceImpl implements ShipService {
 
     @Transactional(readOnly = false)
     public Boolean addHotOfferToShip(Ship ship) {
-        if (concurentWatcherRepository.findByTableName("ShipReservation").getWriting() == false) {
+        if (!concurentWatcherRepository.findByTableName("ShipReservation").getWriting()
+        && !concurentWatcherRepository.findByTableName("Grade").getWriting()) {
             ConcurentWatcher cw = concurentWatcherRepository.findByTableName("ShipHotOffer");
             cw.setWriting(true);
+            concurentWatcherRepository.save(cw);
+
             List<ShipHotOffer> shipHotOffers = ship.getHotOffers();
             Ship ship1 = shipRepository.findById(ship.getId()).get();
             List<ShipHotOffer> hotOffersWithout = ship1.getHotOffers();
@@ -262,6 +291,7 @@ public class ShipServiceImpl implements ShipService {
             }
             cw.setWriting(false);
             concurentWatcherRepository.save(cw);
+
             return slobodno;
         } else {
             return false;

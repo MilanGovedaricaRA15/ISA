@@ -69,10 +69,27 @@ public class CottageServiceImpl implements CottageService {
         }
     }
 
+    @Transactional(readOnly = false)
     public Boolean removeCottage(Long id) {
-        if (!isReserved(id)) {
-            cottageRepository.deleteById(id);
-            return true;
+        if (!concurentWatcherRepository.findByTableName("CottageReservation").getWriting()
+        && !concurentWatcherRepository.findByTableName("Grade").getWriting()) {
+            ConcurentWatcher cw = concurentWatcherRepository.findByTableName("Cottage");
+            cw.setWriting(true);
+            concurentWatcherRepository.save(cw);
+
+            if (!isReserved(id)) {
+                cottageRepository.deleteById(id);
+
+                cw.setWriting(false);
+                concurentWatcherRepository.save(cw);
+
+                return true;
+            } else {
+                cw.setWriting(false);
+                concurentWatcherRepository.save(cw);
+
+                return false;
+            }
         } else {
             return false;
         }
@@ -107,17 +124,22 @@ public class CottageServiceImpl implements CottageService {
 
     @Transactional(readOnly = false)
     public Boolean changeCottage(Cottage cottage) {
-        if (concurentWatcherRepository.findByTableName("CottageReservation").getWriting() == false) {
+        if (!concurentWatcherRepository.findByTableName("CottageReservation").getWriting()) {
             ConcurentWatcher cw = concurentWatcherRepository.findByTableName("Cottage");
             cw.setWriting(true);
+            concurentWatcherRepository.save(cw);
+
             if (!isReserved(cottage.getId())) {
                 cottageRepository.save(cottage);
+
                 cw.setWriting(false);
                 concurentWatcherRepository.save(cw);
+
                 return true;
             } else {
                 cw.setWriting(false);
                 concurentWatcherRepository.save(cw);
+
                 return false;
             }
         } else {
@@ -127,17 +149,22 @@ public class CottageServiceImpl implements CottageService {
 
     @Transactional(readOnly = false)
     public Boolean removeHotOffer(Cottage cottage) {
-        if (concurentWatcherRepository.findByTableName("CottageReservation").getWriting() == false) {
+        if (!concurentWatcherRepository.findByTableName("CottageReservation").getWriting()) {
             ConcurentWatcher cw = concurentWatcherRepository.findByTableName("CottageHotOffer");
             cw.setWriting(true);
+            concurentWatcherRepository.save(cw);
+
             if (cottageRepository.existsById(cottage.getId())) {
                 cottageRepository.save(cottage);
+
                 cw.setWriting(false);
                 concurentWatcherRepository.save(cw);
+
                 return true;
             } else {
                 cw.setWriting(false);
                 concurentWatcherRepository.save(cw);
+
                 return false;
             }
         } else {
@@ -197,10 +224,11 @@ public class CottageServiceImpl implements CottageService {
 
     @Transactional(readOnly = false)
     public Boolean addHotOfferToCottage(Cottage cottage) {
-        if (concurentWatcherRepository.findByTableName("CottageReservation").getWriting() == false) {
+        if (!concurentWatcherRepository.findByTableName("CottageReservation").getWriting()) {
             ConcurentWatcher cw = concurentWatcherRepository.findByTableName("CottageHotOffer");
             cw.setWriting(true);
             concurentWatcherRepository.save(cw);
+
             List<HotOffer> hotOffers = cottage.getHotOffers();
             Cottage cottage1 = cottageRepository.findById(cottage.getId()).get();
             List<HotOffer> hotOffersWithout = cottage1.getHotOffers();
@@ -226,8 +254,10 @@ public class CottageServiceImpl implements CottageService {
             if (slobodno) {
                 cottageRepository.save(cottage);
             }
+
             cw.setWriting(false);
             concurentWatcherRepository.save(cw);
+
             return slobodno;
         } else {
             return false;

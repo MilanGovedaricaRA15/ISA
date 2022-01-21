@@ -1,6 +1,7 @@
 package com.izdajMe.izdajMe.services;
 
 import com.izdajMe.izdajMe.model.*;
+import com.izdajMe.izdajMe.repository.ConcurentWatcherRepository;
 import com.izdajMe.izdajMe.repository.FavorReservationRepository;
 import com.izdajMe.izdajMe.repository.InstructorsFavorRepository;
 import com.izdajMe.izdajMe.repository.UserRepository;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -25,6 +27,8 @@ public class FavorReservationServiceImpl implements FavorReservationService{
     private EmailService emailService;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private ConcurentWatcherRepository concurentWatcherRepository;
 
     @Override
     public List<FavorReservation> getAllReservations() {
@@ -76,26 +80,39 @@ public class FavorReservationServiceImpl implements FavorReservationService{
         return allFavorReservations;
     }
 
+    @Transactional(readOnly = false)
     public Boolean addReservationByOwner(FavorReservation favorReservation){
-        List<FavorReservation> allFavorReservations = getReservationsById(favorReservation.getFavor().getId());
-        InstructorsFavor favor = instructorsFavorRepository.findById(favorReservation.getFavor().getId()).get();
-        List<FavorHotOffer> hotOffers = favor.getHotOffers();
+        if (!concurentWatcherRepository.findByTableName("FavorReservation").getWriting()) {
+            ConcurentWatcher cw = concurentWatcherRepository.findByTableName("FavorReservation");
+            cw.setWriting(true);
+            concurentWatcherRepository.save(cw);
 
-        boolean free = canAddReservation(allFavorReservations, favorReservation, hotOffers);
+            List<FavorReservation> allFavorReservations = getReservationsById(favorReservation.getFavor().getId());
+            InstructorsFavor favor = instructorsFavorRepository.findById(favorReservation.getFavor().getId()).get();
+            List<FavorHotOffer> hotOffers = favor.getHotOffers();
 
-        if(free) {
-            addPointsToInstructor(favorReservation);
-            addPointsToClient(favorReservation);
-            if(favorReservation.getClient().getType() == User.Type.Gold)
-                favorReservation.setCost(favorReservation.getCost() * 80 / 100);
-            else if(favorReservation.getClient().getType() == User.Type.Silver)
-                favorReservation.setCost(favorReservation.getCost() * 90 / 100);
-            
-            favorReservationRepository.save(favorReservation);
-            sendNotificationForReservation(favorReservation);
-            return true;
-        }
-        else{
+            boolean free = canAddReservation(allFavorReservations, favorReservation, hotOffers);
+
+            if(free) {
+                addPointsToInstructor(favorReservation);
+                addPointsToClient(favorReservation);
+                if(favorReservation.getClient().getType() == User.Type.Gold)
+                    favorReservation.setCost(favorReservation.getCost() * 80 / 100);
+                else if(favorReservation.getClient().getType() == User.Type.Silver)
+                    favorReservation.setCost(favorReservation.getCost() * 90 / 100);
+
+                favorReservationRepository.save(favorReservation);
+                cw.setWriting(false);
+                concurentWatcherRepository.save(cw);
+                sendNotificationForReservation(favorReservation);
+                return true;
+            }
+            else {
+                cw.setWriting(false);
+                concurentWatcherRepository.save(cw);
+                return false;
+            }
+        } else {
             return false;
         }
     }
@@ -117,24 +134,38 @@ public class FavorReservationServiceImpl implements FavorReservationService{
         userRepository.save(user);
     }
 
+    @Transactional(readOnly = false)
     public Boolean addReservationByClient(FavorReservation favorReservation) {
-        List<FavorReservation> allFavorReservations = getReservationsById(favorReservation.getFavor().getId());
-        InstructorsFavor thisFavor = instructorsFavorRepository.getById(favorReservation.getFavor().getId());
-        List<FavorHotOffer> allThisFavorHotOffers = thisFavor.getHotOffers();
+        if (!concurentWatcherRepository.findByTableName("FavorReservation").getWriting()
+                && !concurentWatcherRepository.findByTableName("Favor").getWriting()
+                && !concurentWatcherRepository.findByTableName("FavorHotOffer").getWriting()) {
+            ConcurentWatcher cw = concurentWatcherRepository.findByTableName("FavorReservation");
+            cw.setWriting(true);
+            concurentWatcherRepository.save(cw);
 
-        if(canAddReservation(allFavorReservations, favorReservation, allThisFavorHotOffers)) {
-            addPointsToInstructor(favorReservation);
-            addPointsToClient(favorReservation);
-            if(favorReservation.getClient().getType() == User.Type.Gold)
-                favorReservation.setCost(favorReservation.getCost() * 80 / 100);
-            else if(favorReservation.getClient().getType() == User.Type.Silver)
-                favorReservation.setCost(favorReservation.getCost() * 90 / 100);
+            List<FavorReservation> allFavorReservations = getReservationsById(favorReservation.getFavor().getId());
+            InstructorsFavor thisFavor = instructorsFavorRepository.getById(favorReservation.getFavor().getId());
+            List<FavorHotOffer> allThisFavorHotOffers = thisFavor.getHotOffers();
 
-            favorReservationRepository.save(favorReservation);
-            sendNotificationForClientReservation(favorReservation);
-            return true;
-        }
-        else {
+            if (canAddReservation(allFavorReservations, favorReservation, allThisFavorHotOffers)) {
+                addPointsToInstructor(favorReservation);
+                addPointsToClient(favorReservation);
+                if (favorReservation.getClient().getType() == User.Type.Gold)
+                    favorReservation.setCost(favorReservation.getCost() * 80 / 100);
+                else if (favorReservation.getClient().getType() == User.Type.Silver)
+                    favorReservation.setCost(favorReservation.getCost() * 90 / 100);
+
+                favorReservationRepository.save(favorReservation);
+                cw.setWriting(false);
+                concurentWatcherRepository.save(cw);
+                sendNotificationForClientReservation(favorReservation);
+                return true;
+            } else {
+                cw.setWriting(false);
+                concurentWatcherRepository.save(cw);
+                return false;
+            }
+        } else {
             return false;
         }
     }
@@ -156,22 +187,37 @@ public class FavorReservationServiceImpl implements FavorReservationService{
         userRepository.save(user);
     }
 
+    @Transactional(readOnly = false)
     public Boolean addFavorHotOfferReservationByClient(FavorReservation favorReservation) {
-        List<FavorReservation> allFavorReservations = getReservationsById(favorReservation.getFavor().getId());
+        if (!concurentWatcherRepository.findByTableName("FavorReservation").getWriting()
+                && !concurentWatcherRepository.findByTableName("Favor").getWriting()
+                && !concurentWatcherRepository.findByTableName("FavorHotOffer").getWriting()) {
+            ConcurentWatcher cw = concurentWatcherRepository.findByTableName("FavorReservation");
+            cw.setWriting(true);
+            concurentWatcherRepository.save(cw);
 
-        if(canAddReservation(allFavorReservations, favorReservation, new ArrayList<FavorHotOffer>())) {
-            addPointsToInstructor(favorReservation);
-            addPointsToClient(favorReservation);
-            if(favorReservation.getClient().getType() == User.Type.Gold)
-                favorReservation.setCost(favorReservation.getCost() * 80 / 100);
-            else if(favorReservation.getClient().getType() == User.Type.Silver)
-                favorReservation.setCost(favorReservation.getCost() * 90 / 100);
+            List<FavorReservation> allFavorReservations = getReservationsById(favorReservation.getFavor().getId());
 
-            favorReservationRepository.save(favorReservation);
-            sendNotificationForClientReservation(favorReservation);
-            return true;
-        }
-        else {
+            if(canAddReservation(allFavorReservations, favorReservation, new ArrayList<FavorHotOffer>())) {
+                addPointsToInstructor(favorReservation);
+                addPointsToClient(favorReservation);
+                if(favorReservation.getClient().getType() == User.Type.Gold)
+                    favorReservation.setCost(favorReservation.getCost() * 80 / 100);
+                else if(favorReservation.getClient().getType() == User.Type.Silver)
+                    favorReservation.setCost(favorReservation.getCost() * 90 / 100);
+
+                favorReservationRepository.save(favorReservation);
+                cw.setWriting(false);
+                concurentWatcherRepository.save(cw);
+                sendNotificationForClientReservation(favorReservation);
+                return true;
+            }
+            else {
+                cw.setWriting(false);
+                concurentWatcherRepository.save(cw);
+                return false;
+            }
+        } else {
             return false;
         }
     }

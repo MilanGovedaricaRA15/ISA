@@ -122,9 +122,11 @@ public class ShipReservationServiceImpl implements ShipReservationService {
 
     @Transactional(readOnly = false)
     public Boolean addReservationByOwner(ShipReservation shipReservation) {
-        if (concurentWatcherRepository.findByTableName("ShipReservation").getWriting() == false) {
+        if (!concurentWatcherRepository.findByTableName("ShipReservation").getWriting()) {
             ConcurentWatcher cw = concurentWatcherRepository.findByTableName("ShipReservation");
             cw.setWriting(true);
+            concurentWatcherRepository.save(cw);
+
             List<ShipReservation> allThisShipReservations = shipReservationRepository.findAllByShipId(shipReservation.getShip().getId());
             Ship thisShip = shipRepository.getById(shipReservation.getShip().getId());
             List<ShipHotOffer> allThisShipHotOffers = thisShip.getHotOffers();
@@ -172,9 +174,13 @@ public class ShipReservationServiceImpl implements ShipReservationService {
 
     @Transactional(readOnly = false)
     public Boolean addReservationByClient(ShipReservation shipReservation){
-        if (concurentWatcherRepository.findByTableName("ShipReservation").getWriting() == false&&concurentWatcherRepository.findByTableName("Ship").getWriting() == false&&concurentWatcherRepository.findByTableName("ShipHotOffer").getWriting() == false) {
+        if (!concurentWatcherRepository.findByTableName("ShipReservation").getWriting()
+                && !concurentWatcherRepository.findByTableName("Ship").getWriting()
+                && !concurentWatcherRepository.findByTableName("ShipHotOffer").getWriting()) {
             ConcurentWatcher cw = concurentWatcherRepository.findByTableName("ShipReservation");
             cw.setWriting(true);
+            concurentWatcherRepository.save(cw);
+
             List<ShipReservation> allThisShipReservations = shipReservationRepository.findAllByShipId(shipReservation.getShip().getId());
             Ship thisShip = shipRepository.getById(shipReservation.getShip().getId());
             List<ShipHotOffer> allThisShipHotOffers = thisShip.getHotOffers();
@@ -220,22 +226,37 @@ public class ShipReservationServiceImpl implements ShipReservationService {
         userRepository.save(user);
     }
 
+    @Transactional(readOnly = false)
     public Boolean addShipHotOfferReservationByClient(ShipReservation shipReservation) {
-        List<ShipReservation> allThisShipReservations = shipReservationRepository.findAllByShipId(shipReservation.getShip().getId());
+        if (!concurentWatcherRepository.findByTableName("ShipReservation").getWriting()
+                && !concurentWatcherRepository.findByTableName("Ship").getWriting()
+                && !concurentWatcherRepository.findByTableName("ShipHotOffer").getWriting()) {
+            ConcurentWatcher cw = concurentWatcherRepository.findByTableName("ShipReservation");
+            cw.setWriting(true);
+            concurentWatcherRepository.save(cw);
 
-        if(canAddReservation(allThisShipReservations, shipReservation, new ArrayList<ShipHotOffer>())) {
-            addPointsToShipOwner(shipReservation);
-            addPointsToClient(shipReservation);
-            if(shipReservation.getClient().getType() == User.Type.Gold)
-                shipReservation.setCost(shipReservation.getCost() * 80 / 100);
-            else if(shipReservation.getClient().getType() == User.Type.Silver)
-                shipReservation.setCost(shipReservation.getCost() * 90 / 100);
+            List<ShipReservation> allThisShipReservations = shipReservationRepository.findAllByShipId(shipReservation.getShip().getId());
 
-            shipReservationRepository.save(shipReservation);
-            sendNotificationForClientReservation(shipReservation);
-            return true;
-        }
-        else {
+            if(canAddReservation(allThisShipReservations, shipReservation, new ArrayList<ShipHotOffer>())) {
+                addPointsToShipOwner(shipReservation);
+                addPointsToClient(shipReservation);
+                if(shipReservation.getClient().getType() == User.Type.Gold)
+                    shipReservation.setCost(shipReservation.getCost() * 80 / 100);
+                else if(shipReservation.getClient().getType() == User.Type.Silver)
+                    shipReservation.setCost(shipReservation.getCost() * 90 / 100);
+
+                shipReservationRepository.save(shipReservation);
+                cw.setWriting(false);
+                concurentWatcherRepository.save(cw);
+                sendNotificationForClientReservation(shipReservation);
+                return true;
+            }
+            else {
+                cw.setWriting(false);
+                concurentWatcherRepository.save(cw);
+                return false;
+            }
+        } else {
             return false;
         }
     }
