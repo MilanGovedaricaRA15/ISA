@@ -4,12 +4,12 @@ import com.izdajMe.izdajMe.dto.UserDTO;
 import com.izdajMe.izdajMe.model.User;
 import com.izdajMe.izdajMe.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,9 +54,12 @@ public class UserController {
             else{
                 request.getSession(false).setAttribute("role",userRole);
             }
-            ResponseEntity<String> responseEntity = new ResponseEntity<String>("user_found", HttpStatus.OK);
-            responseEntity.getHeaders().add("Set-Cookie", "SameSite=None");
-           return responseEntity;
+            HttpCookie cookie = ResponseCookie.from("Set-Cookie","SameSite=None")
+                    .path("/")
+                    .build();
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.SET_COOKIE, cookie.toString())
+                    .body("user_found");
         }
         else {
            return new ResponseEntity<String>("user_not_found",HttpStatus.NOT_FOUND);
