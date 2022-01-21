@@ -243,7 +243,8 @@ export class FavorProfileComponent implements OnInit {
               if(this?.favorChange?.images == null){
                 this.favorChange.images = new Array<String>();
               }
-              this.favorChange.images.push(this.file.name);
+
+              this.favorChange.images.push(this.file.name.split('.')[0]+'.'+this.file.name.split('.')[1]);
               this.instructorsFavorService.changeFavor(this.favorChange).subscribe(()=>{
                 this.onInit();
               }
