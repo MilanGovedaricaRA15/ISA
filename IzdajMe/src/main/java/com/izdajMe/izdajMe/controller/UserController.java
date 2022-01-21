@@ -4,6 +4,7 @@ import com.izdajMe.izdajMe.dto.UserDTO;
 import com.izdajMe.izdajMe.model.User;
 import com.izdajMe.izdajMe.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -53,7 +54,9 @@ public class UserController {
             else{
                 request.getSession(false).setAttribute("role",userRole);
             }
-           return new ResponseEntity<String>("user_found", HttpStatus.OK);
+            ResponseEntity<String> responseEntity = new ResponseEntity<String>("user_found", HttpStatus.OK);
+            responseEntity.getHeaders().add("Set-Cookie", "SameSite=None");
+           return responseEntity;
         }
         else {
            return new ResponseEntity<String>("user_not_found",HttpStatus.NOT_FOUND);
