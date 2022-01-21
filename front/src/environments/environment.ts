@@ -4,7 +4,7 @@
 
 export const environment = {
   production: true,
-  baseUrl: 'https://enigmatic-fjord-13464.herokuapp.com/'
+  baseUrl: 'https://izdajmeback.herokuapp.com/'
 };
 
 /*
