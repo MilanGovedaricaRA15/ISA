@@ -13,10 +13,10 @@ export class AccountDeleteRequestService {
   private acceptRequestUrl: string;
 
   constructor(private http: HttpClient) { 
-    this.addAccountDeleteRequestUrl = "http://localhost:8080/accountDeleteRequest/addAccountDeleteRequest";
-    this.getAllRequestsUrl = 'http://localhost:8080/accountDeleteRequest/getAllRequests';
-    this.declineRequestUrl = 'http://localhost:8080/accountDeleteRequest/declineRequest';
-    this.acceptRequestUrl = 'http://localhost:8080/accountDeleteRequest/acceptRequest';
+    this.addAccountDeleteRequestUrl = environment.baseUrl+"accountDeleteRequest/addAccountDeleteRequest";
+    this.getAllRequestsUrl = environment.baseUrl+'accountDeleteRequest/getAllRequests';
+    this.declineRequestUrl = environment.baseUrl+'accountDeleteRequest/declineRequest';
+    this.acceptRequestUrl = environment.baseUrl+'accountDeleteRequest/acceptRequest';
   }
 
   public addAccountDeleteRequest(accountDeleteRequest: AccountDeleteRequest):Observable<boolean>{

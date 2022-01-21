@@ -25,21 +25,21 @@ export class CottageService {
   private removeCottageByAdministratorUrl: string;
 
   constructor(private http: HttpClient) { 
-    this.getAllCottagesUrl = "http://localhost:8080/cottages/getAllCottages";
-    this.getAllAvailableCottagesUrl = "http://localhost:8080/cottages/getAllAvailableCottages";
-    this.getAllCottagesOfOwnerUrl = "http://localhost:8080/cottages/getAllCottagesOfOwner";
-    this.removeCottageImgUrl = "http://localhost:8080/cottages/removeCottageImg";
-    this.removeCottageUrl = "http://localhost:8080/cottages/removeCottage";
-    this.changeCottageUrl = 'http://localhost:8080/cottages/changeCottage';
-    this.uploadImgUrl = 'http://localhost:8080/cottages/uploadImg';
-    this.getCottageByIdUrl = 'http://localhost:8080/cottages/getCottageById';
-    this.addCottageUrl = 'http://localhost:8080/cottages/addCottage';
-    this.addHotOfferToCottageUrl = 'http://localhost:8080/cottages/addHotOfferToCottage';
-    this.removeHotOfferUrl = 'http://localhost:8080/cottages/removeHotOffer';
-    this.deleteHotOfferUrl = 'http://localhost:8080/cottages/deleteHotOffer';
-    this.checkIsReservedUrl = 'http://localhost:8080/cottages/checkIsReserved';
-    this.searchCottagesByNameUrl = 'http://localhost:8080/cottages/searchCottagesByName';
-    this.removeCottageByAdministratorUrl = 'http://localhost:8080/cottages/removeCottageByAdministrator';
+    this.getAllCottagesUrl = environment.baseUrl+"cottages/getAllCottages";
+    this.getAllAvailableCottagesUrl = environment.baseUrl+"cottages/getAllAvailableCottages";
+    this.getAllCottagesOfOwnerUrl = environment.baseUrl+"cottages/getAllCottagesOfOwner";
+    this.removeCottageImgUrl = environment.baseUrl+"cottages/removeCottageImg";
+    this.removeCottageUrl = environment.baseUrl+"cottages/removeCottage";
+    this.changeCottageUrl = environment.baseUrl+'cottages/changeCottage';
+    this.uploadImgUrl = environment.baseUrl+'cottages/uploadImg';
+    this.getCottageByIdUrl = environment.baseUrl+'cottages/getCottageById';
+    this.addCottageUrl = environment.baseUrl+'cottages/addCottage';
+    this.addHotOfferToCottageUrl = environment.baseUrl+'cottages/addHotOfferToCottage';
+    this.removeHotOfferUrl = environment.baseUrl+'cottages/removeHotOffer';
+    this.deleteHotOfferUrl = environment.baseUrl+'cottages/deleteHotOffer';
+    this.checkIsReservedUrl = environment.baseUrl+'cottages/checkIsReserved';
+    this.searchCottagesByNameUrl = environment.baseUrl+'cottages/searchCottagesByName';
+    this.removeCottageByAdministratorUrl = environment.baseUrl+'cottages/removeCottageByAdministrator';
   }
 
   public getAllCottages(): Observable<Array<Cottage>> {

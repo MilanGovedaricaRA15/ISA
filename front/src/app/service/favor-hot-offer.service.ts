@@ -13,10 +13,10 @@ export class FavorHotOfferService {
   private getFutureFavorHotOffersByFavorIdUrl: string;
 
   constructor(private http: HttpClient) {
-    this.removeHotOfferUrl = "http://localhost:8080/favorHotOffers/removeHotOffer";
-    this.getAllFavorHotOffersUrl = "http://localhost:8080/favorHotOffers/getAllFavorHotOffers";
-    this.getFavorHotOffersByFavorIdUrl = "http://localhost:8080/favorHotOffers/getFavorHotOffersByFavorId";
-    this.getFutureFavorHotOffersByFavorIdUrl = "http://localhost:8080/favorHotOffers/getFutureFavorHotOffersByFavorId";
+    this.removeHotOfferUrl = environment.baseUrl+"favorHotOffers/removeHotOffer";
+    this.getAllFavorHotOffersUrl = environment.baseUrl+"favorHotOffers/getAllFavorHotOffers";
+    this.getFavorHotOffersByFavorIdUrl = environment.baseUrl+"favorHotOffers/getFavorHotOffersByFavorId";
+    this.getFutureFavorHotOffersByFavorIdUrl = environment.baseUrl+"favorHotOffers/getFutureFavorHotOffersByFavorId";
   }
 
   public removeHotOffer(id:number ): Observable<boolean>{

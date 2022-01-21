@@ -12,9 +12,9 @@ export class ComplaintServiceService {
   private addComplaintUrl: string;
 
   constructor(private http: HttpClient) {
-    this.getAllComplaintsUrl = 'http://localhost:8080/complaints/getAllComplaints';
-    this.sendAnswerUrl = 'http://localhost:8080/complaints/sendAnswer';
-    this.addComplaintUrl = 'http://localhost:8080/complaints/addComplaint';
+    this.getAllComplaintsUrl = environment.baseUrl+'complaints/getAllComplaints';
+    this.sendAnswerUrl = environment.baseUrl+'complaints/sendAnswer';
+    this.addComplaintUrl = environment.baseUrl+'complaints/addComplaint';
   }
 
   public getAllComplaints(): Observable<Array<Complaint>> {

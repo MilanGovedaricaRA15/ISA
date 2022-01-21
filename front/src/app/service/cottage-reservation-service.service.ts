@@ -21,16 +21,16 @@ export class CottageReservationService {
   private cancelCottageReservationByClientUrl: string;
 
   constructor(private http: HttpClient) {
-    this.getAllReservationsOfCottageUrl = "http://localhost:8080/cottageReservation/getAllReservationsOfCottage";
-    this.getAllReservationsOfCottageFromTillUrl = "http://localhost:8080/cottageReservation/getAllReservationsOfCottageFromTill";
-    this.getAllReservationsOfOwnerUrl = "http://localhost:8080/cottageReservation/getAllReservationsOfOwner";
-    this.addReservationByOwnerUrl = "http://localhost:8080/cottageReservation/addReservationByOwner";
-    this.addReservationByClientUrl = "http://localhost:8080/cottageReservation/addReservationByClient";
-    this.addHotOfferReservationByClientUrl = "http://localhost:8080/cottageReservation/addHotOfferReservationByClient";
-    this.changeReservationByOwnerUrl = "http://localhost:8080/cottageReservation/changeReservationByOwner";
-    this.getByIdUrl = "http://localhost:8080/cottageReservation/getById";
-    this.getCottageReservationsOfClientUrl = "http://localhost:8080/cottageReservation/getCottageReservationsOfClient";
-    this.cancelCottageReservationByClientUrl = "http://localhost:8080/cottageReservation/cancelCottageReservationByClient";
+    this.getAllReservationsOfCottageUrl = environment.baseUrl+"cottageReservation/getAllReservationsOfCottage";
+    this.getAllReservationsOfCottageFromTillUrl = environment.baseUrl+"cottageReservation/getAllReservationsOfCottageFromTill";
+    this.getAllReservationsOfOwnerUrl = environment.baseUrl+"cottageReservation/getAllReservationsOfOwner";
+    this.addReservationByOwnerUrl = environment.baseUrl+"cottageReservation/addReservationByOwner";
+    this.addReservationByClientUrl = environment.baseUrl+"cottageReservation/addReservationByClient";
+    this.addHotOfferReservationByClientUrl = environment.baseUrl+"cottageReservation/addHotOfferReservationByClient";
+    this.changeReservationByOwnerUrl = environment.baseUrl+"cottageReservation/changeReservationByOwner";
+    this.getByIdUrl = environment.baseUrl+"cottageReservation/getById";
+    this.getCottageReservationsOfClientUrl = environment.baseUrl+"cottageReservation/getCottageReservationsOfClient";
+    this.cancelCottageReservationByClientUrl = environment.baseUrl+"cottageReservation/cancelCottageReservationByClient";
    }
 
    public getAllReservationsOfCottage(cottage: Cottage): Observable<Array<CottageReservation>> {

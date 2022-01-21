@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { Cottage } from '../model/cottage';
 import { Grade } from '../model/grade';
 import { Ship } from '../model/ship';
@@ -18,12 +19,12 @@ export class GradeService {
   private addGradeToUserUrl: string;
 
   constructor(private http: HttpClient) { 
-    this.getAllGradesUrl = 'http://localhost:8080//grades/getAllGrades';
-    this.acceptGradeUrl = 'http://localhost:8080//grades/acceptGrade';
-    this.deleteGradeUrl = 'http://localhost:8080//grades/deleteGrade';
-    this.addGradeToCottageUrl = 'http://localhost:8080//grades/addGradeToCottage';
-    this.addGradeToShipUrl = 'http://localhost:8080//grades/addGradeToShip';
-    this.addGradeToUserUrl = 'http://localhost:8080//grades/addGradeToUser';
+    this.getAllGradesUrl = environment.baseUrl+'/grades/getAllGrades';
+    this.acceptGradeUrl = environment.baseUrl+'/grades/acceptGrade';
+    this.deleteGradeUrl = environment.baseUrl+'/grades/deleteGrade';
+    this.addGradeToCottageUrl = environment.baseUrl+'/grades/addGradeToCottage';
+    this.addGradeToShipUrl = environment.baseUrl+'/grades/addGradeToShip';
+    this.addGradeToUserUrl = environment.baseUrl+'/grades/addGradeToUser';
   }
 
   public getAllGrades(): Observable<Array<Grade>> {
