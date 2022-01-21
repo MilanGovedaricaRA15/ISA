@@ -60,6 +60,16 @@ public class ShipReservationServiceImpl implements ShipReservationService {
     public Boolean changeReservationByOwner(ShipReservation shipReservation) {
         ShipReservation thisReservation = shipReservationRepository.getById(shipReservation.getId());
         if (thisReservation.getAvailableTill().isBefore(LocalDateTime.now()) && thisReservation.getReport() == null && thisReservation.getPenalty() == null) {
+            if(!shipReservation.getReport().getShowedUp()) {
+                User client = userRepository.findById(shipReservation.getClient().getId()).get();
+                client.setPoints(client.getPoints() - 60);
+                if(client.getPoints() >= 300 && client.getPoints() < 600)
+                    client.setType(User.Type.Silver);
+                else if(client.getPoints() < 300)
+                    client.setType(User.Type.Regular);
+
+                userRepository.save(client);
+            }
             shipReservationRepository.save(shipReservation);
             return true;
         } else {

@@ -21,11 +21,13 @@ public class FavorReservation {
     private InstructorsFavor favor;
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval=true)
     private Report report;
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    private Penalty penalty;
 
     public FavorReservation() {}
 
     public FavorReservation(long id, Report report, LocalDateTime availableFrom, LocalDateTime availableTill,
-                            ArrayList<InstructorsFavor.FavorServices> services, float cost, User client, InstructorsFavor favor) {
+                            ArrayList<InstructorsFavor.FavorServices> services, float cost, User client, InstructorsFavor favor, Penalty penalty) {
         this.id = id;
         this.availableFrom = availableFrom;
         this.availableTill = availableTill;
@@ -34,6 +36,7 @@ public class FavorReservation {
         this.client = client;
         this.favor = favor;
         this.report = report;
+        this.penalty = penalty;
     }
 
     public long getId() { return this.id; }
@@ -67,4 +70,12 @@ public class FavorReservation {
     public Report getReport() { return this.report; }
 
     public void setReport(Report report) { this.report = report; }
+
+    public Penalty getPenalty() {
+        return penalty;
+    }
+
+    public void setPenalty(Penalty penalty) {
+        this.penalty = penalty;
+    }
 }

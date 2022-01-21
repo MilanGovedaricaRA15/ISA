@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter, Input, Type } from '@angular/c
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Cottage } from 'src/app/model/cottage';
 import { InstructorsFavor } from 'src/app/model/instructors-favor';
+import { Report } from 'src/app/model/report';
 import { Ship } from 'src/app/model/ship';
 import { User } from 'src/app/model/user';
 import { AccountDeleteRequestService } from 'src/app/service/account-delete-request-service.service';
@@ -12,6 +13,7 @@ import { CottageService } from 'src/app/service/cottage-service.service';
 import { FavorReservationService } from 'src/app/service/favor-reservation.service';
 import { GradeService } from 'src/app/service/grade-service.service';
 import { InstructorsFavorService } from 'src/app/service/instructors-favor.service';
+import { ReportServiceService } from 'src/app/service/report-service.service';
 import { ShipReservationService } from 'src/app/service/ship-reservation-service.service';
 import { ShipService } from 'src/app/service/ship-service';
 import { UserService } from 'src/app/service/user-service.service';
@@ -27,7 +29,8 @@ export class SuperiorAdministratorProfileComponent implements OnInit {
               private accountDeleteRequestsService: AccountDeleteRequestService, private gradeService: GradeService, 
               private complaintService : ComplaintServiceService, private bookingRevenueService: BookingRevenueService, 
               private cottageReservationService: CottageReservationService, private shipReservationService: ShipReservationService, 
-              private favorReservationService: FavorReservationService, private instructorsFavorService: InstructorsFavorService) { }
+              private favorReservationService: FavorReservationService, private instructorsFavorService: InstructorsFavorService,
+              private reportService: ReportServiceService) { }
 
   editAdministratorForm:any;
   editPasswordForm:any;
@@ -45,6 +48,10 @@ export class SuperiorAdministratorProfileComponent implements OnInit {
   allGrades: any;
   allComplaints: any;
   allFavors: any;
+  allReports: any;
+  allCottageReservations: any;
+  allShipReservations: any;
+  allFavorReservations: any;
   deletingUser: User;
   acceptingUser: User;
   deletingCottage: Cottage;
@@ -88,6 +95,9 @@ export class SuperiorAdministratorProfileComponent implements OnInit {
     this.userService.getAllUsers().subscribe(usersFromBack =>{
       this.allUsers = usersFromBack;
     }); 
+    this.reportService.getAllReports().subscribe(reportsFromBack => {
+      this.allReports = reportsFromBack;
+    });
     this.cottageService.getAllCottages().subscribe(cottagesFromBack => {
       this.allCottages = cottagesFromBack;
     });
@@ -429,5 +439,25 @@ export class SuperiorAdministratorProfileComponent implements OnInit {
           this.totalBookingRevenues += (offer.cost * this.goldRevenue / 100);
       }
     }
+  }
+  
+  acceptReport(index: number) {
+    let report = this.allReports[index]
+    this.reportService.changeVerified(report.id).subscribe(ret => {
+      if(ret)
+        this.reportService.getAllReports().subscribe(ret => {
+          this.allReports = ret;
+      })
+    })
+  }
+
+  declineReport(index: number) {
+    let report = this.allReports[index]
+    this.reportService.removeReport(report.id).subscribe(ret => {
+      if(ret)
+        this.reportService.getAllReports().subscribe(ret => {
+          this.allReports = ret;
+        });
+    });
   }
 }

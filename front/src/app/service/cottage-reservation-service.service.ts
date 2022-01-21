@@ -20,6 +20,7 @@ export class CottageReservationService {
   private getCottageReservationsOfClientUrl: string;
   private cancelCottageReservationByClientUrl: string;
   private getAllReservationsFromBaseFromTillUrl: string;
+  private getAllReservationsUrl: string;
 
   constructor(private http: HttpClient) {
     this.getAllReservationsFromBaseFromTillUrl = 'http://localhost:8080/cottageReservation/getAllReservationsFromBaseFromTill'
@@ -33,6 +34,14 @@ export class CottageReservationService {
     this.getByIdUrl = "http://localhost:8080/cottageReservation/getById";
     this.getCottageReservationsOfClientUrl = "http://localhost:8080/cottageReservation/getCottageReservationsOfClient";
     this.cancelCottageReservationByClientUrl = "http://localhost:8080/cottageReservation/cancelCottageReservationByClient";
+    this.getAllReservationsUrl = "http://localhost:8080/cottageReservation/getAllReservations"
+   }
+
+   public getAllReservations(): Observable<Array<CottageReservation>> {
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+
+    return this.http.get<Array<CottageReservation>>(this.getAllReservationsUrl, {headers: headers});
    }
 
    public getAllReservationsFromBaseFromTill(from: Date, to: Date): Observable<Array<CottageReservation>> {

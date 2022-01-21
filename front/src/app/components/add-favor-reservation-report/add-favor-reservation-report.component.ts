@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FavorReservation } from 'src/app/model/favor-reservation';
+import { Penalty } from 'src/app/model/penalty';
 import { Report } from 'src/app/model/report';
 import { FavorReservationService } from 'src/app/service/favor-reservation.service';
 
@@ -32,6 +33,27 @@ export class AddFavorReservationReportComponent implements OnInit {
   }
 
   submitData(){
+    let elementShowedUp = <HTMLInputElement> document.getElementById('showedUp');
+    let elementShouldGetPenalty = <HTMLInputElement> document.getElementById('shouldGetPenalty');
+    
+    if(elementShowedUp.checked){
+      this.reportToAdd.showedUp = false;
+      this.reportToAdd.verified = true;
+      let penalty = new Penalty;
+      penalty.date = new Date();
+      this.favorReservation.penalty = penalty;
+    }
+    else{
+      this.reportToAdd.showedUp = true;
+      this.reportToAdd.verified = false;
+    }
+    if(elementShouldGetPenalty.checked){
+      this.reportToAdd.shouldGetPenalty = true;
+    }
+    else{
+      this.reportToAdd.shouldGetPenalty = false;
+    }
+    
     this.favorReservation.report = this.reportToAdd;
     this.favorReservationService.changeReservationByInstructor(this.favorReservation).subscribe(ret => {
         this.goToProfile.emit();
