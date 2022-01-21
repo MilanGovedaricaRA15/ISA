@@ -21,6 +21,7 @@
     "@angular/platform-browser-dynamic": "~12.2.0",
     "@angular/router": "~12.2.0",
     "@material/dialog": "^13.0.0",
+    "express": "^4.17.1",
     "layers": "0.0.3",
     "ol": "^6.10.0",
     "open": "^8.4.0",
