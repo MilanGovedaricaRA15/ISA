@@ -54,7 +54,10 @@ public class UserController {
             else{
                 request.getSession(false).setAttribute("role",userRole);
             }
-            HttpCookie cookie = ResponseCookie.from("SameSite","None")
+            HttpCookie cookie = ResponseCookie.from("SESSION", request.getSession().getId())
+                    .httpOnly(true)
+                    .sameSite("None")
+                    .secure(true)
                     .path("/")
                     .build();
             return ResponseEntity.ok()
