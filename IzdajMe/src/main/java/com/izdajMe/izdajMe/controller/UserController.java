@@ -44,7 +44,7 @@ public class UserController {
     }
 
     @PostMapping("/users/login")
-    public ResponseEntity<String> loginUser(@RequestBody User user, HttpServletRequest request) {
+    public String loginUser(@RequestBody User user, HttpServletRequest request,HttpServletResponse response) {
 
         if (userService.loginUser(user)){
             User.Role userRole = userService.getUserByEmail(user.getEmail()).getRole();
@@ -60,14 +60,11 @@ public class UserController {
                     .secure(true)
                     .path("/")
                     .build();
-            HttpHeaders responseHeaders = new HttpHeaders();
-            responseHeaders.set("SET_COOKIE", cookie.toString());
-            return ResponseEntity.ok()
-                    .headers(responseHeaders)
-                    .body("user_found");
+           response.addHeader("SET_COOKIE",cookie.toString());
+           return "user_found";
         }
         else {
-           return new ResponseEntity<String>("user_not_found",HttpStatus.NOT_FOUND);
+           return "user_not_found";
         }
     }
 
