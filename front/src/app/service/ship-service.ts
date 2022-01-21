@@ -52,41 +52,6 @@ export class ShipService {
 		this.isUserSubscribedToShipUrl = environment.baseUrl + 'ships/isUserSubscribedToShip';
     }
 
-    public getAllShips(): Observable<Array<Ship>> {
-        let headers = new HttpHeaders();
-        headers.append('Content-Type', 'application/json');
-
-        return this.http.get<Array<Ship>>(this.getAllShipsUrl, {headers: headers});
-    }
-
-    public getAllAvailableShips(from: Date, to: Date, numOfGuests: number): Observable<Array<Ship>> {
-      let headers = new HttpHeaders();
-      headers.append('Content-Type', 'application/json');
-      let stringFrom = from.getTime().toString();
-      let stringTo = to.getTime().toString();
-      let params = new HttpParams().set("from", stringFrom).set("to", stringTo).set("numOfGuests", numOfGuests);  
-
-      return this.http.get<Array<Ship>>(this.getAllAvailableShipsUrl, {headers: headers, params: params});
-  }
-
-    public getShipById(id: number): Observable<Ship> {
-        let ship = id;
-        let headers = new HttpHeaders();
-        headers.append('Content-Type', 'application/json');
-        let params = new HttpParams().set("ship", ship);
-
-        return this.http.get<Ship>(this.getShipByIdUrl, {headers: headers, params: params});
-    }
-
-    public searchShipsByName(name: string): Observable<Array<Ship>> {
-        let ship = name;
-        let headers = new HttpHeaders();
-        headers.append('Content-Type', 'application/json');
-        let params = new HttpParams().set("name", ship);
-  
-        return this.http.get<Array<Ship>>(this.searchShipsByNameUrl, {headers: headers, params: params});
-    }
-
   public getAllShips(): Observable<Array<Ship>> {
     let headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json');
