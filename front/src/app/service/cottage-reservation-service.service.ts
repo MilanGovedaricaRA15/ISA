@@ -19,8 +19,10 @@ export class CottageReservationService {
   private getByIdUrl: string;
   private getCottageReservationsOfClientUrl: string;
   private cancelCottageReservationByClientUrl: string;
+  private getAllReservationsFromBaseFromTillUrl: string;
 
   constructor(private http: HttpClient) {
+    this.getAllReservationsFromBaseFromTillUrl = 'http://localhost:8080/cottageReservation/getAllReservationsFromBaseFromTill'
     this.getAllReservationsOfCottageUrl = "http://localhost:8080/cottageReservation/getAllReservationsOfCottage";
     this.getAllReservationsOfCottageFromTillUrl = "http://localhost:8080/cottageReservation/getAllReservationsOfCottageFromTill";
     this.getAllReservationsOfOwnerUrl = "http://localhost:8080/cottageReservation/getAllReservationsOfOwner";
@@ -32,6 +34,15 @@ export class CottageReservationService {
     this.getCottageReservationsOfClientUrl = "http://localhost:8080/cottageReservation/getCottageReservationsOfClient";
     this.cancelCottageReservationByClientUrl = "http://localhost:8080/cottageReservation/cancelCottageReservationByClient";
    }
+
+   public getAllReservationsFromBaseFromTill(from: Date, to: Date): Observable<Array<CottageReservation>> {
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+    let numberFrom = from.getTime();
+    let numberTo = to.getTime();
+    let params = new HttpParams().set("from",numberFrom.toString()).set("to",numberTo.toString());  
+    return this.http.get<Array<CottageReservation>>(this.getAllReservationsFromBaseFromTillUrl, {headers: headers,params: params,withCredentials: true});
+  }
 
    public getAllReservationsOfCottage(cottage: Cottage): Observable<Array<CottageReservation>> {
     let headers = new HttpHeaders();

@@ -1,11 +1,13 @@
 package com.izdajMe.izdajMe.services;
 
+import com.izdajMe.izdajMe.model.FavorHotOffer;
 import com.izdajMe.izdajMe.model.ShipHotOffer;
 import com.izdajMe.izdajMe.repository.ShipHotOfferRepository;
 import com.izdajMe.izdajMe.repository.ShipRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +26,17 @@ public class ShipHotOfferServiceImpl implements  ShipHotOfferService {
         allShipHotOffers.forEach(shipHotOffers::add);
 
         return shipHotOffers;
+    }
+
+    public List<ShipHotOffer> getAllHotOffersFromBaseFromTill(String from, String to) {
+        Timestamp fromDateTs = new Timestamp(Long.parseLong(from));
+        Timestamp toDateTs = new Timestamp(Long.parseLong(to));
+        LocalDateTime fromDate = fromDateTs.toLocalDateTime();
+        LocalDateTime toDate = toDateTs.toLocalDateTime();
+
+
+        List<ShipHotOffer> allShipHotOffers = shipHotOfferRepository.findAllFromBaseFromTill(fromDate, toDate);
+        return allShipHotOffers;
     }
 
     @Override

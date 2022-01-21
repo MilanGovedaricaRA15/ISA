@@ -1,6 +1,7 @@
 package com.izdajMe.izdajMe.services;
 
 import com.izdajMe.izdajMe.model.Cottage;
+import com.izdajMe.izdajMe.model.FavorReservation;
 import com.izdajMe.izdajMe.model.HotOffer;
 import com.izdajMe.izdajMe.model.User;
 import com.izdajMe.izdajMe.repository.CottageRepository;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +33,17 @@ public class HotOfferServiceImpl implements HotOfferService {
             return false;
         }
 
+    }
+
+    public List<HotOffer> getAllHotOffersFromBaseFromTill(String from, String to) {
+        Timestamp fromDateTs = new Timestamp(Long.parseLong(from));
+        Timestamp toDateTs = new Timestamp(Long.parseLong(to));
+        LocalDateTime fromDate = fromDateTs.toLocalDateTime();
+        LocalDateTime toDate = toDateTs.toLocalDateTime();
+
+
+        List<HotOffer> allCottageHotOffers = hotOfferRepository.findAllFromBaseFromTill(fromDate, toDate);
+        return allCottageHotOffers;
     }
 
     public Boolean removeHotOffer(Long id) {

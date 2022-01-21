@@ -8,4 +8,5 @@ public interface FavorHotOfferService {
     public List<FavorHotOffer> getAllFavorHotOffers();
     public List<FavorHotOffer> getFavorHotOffersByFavorId(Long favorId);
     public List<FavorHotOffer> getFutureFavorHotOffersByFavorId(Long favorId);
+    public List<FavorHotOffer> getAllHotOffersFromBaseFromTill(String from, String to);
 }

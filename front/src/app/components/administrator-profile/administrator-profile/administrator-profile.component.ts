@@ -4,9 +4,16 @@ import { Cottage } from 'src/app/model/cottage';
 import { Ship } from 'src/app/model/ship';
 import { User } from 'src/app/model/user';
 import { AccountDeleteRequestService } from 'src/app/service/account-delete-request-service.service';
+import { BookingRevenueService } from 'src/app/service/booking-revenue.service';
 import { ComplaintServiceService } from 'src/app/service/complaint-service.service';
+import { CottageReservationService } from 'src/app/service/cottage-reservation-service.service';
 import { CottageService } from 'src/app/service/cottage-service.service';
+import { FavorHotOfferService } from 'src/app/service/favor-hot-offer.service';
+import { FavorReservationService } from 'src/app/service/favor-reservation.service';
 import { GradeService } from 'src/app/service/grade-service.service';
+import { HotOfferService } from 'src/app/service/hot-offer-service.service';
+import { ShipHotOfferService } from 'src/app/service/ship-hot-offer-service.service';
+import { ShipReservationService } from 'src/app/service/ship-reservation-service.service';
 import { ShipService } from 'src/app/service/ship-service';
 import { UserService } from 'src/app/service/user-service.service';
 
@@ -19,7 +26,10 @@ export class AdministratorProfileComponent implements OnInit {
 
   constructor(private userService: UserService, private cottageService: CottageService, private shipService: ShipService, 
               private accountDeleteRequestsService: AccountDeleteRequestService, private gradeService: GradeService, 
-              private complaintService: ComplaintServiceService) { }
+              private complaintService: ComplaintServiceService, private bookingRevenueService: BookingRevenueService, 
+              private cottageReservationService: CottageReservationService, private shipReservationService: ShipReservationService, 
+              private favorReservationService: FavorReservationService, private cottageHotOffersService: HotOfferService, 
+              private shipHotOffersService: ShipHotOfferService, private favorHotOfferService: FavorHotOfferService) { }
 
   editAdministratorForm:any;
   editPasswordForm:any;
@@ -41,6 +51,15 @@ export class AdministratorProfileComponent implements OnInit {
   acceptingUser: User;
   deletingCottage: Cottage;
   deletingShip: Ship;
+  regularRevenue: number;
+  silverRevenue: number;
+  goldRevenue: number;
+  errorRevenue: Boolean = false;
+  totalBookingRevenues: number = 0;
+  datumTo: Date
+  datumFrom: Date
+  datumToString: String = new Date().toISOString().split('T')[0];
+  datumFromString: String = new Date().toISOString().split('T')[0];
   @Output() addAnswer = new EventEmitter<string>();
   @Output() addReason = new EventEmitter<string>();
   @Output() decliningReason = new EventEmitter<string>();
@@ -50,6 +69,12 @@ export class AdministratorProfileComponent implements OnInit {
   }
 
   init(){
+    this.bookingRevenueService.getRevenues().subscribe(revenuesFromBack => {
+      this.regularRevenue = revenuesFromBack.numOfRevenueRegular;
+      this.silverRevenue = revenuesFromBack.numOfRevenueSilver;
+      this.goldRevenue = revenuesFromBack.numOfRevenueGold;
+    });
+
     this.userService.getLoggedUser().subscribe(ret => {
       this.administrator = ret;
       this.administratorChange = JSON.parse(JSON.stringify(this.administrator));
@@ -277,5 +302,81 @@ export class AdministratorProfileComponent implements OnInit {
 
   sendAnswer(index: number) {
     this.addAnswer.emit(index.toString());
+  }
+
+  changeRevenues() {
+    this.errorRevenue = false;
+    let regularRev = document.getElementById("regularRevenueId") as HTMLInputElement;
+    let silverRev = document.getElementById("silverRevenueId") as HTMLInputElement;
+    let goldRev = document.getElementById("goldRevenueId") as HTMLInputElement;
+    if(parseInt(regularRev.value) > 100 || parseInt(regularRev.value) < 0 || 
+        parseInt(silverRev.value) > 100 || parseInt(silverRev.value) < 0 ||
+        parseInt(goldRev.value) > 100 || parseInt(goldRev.value) < 0) {
+      this.errorRevenue = true;
+      return;
+    }
+      
+    this.bookingRevenueService.changeRevenues(parseInt(regularRev.value), parseInt(silverRev.value), parseInt(goldRev.value)).subscribe(ret => {
+      if(ret) {
+        this.bookingRevenueService.getRevenues().subscribe(revenuesFromBack => {
+          this.regularRevenue = revenuesFromBack.numOfRevenueRegular;
+          this.silverRevenue = revenuesFromBack.numOfRevenueSilver;
+          this.goldRevenue = revenuesFromBack.numOfRevenueGold;
+          alert('Successfully changed!')
+        });
+      }
+    })
+  }
+
+  showReport() {
+    let elementFrom = <HTMLInputElement> document.getElementById("from");
+    let elementTo = <HTMLInputElement> document.getElementById("to");
+    this.totalBookingRevenues = 0;
+    this.cottageReservationService.getAllReservationsFromBaseFromTill(elementFrom.valueAsDate, elementTo.valueAsDate).subscribe(ret => {
+      for(let cr of ret){
+        if(cr.cottage.owner.type.toString() == 'Regular')
+          this.totalBookingRevenues += (cr.cost * this.regularRevenue / 100);
+        else if (cr.cottage.owner.type.toString() == 'Silver')
+          this.totalBookingRevenues += (cr.cost * this.silverRevenue / 100);
+        else
+          this.totalBookingRevenues += (cr.cost * this.goldRevenue / 100);
+      }
+      this.shipReservationService.getAllReservationsFromBaseFromTill(elementFrom.valueAsDate, elementTo.valueAsDate).subscribe(ret => {
+        for(let sr of ret){
+          if(sr.ship.owner.type.toString() == 'Regular')
+            this.totalBookingRevenues += (sr.cost * this.regularRevenue / 100);
+          else if (sr.ship.owner.type.toString() == 'Silver')
+            this.totalBookingRevenues += (sr.cost * this.silverRevenue / 100);
+          else
+            this.totalBookingRevenues += (sr.cost * this.goldRevenue / 100);
+        }
+        this.favorReservationService.getAllReservationsFromBaseFromTill(elementFrom.valueAsDate, elementTo.valueAsDate).subscribe(ret => {
+          for(let fr of ret){
+            if(fr.favor.instructor.type.toString() == 'Regular')
+              this.totalBookingRevenues += (fr.cost * this.regularRevenue / 100);
+            else if (fr.favor.instructor.type.toString() == 'Silver')
+              this.totalBookingRevenues += (fr.cost * this.silverRevenue / 100);
+            else
+              this.totalBookingRevenues += (fr.cost * this.goldRevenue / 100);
+          }
+          // this.cottageHotOffersService.getAllHotOffersFromBaseFromTill(elementFrom.valueAsDate, elementTo.valueAsDate).subscribe(ret => {
+          //   for(let cho of ret){
+          //     reservations.push(cho)
+          //   }
+          //   this.shipHotOffersService.getAllShipHotOffersFromBaseFromTill(elementFrom.valueAsDate, elementTo.valueAsDate).subscribe(ret => {
+          //     for(let sho of ret){
+          //       reservations.push(sho)
+          //     }
+
+          //     this.favorHotOfferService.getAllFavorHotOffersFromBaseFromTill(elementFrom.valueAsDate, elementTo.valueAsDate).subscribe(ret => {
+          //       for(let fho of ret){
+          //         reservations.push(fho)
+          //       }
+          //     })
+          //   })
+          // })
+        })
+      })
+    })
   }
 }

@@ -1,6 +1,7 @@
 package com.izdajMe.izdajMe.controller;
 
 import com.izdajMe.izdajMe.model.FavorHotOffer;
+import com.izdajMe.izdajMe.model.ShipHotOffer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +31,13 @@ public class FavorHotOfferController {
         else{
             return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
         }
+    }
+
+    @GetMapping("/favorHotOffers/getAllFavorHotOffersFromBaseFromTill")
+    public ResponseEntity<List<FavorHotOffer>> getAllFavorHotOffersFromBaseFromTill(@RequestParam("from") String from, @RequestParam("to") String to) {
+        List<FavorHotOffer> hotOffers = new ArrayList<>(favorHotOfferService.getAllHotOffersFromBaseFromTill(from, to));
+
+        return new ResponseEntity<List<FavorHotOffer>>(hotOffers, HttpStatus.OK);
     }
 
     @GetMapping("/favorHotOffers/getAllFavorHotOffers")

@@ -32,6 +32,7 @@ delete from ships where id!=0;
 delete from users where id!=0;
 delete from reports where id!=0;
 delete from penalties where id!=0;
+delete from revenues where id!=0;
 
 insert into users (id, address, city, country, email,first_name,last_name,mobile_number,password,reason,role,verified, prepaid, type, points)
 values (1, 'Ilije 1', 'Beograd', 'Srbija', 'rajkorajkoza@gmail.com', 'Milan', 'Govedarica', 123123123, 'aaaa', 'Izdaja vikendice', 0, TRUE, TRUE, 0, 20);
@@ -805,6 +806,9 @@ insert into favor_reservations (id, available_from, available_till, cost, client
 values (11, DATE('2022-01-20'), DATE('2022-01-25'), 900, 14, 4, null);
 insert into favor_reservations (id, available_from, available_till, cost, client_id, favor_id, services)
 values (12, DATE('2022-03-01'), DATE('2022-03-03'), 600, 14, 4, null);
+
+insert into revenues(id, num_of_revenue_regular, num_of_revenue_silver, num_of_revenue_gold)
+values (1, 35, 25, 15);
 
 insert into concurent_watcher (id, table_name, is_writing) values (1, 'CottageReservation', false);
 insert into concurent_watcher (id, table_name, is_writing) values (2, 'Cottage', false);

@@ -1,5 +1,7 @@
 package com.izdajMe.izdajMe.controller;
 
+import com.izdajMe.izdajMe.dto.HotOfferDTO;
+import com.izdajMe.izdajMe.model.HotOffer;
 import com.izdajMe.izdajMe.model.ShipHotOffer;
 import com.izdajMe.izdajMe.services.ShipHotOfferService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,13 @@ public class ShipHotOfferController {
         List<ShipHotOffer> list = new ArrayList<ShipHotOffer>(shipHotOfferService.getShipHotOffersByShipId(shipId));
 
         return new ResponseEntity<List<ShipHotOffer>>(list, HttpStatus.OK);
+    }
+
+    @GetMapping("/shipHotOffers/getAllShipHotOffersFromBaseFromTill")
+    public ResponseEntity<List<ShipHotOffer>> getAllShipHotOffersFromBaseFromTill(@RequestParam("from") String from, @RequestParam("to") String to) {
+        List<ShipHotOffer> hotOffers = new ArrayList<>(shipHotOfferService.getAllHotOffersFromBaseFromTill(from, to));
+
+        return new ResponseEntity<List<ShipHotOffer>>(hotOffers, HttpStatus.OK);
     }
 
     @GetMapping("/shipHotOffers/getFutureShipHotOffersByShipId")

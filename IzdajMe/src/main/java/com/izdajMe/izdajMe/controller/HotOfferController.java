@@ -2,7 +2,9 @@ package com.izdajMe.izdajMe.controller;
 
 
 import com.izdajMe.izdajMe.dto.HotOfferDTO;
+import com.izdajMe.izdajMe.dto.ShipReservationDTO;
 import com.izdajMe.izdajMe.model.HotOffer;
+import com.izdajMe.izdajMe.model.ShipReservation;
 import com.izdajMe.izdajMe.model.User;
 import com.izdajMe.izdajMe.services.HotOfferService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +50,14 @@ public class HotOfferController {
         } else {
             return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
         }
+    }
+
+    @GetMapping("/hotOffers/getAllHotOffersFromBaseFromTill")
+    public ResponseEntity<List<HotOffer>> getAllHotOffersFromBaseFromTill(@RequestParam("from") String from, @RequestParam("to") String to) {
+
+        List<HotOffer> reservations = new ArrayList<>(hotOfferService.getAllHotOffersFromBaseFromTill(from, to));
+
+        return new ResponseEntity<List<HotOffer>>(reservations, HttpStatus.OK);
     }
 
     @GetMapping("/hotOffers/getAllHotOffers")

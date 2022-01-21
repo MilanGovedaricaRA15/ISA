@@ -11,12 +11,23 @@ export class FavorHotOfferService {
   private getAllFavorHotOffersUrl: string;
   private getFavorHotOffersByFavorIdUrl: string;
   private getFutureFavorHotOffersByFavorIdUrl: string;
+  private getAllFavorHotOffersFromBaseFromTillUrl: string;
 
   constructor(private http: HttpClient) {
     this.removeHotOfferUrl = "http://localhost:8080/favorHotOffers/removeHotOffer";
     this.getAllFavorHotOffersUrl = "http://localhost:8080/favorHotOffers/getAllFavorHotOffers";
     this.getFavorHotOffersByFavorIdUrl = "http://localhost:8080/favorHotOffers/getFavorHotOffersByFavorId";
     this.getFutureFavorHotOffersByFavorIdUrl = "http://localhost:8080/favorHotOffers/getFutureFavorHotOffersByFavorId";
+    this.getAllFavorHotOffersFromBaseFromTillUrl = 'http://localhost:8080/favorHotOffers/getAllFavorHotOffersFromBaseFromTill'
+  }
+
+  public getAllFavorHotOffersFromBaseFromTill(from: Date, to: Date): Observable<Array<FavorHotOffer>> {
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+    let numberFrom = from.getTime();
+    let numberTo = to.getTime();
+    let params = new HttpParams().set("from",numberFrom.toString()).set("to",numberTo.toString());  
+    return this.http.get<Array<FavorHotOffer>>(this.getAllFavorHotOffersFromBaseFromTillUrl, {headers: headers,params: params,withCredentials: true});
   }
 
   public removeHotOffer(id:number ): Observable<boolean>{

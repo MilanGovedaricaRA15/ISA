@@ -12,4 +12,5 @@ public interface HotOfferService {
     public List<HotOffer> getAllHotOffers();
     public List<HotOffer> getHotOffersByCottageId(Long cottageId);
     public List<HotOffer> getFutureHotOffersByCottageId(Long cottageId);
+    public List<HotOffer> getAllHotOffersFromBaseFromTill(String from, String to);
 }
