@@ -134,11 +134,11 @@ public class CottageReservationServiceImpl implements CottageReservationService 
 
     @Transactional(readOnly = false)
     public Boolean addReservationByOwner(CottageReservation cottageReservation) {
-
-        if (concurentWatcherRepository.findByTableName("CottageReservation").getWriting() == false) {
+        if (!concurentWatcherRepository.findByTableName("CottageReservation").getWriting()) {
             ConcurentWatcher cw = concurentWatcherRepository.findByTableName("CottageReservation");
             cw.setWriting(true);
             concurentWatcherRepository.save(cw);
+
             List<CottageReservation> allThisCottageReservations = cottageReservationRepository.findAllByCottageId(cottageReservation.getCottage().getId());
             Cottage thisCottage = cottageRepository.getById(cottageReservation.getCottage().getId());
             List<HotOffer> allThisCottageHotOffers = thisCottage.getHotOffers();
@@ -186,12 +186,17 @@ public class CottageReservationServiceImpl implements CottageReservationService 
 
     @Transactional(readOnly = false)
     public Boolean addReservationByClient(CottageReservation cottageReservation){
-        if (concurentWatcherRepository.findByTableName("CottageReservation").getWriting() == false&&concurentWatcherRepository.findByTableName("Cottage").getWriting() == false&&concurentWatcherRepository.findByTableName("CottageHotOffer").getWriting() == false) {
+        if (!concurentWatcherRepository.findByTableName("CottageReservation").getWriting()
+                && !concurentWatcherRepository.findByTableName("Cottage").getWriting()
+                && !concurentWatcherRepository.findByTableName("CottageHotOffer").getWriting()) {
             ConcurentWatcher cw = concurentWatcherRepository.findByTableName("CottageReservation");
             cw.setWriting(true);
+            concurentWatcherRepository.save(cw);
+
             List<CottageReservation> allThisCottageReservations = cottageReservationRepository.findAllByCottageId(cottageReservation.getCottage().getId());
             Cottage thisCottage = cottageRepository.getById(cottageReservation.getCottage().getId());
             List<HotOffer> allThisCottageHotOffers = thisCottage.getHotOffers();
+
             if (canAddReservation(allThisCottageReservations, cottageReservation, allThisCottageHotOffers)) {
                 addPointsToCottageOwner(cottageReservation);
                 addPointsToClient(cottageReservation);
@@ -201,17 +206,21 @@ public class CottageReservationServiceImpl implements CottageReservationService 
                     cottageReservation.setCost(cottageReservation.getCost() * 90 / 100);
 
                 cottageReservationRepository.save(cottageReservation);
+
                 cw.setWriting(false);
                 concurentWatcherRepository.save(cw);
+
                 sendNotificationForClientReservation(cottageReservation);
+
                 return true;
             } else {
                 cw.setWriting(false);
                 concurentWatcherRepository.save(cw);
+
                 return false;
             }
         }
-        else{
+        else {
             return false;
         }
     }
@@ -233,22 +242,37 @@ public class CottageReservationServiceImpl implements CottageReservationService 
         userRepository.save(user);
     }
 
+    @Transactional(readOnly = false)
     public Boolean addHotOfferReservationByClient(CottageReservation cottageReservation){
-        List<CottageReservation> allThisCottageReservations = cottageReservationRepository.findAllByCottageId(cottageReservation.getCottage().getId());
+        if (!concurentWatcherRepository.findByTableName("CottageReservation").getWriting()
+                && !concurentWatcherRepository.findByTableName("Cottage").getWriting()
+                && !concurentWatcherRepository.findByTableName("CottageHotOffer").getWriting()) {
+            ConcurentWatcher cw = concurentWatcherRepository.findByTableName("CottageReservation");
+            cw.setWriting(true);
+            concurentWatcherRepository.save(cw);
 
-        if(canAddReservation(allThisCottageReservations, cottageReservation, new ArrayList<HotOffer>())) {
-            addPointsToCottageOwner(cottageReservation);
-            addPointsToClient(cottageReservation);
-            if(cottageReservation.getClient().getType() == User.Type.Gold)
-                cottageReservation.setCost(cottageReservation.getCost() * 80 / 100);
-            else if(cottageReservation.getClient().getType() == User.Type.Silver)
-                cottageReservation.setCost(cottageReservation.getCost() * 90 / 100);
+            List<CottageReservation> allThisCottageReservations = cottageReservationRepository.findAllByCottageId(cottageReservation.getCottage().getId());
 
-            cottageReservationRepository.save(cottageReservation);
-            sendNotificationForClientReservation(cottageReservation);
-            return true;
-        }
-        else {
+            if(canAddReservation(allThisCottageReservations, cottageReservation, new ArrayList<HotOffer>())) {
+                addPointsToCottageOwner(cottageReservation);
+                addPointsToClient(cottageReservation);
+                if(cottageReservation.getClient().getType() == User.Type.Gold)
+                    cottageReservation.setCost(cottageReservation.getCost() * 80 / 100);
+                else if(cottageReservation.getClient().getType() == User.Type.Silver)
+                    cottageReservation.setCost(cottageReservation.getCost() * 90 / 100);
+
+                cottageReservationRepository.save(cottageReservation);
+                cw.setWriting(false);
+                concurentWatcherRepository.save(cw);
+                sendNotificationForClientReservation(cottageReservation);
+                return true;
+            }
+            else {
+                cw.setWriting(false);
+                concurentWatcherRepository.save(cw);
+                return false;
+            }
+        } else {
             return false;
         }
     }

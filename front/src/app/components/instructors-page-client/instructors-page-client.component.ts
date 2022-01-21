@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { getAverageInstructorGrade, InstructorDTO } from 'src/app/dto/instructor-dto';
 import { User } from 'src/app/model/user';
 import { UserService } from 'src/app/service/user-service.service';
 
@@ -10,7 +11,7 @@ import { UserService } from 'src/app/service/user-service.service';
 export class InstructorsPageClientComponent implements OnInit {
 
   @Output() instructorToShowClient = new EventEmitter<User>();
-  instructors: Array<User>;
+  instructorsDTO: Array<InstructorDTO>;
   searchTextFirstName: string;
   searchTextLastName: string;
   descendingFirstName: boolean;
@@ -24,8 +25,11 @@ export class InstructorsPageClientComponent implements OnInit {
 
   ngOnInit(): void {
     this.userService.getAllInstructors().subscribe(ret => {
-      this.instructors = ret;
-    })
+      this.instructorsDTO = new Array<InstructorDTO>();
+      for (let i of ret) {
+        this.instructorsDTO.push(new InstructorDTO(i, getAverageInstructorGrade(i)));
+      }
+    });
     this.descendingFirstName = false;
     this.descendingLastName = false;
     this.descendingCountry = false;
@@ -44,17 +48,20 @@ export class InstructorsPageClientComponent implements OnInit {
     let firstName = this.searchTextFirstName;
     let lastName = this.searchTextLastName;
     this.userService.searchInstructorssByName(firstName, lastName).subscribe(ret => {
-      this.instructors = ret;
+      this.instructorsDTO = new Array<InstructorDTO>();
+      for (let i of ret) {
+        this.instructorsDTO.push(new InstructorDTO(i, getAverageInstructorGrade(i)));
+      }
     })
   }
 
   sortByFirstName(){
     if(this.descendingFirstName){
-      this.instructors.sort((a,b) => (a.firstName < b.firstName) ? 1 : ((b.firstName < a.firstName) ? -1 : 0))
+      this.instructorsDTO.sort((a,b) => (a.instructor.firstName < b.instructor.firstName) ? 1 : ((b.instructor.firstName < a.instructor.firstName) ? -1 : 0))
       this.descendingFirstName = false;
     }
     else {
-      this.instructors.sort((a,b) => (a.firstName > b.firstName) ? 1 : ((b.firstName > a.firstName) ? -1 : 0))
+      this.instructorsDTO.sort((a,b) => (a.instructor.firstName > b.instructor.firstName) ? 1 : ((b.instructor.firstName > a.instructor.firstName) ? -1 : 0))
       this.descendingFirstName = true;
     }
 
@@ -62,55 +69,66 @@ export class InstructorsPageClientComponent implements OnInit {
 
   sortByLastName(){
     if(this.descendingLastName){
-      this.instructors.sort((a,b) => (a.lastName < b.lastName) ? 1 : ((b.lastName < a.lastName) ? -1 : 0))
+      this.instructorsDTO.sort((a,b) => (a.instructor.lastName < b.instructor.lastName) ? 1 : ((b.instructor.lastName < a.instructor.lastName) ? -1 : 0))
       this.descendingLastName = false;
     }
     else {
-      this.instructors.sort((a,b) => (a.lastName > b.lastName) ? 1 : ((b.lastName > a.lastName) ? -1 : 0))
+      this.instructorsDTO.sort((a,b) => (a.instructor.lastName > b.instructor.lastName) ? 1 : ((b.instructor.lastName > a.instructor.lastName) ? -1 : 0))
       this.descendingLastName = true;
     }
   }
 
   sortByAddress(){
     if(this.descendingAddress){
-      this.instructors.sort((a,b) => (a.address < b.address) ? 1 : ((b.address < a.address) ? -1 : 0))
+      this.instructorsDTO.sort((a,b) => (a.instructor.address < b.instructor.address) ? 1 : ((b.instructor.address < a.instructor.address) ? -1 : 0))
       this.descendingAddress = false;
     }
     else {
-      this.instructors.sort((a,b) => (a.address > b.address) ? 1 : ((b.address > a.address) ? -1 : 0))
+      this.instructorsDTO.sort((a,b) => (a.instructor.address > b.instructor.address) ? 1 : ((b.instructor.address > a.instructor.address) ? -1 : 0))
       this.descendingAddress = true;
     }
   }
 
   sortByEmail(){
     if(this.descendingEmail){
-      this.instructors.sort((a,b) => (a.email < b.email) ? 1 : ((b.email < a.email) ? -1 : 0))
+      this.instructorsDTO.sort((a,b) => (a.instructor.email < b.instructor.email) ? 1 : ((b.instructor.email < a.instructor.email) ? -1 : 0))
       this.descendingEmail = false;
     }
     else {
-      this.instructors.sort((a,b) => (a.email > b.email) ? 1 : ((b.email > a.email) ? -1 : 0))
+      this.instructorsDTO.sort((a,b) => (a.instructor.email > b.instructor.email) ? 1 : ((b.instructor.email > a.instructor.email) ? -1 : 0))
       this.descendingEmail = true;
     }
 
   }
 sortByMobile(){
     if(this.descendingMobile){
-      this.instructors.sort((a,b) => (a.mobileNumber < b.mobileNumber) ? 1 : ((b.mobileNumber < a.mobileNumber) ? -1 : 0))
+      this.instructorsDTO.sort((a,b) => (a.instructor.mobileNumber < b.instructor.mobileNumber) ? 1 : ((b.instructor.mobileNumber < a.instructor.mobileNumber) ? -1 : 0))
       this.descendingMobile = false;
     }
     else {
-      this.instructors.sort((a,b) => (a.mobileNumber > b.mobileNumber) ? 1 : ((b.mobileNumber > a.mobileNumber) ? -1 : 0))
+      this.instructorsDTO.sort((a,b) => (a.instructor.mobileNumber > b.instructor.mobileNumber) ? 1 : ((b.instructor.mobileNumber > a.instructor.mobileNumber) ? -1 : 0))
       this.descendingMobile = true;
     }
   }
 
   sortByCountry(){
     if(this.descendingCountry){
-      this.instructors.sort((a,b) => (a.country < b.country) ? 1 : ((b.country < a.country) ? -1 : 0))
+      this.instructorsDTO.sort((a,b) => (a.instructor.country < b.instructor.country) ? 1 : ((b.instructor.country < a.instructor.country) ? -1 : 0))
       this.descendingCountry = false;
     }
     else {
-      this.instructors.sort((a,b) => (a.country > b.country) ? 1 : ((b.country > a.country) ? -1 : 0))
+      this.instructorsDTO.sort((a,b) => (a.instructor.country > b.instructor.country) ? 1 : ((b.instructor.country > a.instructor.country) ? -1 : 0))
+      this.descendingCountry = true;
+    }
+  }
+
+  sortByGrade(){
+    if(this.descendingCountry){
+      this.instructorsDTO.sort((a,b) => (a.averageGrade < b.averageGrade) ? 1 : ((b.averageGrade < a.averageGrade) ? -1 : 0))
+      this.descendingCountry = false;
+    }
+    else {
+      this.instructorsDTO.sort((a,b) => (a.averageGrade > b.averageGrade) ? 1 : ((b.averageGrade > a.averageGrade) ? -1 : 0))
       this.descendingCountry = true;
     }
   }

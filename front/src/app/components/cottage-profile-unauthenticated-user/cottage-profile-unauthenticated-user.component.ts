@@ -20,12 +20,15 @@ export class CottageProfileUnauthenticatedUserComponent implements OnInit {
     if(this.cottageUnauthenticated == undefined){
       this.cottageService.getCottageById(Number(sessionStorage.getItem("cottageToShowUnauthenticated"))).subscribe(ret =>{
         this.cottage = new CottageDTO(ret, getAverageCottageGrade(ret), ret.costPerNight);
-      })
+        if(this.cottage.cottage.images != null){
+          this.cottageImg = this.cottage.cottage.images[0];
+        }
+      });
     } else {
       this.cottage = new CottageDTO(this.cottageUnauthenticated, getAverageCottageGrade(this.cottageUnauthenticated), this.cottageUnauthenticated.costPerNight);
-    }
-    if(this.cottage.cottage.images != null){
-      this.cottageImg = this.cottage.cottage.images[0];
+      if(this.cottage.cottage.images != null){
+        this.cottageImg = this.cottage.cottage.images[0];
+      }
     }
   }
 

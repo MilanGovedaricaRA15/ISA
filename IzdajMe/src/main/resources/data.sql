@@ -816,6 +816,10 @@ insert into concurent_watcher (id, table_name, is_writing) values (3, 'ShipReser
 insert into concurent_watcher (id, table_name, is_writing) values (4, 'Ship', false);
 insert into concurent_watcher (id, table_name, is_writing) values (5, 'ShipHotOffer', false);
 insert into concurent_watcher (id, table_name, is_writing) values (6, 'CottageHotOffer', false);
+insert into concurent_watcher (id, table_name, is_writing) values (7, 'FavorReservation', false);
+insert into concurent_watcher (id, table_name, is_writing) values (8, 'Favor', false);
+insert into concurent_watcher (id, table_name, is_writing) values (9, 'FavorHotOffer', false);
+insert into concurent_watcher (id, table_name, is_writing) values (10, 'Grade', false);
 
 insert into cottages_subscribed_users (cottage_id, subscribed_users_id) values (1, 14);
 insert into cottages_subscribed_users (cottage_id, subscribed_users_id) values (1, 27);
