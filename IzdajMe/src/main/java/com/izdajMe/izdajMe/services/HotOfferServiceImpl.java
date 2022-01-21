@@ -35,17 +35,6 @@ public class HotOfferServiceImpl implements HotOfferService {
 
     }
 
-    public List<HotOffer> getAllHotOffersFromBaseFromTill(String from, String to) {
-        Timestamp fromDateTs = new Timestamp(Long.parseLong(from));
-        Timestamp toDateTs = new Timestamp(Long.parseLong(to));
-        LocalDateTime fromDate = fromDateTs.toLocalDateTime();
-        LocalDateTime toDate = toDateTs.toLocalDateTime();
-
-
-        List<HotOffer> allCottageHotOffers = hotOfferRepository.findAllFromBaseFromTill(fromDate, toDate);
-        return allCottageHotOffers;
-    }
-
     public Boolean removeHotOffer(Long id) {
         hotOfferRepository.deleteById(id);
         return true;

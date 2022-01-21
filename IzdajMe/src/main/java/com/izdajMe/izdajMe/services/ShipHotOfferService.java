@@ -8,5 +8,4 @@ public interface ShipHotOfferService {
     public List<ShipHotOffer> getAllShipHotOffers();
     public List<ShipHotOffer> getShipHotOffersByShipId(Long shipId);
     public List<ShipHotOffer> getFutureShipHotOffersByShipId(Long shipId);
-    public List<ShipHotOffer> getAllHotOffersFromBaseFromTill(String from, String to);
 }

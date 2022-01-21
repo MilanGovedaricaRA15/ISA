@@ -35,13 +35,6 @@ public class ShipHotOfferController {
         return new ResponseEntity<List<ShipHotOffer>>(list, HttpStatus.OK);
     }
 
-    @GetMapping("/shipHotOffers/getAllShipHotOffersFromBaseFromTill")
-    public ResponseEntity<List<ShipHotOffer>> getAllShipHotOffersFromBaseFromTill(@RequestParam("from") String from, @RequestParam("to") String to) {
-        List<ShipHotOffer> hotOffers = new ArrayList<>(shipHotOfferService.getAllHotOffersFromBaseFromTill(from, to));
-
-        return new ResponseEntity<List<ShipHotOffer>>(hotOffers, HttpStatus.OK);
-    }
-
     @GetMapping("/shipHotOffers/getFutureShipHotOffersByShipId")
     public ResponseEntity<List<ShipHotOffer>> getFutureShipHotOffersByShipId(@RequestParam("shipId") Long shipId) {
         List<ShipHotOffer> list = new ArrayList<ShipHotOffer>(shipHotOfferService.getFutureShipHotOffersByShipId(shipId));

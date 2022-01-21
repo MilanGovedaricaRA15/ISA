@@ -11,6 +11,4 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface HotOfferRepository extends JpaRepository<HotOffer, Long> {
-    @Query("Select h from HotOffer h where h.availableFrom >= ?1 and h.availableTill <= ?2")
-    public List<HotOffer> findAllFromBaseFromTill(LocalDateTime fromDate, LocalDateTime toDate);
 }

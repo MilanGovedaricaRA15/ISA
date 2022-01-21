@@ -10,22 +10,11 @@ export class ShipHotOfferService {
   private getAllShipHotOffersUrl: string;
   private getShipHotOffersByShipIdUrl: string;
   private getFutureShipHotOffersByShipIdUrl: string;
-  private getAllShipHotOffersFromBaseFromTillUrl: string;
 
   constructor(private http: HttpClient) {
     this.getAllShipHotOffersUrl = "http://localhost:8080/shipHotOffers/getAllShipHotOffers";
     this.getShipHotOffersByShipIdUrl = "http://localhost:8080/shipHotOffers/getShipHotOffersByShipId";
     this.getFutureShipHotOffersByShipIdUrl = "http://localhost:8080/shipHotOffers/getFutureShipHotOffersByShipId";
-    this.getAllShipHotOffersFromBaseFromTillUrl = 'http://localhost:8080/shipHotOffers/getAllShipHotOffersFromBaseFromTill'
-  }
-
-  public getAllShipHotOffersFromBaseFromTill(from: Date, to: Date): Observable<Array<ShipHotOffer>> {
-    let headers = new HttpHeaders();
-    headers.append('Content-Type', 'application/json');
-    let numberFrom = from.getTime();
-    let numberTo = to.getTime();
-    let params = new HttpParams().set("from",numberFrom.toString()).set("to",numberTo.toString());  
-    return this.http.get<Array<ShipHotOffer>>(this.getAllShipHotOffersFromBaseFromTillUrl, {headers: headers,params: params,withCredentials: true});
   }
   
   public getAllShipHotOffers() : Observable<Array<ShipHotOffer>> {

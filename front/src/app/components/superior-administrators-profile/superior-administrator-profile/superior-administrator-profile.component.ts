@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input, Type } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { BookingRevenue } from 'src/app/model/booking-revenue';
 import { Cottage } from 'src/app/model/cottage';
+import { InstructorsFavor } from 'src/app/model/instructors-favor';
 import { Ship } from 'src/app/model/ship';
 import { User } from 'src/app/model/user';
 import { AccountDeleteRequestService } from 'src/app/service/account-delete-request-service.service';
@@ -9,11 +9,9 @@ import { BookingRevenueService } from 'src/app/service/booking-revenue.service';
 import { ComplaintServiceService } from 'src/app/service/complaint-service.service';
 import { CottageReservationService } from 'src/app/service/cottage-reservation-service.service';
 import { CottageService } from 'src/app/service/cottage-service.service';
-import { FavorHotOfferService } from 'src/app/service/favor-hot-offer.service';
 import { FavorReservationService } from 'src/app/service/favor-reservation.service';
 import { GradeService } from 'src/app/service/grade-service.service';
-import { HotOfferService } from 'src/app/service/hot-offer-service.service';
-import { ShipHotOfferService } from 'src/app/service/ship-hot-offer-service.service';
+import { InstructorsFavorService } from 'src/app/service/instructors-favor.service';
 import { ShipReservationService } from 'src/app/service/ship-reservation-service.service';
 import { ShipService } from 'src/app/service/ship-service';
 import { UserService } from 'src/app/service/user-service.service';
@@ -29,8 +27,7 @@ export class SuperiorAdministratorProfileComponent implements OnInit {
               private accountDeleteRequestsService: AccountDeleteRequestService, private gradeService: GradeService, 
               private complaintService : ComplaintServiceService, private bookingRevenueService: BookingRevenueService, 
               private cottageReservationService: CottageReservationService, private shipReservationService: ShipReservationService, 
-              private favorReservationService: FavorReservationService, private cottageHotOffersService: HotOfferService, 
-              private shipHotOffersService: ShipHotOfferService, private favorHotOfferService: FavorHotOfferService) { }
+              private favorReservationService: FavorReservationService, private instructorsFavorService: InstructorsFavorService) { }
 
   editAdministratorForm:any;
   editPasswordForm:any;
@@ -47,6 +44,7 @@ export class SuperiorAdministratorProfileComponent implements OnInit {
   allRequests: any;
   allGrades: any;
   allComplaints: any;
+  allFavors: any;
   deletingUser: User;
   acceptingUser: User;
   deletingCottage: Cottage;
@@ -104,6 +102,9 @@ export class SuperiorAdministratorProfileComponent implements OnInit {
     });
     this.complaintService.getAllComplaints().subscribe(complaintsFromBack => {
       this.allComplaints = complaintsFromBack;
+    });
+    this.instructorsFavorService.getAllFavors().subscribe(favorsFromBack => {
+      this.allFavors = favorsFromBack;
     });
 
     this.acceptingUser = new User()
@@ -365,24 +366,68 @@ export class SuperiorAdministratorProfileComponent implements OnInit {
             else
               this.totalBookingRevenues += (fr.cost * this.goldRevenue / 100);
           }
-          // this.cottageHotOffersService.getAllHotOffersFromBaseFromTill(elementFrom.valueAsDate, elementTo.valueAsDate).subscribe(ret => {
-          //   for(let cho of ret){
-          //     reservations.push(cho)
-          //   }
-          //   this.shipHotOffersService.getAllShipHotOffersFromBaseFromTill(elementFrom.valueAsDate, elementTo.valueAsDate).subscribe(ret => {
-          //     for(let sho of ret){
-          //       reservations.push(sho)
-          //     }
-
-          //     this.favorHotOfferService.getAllFavorHotOffersFromBaseFromTill(elementFrom.valueAsDate, elementTo.valueAsDate).subscribe(ret => {
-          //       for(let fho of ret){
-          //         reservations.push(fho)
-          //       }
-          //     })
-          //   })
-          // })
+          this.checkHotOffers();
         })
       })
     })
+  }
+
+  checkHotOffers() {
+    for(let cottage of this.allCottages) {
+      this.checkCottageHotOffers(cottage)
+    }
+
+    for(let ship of this.allShips) {
+      this.checkShipHotOffers(ship);
+    }
+
+    for(let favor of this.allFavors) {
+      this.checkFavorHotOffers(favor);
+    }
+  }
+
+  checkCottageHotOffers(cottage: Cottage) {
+    let elementFrom = <HTMLInputElement> document.getElementById("from");
+    let elementTo = <HTMLInputElement> document.getElementById("to");
+    for(let offer of cottage.hotOffers) {
+      if(elementFrom.valueAsDate <= new Date(offer.availableFrom.toString()) && elementTo.valueAsDate >= new Date(offer.availableTill)) {
+        if(cottage.owner.type.toString() == 'Regular')
+          this.totalBookingRevenues += (offer.cost * this.regularRevenue / 100);
+        else if (cottage.owner.type.toString() == 'Silver')
+          this.totalBookingRevenues += (offer.cost * this.silverRevenue / 100);
+        else
+          this.totalBookingRevenues += (offer.cost * this.goldRevenue / 100);
+      }
+    }
+  }
+
+  checkShipHotOffers(ship: Ship) {
+    let elementFrom = <HTMLInputElement> document.getElementById("from");
+    let elementTo = <HTMLInputElement> document.getElementById("to");
+    for(let offer of ship.hotOffers) {
+      if(elementFrom.valueAsDate <= new Date(offer.availableFrom.toString()) && elementTo.valueAsDate >= new Date(offer.availableTill)) {
+        if(ship.owner.type.toString() == 'Regular')
+          this.totalBookingRevenues += (offer.cost * this.regularRevenue / 100);
+        else if (ship.owner.type.toString() == 'Silver')
+          this.totalBookingRevenues += (offer.cost * this.silverRevenue / 100);
+        else
+          this.totalBookingRevenues += (offer.cost * this.goldRevenue / 100);
+      }
+    }
+  }
+
+  checkFavorHotOffers(favor: InstructorsFavor) {
+    let elementFrom = <HTMLInputElement> document.getElementById("from");
+    let elementTo = <HTMLInputElement> document.getElementById("to");
+    for(let offer of favor.hotOffers) {
+      if(elementFrom.valueAsDate <= new Date(offer.availableFrom.toString()) && elementTo.valueAsDate >= new Date(offer.availableTill)) {
+        if(favor.instructor.type.toString() == 'Regular')
+          this.totalBookingRevenues += (offer.cost * this.regularRevenue / 100);
+        else if (favor.instructor.type.toString() == 'Silver')
+          this.totalBookingRevenues += (offer.cost * this.silverRevenue / 100);
+        else
+          this.totalBookingRevenues += (offer.cost * this.goldRevenue / 100);
+      }
+    }
   }
 }

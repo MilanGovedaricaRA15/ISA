@@ -28,17 +28,6 @@ public class ShipHotOfferServiceImpl implements  ShipHotOfferService {
         return shipHotOffers;
     }
 
-    public List<ShipHotOffer> getAllHotOffersFromBaseFromTill(String from, String to) {
-        Timestamp fromDateTs = new Timestamp(Long.parseLong(from));
-        Timestamp toDateTs = new Timestamp(Long.parseLong(to));
-        LocalDateTime fromDate = fromDateTs.toLocalDateTime();
-        LocalDateTime toDate = toDateTs.toLocalDateTime();
-
-
-        List<ShipHotOffer> allShipHotOffers = shipHotOfferRepository.findAllFromBaseFromTill(fromDate, toDate);
-        return allShipHotOffers;
-    }
-
     @Override
     public List<ShipHotOffer> getShipHotOffersByShipId(Long shipId) {
         return shipRepository.getById(shipId).getHotOffers();

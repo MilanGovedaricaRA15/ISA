@@ -33,13 +33,6 @@ public class FavorHotOfferController {
         }
     }
 
-    @GetMapping("/favorHotOffers/getAllFavorHotOffersFromBaseFromTill")
-    public ResponseEntity<List<FavorHotOffer>> getAllFavorHotOffersFromBaseFromTill(@RequestParam("from") String from, @RequestParam("to") String to) {
-        List<FavorHotOffer> hotOffers = new ArrayList<>(favorHotOfferService.getAllHotOffersFromBaseFromTill(from, to));
-
-        return new ResponseEntity<List<FavorHotOffer>>(hotOffers, HttpStatus.OK);
-    }
-
     @GetMapping("/favorHotOffers/getAllFavorHotOffers")
     public ResponseEntity<List<FavorHotOffer>> getAllFavorHotOffers() {
         List<FavorHotOffer> list = new ArrayList<FavorHotOffer>(favorHotOfferService.getAllFavorHotOffers());

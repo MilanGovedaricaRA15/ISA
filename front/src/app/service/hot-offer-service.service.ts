@@ -12,7 +12,6 @@ export class HotOfferService {
   private getAllHotOffersUrl: string;
   private getHotOffersByCottageIdUrl: string;
   private getFutureHotOffersByCottageIdUrl: string;
-  private getAllHotOffersFromBaseFromTillUrl: string;
 
   constructor(private http: HttpClient) { 
     this.addHotOfferUrl = "http://localhost:8080/hotOffers/saveHotOffer";
@@ -20,16 +19,6 @@ export class HotOfferService {
     this.getAllHotOffersUrl = "http://localhost:8080/hotOffers/getAllHotOffers";
     this.getHotOffersByCottageIdUrl = "http://localhost:8080/hotOffers/getHotOffersByCottageId";
     this.getFutureHotOffersByCottageIdUrl = "http://localhost:8080/hotOffers/getFutureHotOffersByCottageId";
-    this.getAllHotOffersFromBaseFromTillUrl = 'http://localhost:8080/hotOffers/getAllHotOffersFromBaseFromTill'
-  }
-
-  public getAllHotOffersFromBaseFromTill(from: Date, to: Date): Observable<Array<HotOffer>> {
-    let headers = new HttpHeaders();
-    headers.append('Content-Type', 'application/json');
-    let numberFrom = from.getTime();
-    let numberTo = to.getTime();
-    let params = new HttpParams().set("from",numberFrom.toString()).set("to",numberTo.toString());  
-    return this.http.get<Array<HotOffer>>(this.getAllHotOffersFromBaseFromTillUrl, {headers: headers,params: params,withCredentials: true});
   }
 
   public saveHotOffer(hotOffer:HotOffer ): Observable<any>{

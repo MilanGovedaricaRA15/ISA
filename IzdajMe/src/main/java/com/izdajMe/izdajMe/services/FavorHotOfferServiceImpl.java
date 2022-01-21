@@ -32,17 +32,6 @@ public class FavorHotOfferServiceImpl implements FavorHotOfferService{
         return favorHotOffers;
     }
 
-    public List<FavorHotOffer> getAllHotOffersFromBaseFromTill(String from, String to) {
-        Timestamp fromDateTs = new Timestamp(Long.parseLong(from));
-        Timestamp toDateTs = new Timestamp(Long.parseLong(to));
-        LocalDateTime fromDate = fromDateTs.toLocalDateTime();
-        LocalDateTime toDate = toDateTs.toLocalDateTime();
-
-
-        List<FavorHotOffer> allFavorHotOffers = favorHotOfferRepository.findAllFromBaseFromTill(fromDate, toDate);
-        return allFavorHotOffers;
-    }
-
     public List<FavorHotOffer> getFavorHotOffersByFavorId(Long favorId) {
         return instructorsFavorRepository.getById(favorId).getHotOffers();
     }

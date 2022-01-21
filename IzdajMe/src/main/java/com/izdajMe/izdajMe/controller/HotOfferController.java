@@ -52,14 +52,6 @@ public class HotOfferController {
         }
     }
 
-    @GetMapping("/hotOffers/getAllHotOffersFromBaseFromTill")
-    public ResponseEntity<List<HotOffer>> getAllHotOffersFromBaseFromTill(@RequestParam("from") String from, @RequestParam("to") String to) {
-
-        List<HotOffer> reservations = new ArrayList<>(hotOfferService.getAllHotOffersFromBaseFromTill(from, to));
-
-        return new ResponseEntity<List<HotOffer>>(reservations, HttpStatus.OK);
-    }
-
     @GetMapping("/hotOffers/getAllHotOffers")
     public ResponseEntity<List<HotOfferDTO>> getAllHotOffers() {
         List<HotOfferDTO> list = new ArrayList<HotOfferDTO>();
