@@ -46,10 +46,10 @@ export class ShipService {
         this.addShipHotOfferToShipUrl = environment.baseUrl+'ships/addHotOfferToShip';
         this.checkIsReservedUrl = environment.baseUrl+'ships/checkIsReserved';
         this.removeShipByAdministratorUrl = environment.baseUrl+'ships/removeShipByAdministrator';
-		this.addSubscribedUserToShipUrl = environment.baseUrl + 'ships/addSubscribedUserToShip';
-		this.removeSubscribedUserFromShipUrl = environment.baseUrl + 'ships/removeSubscribedUserFromShip';
-		this.getUsersSubscribedShipsUrl = environment.baseUrl + 'ships/getUsersSubscribedShips';
-		this.isUserSubscribedToShipUrl = environment.baseUrl + 'ships/isUserSubscribedToShip';
+        this.addSubscribedUserToShipUrl = environment.baseUrl + 'ships/addSubscribedUserToShip';
+        this.removeSubscribedUserFromShipUrl = environment.baseUrl + 'ships/removeSubscribedUserFromShip';
+        this.getUsersSubscribedShipsUrl = environment.baseUrl + 'ships/getUsersSubscribedShips';
+        this.isUserSubscribedToShipUrl = environment.baseUrl + 'ships/isUserSubscribedToShip';
     }
 
     public getAllShips(): Observable<Array<Ship>> {
@@ -86,41 +86,6 @@ export class ShipService {
   
         return this.http.get<Array<Ship>>(this.searchShipsByNameUrl, {headers: headers, params: params});
     }
-
-  public getAllShips(): Observable<Array<Ship>> {
-    let headers = new HttpHeaders();
-    headers.append('Content-Type', 'application/json');
-
-    return this.http.get<Array<Ship>>(this.getAllShipsUrl, {headers: headers});
-  }
-
-  public getAllAvailableShips(from: Date, to: Date, numOfGuests: number): Observable<Array<Ship>> {
-    let headers = new HttpHeaders();
-    headers.append('Content-Type', 'application/json');
-    let stringFrom = from.getTime().toString();
-    let stringTo = to.getTime().toString();
-    let params = new HttpParams().set("from", stringFrom).set("to", stringTo).set("numOfGuests", numOfGuests);  
-
-    return this.http.get<Array<Ship>>(this.getAllAvailableShipsUrl, {headers: headers, params: params});
-  }
-
-  public getShipById(id: number): Observable<Ship> {
-    let ship = id;
-    let headers = new HttpHeaders();
-    headers.append('Content-Type', 'application/json');
-    let params = new HttpParams().set("ship", ship);
-
-    return this.http.get<Ship>(this.getShipByIdUrl, {headers: headers, params: params});
-  }
-
-  public searchShipsByName(name: string): Observable<Array<Ship>> {
-    let ship = name;
-    let headers = new HttpHeaders();
-    headers.append('Content-Type', 'application/json');
-    let params = new HttpParams().set("name", ship);
-
-    return this.http.get<Array<Ship>>(this.searchShipsByNameUrl, {headers: headers, params: params});
-  }
 
   public getShipAverageGrade(id: number): Observable<number> {
     let headers = new HttpHeaders();
