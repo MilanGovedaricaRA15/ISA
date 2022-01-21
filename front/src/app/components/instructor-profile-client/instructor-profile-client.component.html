@@ -1,22 +1,29 @@
+<div>
+  <h1 style="text-align: center;">Instructor {{instructor.firstName}} {{instructor.lastName}}</h1>
+  <div *ngIf="isSubscribed" style="text-align: right;">
+    <b>Subscribed to this instructor!</b> <br>
+    <button (click)="cancelSubscriptionOfInstructor()">Cancel subscription</button>
+  </div>
+  <div *ngIf="!isSubscribed" style="text-align: right;">
+    <button (click)="subscribeToInstructor()">Subscribe</button>
+  </div>
+</div>
+
+<br><br>
+
 <div class="row">
-  <h1>Instructor informations</h1>
   <div class="column">
+    <h3>Instructor informations</h3>
     First name: {{instructor.firstName}} <br>
-  Last name: {{instructor.lastName}} <br>
-  Email: {{instructor.email}} <br>
-  Mobile number: {{instructor.mobileNumber}} <br>
-  Country: {{instructor.country}} <br>
-  City: {{instructor.city}} <br>
-  Address: {{instructor.address}} <br>
+    Last name: {{instructor.lastName}} <br>
+    Email: {{instructor.email}} <br>
+    Mobile number: {{instructor.mobileNumber}} <br>
+    Country: {{instructor.country}} <br>
+    City: {{instructor.city}} <br>
+    Address: {{instructor.address}} <br>
   </div>
   <div class="column">
-    <div *ngIf="isSubscribed">
-      <b>Subscribed to this instructor!</b> <br>
-      <button (click)="cancelSubscriptionOfInstructor()">Cancel subscription</button>
-    </div>
-    <div *ngIf="!isSubscribed">
-      <button (click)="subscribeToInstructor()">Subscribe</button>
-    </div>
+    <app-map [address]="instructor.address" style="height: 100%;"></app-map>
   </div>
 </div>
 
@@ -44,7 +51,7 @@
 </div>
 <br>
 <div>
-  <h1>Adventure informations</h1>
+  <h3>Adventure informations</h3>
   <table style="width: 100%;">
     <thead>
       <th>Name</th>
@@ -68,7 +75,7 @@
 <br>
 
 <div>
-  <h1>Fast reservations</h1>
+  <h3>Fast reservations</h3>
   <table style="width: 100%;">
     <thead>
         <th>Starts</th>
@@ -100,7 +107,7 @@
 <br>
 
 <div>
-  <h1>Reservations</h1>
+  <h3>Reservations</h3>
   <table style="width: 100%;">
     <thead>
         <th>Starts </th>

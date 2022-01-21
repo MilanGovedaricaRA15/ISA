@@ -1,4 +1,9 @@
+<div>
+    <h1 style="text-align: center;">Instructors page</h1>
+</div>
+  
 <br><br>
+
 <form (ngSubmit)="searchInstructors()">
     <label>First name: </label>
     <input type="text" id="search-instructors-first-name" name="search-instructors-first-name" [(ngModel)]="searchTextFirstName">
@@ -26,7 +31,7 @@
             <td>{{i.instructor.email}}</td>
             <td>{{i.instructor.mobileNumber}}</td>
             <td>{{i.instructor.country}}</td>
-            <td>{{i.averageGrade}}</td>
+            <td>{{i.averageGrade | number: '1.1-2'}}</td>
             <td><a href="#" (click)="goToInstructorProfile(i.instructor.email)">More details</a></td>
         </tr>
     </tbody>

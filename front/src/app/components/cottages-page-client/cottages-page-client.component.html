@@ -1,6 +1,12 @@
-<h4>Search available cottages</h4>
+<div>
+    <h1 style="text-align: center;">Cottages page</h1>
+</div>
+
+<br><br>
+
 <div class="row">
     <div class="column">
+        <h4>Search available cottages</h4>
         <form (ngSubmit)="searchCottages()">
             <label style="min-width: 15%;">Start date:</label>
             <input type="date" id="startDate" min="{{today}}" value={{today}} onkeydown="return false" style="min-width: 20%;" required><br>
@@ -39,7 +45,7 @@
             <td>{{c.cottage.address}}</td>
             <td>{{c.cottage.description}}</td>
             <td>{{c.cottage.costPerNight}}</td>
-            <td>{{c.averageGrade}}</td>
+            <td>{{c.averageGrade | number: '1.1-2'}}</td>
             <td><a href="#" (click)="goToCottageProfile(c.cottage.id)">More details</a></td>
         </tr>
     </tbody>

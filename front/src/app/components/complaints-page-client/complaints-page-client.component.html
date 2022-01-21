@@ -1,12 +1,20 @@
-<h3 *ngIf="complaints">Your complaints:</h3>
-<ul *ngFor="let c of complaints">
-    <li>
-        <div *ngIf="c.complaintCottage">Cottage: {{c.complaintCottage.name}}</div>
-        <div *ngIf="c.complaintShip">Ship: {{c.complaintShip.name}}</div>
-        <div *ngIf="c.complaintUser">User: {{c.complaintUser.firstName}} {{c.complaintUser.lastName}}</div>
-        Text: {{c.text}}
-    </li>
-</ul>
+<div>
+    <h1 style="text-align: center;">Complaints page</h1>
+</div>
+
+<br><br>
+
+<div>
+    <h3 *ngIf="complaints">Your complaints:</h3>
+    <ul *ngFor="let c of complaints">
+        <li>
+            <div *ngIf="c.complaintCottage">Cottage: {{c.complaintCottage.name}}</div>
+            <div *ngIf="c.complaintShip">Ship: {{c.complaintShip.name}}</div>
+            <div *ngIf="c.complaintUser">User: {{c.complaintUser.firstName}} {{c.complaintUser.lastName}}</div>
+            Text: {{c.text}}
+        </li>
+    </ul>
+</div>
 
 <br><br><br>
 

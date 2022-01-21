@@ -1,49 +1,86 @@
+<div>
+  <h1 style="text-align: center;">Cottage profile</h1>
+  <div *ngIf="isSubscribed" style="text-align: right;">
+    <b>Subscribed to this cottage!</b> <br>
+    <button (click)="cancelSubscriptionOfCottage()">Cancel subscription</button>
+  </div>
+  <div *ngIf="!isSubscribed" style="text-align: right;">
+    <button (click)="subscribeToCottage()">Subscribe</button>
+  </div>
+</div>
+
+<br><br>
+
 <div class="row">
 
   <div class="column">
-    <img style="width: 100%; height: 100%;" [src]="('../../assets/images/' + cottageImg + '.jpg')" class="img-fluid z-depth-1"/>
+    <h1 style="text-align: center;">{{cottage.cottage.name}}</h1>
+      <br>
+      <img style="width: 100%;" [src]="('../../assets/images/' + cottageImg + '.jpg')" class="img-fluid z-depth-1"/>
+      <br>
+      Description: {{cottage.cottage.description}}
   </div>
   
   <div class="column">
-    <h1>Cottage informations</h1>
-    <div class="column">
-      Name: {{cottage.cottage.name}} <br>
-      Address: {{cottage.cottage.address}} <br>
-      Owner: {{cottage.cottage.owner.firstName}} {{cottage.cottage.owner.lastName}} <br>
-      Description: {{cottage.cottage.description}} <br>
-      Grade: {{cottage.averageGrade}} <br>
-      Number of rooms: {{cottage.cottage.numOfRooms}} <br>
-      Number of beds: {{cottage.cottage.numOfBeds}} <br>
-      Rules: {{cottage.cottage.rules}} <br>
-      Cost per night: {{cottage.cottage.costPerNight}} <br>
-      Available from: {{cottage.cottage.availableFrom | date:'dd.MM.yyyy'}} <br>
-      Available till: {{cottage.cottage.availableTill | date:'dd.MM.yyyy'}} <br>
-      Services:
-      <ul *ngFor='let s of cottage.cottage.priceList'>
-          <li>{{s.service}}</li>
-      </ul>
-
+    <table style="width: 100%; height: 100%;">
+      <tr>
+        <td>Name:</td>
+        <td><b>{{cottage.cottage.name}}</b></td>
+      </tr>
+      <tr>
+        <td>Owner:</td>
+        <td><b>{{cottage.cottage.owner.firstName}} {{cottage.cottage.owner.lastName}}</b></td>
+      </tr>
+      <tr>
+        <td>Number of rooms:</td> 
+        <td><b>{{cottage.cottage.numOfRooms}}</b></td>
+      </tr>
+      <tr>
+        <td>Number of beds:</td> 
+        <td><b>{{cottage.cottage.numOfBeds}}</b></td>
+      </tr>
+      <tr>
+        <td>Address:</td> 
+        <td><b>{{cottage.cottage.address}}</b></td>
+      </tr>
+      <tr>
+        <td>Cost per night:</td> 
+        <td><b>{{cottage.cottage.costPerNight}}</b></td>
+      </tr>
+      <tr>
+        <td>Grade:</td> 
+        <td><b>{{cottage.averageGrade | number: '1.1-2'}}</b></td>
+      </tr>
+      <tr>
+        <td>Rules:</td> 
+        <td><b>{{cottage.cottage.rules}}</b></td>
+      </tr>
+      <tr>
+        <td>Available from:</td> 
+        <td><b>{{cottage.cottage.availableFrom | date:'dd.MM.yyyy'}}</b></td>
+      </tr>
+      <tr>
+        <td>Available till:</td> 
+        <td><b>{{cottage.cottage.availableTill | date:'dd.MM.yyyy'}}</b></td>
+      </tr>
+      <tr>
+        <td>Services:</td> 
+        <td><div *ngFor='let s of cottage.cottage.priceList'><b>{{s.service}}</b></div></td>
+      </tr>
+  </table>
     </div>
     <div class="column">
-      <div *ngIf="isSubscribed">
-        <b>Subscribed to this cottage!</b> <br>
-        <button (click)="cancelSubscriptionOfCottage()">Cancel subscription</button>
-      </div>
-      <div *ngIf="!isSubscribed">
-        <button (click)="subscribeToCottage()">Subscribe</button>
-      </div>
-
-      <br><br><br>
-
       <div>
         <app-map [address]="cottage.cottage.address"></app-map>
       </div>
     </div>
     
-  </div>
 </div>
-  
-  <h1>Fast reservations</h1>
+
+<br>
+
+<div>
+  <h3>Fast reservations</h3>
   <table style="width: 100%;">
     <thead>
         <th>Starts</th>
@@ -66,10 +103,12 @@
         </tr>
     </tbody>
   </table>
+</div>
   
-  <br>
+<br>
 
-  <h1>Reservations</h1>
+<div>
+  <h3>Reservations</h3>
   <table style="width: 100%;">
     <thead>
         <th>Starts</th>
@@ -77,15 +116,15 @@
         <th>Services</th>
         <th>Cost</th>
         <th>User name</th>
-        <th></th>
     </thead>
     <tbody>
         <tr *ngFor='let cr of cottageReservations'>
           <td>{{cr.availableFrom | date:'dd.MM.yyyy'}}</td>
           <td>{{cr.availableTill | date:'dd.MM.yyyy'}}</td>
-          <td><div *ngFor='let s of cr.services'>{{s}}</div></td>
+          <td><div *ngFor='let s of cr.services'>{{s}}</div><div *ngIf='!cr.services'>-</div></td>
           <td>{{cr.cost}}</td>
           <td>{{cr.client.firstName}}</td>
         </tr>
     </tbody>
   </table>
+</div>

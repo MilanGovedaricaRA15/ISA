@@ -1,4 +1,9 @@
+<div>
+    <h1 style="text-align: center;">Ships page</h1>
+</div>
+  
 <br><br>
+  
 <form (ngSubmit)="searchShips()">
     <label>Search ships by name: </label>
     <input type="text" id="search-ships" name="search-ships" [(ngModel)]="searchText">
@@ -24,7 +29,7 @@
             <td>{{s.ship.capacity}}</td>
             <td>{{s.ship.description}}</td>
             <td>{{s.ship.costPerNight}}</td>
-            <td>{{s.averageGrade}}</td>
+            <td>{{s.averageGrade | number: '1.1-2'}}</td>
             <td><a href="#" (click)="goToShipProfile(s.ship.id)">More details</a></td>
         </tr>
     </tbody>

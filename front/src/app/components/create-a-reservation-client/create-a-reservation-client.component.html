@@ -1,4 +1,9 @@
-<h1>Create a reservation</h1>
+<div>
+    <h1 style="text-align: center;">Create reservation page</h1>
+</div>
+
+<br><br>
+
 <h3>Step 1: Chose a entity, start date, end dta and number of guests of reservation</h3>
 <form (ngSubmit)="availableReservations()" ngNativeValidate>
     <label style="min-width: 15%;">Entity:</label>
@@ -19,11 +24,10 @@
     
     <button class="btn" type="submit">Find available entities</button>
 </form>
-<br>
-<br>
-<br>
-<div
- *ngIf="entity === 'cottage'">
+
+<br><br><br>
+
+<div *ngIf="entity === 'cottage'">
     <h3>Step 2: Choose one of the available cottages</h3>
     <table style="width: 100%;">
         <thead>
@@ -42,7 +46,7 @@
                 <td>{{c.cottage.address}}</td>
                 <td>{{c.cottage.description}}</td>
                 <td>{{c.cottage.costPerNight}}</td>
-                <td>{{c.averageGrade}}</td>
+                <td>{{c.averageGrade | number: '1.1-2'}}</td>
                 <td><div *ngFor='let s of c.cottage.priceList'><input type="checkbox" id={{s.id}} (change)="checkCottageService(c.cottage.id, s.id, s.cost)">{{s.service}} ({{s.cost}} per day)</div></td>
                 <td>{{c.totalPrice}}</td>
                 <td><a href="#" (click)="bookTheCottage(c.cottage.id)">Choose</a></td>
@@ -69,7 +73,7 @@
                 <td>{{s.ship.address}}</td>
                 <td>{{s.ship.description}}</td>
                 <td>{{s.ship.costPerNight}}</td>
-                <td>{{s.averageGrade}}</td>
+                <td>{{s.averageGrade | number: '1.1-2'}}</td>
                 <td><div *ngFor='let sr of s.ship.priceList'><input type="checkbox" id={{sr.id}} (change)="checkShipService(s.ship.id, sr.id, sr.cost)">{{sr.service}} ({{sr.cost}} per day)</div></td>
                 <td>{{s.totalPrice}}</td>
                 <td><a href="#" (click)="bookTheShip(s.ship.id)">Choose</a></td>
@@ -96,7 +100,7 @@
                 <td>{{f.instructorsFavor.address}}</td>
                 <td>{{f.instructorsFavor.description}}</td>
                 <td>{{f.instructorsFavor.cost}}</td>
-                <td>{{f.averageGrade}}</td>
+                <td>{{f.averageGrade | number: '1.1-2'}}</td>
                 <td><div *ngFor='let s of f.instructorsFavor.priceList'><input type="checkbox" id={{s.id}} (change)="checkFavorService(f.instructorsFavor.id, s.id, s.cost)">{{s.service}} ({{s.cost}} per day)</div></td>
                 <td>{{f.totalPrice}}</td>
                 <td><a href="#" (click)="bookTheInstructorsFavor(f.instructorsFavor.id)">Choose</a></td>

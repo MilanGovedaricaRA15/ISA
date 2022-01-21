@@ -1,3 +1,9 @@
+<div>
+    <h1 style="text-align: center;">Ships page</h1>
+</div>
+  
+<br><br>
+  
 <h4>Search available ships</h4>
 <div class="row">
     <div class="column">
@@ -41,7 +47,7 @@
             <td>{{s.ship.type}}</td>
             <td>{{s.ship.capacity}}</td>
             <td>{{s.ship.costPerNight}}</td>
-            <td>{{s.averageGrade}}</td>
+            <td>{{s.averageGrade | number: '1.1-2'}}</td>
             <td><a href="#" (click)="goToShipProfile(s.ship.id)">More details</a></td>
         </tr>
     </tbody>
