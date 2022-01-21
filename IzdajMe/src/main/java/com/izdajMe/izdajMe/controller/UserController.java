@@ -60,8 +60,10 @@ public class UserController {
                     .secure(true)
                     .path("/")
                     .build();
+            HttpHeaders responseHeaders = new HttpHeaders();
+            responseHeaders.set("SET_COOKIE", cookie.toString());
             return ResponseEntity.ok()
-                    .header(HttpHeaders.SET_COOKIE, cookie.toString())
+                    .headers(responseHeaders)
                     .body("user_found");
         }
         else {
