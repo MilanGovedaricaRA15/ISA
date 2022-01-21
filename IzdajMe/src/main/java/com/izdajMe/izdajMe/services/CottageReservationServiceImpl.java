@@ -280,6 +280,17 @@ public class CottageReservationServiceImpl implements CottageReservationService 
     public Boolean changeReservationByOwner(CottageReservation cottageReservation){
         CottageReservation thisReservation = cottageReservationRepository.getById(cottageReservation.getId());
         if (thisReservation.getAvailableTill().isBefore(LocalDateTime.now()) && thisReservation.getReport() == null && thisReservation.getPenalty() == null) {
+            if(!cottageReservation.getReport().getShowedUp()) {
+                User client = userRepository.findById(cottageReservation.getClient().getId()).get();
+                client.setPoints(client.getPoints() - 60);
+                if(client.getPoints() >= 300 && client.getPoints() < 600)
+                    client.setType(User.Type.Silver);
+                else if(client.getPoints() < 300)
+                    client.setType(User.Type.Regular);
+
+                userRepository.save(client);
+            }
+
             cottageReservationRepository.save(cottageReservation);
             return true;
         } else {

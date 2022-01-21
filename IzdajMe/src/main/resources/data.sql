@@ -37,7 +37,7 @@ delete from revenues where id!=0;
 insert into users (id, address, city, country, email,first_name,last_name,mobile_number,password,reason,role,verified, prepaid, type, points)
 values (1, 'Ilije 1', 'Beograd', 'Srbija', 'rajkorajkoza@gmail.com', 'Milan', 'Govedarica', 123123123, 'aaaa', 'Izdaja vikendice', 0, TRUE, TRUE, 0, 20);
 insert into users (id, address, city, country, email,first_name,last_name,mobile_number,password,reason,role,verified, prepaid, type, points)
-values (2, 'Banjalucka 2', 'Banjaluka', 'Bosna', 'popaljubav@gmail.com', 'Miodrag', 'Prod', 111222333, 'aaaa', null, 0, TRUE, TRUE, 1, 50);
+values (2, 'Banjalucka 2', 'Banjaluka', 'Bosna', 'popaljubav@gmail.com', 'Miodrag', 'Prod', 111222333, 'aaaa', null, 0, TRUE, TRUE, 1, 350);
 insert into users (id, address, city, country, email, first_name, last_name, mobile_number, password, reason, role, verified, prepaid, type, points)
 values (3, 'Focanska 2', 'Foca', 'Bosna', 'foca@gmail.com', 'Coa', 'Podunavac', 064456456, 'aaaa', 'reason', 1, TRUE, FALSE, 2, 200);
 insert into users (id, address, city, country, email, first_name, last_name, mobile_number, password, reason, role, verified, prepaid, type, points)
