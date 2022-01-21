@@ -152,7 +152,7 @@ export class CottageProfileComponent implements OnInit {
               if(this?.cottageChange?.images == null){
                 this.cottageChange.images = new Array<String>();
               }
-              this.cottageChange.images.push(this.file.name.split('.')[0]+'.'+this.file.name.split('.')[1]);
+              this.cottageChange.images.push(this.file.name.split('.')[0]);
               this.cottageService.changeCottage(this.cottageChange).subscribe(()=>{
                 this.onIni();
               }

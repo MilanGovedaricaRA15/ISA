@@ -174,7 +174,7 @@ export class ShipProfileComponent implements OnInit {
               if(this?.shipChange?.images == null){
                 this.shipChange.images = new Array<String>();
               }
-              this.shipChange.images.push(this.file.name.split('.')[0]+'.'+this.file.name.split('.')[1]);
+              this.shipChange.images.push(this.file.name.split('.')[0]);
               this.shipService.changeShip(this.shipChange).subscribe(()=>{
                 this.onIni();
               }
