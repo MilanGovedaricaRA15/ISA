@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "https://izdajme.herokuapp.com")
+@CrossOrigin(origins = "https://izdajme.herokuapp.com/")
 
 public class UserController {
 
