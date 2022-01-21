@@ -99,6 +99,39 @@
                 </form>
             </div>
         </div>
+        <div class="col-4" style="margin-top: 250px; margin-left: 150px;">
+            <div class="row" style=" margin-bottom: 30px;">
+                <b style="font-size: 20px;"> Booking revenues group by user types </b> 
+            </div>
+            <div class="row">
+                <div class="col-5">
+                    <label for=""> Regular users(%) </label>
+                </div>
+                <div class="col-5">
+                    <input type="number" id="regularRevenueId" style="width: 50%;" value="{{regularRevenue}}"> 
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-5">
+                    <label for=""> Silver users(%) </label>
+                </div>
+                <div class="col-5">
+                    <input type="number" id="silverRevenueId" style="width: 50%;" value="{{silverRevenue}}"> 
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-5">
+                    <label for=""> Gold users(%) </label>
+                </div>
+                <div class="col-5">
+                    <input type="number" id="goldRevenueId" style="width: 50%;" value="{{goldRevenue}}"> 
+                </div>
+            </div>
+            <div class="row" *ngIf="errorRevenue">  
+                <label for=""  style="color: red;"> Number of percents(regular, silver, gold) must be between 0 and 100! </label>
+            </div>
+            <button class="btn btn-primary" (click)="changeRevenues()"> Change revenues </button>
+        </div>
     </div>
 </div>
 
@@ -333,6 +366,41 @@
                             </tr>
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title m-b-0">Report</h5>
+                </div>
+                <div class="col">
+                    <h1 style="text-align: center;">Total booking revenues: {{totalBookingRevenues}}</h1>
+                    <div class="row align-items-center">
+                        <div class="col-sm"></div>
+                        <div class="col-sm"></div>
+                        <h5 class="col-sm"> From:</h5> <input class="form-control col-sm" (value)="datumFrom"  [value]="datumFromString" placeholder="from"  type="date" id="from"/>
+                        <div class="col-sm"></div>
+                        <div class="col-sm"></div>
+                    </div>
+                    <div class="row align-items-center">
+                        <div class="col-sm"></div>
+                        <div class="col-sm"></div>
+                        <h5 class="col-sm"> To:</h5> <input class="form-control col-sm" style="width: 50%;" (value)="datumTo"  [value]="datumToString" placeholder="to"  type="date" id="to"/>
+                        <div class="col-sm"></div>
+                        <div class="col-sm"></div>
+                    </div>
+                    <div class="row align-items-center">
+                        <div class="col-sm"></div>
+                        
+                            <button (click)="showReport()" class="list-item btn btn-primary bg-danger btn-lg text-white col-sm">Send</button>
+                        
+                        <div class="col-sm"></div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -3,6 +3,7 @@ package com.izdajMe.izdajMe.services;
 import com.izdajMe.izdajMe.model.*;
 import com.izdajMe.izdajMe.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,6 +23,8 @@ public class ShipServiceImpl implements ShipService {
     private ShipReservationRepository shipReservationRepository;
     @Autowired
     private ConcurentWatcherRepository concurentWatcherRepository;
+    @Autowired
+    private EmailService emailService;
 
     @Override
     public List<Ship> getAllShips() {
@@ -288,6 +291,7 @@ public class ShipServiceImpl implements ShipService {
 
             if (slobodno) {
                 shipRepository.save(ship);
+                sendNotificationForNewHotOffer(ship,addedHotOffer);
             }
             cw.setWriting(false);
             concurentWatcherRepository.save(cw);
@@ -295,6 +299,20 @@ public class ShipServiceImpl implements ShipService {
             return slobodno;
         } else {
             return false;
+        }
+    }
+
+    private void sendNotificationForNewHotOffer(Ship ship, ShipHotOffer addedHotOffer){
+        List<User> users = ship.getSubscribedUsers();
+        for(User user: users){
+            SimpleMailMessage mail = new SimpleMailMessage();
+            mail.setTo(user.getEmail());
+            mail.setFrom("rajkorajkeza@gmail.com");
+            mail.setSubject("New hot offer for ship "+ ship.getName() );
+            mail.setText("There is a new hot offer for a ship: " + ship.getName() + "\n"
+                    + "Owner: " + ship.getOwner().getFirstName() + " " + ship.getOwner().getLastName() + "\n"
+                    + "Cost: " + addedHotOffer.getCost());
+            emailService.sendSimpleMessage(mail);
         }
     }
 

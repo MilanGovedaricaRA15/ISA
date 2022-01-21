@@ -1,11 +1,9 @@
 package com.izdajMe.izdajMe.controller;
 
 import com.izdajMe.izdajMe.dto.CottageReservationDTO;
+import com.izdajMe.izdajMe.dto.FavorReservationDTO;
 import com.izdajMe.izdajMe.dto.ShipReservationDTO;
-import com.izdajMe.izdajMe.model.Cottage;
-import com.izdajMe.izdajMe.model.CottageReservation;
-import com.izdajMe.izdajMe.model.ShipReservation;
-import com.izdajMe.izdajMe.model.User;
+import com.izdajMe.izdajMe.model.*;
 import com.izdajMe.izdajMe.services.CottageReservationService;
 import com.izdajMe.izdajMe.services.CottageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +29,23 @@ public class CottageReservationController {
             list.add(new CottageReservationDTO(c));
         }
         return new ResponseEntity<List<CottageReservationDTO>>(list, HttpStatus.OK);
+    }
+
+    @GetMapping("/cottageReservation/getAllReservations")
+    public ResponseEntity<List<CottageReservation>> getAllReservations(){
+        List<CottageReservation> allReservations = new ArrayList<>();
+        for(CottageReservation cottageReservation : cottageReservationService.getAllReservations()) {
+            allReservations.add(cottageReservation);
+        }
+
+        return new ResponseEntity<List<CottageReservation>>(allReservations, HttpStatus.OK);
+    }
+
+    @GetMapping("/cottageReservation/getAllReservationsFromBaseFromTill")
+    public ResponseEntity<List<CottageReservation>> getAllReservationsFromBaseFromTill(@RequestParam("from") String from, @RequestParam("to") String to) {
+        List<CottageReservation> reservations = new ArrayList<>(cottageReservationService.getAllReservationsFromBaseFromTill(from ,to));
+
+        return new ResponseEntity<List<CottageReservation>>(reservations, HttpStatus.OK);
     }
 
     @GetMapping("/cottageReservation/getAllReservationsOfCottageFromTill")

@@ -1,5 +1,7 @@
 package com.izdajMe.izdajMe.controller;
 
+import com.izdajMe.izdajMe.dto.HotOfferDTO;
+import com.izdajMe.izdajMe.model.HotOffer;
 import com.izdajMe.izdajMe.model.ShipHotOffer;
 import com.izdajMe.izdajMe.services.ShipHotOfferService;
 import org.springframework.beans.factory.annotation.Autowired;
