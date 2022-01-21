@@ -3,6 +3,7 @@ import { Ship } from 'src/app/model/ship';
 import { Grade } from 'src/app/model/grade';
 import { ShipService } from 'src/app/service/ship-service';
 import { Observable } from 'rxjs';
+import { getAverageShipGrade, ShipDTO } from 'src/app/dto/ship-dto';
 
 @Component({
   selector: 'app-ship-profile-unauthenticated-user',
@@ -11,7 +12,7 @@ import { Observable } from 'rxjs';
 })
 export class ShipProfileUnauthenticatedUserComponent implements OnInit {
   
-  ship: Ship;
+  ship: ShipDTO;
   shipImg: String;
   averageGrade: number;
   @Input() shipUnauthenticated: Ship;
@@ -21,17 +22,14 @@ export class ShipProfileUnauthenticatedUserComponent implements OnInit {
   ngOnInit(): void {
     if(this.shipUnauthenticated == undefined){
       this.shipService.getShipById(Number(sessionStorage.getItem("shipToShowUnauthenticated"))).subscribe(ret =>{
-        this.ship = ret;
+        this.ship = new ShipDTO(ret, getAverageShipGrade(ret), ret.costPerNight);
       })
     } else {
-      this.ship = this.shipUnauthenticated;
+      this.ship = new ShipDTO(this.shipUnauthenticated, getAverageShipGrade(this.shipUnauthenticated), this.shipUnauthenticated.costPerNight);
     }
-    if(this.ship.images != null){
-      this.shipImg = this.ship.images[0];
+    if(this.ship.ship.images != null){
+      this.shipImg = this.ship.ship.images[0];
     }
-    this.shipService.getShipAverageGrade(this.ship.id).subscribe(ret =>{
-      this.averageGrade = ret;
-    });
   }
 
 }
