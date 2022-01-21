@@ -170,8 +170,7 @@ export class ShipProfileComponent implements OnInit {
         this.cantAdd = false;
         if(this.file?.name.match(/.(jpg)$/i)){
           this.invalidFile = false;
-          this.shipService.upload(this.file).subscribe(ret=>{
-            if(ret){
+            
               if(this?.shipChange?.images == null){
                 this.shipChange.images = new Array<String>();
               }
@@ -180,12 +179,7 @@ export class ShipProfileComponent implements OnInit {
                 this.onIni();
               }
               )
-              
-            }
-            else {
-              this.invalidFile = true;
-            }
-          });
+
         }
         else {
           this.invalidFile = true;

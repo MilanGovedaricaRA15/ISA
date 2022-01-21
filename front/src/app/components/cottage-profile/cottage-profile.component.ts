@@ -148,9 +148,7 @@ export class CottageProfileComponent implements OnInit {
       if(ret){
         this.cantAdd = false;
         if(this.file?.name.match(/.(jpg)$/i)){
-          this.invalidFile = false;
-          this.cottageService.upload(this.file).subscribe(ret=>{
-            if(ret){
+          this.invalidFile = false;        
               if(this?.cottageChange?.images == null){
                 this.cottageChange.images = new Array<String>();
               }
@@ -159,12 +157,6 @@ export class CottageProfileComponent implements OnInit {
                 this.onIni();
               }
               )
-              
-            }
-            else {
-              this.invalidFile = true;
-            }
-          });
         }
         else {
           this.invalidFile = true;

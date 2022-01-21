@@ -240,8 +240,6 @@ export class FavorProfileComponent implements OnInit {
         this.cantAdd = false;
         if(this.file?.name.match(/.(jpg)$/i)){
           this.invalidFile = false;
-          this.instructorsFavorService.upload(this.file).subscribe(ret=>{
-            if(ret){
               if(this?.favorChange?.images == null){
                 this.favorChange.images = new Array<String>();
               }
@@ -250,12 +248,6 @@ export class FavorProfileComponent implements OnInit {
                 this.onInit();
               }
               )
-              
-            }
-            else {
-              this.invalidFile = true;
-            }
-          });
         }
         else {
           this.invalidFile = true;
