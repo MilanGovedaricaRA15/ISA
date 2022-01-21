@@ -20,6 +20,8 @@ export class ShipReservationService {
   private changeReservationByOwnerUrl: string;
   private getByIdUrl: string;
   private cancelShipReservationByClientUrl: string;
+  private getAllReservationsUrl: string;
+  private getAllReservationsFromBaseFromTillUrl: string;
 
   constructor(private http: HttpClient) {
     this.getAllReservationsOfShipFromTillUrl=environment.baseUrl+"shipReservation/getAllReservationsOfShipFromTill";
@@ -32,7 +34,26 @@ export class ShipReservationService {
     this.changeReservationByOwnerUrl=environment.baseUrl+"shipReservation/changeReservationByOwner";
     this.getByIdUrl=environment.baseUrl+"shipReservation/getById";
     this.cancelShipReservationByClientUrl=environment.baseUrl+"shipReservation/cancelShipReservationByClient";
+    this.getAllReservationsUrl = environment.baseUrl+ 'shipReservation/getAllReservations';
+    this.getAllReservationsFromBaseFromTillUrl = environment.baseUrl+ 'shipReservation/getAllReservationsFromBaseFromTill'
+
    }
+
+   public getAllReservations(): Observable<Array<ShipReservation>> {
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+
+    return this.http.get<Array<ShipReservation>>(this.getAllReservationsUrl, {headers: headers});
+  }
+
+  public getAllReservationsFromBaseFromTill(from: Date, to: Date): Observable<Array<ShipReservation>> {
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+    let numberFrom = from.getTime();
+    let numberTo = to.getTime();
+    let params = new HttpParams().set("from",numberFrom.toString()).set("to",numberTo.toString());  
+    return this.http.get<Array<ShipReservation>>(this.getAllReservationsFromBaseFromTillUrl, {headers: headers,params: params,withCredentials: true});
+  }
 
    public getAllReservationsOfShip(ship: Ship): Observable<Array<ShipReservation>> {
     let headers = new HttpHeaders();

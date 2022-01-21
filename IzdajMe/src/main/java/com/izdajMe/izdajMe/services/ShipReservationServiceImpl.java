@@ -34,8 +34,27 @@ public class ShipReservationServiceImpl implements ShipReservationService {
         return allThisShipReservations;
     }
 
+    public List<ShipReservation> getAllReservations() {
+        Iterable<ShipReservation> allReservations = shipReservationRepository.findAll();
+        ArrayList<ShipReservation> allReservationsList = new ArrayList<ShipReservation>();
+        allReservations.forEach(allReservationsList::add);
+
+        return allReservationsList;
+    }
+
     public ShipReservation getById(Long id) {
         return shipReservationRepository.findById(id).get();
+    }
+
+    public List<ShipReservation> getAllReservationsFromBaseFromTill(String from, String to) {
+        Timestamp fromDateTs = new Timestamp(Long.parseLong(from));
+        Timestamp toDateTs = new Timestamp(Long.parseLong(to));
+        LocalDateTime fromDate = fromDateTs.toLocalDateTime();
+        LocalDateTime toDate = toDateTs.toLocalDateTime();
+
+
+        List<ShipReservation> allShipReservations = shipReservationRepository.findAllFromBaseFromTill(fromDate, toDate);
+        return allShipReservations;
     }
 
     public Boolean changeReservationByOwner(ShipReservation shipReservation) {

@@ -43,10 +43,14 @@ export class ReportForInstructorComponent implements OnInit {
     let averageGrade = 0;
     let count = 0;
     for (let grade of favor.grades){
-      averageGrade = averageGrade + grade.value;
-      count = count + 1;
+      if(grade.seen) {
+        averageGrade = averageGrade + grade.value;
+        count = count + 1;
+      }
     }
-    averageGrade = averageGrade / count;
+    if(count != 0)
+      averageGrade = averageGrade / count;
+      
     return averageGrade;
   }
 }

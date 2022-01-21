@@ -1,6 +1,7 @@
 package com.izdajMe.izdajMe.services;
 
 import com.izdajMe.izdajMe.model.Cottage;
+import com.izdajMe.izdajMe.model.FavorReservation;
 import com.izdajMe.izdajMe.model.HotOffer;
 import com.izdajMe.izdajMe.model.User;
 import com.izdajMe.izdajMe.repository.CottageRepository;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;

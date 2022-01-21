@@ -18,4 +18,6 @@ public interface ShipReservationRepository extends JpaRepository<ShipReservation
     public List<ShipReservation> findAllByShipIdFromTill(Long id, LocalDateTime fromDate,LocalDateTime toDate);
     @Query("Select c from ShipReservation c where c.client.email = ?1")
     public List<ShipReservation> findAllByClientEmail(String email);
+    @Query("Select c from ShipReservation c where c.availableFrom >= ?1 and c.availableTill <= ?2")
+    public List<ShipReservation> findAllFromBaseFromTill(LocalDateTime fromDate, LocalDateTime toDate);
 }

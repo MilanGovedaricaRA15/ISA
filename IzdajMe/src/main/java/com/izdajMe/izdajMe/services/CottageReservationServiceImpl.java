@@ -37,8 +37,27 @@ public class CottageReservationServiceImpl implements CottageReservationService 
         return cottageReservationRepository.findAllByCottageId(id);
     }
 
+    public List<CottageReservation> getAllReservations() {
+        Iterable<CottageReservation> allReservations = cottageReservationRepository.findAll();
+        ArrayList<CottageReservation> allReservationsList = new ArrayList<CottageReservation>();
+        allReservations.forEach(allReservationsList::add);
+
+        return allReservationsList;
+    }
+
     public CottageReservation getById(Long id) {
         return cottageReservationRepository.findById(id).get();
+    }
+
+    public List<CottageReservation> getAllReservationsFromBaseFromTill(String from, String to) {
+        Timestamp fromDateTs = new Timestamp(Long.parseLong(from));
+        Timestamp toDateTs = new Timestamp(Long.parseLong(to));
+        LocalDateTime fromDate = fromDateTs.toLocalDateTime();
+        LocalDateTime toDate = toDateTs.toLocalDateTime();
+
+
+        List<CottageReservation> allCottageReservations = cottageReservationRepository.findAllFromBaseFromTill(fromDate, toDate);
+        return allCottageReservations;
     }
 
     public List<CottageReservation> getAllReservationsOfCottageFromTill(Long id, String from, String to) {
