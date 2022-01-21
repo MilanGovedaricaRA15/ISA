@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "IzdajMe": {
+    "izdaj-me": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:application": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/IzdajMe",
+            "outputPath": "dist/izdaj-me",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -36,8 +36,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "1mb",
+                  "maximumError": "2mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -68,10 +68,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "IzdajMe:build:production"
+              "browserTarget": "izdaj-me:build:production"
             },
             "development": {
-              "browserTarget": "IzdajMe:build:development"
+              "browserTarget": "izdaj-me:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -79,7 +79,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "IzdajMe:build"
+            "browserTarget": "izdaj-me:build"
           }
         },
         "test": {
@@ -103,5 +103,5 @@
       }
     }
   },
-  "defaultProject": "IzdajMe"
+  "defaultProject": "izdaj-me"
 }

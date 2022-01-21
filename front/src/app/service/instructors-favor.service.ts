@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { InstructorsFavor } from '../model/instructors-favor';
 
 
@@ -24,19 +25,19 @@ export class InstructorsFavorService {
   deleteFavorHotOfferUrl: string;
 
   constructor(private http: HttpClient) {
-    this.getAllFavorsUrl = 'http://localhost:8080/favors/getAllFavors';
-    this.getAllAvailableFavorsUrl = 'http://localhost:8080/favors/getAllAvailableFavors';
-    this.deleteFavorUrl = 'http://localhost:8080/favors/deleteFavor';
-    this.getFavorByIdUrl = 'http://localhost:8080/favors/getFavorById';
-    this.checkIsReservedUrl = 'http://localhost:8080/favors/checkIsReserved';
-    this.changeFavorUrl='http://localhost:8080/favors/changeFavor';
-    this.removeFavorImgUrl="http://localhost:8080/favors/removeFavorImg";
-    this.uploadImgUrl='http://localhost:8080/favors/uploadImg';
-    this.addHotOfferToFavorUrl = 'http://localhost:8080/favors/addHotOfferToFavor';
-    this.addFavorUrl = 'http://localhost:8080/favors/addFavor';
-    this.getAllFavorsOfInstructorUrl = 'http://localhost:8080/favors/getAllFavorsOfInstructor';
-    this.getAllFavorsByInstructorsEmailUrl = 'http://localhost:8080/favors/getAllFavorsByInstructorsEmail';
-    this.deleteFavorHotOfferUrl = 'http://localhost:8080/favors/deleteFavorHotOffer';
+    this.getAllFavorsUrl = environment.baseUrl+'favors/getAllFavors';
+    this.getAllAvailableFavorsUrl = environment.baseUrl+'favors/getAllAvailableFavors';
+    this.deleteFavorUrl = environment.baseUrl+'favors/deleteFavor';
+    this.getFavorByIdUrl = environment.baseUrl+'favors/getFavorById';
+    this.checkIsReservedUrl = environment.baseUrl+'favors/checkIsReserved';
+    this.changeFavorUrl=environment.baseUrl+'favors/changeFavor';
+    this.removeFavorImgUrl=environment.baseUrl+"favors/removeFavorImg";
+    this.uploadImgUrl=environment.baseUrl+'favors/uploadImg';
+    this.addHotOfferToFavorUrl = environment.baseUrl+'favors/addHotOfferToFavor';
+    this.addFavorUrl = environment.baseUrl+'favors/addFavor';
+    this.getAllFavorsOfInstructorUrl = environment.baseUrl+'favors/getAllFavorsOfInstructor';
+    this.getAllFavorsByInstructorsEmailUrl = environment.baseUrl+'favors/getAllFavorsByInstructorsEmail';
+    this.deleteFavorHotOfferUrl = environment.baseUrl+'favors/deleteFavorHotOffer';
   }
 
   public getAllFavors(): Observable<Array<InstructorsFavor>> {

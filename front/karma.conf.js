@@ -25,7 +25,7 @@ module.exports = function (config) {
       suppressAll: true // removes the duplicated traces
     },
     coverageReporter: {
-      dir: require('path').join(__dirname, './coverage/IzdajMe'),
+      dir: require('path').join(__dirname, './coverage/izdaj-me'),
       subdir: '.',
       reporters: [
         { type: 'html' },
@@ -33,7 +33,7 @@ module.exports = function (config) {
       ]
     },
     reporters: ['progress', 'kjhtml'],
-    port: 9876,
+    port:process.env.PORT || 9876,
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,

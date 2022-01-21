@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { environment } from "src/environments/environment";
 import { Ship } from "../model/ship";
 
 @Injectable({
@@ -25,22 +26,22 @@ export class ShipService {
     private removeShipByAdministratorUrl: string;
 
     constructor(private http: HttpClient) { 
-        this.getAllShipsUrl = "http://localhost:8080/ships/getAllShips";
-        this.getAllAvailableShipsUrl = "http://localhost:8080/ships/getAllAvailableShips";
-        this.getShipByIdUrl = 'http://localhost:8080/ships/getShipById';
-        this.searchShipsByNameUrl = 'http://localhost:8080/ships/searchShipsByName';
-        this.getShipAverageGradeUrl = 'http://localhost:8080/ships/getShipAverageGrade';
-        this.removeShipImgUrl = 'http://localhost:8080/ships/removeShipImg';
-        this.getAllShipsOfOwnerUrl = 'http://localhost:8080/ships/getAllShipsOfOwner';
-        this.changeShipUrl = 'http://localhost:8080/ships/changeShip';
-        this.removeShipHotOfferUrl = 'http://localhost:8080/ships/removeHotOffer';
-        this.deleteShipHotOfferUrl = 'http://localhost:8080/ships/deleteShipHotOffer';
-        this.uploadImgUrl = 'http://localhost:8080/ships/uploadImg';
-        this.removeShipUrl = 'http://localhost:8080/ships/removeShip';
-        this.addShipUrl = 'http://localhost:8080/ships/addShip';
-        this.addShipHotOfferToShipUrl = 'http://localhost:8080/ships/addHotOfferToShip';
-        this.checkIsReservedUrl = 'http://localhost:8080/ships/checkIsReserved';
-        this.removeShipByAdministratorUrl = 'http://localhost:8080/ships/removeShipByAdministrator'
+        this.getAllShipsUrl = environment.baseUrl+"ships/getAllShips";
+        this.getAllAvailableShipsUrl = environment.baseUrl+"ships/getAllAvailableShips";
+        this.getShipByIdUrl = environment.baseUrl+'ships/getShipById';
+        this.searchShipsByNameUrl = environment.baseUrl+'ships/searchShipsByName';
+        this.getShipAverageGradeUrl = environment.baseUrl+'ships/getShipAverageGrade';
+        this.removeShipImgUrl = environment.baseUrl+'ships/removeShipImg';
+        this.getAllShipsOfOwnerUrl = environment.baseUrl+'ships/getAllShipsOfOwner';
+        this.changeShipUrl = environment.baseUrl+'ships/changeShip';
+        this.removeShipHotOfferUrl = environment.baseUrl+'ships/removeHotOffer';
+        this.deleteShipHotOfferUrl = environment.baseUrl+'ships/deleteShipHotOffer';
+        this.uploadImgUrl = environment.baseUrl+'ships/uploadImg';
+        this.removeShipUrl = environment.baseUrl+'ships/removeShip';
+        this.addShipUrl = environment.baseUrl+'ships/addShip';
+        this.addShipHotOfferToShipUrl = environment.baseUrl+'ships/addHotOfferToShip';
+        this.checkIsReservedUrl = environment.baseUrl+'ships/checkIsReserved';
+        this.removeShipByAdministratorUrl = environment.baseUrl+'ships/removeShipByAdministrator'
     }
 
     public getAllShips(): Observable<Array<Ship>> {

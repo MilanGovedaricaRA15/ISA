@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { ShipHotOffer } from '../model/ship-hot-offer';
 
 @Injectable({
@@ -12,9 +13,9 @@ export class ShipHotOfferService {
   private getFutureShipHotOffersByShipIdUrl: string;
 
   constructor(private http: HttpClient) {
-    this.getAllShipHotOffersUrl = "http://localhost:8080/shipHotOffers/getAllShipHotOffers";
-    this.getShipHotOffersByShipIdUrl = "http://localhost:8080/shipHotOffers/getShipHotOffersByShipId";
-    this.getFutureShipHotOffersByShipIdUrl = "http://localhost:8080/shipHotOffers/getFutureShipHotOffersByShipId";
+    this.getAllShipHotOffersUrl = environment.baseUrl+"shipHotOffers/getAllShipHotOffers";
+    this.getShipHotOffersByShipIdUrl = environment.baseUrl+"shipHotOffers/getShipHotOffersByShipId";
+    this.getFutureShipHotOffersByShipIdUrl = environment.baseUrl+"shipHotOffers/getFutureShipHotOffersByShipId";
   }
   
   public getAllShipHotOffers() : Observable<Array<ShipHotOffer>> {

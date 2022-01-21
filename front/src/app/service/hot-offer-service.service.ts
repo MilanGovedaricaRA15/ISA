@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { HotOffer } from '../model/hot-offer';
 
 @Injectable({
@@ -14,11 +15,11 @@ export class HotOfferService {
   private getFutureHotOffersByCottageIdUrl: string;
 
   constructor(private http: HttpClient) { 
-    this.addHotOfferUrl = "http://localhost:8080/hotOffers/saveHotOffer";
-    this.removeHotOfferUrl = "http://localhost:8080/hotOffers/removeHotOffer";
-    this.getAllHotOffersUrl = "http://localhost:8080/hotOffers/getAllHotOffers";
-    this.getHotOffersByCottageIdUrl = "http://localhost:8080/hotOffers/getHotOffersByCottageId";
-    this.getFutureHotOffersByCottageIdUrl = "http://localhost:8080/hotOffers/getFutureHotOffersByCottageId";
+    this.addHotOfferUrl = environment.baseUrl+"hotOffers/saveHotOffer";
+    this.removeHotOfferUrl = environment.baseUrl+"hotOffers/removeHotOffer";
+    this.getAllHotOffersUrl = environment.baseUrl+"hotOffers/getAllHotOffers";
+    this.getHotOffersByCottageIdUrl = environment.baseUrl+"hotOffers/getHotOffersByCottageId";
+    this.getFutureHotOffersByCottageIdUrl = environment.baseUrl+"hotOffers/getFutureHotOffersByCottageId";
   }
 
   public saveHotOffer(hotOffer:HotOffer ): Observable<any>{

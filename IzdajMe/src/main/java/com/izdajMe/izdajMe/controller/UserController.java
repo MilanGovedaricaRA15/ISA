@@ -4,16 +4,18 @@ import com.izdajMe.izdajMe.dto.UserDTO;
 import com.izdajMe.izdajMe.model.User;
 import com.izdajMe.izdajMe.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://izdajme.herokuapp.com/")
 
 public class UserController {
 
@@ -43,7 +45,7 @@ public class UserController {
     }
 
     @PostMapping("/users/login")
-    public ResponseEntity<String> loginUser(@RequestBody User user, HttpServletRequest request) {
+    public String loginUser(@RequestBody User user, HttpServletRequest request,HttpServletResponse response) {
 
         if (userService.loginUser(user)){
             User.Role userRole = userService.getUserByEmail(user.getEmail()).getRole();
@@ -53,10 +55,11 @@ public class UserController {
             else{
                 request.getSession(false).setAttribute("role",userRole);
             }
-           return new ResponseEntity<String>("user_found", HttpStatus.OK);
+
+           return "user_found";
         }
         else {
-           return new ResponseEntity<String>("user_not_found",HttpStatus.NOT_FOUND);
+           return "user_not_found";
         }
     }
 

@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { User } from '../model/user';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class UserService {
@@ -27,23 +28,23 @@ export class UserService {
   
 
   constructor(private http: HttpClient) {
-    this.getAllUsersUrl = 'http://localhost:8080/users/getAllUsers';
-    this.getAllInstructorsUrl = 'http://localhost:8080/users/getAllInstructors';
-    this.usersUrlLogin = 'http://localhost:8080/users/login';
-    this.usersUrlRegister = 'http://localhost:8080/users/register';
-    this.usersUrlRegisterClient = 'http://localhost:8080/users/registerClient';
-    this.usersUrlGetLoggedUser = 'http://localhost:8080/users/getUserByEmail';
-    this.usersUrlGetUserByEmail = 'http://localhost:8080/users/getUserByEmail';
-    this.getInstructorByEmailUrl = 'http://localhost:8080/users/getInstructorByEmail';
-    this.usersUrlChangeUser = 'http://localhost:8080/users/changeUser';
-    this.usersUrlChangePasswordUser = 'http://localhost:8080/users/changePasswordUser';
-    this.changeAdministratorsPassword = 'http://localhost:8080/users/changeAdministratorsPassword';
-    this.addNewAdmin = 'http://localhost:8080/users/addAdmin';
-    this.deleteUserUrl = 'http://localhost:8080/users/deleteUser';
-    this.declineUserUrl = 'http://localhost:8080/users/declineUser';
-    this.searchInstructorssByNameUrl = 'http://localhost:8080/users/searchInstructorsByName';
-    this.acceptUserUrl = 'http://localhost:8080/users/acceptUser';
-    this.changePrepaidUrl = 'http://localhost:8080/users/changePrepaid';
+    this.getAllUsersUrl = environment.baseUrl+'users/getAllUsers';
+    this.getAllInstructorsUrl = environment.baseUrl+'users/getAllInstructors';
+    this.usersUrlLogin = environment.baseUrl+'users/login';
+    this.usersUrlRegister = environment.baseUrl+'users/register';
+    this.usersUrlRegisterClient = environment.baseUrl+'users/registerClient';
+    this.usersUrlGetLoggedUser = environment.baseUrl+'users/getUserByEmail';
+    this.usersUrlGetUserByEmail = environment.baseUrl+'users/getUserByEmail';
+    this.getInstructorByEmailUrl = environment.baseUrl+'users/getInstructorByEmail';
+    this.usersUrlChangeUser = environment.baseUrl+'users/changeUser';
+    this.usersUrlChangePasswordUser = environment.baseUrl+'users/changePasswordUser';
+    this.changeAdministratorsPassword = environment.baseUrl+'users/changeAdministratorsPassword';
+    this.addNewAdmin = environment.baseUrl+'users/addAdmin';
+    this.deleteUserUrl = environment.baseUrl+'users/deleteUser';
+    this.declineUserUrl = environment.baseUrl+'users/declineUser';
+    this.searchInstructorssByNameUrl = environment.baseUrl+'users/searchInstructorsByName';
+    this.acceptUserUrl = environment.baseUrl+'users/acceptUser';
+    this.changePrepaidUrl = environment.baseUrl+'users/changePrepaid';
   }
 
   public getAllUsers(): Observable<Array<User>> {

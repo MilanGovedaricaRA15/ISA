@@ -16,7 +16,7 @@ import { Complaint } from './model/complaint';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'IzdajMe';
+  title = 'izdaj-me';
   cottageForHotOffers: Cottage;
   cottageToShow: Cottage;
   shipToShow: Ship;

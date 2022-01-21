@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Administrator } from '../model/administrator';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -13,10 +14,10 @@ export class AdministratorService {
   private administratorsUrlChangePasswordAdministrator: string;
 
   constructor(private http: HttpClient) {
-      this.administratorsUrlLogin = 'http://localhost:8080/administrators/login';
-      this.administratorsUrlRegister = 'http://localhost:8080/administrators/register';
-      this.administratorsUrlChangeAdministrator = 'http://localhost:8080/administrators/changeAdministrator';
-      this.administratorsUrlChangePasswordAdministrator = 'http://localhost:8080/administrators/changePasswordAdministrator';
+      this.administratorsUrlLogin = environment.baseUrl+'administrators/login';
+      this.administratorsUrlRegister = environment.baseUrl+'administrators/register';
+      this.administratorsUrlChangeAdministrator = environment.baseUrl+'administrators/changeAdministrator';
+      this.administratorsUrlChangePasswordAdministrator = environment.baseUrl+'administrators/changePasswordAdministrator';
     }
 
     public register(administrator: Administrator): Observable<string> {

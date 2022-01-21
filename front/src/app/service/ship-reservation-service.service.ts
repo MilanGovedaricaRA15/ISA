@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { Ship } from '../model/ship';
 import { ShipReservation } from '../model/ship-reservation';
 
@@ -21,16 +22,16 @@ export class ShipReservationService {
   private cancelShipReservationByClientUrl: string;
 
   constructor(private http: HttpClient) {
-    this.getAllReservationsOfShipFromTillUrl="http://localhost:8080/shipReservation/getAllReservationsOfShipFromTill";
-    this.getAllReservationsOfShipUrl="http://localhost:8080/shipReservation/getAllReservationsOfShip";
-    this.getAllReservationsOfOwnerUrl="http://localhost:8080/shipReservation/getAllReservationsOfOwner";
-    this.getShipReservationsOfClientUrl = "http://localhost:8080/shipReservation/getShipReservationsOfClient";
-    this.addReservationByOwnerUrl="http://localhost:8080/shipReservation/addReservationByOwner";
-    this.addReservationByClientUrl="http://localhost:8080/shipReservation/addReservationByClient";
-    this.addShipHotOfferReservationByClientUrl="http://localhost:8080/shipReservation/addShipHotOfferReservationByClient";
-    this.changeReservationByOwnerUrl="http://localhost:8080/shipReservation/changeReservationByOwner";
-    this.getByIdUrl="http://localhost:8080/shipReservation/getById";
-    this.cancelShipReservationByClientUrl="http://localhost:8080/shipReservation/cancelShipReservationByClient";
+    this.getAllReservationsOfShipFromTillUrl=environment.baseUrl+"shipReservation/getAllReservationsOfShipFromTill";
+    this.getAllReservationsOfShipUrl=environment.baseUrl+"shipReservation/getAllReservationsOfShip";
+    this.getAllReservationsOfOwnerUrl=environment.baseUrl+"shipReservation/getAllReservationsOfOwner";
+    this.getShipReservationsOfClientUrl = environment.baseUrl+"shipReservation/getShipReservationsOfClient";
+    this.addReservationByOwnerUrl=environment.baseUrl+"shipReservation/addReservationByOwner";
+    this.addReservationByClientUrl=environment.baseUrl+"shipReservation/addReservationByClient";
+    this.addShipHotOfferReservationByClientUrl=environment.baseUrl+"shipReservation/addShipHotOfferReservationByClient";
+    this.changeReservationByOwnerUrl=environment.baseUrl+"shipReservation/changeReservationByOwner";
+    this.getByIdUrl=environment.baseUrl+"shipReservation/getById";
+    this.cancelShipReservationByClientUrl=environment.baseUrl+"shipReservation/cancelShipReservationByClient";
    }
 
    public getAllReservationsOfShip(ship: Ship): Observable<Array<ShipReservation>> {

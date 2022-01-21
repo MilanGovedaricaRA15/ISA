@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { FavorReservation } from '../model/favor-reservation';
 import { InstructorsFavor } from '../model/instructors-favor';
 
@@ -22,18 +23,18 @@ export class FavorReservationService {
   getAllReservationsFromTillUrl: string;
 
   constructor(private http: HttpClient) {
-    this.getAllReservationsUrl = 'http://localhost:8080/favorReservations/getAllReservations';
-    this.addReservationByOwnerUrl = 'http://localhost:8080/favorReservations/addReservationByOwner';
-    this.addReservationByClientUrl = 'http://localhost:8080/favorReservations/addReservationByClient';
-    this.addFavorHotOfferReservationByClientUrl = 'http://localhost:8080/favorReservations/addFavorHotOfferReservationByClient';
-    this.getByIdUrl = 'http://localhost:8080/favorReservations/getReservationById';
-    this.changeReservationByInstructorUrl="http://localhost:8080/favorReservations/changeReservationByInstructor";
-    this.getAllReservationsOfInstructorFavorsUrl = "http://localhost:8080/favorReservations/getAllReservationsOfInstructorFavors";
-    this.getFavorReservationsOfClientUrl = "http://localhost:8080/favorReservations/getFavorReservationsOfClient";
-    this.cancelFavorReservationByClientUrl = "http://localhost:8080/favorReservations/cancelFavorReservationByClient";
-    this.getAllReservationsOfFavorFromTillUrl = "http://localhost:8080/favorReservations/getAllReservationsOfFavorFromTill";
-    this.getAllReservationsOfFavorUrl = "http://localhost:8080/favorReservations/getAllReservationsOfFavor";
-    this.getAllReservationsFromTillUrl = "http://localhost:8080/favorReservations/getAllReservationsFromTill"
+    this.getAllReservationsUrl = environment.baseUrl+'favorReservations/getAllReservations';
+    this.addReservationByOwnerUrl = environment.baseUrl+'favorReservations/addReservationByOwner';
+    this.addReservationByClientUrl = environment.baseUrl+'favorReservations/addReservationByClient';
+    this.addFavorHotOfferReservationByClientUrl = environment.baseUrl+'favorReservations/addFavorHotOfferReservationByClient';
+    this.getByIdUrl = environment.baseUrl+'favorReservations/getReservationById';
+    this.changeReservationByInstructorUrl=environment.baseUrl+"favorReservations/changeReservationByInstructor";
+    this.getAllReservationsOfInstructorFavorsUrl = environment.baseUrl+"favorReservations/getAllReservationsOfInstructorFavors";
+    this.getFavorReservationsOfClientUrl = environment.baseUrl+"favorReservations/getFavorReservationsOfClient";
+    this.cancelFavorReservationByClientUrl = environment.baseUrl+"favorReservations/cancelFavorReservationByClient";
+    this.getAllReservationsOfFavorFromTillUrl = environment.baseUrl+"favorReservations/getAllReservationsOfFavorFromTill";
+    this.getAllReservationsOfFavorUrl = environment.baseUrl+"favorReservations/getAllReservationsOfFavor";
+    this.getAllReservationsFromTillUrl = environment.baseUrl+"favorReservations/getAllReservationsFromTill"
   }
 
   public getAllReservations(): Observable<Array<FavorReservation>> {
