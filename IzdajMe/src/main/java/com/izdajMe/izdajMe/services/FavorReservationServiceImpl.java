@@ -286,6 +286,16 @@ public class FavorReservationServiceImpl implements FavorReservationService{
         FavorReservation thisReservation = favorReservationRepository.getById(favorReservation.getId());
         if (thisReservation.getAvailableTill().isBefore(LocalDateTime.now())&&thisReservation.getReport()==null)
         {
+            if(!favorReservation.getReport().getShowedUp()) {
+                User client = userRepository.findById(favorReservation.getClient().getId()).get();
+                client.setPoints(client.getPoints() - 60);
+                if(client.getPoints() >= 300 && client.getPoints() < 600)
+                    client.setType(User.Type.Silver);
+                else if(client.getPoints() < 300)
+                    client.setType(User.Type.Regular);
+
+                userRepository.save(client);
+            }
             favorReservationRepository.save(favorReservation);
             return true;
         }

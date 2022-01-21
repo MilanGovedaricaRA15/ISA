@@ -375,6 +375,41 @@
         </div>
     </div>
 </div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title m-b-0">All reports</h5>
+                </div>
+                <div class="table-responsive">
+                    <table class="table" id="usertable">
+                        <thead class="thead-light">
+                            <tr >
+                                <th scope="col">Comment</th>
+                                <th scope="col">Report</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngFor="let item of allReports;let indexOfelement=index;">
+                            <tr *ngIf="item.verified === false && item.shouldGetPenalty">
+                                <td scope="col">{{item.comment}}</td>
+                                <td scope="col">{{item.report}}</td>
+                                <td scope="col">
+                                    <button class="btn btn-success" style="margin-bottom: 2px;" (click)="acceptReport(indexOfelement)"> Accept </button>
+                                </td>
+                                <td scope="col">
+                                    <button class="btn btn-danger" style="margin-bottom: 2px;" (click)="declineReport(indexOfelement)"> Decline </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="container">
     <div class="row">
         <div class="col-12">
