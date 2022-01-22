@@ -23,10 +23,10 @@ public class Cottage {
     private ArrayList<Services> services;
     private LocalDateTime availableFrom;
     private LocalDateTime availableTill;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL)
     private List<HotOffer> hotOffers;
     private float costPerNight;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL)
     private List<ServicePrice> priceList;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Grade> grades;

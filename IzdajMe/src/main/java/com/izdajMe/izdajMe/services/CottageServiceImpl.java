@@ -32,6 +32,10 @@ public class CottageServiceImpl implements CottageService {
     private ConcurentWatcherRepository concurentWatcherRepository;
     @Autowired
     private EmailService emailService;
+    @Autowired
+    private GradeRepository gradeRepository;
+    @Autowired
+    private ComplaintRepository complaintRepository;
 
 
     public List<Cottage> getAllCottagesOfOwner(String email) {
@@ -99,13 +103,22 @@ public class CottageServiceImpl implements CottageService {
     }
 
     public Boolean removeCottageByAdministrator(Long id) {
-        if (!isReserved(id)) {
-            cottageRepository.deleteById(id);
-        } else {
-            removeCottageReservations(id);
-            cottageRepository.deleteById(id);
-        }
+        Cottage cottage = cottageRepository.findById(id).get();
+        cottage.setSubscribedUsers(new ArrayList<>());
+        deleteComplaints(cottage);
+
+        removeCottageReservations(id);
+        cottageRepository.deleteById(id);
+
         return true;
+    }
+
+    private void deleteComplaints(Cottage cottage) {
+        List<Complaint> complaints = complaintRepository.findAll();
+        for(Complaint complaint: complaints) {
+            if(complaint.getComplaintCottage() != null && complaint.getComplaintCottage().getId() == cottage.getId())
+                complaintRepository.delete(complaint);
+        }
     }
 
     private void removeCottageReservations(long id) {

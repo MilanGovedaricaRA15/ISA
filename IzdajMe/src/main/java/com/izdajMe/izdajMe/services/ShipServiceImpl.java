@@ -25,6 +25,8 @@ public class ShipServiceImpl implements ShipService {
     private ConcurentWatcherRepository concurentWatcherRepository;
     @Autowired
     private EmailService emailService;
+    @Autowired
+    private ComplaintRepository complaintRepository;
 
     @Override
     public List<Ship> getAllShips() {
@@ -152,13 +154,22 @@ public class ShipServiceImpl implements ShipService {
     }
 
     public Boolean removeShipByAdministrator(Long id) {
-        if (!isReserved(id)) {
-            shipRepository.deleteById(id);
-        } else {
-            removeShipReservations(id);
-            shipRepository.deleteById(id);
-        }
+        Ship ship = shipRepository.findById(id).get();
+        ship.setSubscribedUsers(new ArrayList<>());
+        deleteComplaints(ship);
+
+        removeShipReservations(id);
+        shipRepository.deleteById(id);
+
         return true;
+    }
+
+    private void deleteComplaints(Ship ship) {
+        List<Complaint> complaints = complaintRepository.findAll();
+        for(Complaint complaint: complaints) {
+            if(complaint.getComplaintShip() != null && complaint.getComplaintShip().getId() == ship.getId())
+                complaintRepository.delete(complaint);
+        }
     }
 
     private void removeShipReservations(long id) {
