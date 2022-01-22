@@ -229,6 +229,16 @@ public class CottageController {
         return new ResponseEntity<List<Cottage>>(cottageService.searchCottagesByName(name), HttpStatus.OK);
     }
 
+    @GetMapping("/cottages/searchCottagesByAddress")
+    public ResponseEntity<List<Cottage>> searchCottagesByAddress(@RequestParam("address") String address) {
+        return new ResponseEntity<List<Cottage>>(cottageService.searchCottagesByAddress(address), HttpStatus.OK);
+    }
+
+    @GetMapping("/cottages/searchCottagesByCost")
+    public ResponseEntity<List<Cottage>> searchCottagesByCost(@RequestParam("minCost") Float minCost, @RequestParam("maxCost") Float maxCost) {
+        return new ResponseEntity<List<Cottage>>(cottageService.searchCottagesByCost(minCost, maxCost), HttpStatus.OK);
+    }
+
     @PostMapping("/cottages/addSubscribedUserToCottage")
     public ResponseEntity<Boolean> addSubscribedUserToCottage(@RequestBody Cottage cottage, HttpServletRequest request) {
         if (request.getSession(false).getAttribute("role") != null) {

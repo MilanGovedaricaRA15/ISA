@@ -33,6 +33,10 @@ export class CottageProfileClientComponent implements OnInit {
       this.cottageService.getCottageById(Number(sessionStorage.getItem("cottageToShowClient"))).subscribe(ret =>{
         this.cottage = new CottageDTO(ret, getAverageCottageGrade(ret), ret.costPerNight);
 
+        if(this.cottage.cottage.images != null){
+          this.cottageImg = this.cottage.cottage.images[0];
+        }
+
         this.userService.getLoggedUser().subscribe(ret => {
           this.user = ret;
           this.cottageService.isUserSubscribedToCottage(this.user.email, this.cottage.cottage.id).subscribe(ret => {
@@ -72,6 +76,10 @@ export class CottageProfileClientComponent implements OnInit {
     } else {
       this.cottage = new CottageDTO(this.cottageClient, getAverageCottageGrade(this.cottageClient), this.cottageClient.costPerNight);
 
+      if(this.cottage.cottage.images != null){
+        this.cottageImg = this.cottage.cottage.images[0];
+      }
+
       this.userService.getLoggedUser().subscribe(ret => {
         this.user = ret;
         this.cottageService.isUserSubscribedToCottage(this.user.email, this.cottage.cottage.id).subscribe(ret => {
@@ -107,9 +115,6 @@ export class CottageProfileClientComponent implements OnInit {
             this.costs.push(totalCost);
           }
       });
-    }
-    if(this.cottage.cottage.images != null){
-      this.cottageImg = this.cottage.cottage.images[0];
     }
   }
 

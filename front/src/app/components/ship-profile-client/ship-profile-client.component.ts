@@ -34,6 +34,10 @@ export class ShipProfileClientComponent implements OnInit {
       this.shipService.getShipById(Number(sessionStorage.getItem("shipToShowClient"))).subscribe(ret =>{
         this.ship = new ShipDTO(ret, getAverageShipGrade(ret), ret.costPerNight);
 
+        if(this.ship.ship.images != null){
+          this.shipImg = this.ship.ship.images[0];
+        }
+
         this.userService.getLoggedUser().subscribe(ret => {
           this.user = ret;
           this.shipService.isUserSubscribedToShip(this.user.email, this.ship.ship.id).subscribe(ret => {
@@ -73,6 +77,10 @@ export class ShipProfileClientComponent implements OnInit {
     } else {
       this.ship = new ShipDTO(this.shipClient, getAverageShipGrade(this.shipClient), this.shipClient.costPerNight);
 
+      if(this.ship.ship.images != null){
+        this.shipImg = this.ship.ship.images[0];
+      }
+
       this.userService.getLoggedUser().subscribe(ret => {
         this.user = ret;
         this.shipService.isUserSubscribedToShip(this.user.email, this.ship.ship.id).subscribe(ret => {
@@ -108,9 +116,6 @@ export class ShipProfileClientComponent implements OnInit {
             this.costs.push(totalCost);
           }
       });
-    }
-    if(this.ship.ship.images != null){
-      this.shipImg = this.ship.ship.images[0];
     }
   }
 

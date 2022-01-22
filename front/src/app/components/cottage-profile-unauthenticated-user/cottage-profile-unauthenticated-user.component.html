@@ -1,24 +1,67 @@
+<div>
+  <h1 style="text-align: center;">Cottage profile</h1>
+</div>
+
+<br><br>
+
 <div class="row">
     <div class="column">
-      <img style="width: 100%; height: 100%;" [src]="('../../assets/images/' + cottageImg + '.jpg')" class="img-fluid z-depth-1"/>
-      <app-map [address]="cottage.cottage.address"></app-map>
+      <h1 style="text-align: center;">{{cottage.cottage.name}}</h1>
+      <br>
+      <img style="width: 100%;" [src]="('../../assets/images/' + cottageImg + '.jpg')" class="img-fluid z-depth-1"/>
+      <br>
+      Description: {{cottage.cottage.description}}
     </div>
     <div class="column">
-      <h1>Cottage informations</h1>
-      Name: {{cottage.cottage.name}} <br>
-      Address: {{cottage.cottage.address}} <br>
-      Owner: {{cottage.cottage.owner.firstName}} {{cottage.cottage.owner.lastName}} <br>
-      Description: {{cottage.cottage.description}} <br>
-      Grade: {{cottage.averageGrade}} <br>
-      Number of rooms: {{cottage.cottage.numOfRooms}} <br>
-      Number of beds: {{cottage.cottage.numOfBeds}} <br>
-      Rules: {{cottage.cottage.rules}} <br>
-      Cost per night: {{cottage.cottage.costPerNight}} <br>
-      Available from: {{cottage.cottage.availableFrom | date:'dd.MM.yyyy'}} <br>
-      Available till: {{cottage.cottage.availableTill | date:'dd.MM.yyyy'}} <br>
-      Services:
-      <ul *ngFor='let s of cottage.cottage.priceList'>
-         <li>{{s.service}}</li>
-      </ul>
+      <table style="width: 100%; height: 100%;">
+        <tr>
+          <td>Name:</td>
+          <td><b>{{cottage.cottage.name}}</b></td>
+        </tr>
+        <tr>
+          <td>Owner:</td>
+          <td><b>{{cottage.cottage.owner.firstName}} {{cottage.cottage.owner.lastName}}</b></td>
+        </tr>
+        <tr>
+          <td>Number of rooms:</td> 
+          <td><b>{{cottage.cottage.numOfRooms}}</b></td>
+        </tr>
+        <tr>
+          <td>Number of beds:</td> 
+          <td><b>{{cottage.cottage.numOfBeds}}</b></td>
+        </tr>
+        <tr>
+          <td>Address:</td> 
+          <td><b>{{cottage.cottage.address}}</b></td>
+        </tr>
+        <tr>
+          <td>Cost per night:</td> 
+          <td><b>{{cottage.cottage.costPerNight}}</b></td>
+        </tr>
+        <tr>
+          <td>Grade:</td> 
+          <td><b>{{cottage.averageGrade | number: '1.1-2'}}</b></td>
+        </tr>
+        <tr>
+          <td>Rules:</td> 
+          <td><b>{{cottage.cottage.rules}}</b></td>
+        </tr>
+        <tr>
+          <td>Available from:</td> 
+          <td><b>{{cottage.cottage.availableFrom | date:'dd.MM.yyyy'}}</b></td>
+        </tr>
+        <tr>
+          <td>Available till:</td> 
+          <td><b>{{cottage.cottage.availableTill | date:'dd.MM.yyyy'}}</b></td>
+        </tr>
+        <tr>
+          <td>Services:</td> 
+          <td><div *ngFor='let s of cottage.cottage.priceList'><b>{{s.service}}</b></div></td>
+        </tr>
+    </table>
+    </div>
+
+    <div class="column">
+      <app-map [address]="cottage.cottage.address"></app-map>
     </div>
 </div>

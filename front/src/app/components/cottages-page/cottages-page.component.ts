@@ -14,10 +14,15 @@ export class CottagesPageComponent implements OnInit {
   @Output() cottageToShowUnauthenticated = new EventEmitter<Cottage>();
 
   searchText: string;
+  searchTextAddress: string;
+  searchMinCost: number;
+  searchMaxCost: number;
+
   descendingName: boolean;
   descendingAddress: boolean;
   descendingGrade: boolean;
-  descendingDescription: boolean;
+  descendingNumOfRooms: boolean;
+  descendingNumOfBeds: boolean;
   descendingCost: boolean;
 
   constructor(private cottageService: CottageService) { }
@@ -32,7 +37,8 @@ export class CottagesPageComponent implements OnInit {
     })
     this.descendingName = false;
     this.descendingAddress = false;
-    this.descendingDescription = false;
+    this.descendingNumOfRooms = false;
+    this.descendingNumOfBeds = false;
     this.descendingGrade = false;
     this.descendingCost = false;
   }
@@ -46,6 +52,29 @@ export class CottagesPageComponent implements OnInit {
   searchCottages(): void {
     let input = this.searchText;
     this.cottageService.searchCottagesByName(input).subscribe(ret => {
+      this.cottages = new Array<CottageDTO>();
+      for (let cottage of ret){
+        let cottageDTO = new CottageDTO(cottage, getAverageCottageGrade(cottage), cottage.costPerNight);
+        this.cottages.push(cottageDTO);
+      }
+    })
+  }
+
+  searchCottagesByAddress(): void {
+    let inputAddress = this.searchTextAddress;
+    this.cottageService.searchCottagesByAddress(inputAddress).subscribe(ret => {
+      this.cottages = new Array<CottageDTO>();
+      for (let cottage of ret){
+        let cottageDTO = new CottageDTO(cottage, getAverageCottageGrade(cottage), cottage.costPerNight);
+        this.cottages.push(cottageDTO);
+      }
+    })
+  }
+
+  searchCottagesByCost(): void {
+    let inputMin = this.searchMinCost;
+    let inputMax = this.searchMaxCost;
+    this.cottageService.searchCottagesByCost(inputMin, inputMax).subscribe(ret => {
       this.cottages = new Array<CottageDTO>();
       for (let cottage of ret){
         let cottageDTO = new CottageDTO(cottage, getAverageCottageGrade(cottage), cottage.costPerNight);
@@ -77,16 +106,26 @@ export class CottagesPageComponent implements OnInit {
 
   }
 
-  sortByDescription(){
-    if(this.descendingDescription){
-      this.cottages.sort((a,b) => (a.cottage.description < b.cottage.description) ? 1 : ((b.cottage.description < a.cottage.description) ? -1 : 0))
-      this.descendingDescription = false;
+  sortByNumOfRooms(){
+    if(this.descendingNumOfRooms){
+      this.cottages.sort((a,b) => (a.cottage.numOfRooms < b.cottage.numOfRooms) ? 1 : ((b.cottage.numOfRooms < a.cottage.numOfRooms) ? -1 : 0))
+      this.descendingNumOfRooms = false;
     }
     else {
-      this.cottages.sort((a,b) => (a.cottage.description > b.cottage.description) ? 1 : ((b.cottage.description > a.cottage.description) ? -1 : 0))
-      this.descendingDescription = true;
+      this.cottages.sort((a,b) => (a.cottage.numOfRooms > b.cottage.numOfRooms) ? 1 : ((b.cottage.numOfRooms > a.cottage.numOfRooms) ? -1 : 0))
+      this.descendingNumOfRooms = true;
     }
+  }
 
+  sortByNumOfBeds(){
+    if(this.descendingNumOfBeds){
+      this.cottages.sort((a,b) => (a.cottage.numOfBeds < b.cottage.numOfBeds) ? 1 : ((b.cottage.numOfBeds < a.cottage.numOfBeds) ? -1 : 0))
+      this.descendingNumOfBeds = false;
+    }
+    else {
+      this.cottages.sort((a,b) => (a.cottage.numOfBeds > b.cottage.numOfBeds) ? 1 : ((b.cottage.numOfBeds > a.cottage.numOfBeds) ? -1 : 0))
+      this.descendingNumOfBeds = true;
+    }
   }
 
   sortByCost(){

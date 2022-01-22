@@ -11,6 +11,8 @@ public interface ShipService {
     public List<Ship> getAllAvailableShips(LocalDateTime from, LocalDateTime to, int numOfGuests);
     public Ship getShipById(Long id);
     public List<Ship> searchShipsByName(String name);
+    public List<Ship> searchShipsByAddress(String address);
+    public List<Ship> searchShipsByCost(Float minCost, Float maxCost);
     public float getShipAverageGrade(Long id);
     public List<Ship> getAllShipsOfOwner(String email);
     public Boolean removeShipImg(Ship ship);

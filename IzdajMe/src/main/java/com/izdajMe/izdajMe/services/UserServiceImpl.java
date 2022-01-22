@@ -67,7 +67,8 @@ public class UserServiceImpl implements UserService {
         User foundUser = userRepository.findByEmailAndPasswordVerified(user.getEmail(),user.getPassword());
 
         if (foundUser != null){
-            inicijalizuj();
+            initialize();
+            addPictures();
             return true;
         }
         else{
@@ -75,7 +76,45 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    private void inicijalizuj(){
+    private void addPictures() {
+        List<Cottage> allCotages = cottageRepository.findAll();
+        for (Cottage c : allCotages) {
+            if (c.getId() != 1) {
+                if (c.getImages() == null) {
+                    ArrayList<String> images = new ArrayList<String>();
+                    String imageName = "cottage";
+                    if (c.getId() > 10) {
+                        imageName += c.getId() % 10;
+                    } else {
+                        imageName += c.getId();
+                    }
+                    images.add(imageName);
+                    c.setImages(images);
+                    cottageRepository.save(c);
+                }
+            }
+        }
+
+        List<Ship> allShips = shipRepository.findAll();
+        for (Ship s : allShips) {
+            if (s.getId() != 1) {
+                if (s.getImages() == null) {
+                    ArrayList<String> images = new ArrayList<String>();
+                    String imageName = "boat";
+                    if (s.getId() > 10) {
+                        imageName += s.getId() % 10;
+                    } else {
+                        imageName += s.getId();
+                    }
+                    images.add(imageName);
+                    s.setImages(images);
+                    shipRepository.save(s);
+                }
+            }
+        }
+    }
+
+    private void initialize(){
         Cottage c = cottageRepository.getById(1L);
         ArrayList<Cottage.Services> services = new ArrayList<Cottage.Services>();
         services.add(Cottage.Services.Parking);
@@ -515,6 +554,20 @@ public class UserServiceImpl implements UserService {
             if (s.getRole().equals(User.Role.instructor) && s.getFirstName().toLowerCase().contains(firstName.toLowerCase())
                     && s.getLastName().toLowerCase().contains(lastName.toLowerCase())) {
                     searchedShips.add(s);
+            }
+        }
+
+        return searchedShips;
+    }
+
+    @Override
+    public List<User> searchInstructorsByCountry(String country) {
+        List<User> searchedShips = new ArrayList<>();
+
+        List<User> users = userRepository.findAll();
+        for (User s : users) {
+            if (s.getRole().equals(User.Role.instructor) && s.getCountry().toLowerCase().contains(country.toLowerCase())) {
+                searchedShips.add(s);
             }
         }
 
