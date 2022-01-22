@@ -49,9 +49,13 @@ export class CreateAReservationClientComponent implements OnInit {
   descendingCostCottage: boolean;
   descendingGradeCottage: boolean;
   descendingTotalPriceCottage: boolean;
+  descendingNumOfRooms: boolean;
+  descendingNumOfBeds: boolean;
+
   descendingCostShip: boolean;
   descendingGradeShip: boolean;
   descendingTotalPriceShip: boolean;
+  
   descendingCostFavor: boolean;
   descendingGradeFavor: boolean;
   descendingTotalPriceFavor: boolean;
@@ -66,6 +70,8 @@ export class CreateAReservationClientComponent implements OnInit {
     this.descendingCostCottage = false;
     this.descendingGradeCottage = false;
     this.descendingTotalPriceCottage = false;
+    this.descendingNumOfRooms = false;
+    this.descendingNumOfBeds = false;
     this.descendingCostShip = false;
     this.descendingGradeShip = false;
     this.descendingTotalPriceShip = false;
@@ -197,7 +203,7 @@ export class CreateAReservationClientComponent implements OnInit {
           alert('Reservation successfully created!');
           this.clientReservations.emit();
         } else {
-          alert('Reservation could not be created because for selected interval, cottage is already booked!');
+          alert('Reservation could not be created because for selected interval, cottage is already booked or there is a available cottage hot offer in that date span!');
         }
       });
 
@@ -233,7 +239,7 @@ export class CreateAReservationClientComponent implements OnInit {
           alert('Reservation successfully created!');
           this.clientReservations.emit();
         } else {
-          alert('Reservation could not be created because for selected interval, ship is already booked!');
+          alert('Reservation could not be created because for selected interval, ship is already booked or there is a available ship hot offer in that date span!');
         }
       });
 
@@ -269,7 +275,7 @@ export class CreateAReservationClientComponent implements OnInit {
           alert('Reservation successfully created!');
           this.clientReservations.emit();
         } else {
-          alert('Reservation could not be created because for selected interval, favor is already booked!');
+          alert('Reservation could not be created because for selected interval, favor is already booked or there is a available favor hot offer in that date span!');
         }
       });
 
@@ -324,6 +330,30 @@ export class CreateAReservationClientComponent implements OnInit {
       this.cottages.sort((a,b) => (a.totalPrice > b.totalPrice) ? 1 : ((b.totalPrice > a.totalPrice) ? -1 : 0))
       this.descendingTotalPriceCottage = true;
     }
+  }
+
+  sortByNumOfRooms(){
+    if(this.descendingNumOfRooms){
+      this.cottages.sort((a,b) => (a.cottage.numOfRooms < b.cottage.numOfRooms) ? 1 : ((b.cottage.numOfRooms < a.cottage.numOfRooms) ? -1 : 0))
+      this.descendingNumOfRooms = false;
+    }
+    else {
+      this.cottages.sort((a,b) => (a.cottage.numOfRooms > b.cottage.numOfRooms) ? 1 : ((b.cottage.numOfRooms > a.cottage.numOfRooms) ? -1 : 0))
+      this.descendingNumOfRooms = true;
+    }
+
+  }
+
+  sortByNumOfBeds(){
+    if(this.descendingNumOfBeds){
+      this.cottages.sort((a,b) => (a.cottage.numOfBeds < b.cottage.numOfBeds) ? 1 : ((b.cottage.numOfBeds < a.cottage.numOfBeds) ? -1 : 0))
+      this.descendingNumOfBeds = false;
+    }
+    else {
+      this.cottages.sort((a,b) => (a.cottage.numOfBeds > b.cottage.numOfBeds) ? 1 : ((b.cottage.numOfBeds > a.cottage.numOfBeds) ? -1 : 0))
+      this.descendingNumOfBeds = true;
+    }
+
   }
 
   sortShipByCost(){

@@ -69,6 +69,34 @@ public class ShipServiceImpl implements ShipService {
     }
 
     @Override
+    public List<Ship> searchShipsByAddress(String address) {
+        List<Ship> searchedShips = new ArrayList<>();
+
+        List<Ship> ships = shipRepository.findAll();
+        for (Ship s : ships) {
+            if (s.getAddress().toLowerCase().contains(address.toLowerCase())) {
+                searchedShips.add(s);
+            }
+        }
+
+        return searchedShips;
+    }
+
+    @Override
+    public List<Ship> searchShipsByCost(Float minCost, Float maxCost) {
+        List<Ship> searchedShips = new ArrayList<Ship>();
+
+        List<Ship> ships = shipRepository.findAll();
+        for (Ship s : ships) {
+            if (minCost <= s.getCostPerNight() && s.getCostPerNight() <= maxCost) {
+                searchedShips.add(s);
+            }
+        }
+
+        return searchedShips;
+    }
+
+    @Override
     public float getShipAverageGrade(Long id) {
         float averageGrade = 0.0F;
         int sum = 0;

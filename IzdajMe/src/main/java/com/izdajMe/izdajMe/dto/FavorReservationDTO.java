@@ -5,6 +5,7 @@ import com.izdajMe.izdajMe.model.InstructorsFavor;
 import com.izdajMe.izdajMe.model.User;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class FavorReservationDTO {
     protected long id;
@@ -13,6 +14,7 @@ public class FavorReservationDTO {
     private float cost;
     private User client;
     private InstructorsFavor favor;
+    private ArrayList<InstructorsFavor.FavorServices> services;
 
     public FavorReservationDTO() {}
 
@@ -23,6 +25,7 @@ public class FavorReservationDTO {
         this.cost = favorReservation.getCost();
         this.client = favorReservation.getClient();
         this.favor = favorReservation.getFavor();
+        this.services = favorReservation.getServices();
     }
 
     public long getId() { return this.id; }
@@ -48,4 +51,12 @@ public class FavorReservationDTO {
     public InstructorsFavor getFavor() { return this.favor; }
 
     public void setFavor(InstructorsFavor favor) { this.favor = favor; }
+
+    public ArrayList<InstructorsFavor.FavorServices> getServices() {
+        return services;
+    }
+
+    public void setServices(ArrayList<InstructorsFavor.FavorServices> services) {
+        this.services = services;
+    }
 }

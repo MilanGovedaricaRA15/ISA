@@ -23,12 +23,15 @@ export class ShipProfileUnauthenticatedUserComponent implements OnInit {
     if(this.shipUnauthenticated == undefined){
       this.shipService.getShipById(Number(sessionStorage.getItem("shipToShowUnauthenticated"))).subscribe(ret =>{
         this.ship = new ShipDTO(ret, getAverageShipGrade(ret), ret.costPerNight);
-      })
+        if(this.ship.ship.images != null){
+          this.shipImg = this.ship.ship.images[0];
+        }
+      });
     } else {
       this.ship = new ShipDTO(this.shipUnauthenticated, getAverageShipGrade(this.shipUnauthenticated), this.shipUnauthenticated.costPerNight);
-    }
-    if(this.ship.ship.images != null){
-      this.shipImg = this.ship.ship.images[0];
+      if(this.ship.ship.images != null){
+        this.shipImg = this.ship.ship.images[0];
+      }
     }
   }
 

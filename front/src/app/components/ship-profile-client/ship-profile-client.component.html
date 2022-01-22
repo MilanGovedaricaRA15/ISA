@@ -1,42 +1,111 @@
+<div>
+  <h1 style="text-align: center;">Ship profile</h1>
+  <div *ngIf="isSubscribed" style="text-align: right;">
+    <b>Subscribed to this ship!</b> <br>
+    <button (click)="cancelSubscriptionOfShip()">Cancel subscription</button>
+  </div>
+  <div *ngIf="!isSubscribed" style="text-align: right;">
+    <button (click)="subscribeToShip()">Subscribe</button>
+  </div>
+</div>
+
+<br><br>
+
 <div class="row">
     <div class="column">
-      <img style="width: 100%; height: 100%;" [src]="('../../assets/images/' + shipImg + '.jpg')" class="img-fluid z-depth-1"/>
+      <h1 style="text-align: center;">{{ship.ship.name}}</h1>
+      <br>
+      <img style="width: 100%;" [src]="('../../assets/images/' + shipImg + '.jpg')" class="img-fluid z-depth-1"/>
+      <br>
+      Description: {{ship.ship.description}}
     </div>
-    <div class="column">
-      <h1>Ship informations</h1>
       <div class="column">
-        Name: {{ship.ship.name}} <br>
-        Owner: {{ship.ship.owner.firstName}} {{ship.ship.owner.lastName}} <br>
-        Length: {{ship.ship.length}} <br>
-        Type: {{ship.ship.type}} <br>
-        Engine number: {{ship.ship.engineNumber}} <br>
-        Engine power: {{ship.ship.enginePower}} <br>
-        Top speed: {{ship.ship.topSpeed}} <br>
-        Navigation equipment: {{ship.ship.navigationEquipment}} <br>
-        Capacity: {{ship.ship.capacity}} <br>
-        Address: {{ship.ship.address}} <br>
-        Description: {{ship.ship.description}} <br>
-        Grade: {{ship.averageGrade}} <br>
-        Rules: {{ship.ship.rules}} <br>
-        Available from: {{ship.ship.availableFrom | date:'dd.MM.yyyy'}} <br>
-        Available till: {{ship.ship.availableTill | date:'dd.MM.yyyy'}} <br>
-        Services: 
-        <ul *ngFor='let s of ship.ship.priceList'>
-          <li>{{s.service}}</li>
-      </ul>
+        <table style="width: 100%; height: 100%;">
+          <tr>
+            <td>Name:</td>
+            <td><b>{{ship.ship.name}}</b></td>
+          </tr>
+          <tr>
+            <td>Owner:</td>
+            <td><b>{{ship.ship.owner.firstName}} {{ship.ship.owner.lastName}}</b></td>
+          </tr>
+          <tr>
+            <td>Length:</td> 
+            <td><b>{{ship.ship.length}}</b></td>
+          </tr>
+          <tr>
+            <td>Type:</td> 
+            <td><b>{{ship.ship.type}}</b></td>
+          </tr>
+          <tr>
+            <td>Engine number:</td> 
+            <td><b>{{ship.ship.engineNumber}}</b></td>
+          </tr>
+          <tr>
+            <td>Engine power:</td> 
+            <td><b>{{ship.ship.enginePower}}</b></td>
+          </tr>
+          <tr>
+            <td>Top speed:</td> 
+            <td><b>{{ship.ship.topSpeed}}</b></td>
+          </tr>
+          <tr>
+            <td>Capacity:</td> 
+            <td><b>{{ship.ship.capacity}}</b></td>
+          </tr>
+          <tr>
+            <td>Type:</td> 
+            <td><b>{{ship.ship.type}}</b></td>
+          </tr>
+          <tr>
+            <td>Address:</td> 
+            <td><b>{{ship.ship.address}}</b></td>
+          </tr>
+          <tr>
+            <td>Cost per night:</td> 
+            <td><b>{{ship.ship.costPerNight}}</b></td>
+          </tr>
+          <tr>
+            <td>Grade:</td> 
+            <td><b>{{ship.averageGrade | number: '1.1-2'}}</b></td>
+          </tr>
+          <tr>
+            <td>Rules:</td> 
+            <td><b>{{ship.ship.rules}}</b></td>
+          </tr>
+          <tr>
+            <td>Available from:</td> 
+            <td><b>{{ship.ship.availableFrom | date:'dd.MM.yyyy'}}</b></td>
+          </tr>
+          <tr>
+            <td>Available till:</td> 
+            <td><b>{{ship.ship.availableTill | date:'dd.MM.yyyy'}}</b></td>
+          </tr>
+          <tr>
+            <td>Services:</td> 
+            <td><div *ngFor='let s of ship.ship.priceList'><b>{{s.service}}</b></div></td>
+          </tr>
+          <tr>
+            <td>Navigation equipment:</td> 
+            <td><div *ngFor='let neq of ship.ship.navigationEquipment'><b>{{neq}}</b></div></td>
+          </tr>
+          <tr>
+            <td>Fishing equipment:</td> 
+            <td><div *ngFor='let feq of ship.ship.fishingEquipment'><b>{{feq}}</b></div></td>
+          </tr>
+      </table>
       </div>
-     <div class="column">
-      <div *ngIf="isSubscribed">
-        <b>Subscribed to this ship!</b> <br>
-        <button (click)="cancelSubscriptionOfShip()">Cancel subscription</button>
+      <div class="column">          
+        <div>
+          <app-map [address]="ship.ship.address"></app-map>
+        </div>
       </div>
-      <div *ngIf="!isSubscribed">
-        <button (click)="subscribeToShip()">Subscribe</button>
-      </div>
-    </div>
-    </div>
+     
   </div>
-  <h1>Fast reservations</h1>
+
+<br>
+
+  <h3>Fast reservations</h3>
   <table style="width: 100%;">
     <thead>
         <th>Starts</th>
@@ -59,7 +128,10 @@
         </tr>
     </tbody>
   </table>
-  <h1>Reservations</h1>
+
+  <br>
+
+  <h3>Reservations</h3>
   <table style="width: 100%;">
     <thead>
         <th>Starts </th>
@@ -67,7 +139,6 @@
         <th>Services</th>
         <th>Cost</th>
         <th>User name</th>
-        <th></th>
     </thead>
     <tbody>
       <tr *ngFor='let sr of shipReservations'>

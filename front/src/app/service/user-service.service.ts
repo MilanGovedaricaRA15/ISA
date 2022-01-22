@@ -22,6 +22,7 @@ export class UserService {
   private deleteUserUrl: string;
   private declineUserUrl: string;
   private searchInstructorssByNameUrl: string;
+  private searchInstructorssByCountryUrl: string;
   private acceptUserUrl: string;
   private changePrepaidUrl: string;
   private addSubscribedUserToInstructorUrl: string;
@@ -45,6 +46,7 @@ export class UserService {
     this.deleteUserUrl = 'http://localhost:8080/users/deleteUser';
     this.declineUserUrl = 'http://localhost:8080/users/declineUser';
     this.searchInstructorssByNameUrl = 'http://localhost:8080/users/searchInstructorsByName';
+    this.searchInstructorssByCountryUrl = 'http://localhost:8080/users/searchInstructorsByCountry';
     this.acceptUserUrl = 'http://localhost:8080/users/acceptUser';
     this.changePrepaidUrl = 'http://localhost:8080/users/changePrepaid';
     this.addSubscribedUserToInstructorUrl = 'http://localhost:8080/users/addSubscribedUserToInstructor';
@@ -234,6 +236,17 @@ export class UserService {
     let params = new HttpParams().set("firstName", firstName).set("lastName", lastName);
 
     return this.http.get<Array<User>>(this.searchInstructorssByNameUrl, {headers: headers, params: params});
+  }
+
+  public searchInstructorssByCountry(country: string): Observable<Array<User>> {
+    if (!country) {
+      country = "";
+    }
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+    let params = new HttpParams().set("country", country);
+
+    return this.http.get<Array<User>>(this.searchInstructorssByCountryUrl, {headers: headers, params: params});
   }
 
   public addSubscribedUserToInstructor(instructor: User): Observable<boolean> {

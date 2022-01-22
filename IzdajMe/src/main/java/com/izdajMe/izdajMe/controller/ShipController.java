@@ -65,6 +65,16 @@ public class ShipController {
         return new ResponseEntity<List<Ship>>(shipService.searchShipsByName(name), HttpStatus.OK);
     }
 
+    @GetMapping("/ships/searchShipsByAddress")
+    public ResponseEntity<List<Ship>> searchShipsByAddress(@RequestParam("address") String address) {
+        return new ResponseEntity<List<Ship>>(shipService.searchShipsByAddress(address), HttpStatus.OK);
+    }
+
+    @GetMapping("/ships/searchShipsByCost")
+    public ResponseEntity<List<Ship>> searchShipsByCost(@RequestParam("minCost") Float minCost, @RequestParam("maxCost") Float maxCost) {
+        return new ResponseEntity<List<Ship>>(shipService.searchShipsByCost(minCost, maxCost), HttpStatus.OK);
+    }
+
     @GetMapping("/ships/getShipAverageGrade")
     public ResponseEntity<Float> getShipAverageGrade(@RequestParam("id") Long id) {
         return new ResponseEntity<Float>(shipService.getShipAverageGrade(id), HttpStatus.OK);

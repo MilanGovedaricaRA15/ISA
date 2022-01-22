@@ -11,6 +11,8 @@ export class ShipService {
   private getAllAvailableShipsUrl: string;
   private getShipByIdUrl: string;
   private searchShipsByNameUrl: string;
+  private searchShipsByAddressUrl: string;
+  private searchShipsByCostUrl: string;
   private getShipAverageGradeUrl: string;
   private removeShipImgUrl: string;
   private getAllShipsOfOwnerUrl: string;
@@ -33,6 +35,8 @@ export class ShipService {
     this.getAllAvailableShipsUrl = "http://localhost:8080/ships/getAllAvailableShips";
     this.getShipByIdUrl = 'http://localhost:8080/ships/getShipById';
     this.searchShipsByNameUrl = 'http://localhost:8080/ships/searchShipsByName';
+    this.searchShipsByAddressUrl = 'http://localhost:8080/ships/searchShipsByAddress';
+    this.searchShipsByCostUrl = 'http://localhost:8080/ships/searchShipsByCost';
     this.getShipAverageGradeUrl = 'http://localhost:8080/ships/getShipAverageGrade';
     this.removeShipImgUrl = 'http://localhost:8080/ships/removeShipImg';
     this.getAllShipsOfOwnerUrl = 'http://localhost:8080/ships/getAllShipsOfOwner';
@@ -78,12 +82,39 @@ export class ShipService {
   }
 
   public searchShipsByName(name: string): Observable<Array<Ship>> {
-    let ship = name;
+    if (!name) {
+      name = '';
+    }
     let headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json');
-    let params = new HttpParams().set("name", ship);
+    let params = new HttpParams().set("name", name);
 
     return this.http.get<Array<Ship>>(this.searchShipsByNameUrl, {headers: headers, params: params});
+  }
+
+  public searchShipsByAddress(address: string): Observable<Array<Ship>> {
+    if (!address) {
+      address = '';
+    }
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+    let params = new HttpParams().set("address", address);
+
+    return this.http.get<Array<Ship>>(this.searchShipsByAddressUrl, {headers: headers, params: params});
+  }
+
+  public searchShipsByCost(minCost: number, maxCost: number): Observable<Array<Ship>> {
+    if (!minCost) {
+      minCost = 0;
+    }
+    if (!maxCost) {
+      maxCost = 100000;
+    }
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+    let params = new HttpParams().set("minCost", minCost).set("maxCost", maxCost);
+  
+    return this.http.get<Array<Ship>>(this.searchShipsByCostUrl, {headers: headers, params: params});
   }
 
   public getShipAverageGrade(id: number): Observable<number> {
