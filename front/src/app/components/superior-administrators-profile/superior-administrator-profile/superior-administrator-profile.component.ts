@@ -445,9 +445,7 @@ export class SuperiorAdministratorProfileComponent implements OnInit {
     let report = this.allReports[index]
     this.reportService.changeVerified(report.id).subscribe(ret => {
       if(ret)
-        this.reportService.getAllReports().subscribe(ret => {
-          this.allReports = ret;
-      })
+        this.allReports.splice(index, 1);
     })
   }
 
@@ -455,9 +453,7 @@ export class SuperiorAdministratorProfileComponent implements OnInit {
     let report = this.allReports[index]
     this.reportService.removeReport(report.id).subscribe(ret => {
       if(ret)
-        this.reportService.getAllReports().subscribe(ret => {
-          this.allReports = ret;
-        });
+        this.allReports.splice(index, 1);
     });
   }
 }

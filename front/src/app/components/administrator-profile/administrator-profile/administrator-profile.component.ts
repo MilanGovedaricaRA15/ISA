@@ -14,6 +14,7 @@ import { FavorReservationService } from 'src/app/service/favor-reservation.servi
 import { GradeService } from 'src/app/service/grade-service.service';
 import { HotOfferService } from 'src/app/service/hot-offer-service.service';
 import { InstructorsFavorService } from 'src/app/service/instructors-favor.service';
+import { ReportServiceService } from 'src/app/service/report-service.service';
 import { ShipHotOfferService } from 'src/app/service/ship-hot-offer-service.service';
 import { ShipReservationService } from 'src/app/service/ship-reservation-service.service';
 import { ShipService } from 'src/app/service/ship-service';
@@ -30,7 +31,8 @@ export class AdministratorProfileComponent implements OnInit {
               private accountDeleteRequestsService: AccountDeleteRequestService, private gradeService: GradeService, 
               private complaintService: ComplaintServiceService, private bookingRevenueService: BookingRevenueService, 
               private cottageReservationService: CottageReservationService, private shipReservationService: ShipReservationService, 
-              private favorReservationService: FavorReservationService, private instructorsFavorService: InstructorsFavorService) { }
+              private favorReservationService: FavorReservationService, private instructorsFavorService: InstructorsFavorService, 
+              private reportService: ReportServiceService) { }
 
   editAdministratorForm:any;
   editPasswordForm:any;
@@ -49,6 +51,7 @@ export class AdministratorProfileComponent implements OnInit {
   allGrades: any;
   allComplaints: any;
   allFavors: any;
+  allReports: any;
   deletingUser: User;
   acceptingUser: User;
   deletingCottage: Cottage;
@@ -91,6 +94,9 @@ export class AdministratorProfileComponent implements OnInit {
     this.userService.getAllUsers().subscribe(usersFromBack =>{
       this.allUsers = usersFromBack;
     }); 
+    this.reportService.getAllReports().subscribe(reportsFromBack => {
+      this.allReports = reportsFromBack;
+    });
     this.cottageService.getAllCottages().subscribe(cottagesFromBack => {
       this.allCottages = cottagesFromBack;
     });
@@ -427,5 +433,21 @@ export class AdministratorProfileComponent implements OnInit {
           this.totalBookingRevenues += (offer.cost * this.goldRevenue / 100);
       }
     }
+  }
+
+  acceptReport(index: number) {
+    let report = this.allReports[index]
+    this.reportService.changeVerified(report.id).subscribe(ret => {
+      if(ret)
+        this.allReports.splice(index, 1);
+    })
+  }
+
+  declineReport(index: number) {
+    let report = this.allReports[index]
+    this.reportService.removeReport(report.id).subscribe(ret => {
+      if(ret)
+        this.allReports.splice(index, 1);
+    });
   }
 }
