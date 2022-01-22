@@ -879,6 +879,9 @@ insert into concurent_watcher (id, table_name, is_writing) values (7, 'FavorRese
 insert into concurent_watcher (id, table_name, is_writing) values (8, 'Favor', false);
 insert into concurent_watcher (id, table_name, is_writing) values (9, 'FavorHotOffer', false);
 insert into concurent_watcher (id, table_name, is_writing) values (10, 'Grade', false);
+insert into concurent_watcher (id, table_name, is_writing) values (11, 'AnswerToDeleteRequest', false);
+insert into concurent_watcher (id, table_name, is_writing) values (12, 'AnswerToComplaint', false);
+insert into concurent_watcher (id, table_name, is_writing) values (13, 'AnswerToRegistrationRequest', false);
 
 insert into cottages_subscribed_users (cottage_id, subscribed_users_id) values (1, 14);
 insert into cottages_subscribed_users (cottage_id, subscribed_users_id) values (1, 27);

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -263,9 +264,11 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Transactional(readOnly = false)
     public Boolean declineUser(String text) {
         if(!concurentWatcherRepository.findByTableName("AnswerToRegistrationRequest").getWriting()) {
             ConcurentWatcher cw = concurentWatcherRepository.findByTableName("AnswerToRegistrationRequest");
+
             cw.setWriting(true);
             concurentWatcherRepository.save(cw);
 
@@ -615,9 +618,11 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
+    @Transactional(readOnly = false)
     public Boolean acceptUser(long id){
         if(!concurentWatcherRepository.findByTableName("AnswerToRegistrationRequest").getWriting()) {
             ConcurentWatcher cw = concurentWatcherRepository.findByTableName("AnswerToRegistrationRequest");
+
             cw.setWriting(true);
             concurentWatcherRepository.save(cw);
 

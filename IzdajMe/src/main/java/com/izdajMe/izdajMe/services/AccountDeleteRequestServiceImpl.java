@@ -1,11 +1,14 @@
 package com.izdajMe.izdajMe.services;
 
 import com.izdajMe.izdajMe.model.AccountDeleteRequest;
+import com.izdajMe.izdajMe.model.ConcurentWatcher;
 import com.izdajMe.izdajMe.model.User;
 import com.izdajMe.izdajMe.repository.AccountDeleteRequestRepository;
+import com.izdajMe.izdajMe.repository.ConcurentWatcherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +21,8 @@ public class AccountDeleteRequestServiceImpl implements AccountDeleteRequestServ
     private EmailService emailService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private ConcurentWatcherRepository concurentWatcherRepository;
 
     public Boolean addAccountDeleteRequest(AccountDeleteRequest accountDeleteRequest) {
         List<AccountDeleteRequest> allNotSeenUserAccountDeleteRequestList = accountDeleteRequestRepository.findAllNotSeenByUserId(accountDeleteRequest.getUser().getId());
@@ -37,16 +42,37 @@ public class AccountDeleteRequestServiceImpl implements AccountDeleteRequestServ
         return allRequestsList;
     }
 
+    @Transactional(readOnly = false)
     public Boolean acceptRequest(AccountDeleteRequest accountDeleteRequest) {
-        accountDeleteRequestRepository.deleteById(accountDeleteRequest.getId());
-        sendNotificationForAcceptingRequest(accountDeleteRequest);
-        return true;
+        if(!concurentWatcherRepository.findByTableName("AnswerToDeclineRequest").getWriting()) {
+            ConcurentWatcher cw = concurentWatcherRepository.findByTableName("AnswerToDeclineRequest");
+            cw.setWriting(true);
+            concurentWatcherRepository.save(cw);
+
+            accountDeleteRequestRepository.deleteById(accountDeleteRequest.getId());
+            sendNotificationForAcceptingRequest(accountDeleteRequest);
+            cw.setWriting(false);
+            concurentWatcherRepository.save(cw);
+            return true;
+        } else
+            return false;
     }
 
+    @Transactional(readOnly = false)
     public Boolean declineRequest(AccountDeleteRequest accountDeleteRequest) {
-        sendNotificationForDecliningRequest(accountDeleteRequest);
-        accountDeleteRequestRepository.deleteById(accountDeleteRequest.getId());
-        return true;
+        if(!concurentWatcherRepository.findByTableName("AnswerToDeclineRequest").getWriting()) {
+            ConcurentWatcher cw = concurentWatcherRepository.findByTableName("AnswerToDeclineRequest");
+            cw.setWriting(true);
+            concurentWatcherRepository.save(cw);
+
+            sendNotificationForDecliningRequest(accountDeleteRequest);
+            accountDeleteRequestRepository.deleteById(accountDeleteRequest.getId());
+            cw.setWriting(false);
+            concurentWatcherRepository.save(cw);
+
+            return true;
+        } else
+            return false;
     }
 
     private void sendNotificationForAcceptingRequest(AccountDeleteRequest accountDeleteRequest) {
