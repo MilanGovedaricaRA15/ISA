@@ -18,6 +18,7 @@ export class InstructorProfileUnauthenticatedUserComponent implements OnInit {
   instructorsFavors: Array<InstructorsFavorDTO>;
 
   searchFavorsName: string;
+  searchFavorsAddress: string;
 
   constructor(private userService : UserService, private favorService: InstructorsFavorService) { }
 
@@ -50,7 +51,17 @@ export class InstructorProfileUnauthenticatedUserComponent implements OnInit {
         for (let f of ret) {
           this.instructorsFavors.push(new InstructorsFavorDTO(f, getAverageFavorGrade(f), f.cost));
         }
-    })
+    });
+  }
+
+  searchFavorsByAddress(): void {
+    let input = this.searchFavorsAddress;
+    this.favorService.searchInstructorsFavorsByAddress(this.instructorDTO.instructor.email, input).subscribe(ret => {
+      this.instructorsFavors = new Array<InstructorsFavorDTO>();
+        for (let f of ret) {
+          this.instructorsFavors.push(new InstructorsFavorDTO(f, getAverageFavorGrade(f), f.cost));
+        }
+    });
   }
 }
 

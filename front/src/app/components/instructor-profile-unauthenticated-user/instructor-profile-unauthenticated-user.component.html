@@ -31,6 +31,13 @@
       <button type="submit">Search</button>
   </form>
 
+  <div>
+    <form (ngSubmit)="searchFavorsByAddress()">
+      <label style="border-right-width: 10px;">Search by favors address: </label>
+      <input type="text" id="search-favors-address" name="search-favors-address" [(ngModel)]="searchFavorsAddress">
+      <button type="submit">Search</button>
+  </form>
+
     <h3>Adventure informations</h3>
   <table style="width: 100%;">
     <thead>

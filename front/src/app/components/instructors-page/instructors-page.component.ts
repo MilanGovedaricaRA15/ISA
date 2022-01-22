@@ -14,6 +14,7 @@ export class InstructorsPageComponent implements OnInit {
   instructorsDTO: Array<InstructorDTO>;
   searchTextFirstName: string;
   searchTextLastName: string;
+  searchTextCountry: string;
 
   constructor(private userService: UserService) { }
 
@@ -40,7 +41,17 @@ export class InstructorsPageComponent implements OnInit {
       for (let i of ret) {
         this.instructorsDTO.push(new InstructorDTO(i, getAverageInstructorGrade(i)));
       }
-    })
+    });
+  }
+
+  searchInstructorsCountry(): void {
+    let country = this.searchTextCountry;
+    this.userService.searchInstructorssByCountry(country).subscribe(ret => {
+      this.instructorsDTO = new Array<InstructorDTO>();
+      for (let i of ret) {
+        this.instructorsDTO.push(new InstructorDTO(i, getAverageInstructorGrade(i)));
+      }
+    });
   }
 
 }

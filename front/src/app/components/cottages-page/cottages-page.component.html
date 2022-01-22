@@ -16,9 +16,9 @@
 </form>
 <form (ngSubmit)="searchCottagesByCost()">
     <label>Min cost: </label>
-    <input type="number" min="0" max="1000" value="0" id="search-cottages-min" name="search-cottages-min" [(ngModel)]="searchMinCost">
+    <input type="number" min=0 value=0 id="search-cottages-min" name="search-cottages-min" [(ngModel)]="searchMinCost">
     <label>Max cost:</label>
-    <input type="number" min="0" max="1000" value="1000" id="search-cottages-max" name="search-cottages-max" [(ngModel)]="searchMaxCost">
+    <input type="number" min=0 value=100 id="search-cottages-max" name="search-cottages-max" [(ngModel)]="searchMaxCost">
     <button type="submit">Search</button>
 </form>
 <br><br>

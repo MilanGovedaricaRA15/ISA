@@ -397,6 +397,20 @@ public class UserServiceImpl implements UserService {
         return searchedShips;
     }
 
+    @Override
+    public List<User> searchInstructorsByCountry(String country) {
+        List<User> searchedShips = new ArrayList<>();
+
+        List<User> users = userRepository.findAll();
+        for (User s : users) {
+            if (s.getRole().equals(User.Role.instructor) && s.getCountry().toLowerCase().contains(country.toLowerCase())) {
+                searchedShips.add(s);
+            }
+        }
+
+        return searchedShips;
+    }
+
     public Boolean saveClient(User user) {
         User foundUser = userRepository.findByEmail(user.getEmail());
 

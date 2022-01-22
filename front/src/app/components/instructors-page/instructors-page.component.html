@@ -11,6 +11,13 @@
     <input type="text" id="search-instructors-last-name" name="search-instructors-last-name" [(ngModel)]="searchTextLastName">
     <button type="submit">Search</button>
 </form>
+
+<form (ngSubmit)="searchInstructorsCountry()">
+    <label>Country: </label>
+    <input type="text" id="search-instructors-country" name="search-instructors-country" [(ngModel)]="searchTextCountry">
+    <button type="submit">Search</button>
+</form>
+
 <br><br>
 <table style="width: 100%;">
     <thead>

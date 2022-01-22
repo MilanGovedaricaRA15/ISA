@@ -56,7 +56,7 @@ values (10, 'Njegoseva 1', 'Subotica', 'Srbija', 'vrbica.vlado11@gmail.com', 'Vl
 insert into users (id, address, city, country, email,first_name,last_name,mobile_number,password,reason,role,verified, prepaid, type, points)
 values (11, 'Nemanjina 2', 'Srbobran', 'Srbija', 'nikola.aleksic@gmail.com', 'Nikola', 'Aleksic', '22222222222', 'leksa', '', 4, TRUE, TRUE, 0, 500);
 insert into users (id, address, city, country, email,first_name,last_name,mobile_number,password,reason,role,verified, prepaid, type, points)
-values (12, 'Kralja Petra 12a', 'Becej', 'Srbija', 'milos.zivic@gmail.com', 'Milos', 'Zivic', '222222222222', 'zile', '', 5, TRUE, TRUE, 0, 77);
+values (12, 'Kralja Petra 12', 'Becej', 'Srbija', 'milos.zivic@gmail.com', 'Milos', 'Zivic', '222222222222', 'zile', '', 5, TRUE, TRUE, 0, 77);
 insert into users (id, address, city, country, email,first_name,last_name,mobile_number,password,reason,role,verified, prepaid, type, points)
 values (13, 'Vozdovacka 12', 'Beograd', 'Srbija', 'vesnakundacina852@gmail.com', 'Vesna', 'Kundacina', 123123123, 'aaaa', 'Izdaja vikendice', 0, FALSE, TRUE, 0, 1);
 insert into users (id, address, city, country, email,first_name,last_name,mobile_number,password,reason,role,verified, prepaid, type, points)
@@ -94,7 +94,7 @@ values (29, 'Stepe Stepanovica 20', 'Kraljevo', 'Srbija', 'klijent3@gmail.com', 
 insert into users (id, address, city, country, email,first_name,last_name,mobile_number,password,reason,role,verified, type, points)
 values (30, 'Cara Lazara 30', 'Krusevac', 'Srbija', 'klijent4@gmail.com', 'Dejan', 'Drakul', 0633654321, 'aaaa', null, 6, TRUE, 0, 379);
 insert into users (id, address, city, country, email,first_name,last_name,mobile_number,password,reason,role,verified, type, points)
-values (31, 'Bulevar Despota Stefana 5a', 'Novi Sad', 'Srbija', 'miodragprodanovic99@gmail.com', 'Miodrag', 'Prodanovic', '0647532684', 'aaaa', '', 6, TRUE, 1, 330);
+values (31, 'Bulevar Despota Stefana 5', 'Novi Sad', 'Srbija', 'miodragprodanovic99@gmail.com', 'Miodrag', 'Prodanovic', '0647532684', 'aaaa', '', 6, TRUE, 1, 330);
 
 insert into cottages (id, address, available_from, available_till, description, images, name, num_of_beds, num_of_rooms, rules, services, owner_id, cost_per_night)
 values (1, 'Dunavska 1', DATE('2021-09-01'), DATE('2022-02-01'), 'To dream so snug within a cottage-cocoon, to feel the sunlight that comes in welcome soon-ness to the budding day, births dreams of Iron Man made butterflies.', null, 'Micova', 3, 3, 'Nisu dozvoljene zivotinje', null, 1, 50);

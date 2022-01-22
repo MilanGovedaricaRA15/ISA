@@ -23,6 +23,7 @@ export class InstructorsFavorService {
   getAllFavorsByInstructorsEmailUrl: string;
   deleteFavorHotOfferUrl: string;
   searchInstructorsFavorsByNameUrl: string;
+  searchInstructorsFavorsByAddressUrl: string;
 
   constructor(private http: HttpClient) {
     this.getAllFavorsUrl = 'http://localhost:8080/favors/getAllFavors';
@@ -39,6 +40,7 @@ export class InstructorsFavorService {
     this.getAllFavorsByInstructorsEmailUrl = 'http://localhost:8080/favors/getAllFavorsByInstructorsEmail';
     this.deleteFavorHotOfferUrl = 'http://localhost:8080/favors/deleteFavorHotOffer';
     this.searchInstructorsFavorsByNameUrl = 'http://localhost:8080/favors/searchInstructorsFavorsByName';
+    this.searchInstructorsFavorsByAddressUrl = 'http://localhost:8080/favors/searchInstructorsFavorsByAddress';
   }
 
   public getAllFavors(): Observable<Array<InstructorsFavor>> {
@@ -121,10 +123,24 @@ export class InstructorsFavorService {
   }
 
   public searchInstructorsFavorsByName(email: string, name: string): Observable<Array<InstructorsFavor>> {
+    if (!name) {
+      name = '';
+    }
     let headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json');
     let params = new HttpParams().set("email", email).set("name", name);
   
     return this.http.get<Array<InstructorsFavor>>(this.searchInstructorsFavorsByNameUrl, {headers: headers, params: params});
+  }
+
+  public searchInstructorsFavorsByAddress(email: string, address: string): Observable<Array<InstructorsFavor>> {
+    if (!address) {
+      address = '';
+    }
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+    let params = new HttpParams().set("email", email).set("address", address);
+  
+    return this.http.get<Array<InstructorsFavor>>(this.searchInstructorsFavorsByAddressUrl, {headers: headers, params: params});
   }
 }

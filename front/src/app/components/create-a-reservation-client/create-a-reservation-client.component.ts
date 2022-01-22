@@ -203,7 +203,7 @@ export class CreateAReservationClientComponent implements OnInit {
           alert('Reservation successfully created!');
           this.clientReservations.emit();
         } else {
-          alert('Reservation could not be created because for selected interval, cottage is already booked!');
+          alert('Reservation could not be created because for selected interval, cottage is already booked or there is a available cottage hot offer in that date span!');
         }
       });
 
@@ -239,7 +239,7 @@ export class CreateAReservationClientComponent implements OnInit {
           alert('Reservation successfully created!');
           this.clientReservations.emit();
         } else {
-          alert('Reservation could not be created because for selected interval, ship is already booked!');
+          alert('Reservation could not be created because for selected interval, ship is already booked or there is a available ship hot offer in that date span!');
         }
       });
 
@@ -275,7 +275,7 @@ export class CreateAReservationClientComponent implements OnInit {
           alert('Reservation successfully created!');
           this.clientReservations.emit();
         } else {
-          alert('Reservation could not be created because for selected interval, favor is already booked!');
+          alert('Reservation could not be created because for selected interval, favor is already booked or there is a available favor hot offer in that date span!');
         }
       });
 

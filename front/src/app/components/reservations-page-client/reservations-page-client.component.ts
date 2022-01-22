@@ -51,8 +51,9 @@ export class ReservationsPageClientComponent implements OnInit {
       this.cottageReservationService.getCottageReservationsOfClient(ret.email).subscribe(ret => {
         this.clientCottageReservations = new Array<CottageReservation>();
         this.pastCottageReservations = new Array<CottageReservation>();
+        let today = this.getToday();
         for (let cr of ret) {
-          if (new Date(cr.availableFrom).getTime() >= new Date().getTime()) {
+          if (new Date(cr.availableFrom).getTime() >= today.getTime()) {
             this.clientCottageReservations.push(cr);
           } else {
             this.pastCottageReservations.push(cr);
@@ -62,8 +63,9 @@ export class ReservationsPageClientComponent implements OnInit {
       this.shipReservationService.getShipReservationsOfClient(ret.email).subscribe(ret => {
         this.clientShipReservations = new Array<ShipReservation>();
         this.pastShipReservations = new Array<ShipReservation>();
+        let today = this.getToday();
         for (let sr of ret) {
-          if (new Date(sr.availableFrom).getTime() >= new Date().getTime()) {
+          if (new Date(sr.availableFrom).getTime() >= today.getTime()) {
             this.clientShipReservations.push(sr);
           } else {
             this.pastShipReservations.push(sr);
@@ -73,8 +75,9 @@ export class ReservationsPageClientComponent implements OnInit {
       this.favorReservationService.getFavorReservationsOfClient(ret.email).subscribe(ret => {
         this.clientFavorReservations = new Array<FavorReservation>();
         this.pastFavorReservations = new Array<FavorReservation>();
+        let today = this.getToday();
         for (let fr of ret) {
-          if (new Date(fr.availableFrom).getTime() >= new Date().getTime()) {
+          if (new Date(fr.availableFrom).getTime() >= today.getTime()) {
             this.clientFavorReservations.push(fr);
           } else {
             this.pastFavorReservations.push(fr);
@@ -112,11 +115,7 @@ export class ReservationsPageClientComponent implements OnInit {
   }
 
   cancelCottageReservation(cottageReservation: CottageReservation) : void {
-    let today = new Date();
-    today.setHours(0);
-    today.setMinutes(0);
-    today.setSeconds(0);
-    today.setMilliseconds(0);
+    let today = this.getToday();
     let from = new Date(cottageReservation.availableFrom);
     let daysBefore = (from.getTime() - today.getTime()) / 86400000;
     if (daysBefore >= 3) {
@@ -134,11 +133,7 @@ export class ReservationsPageClientComponent implements OnInit {
   }
 
   cancelShipReservation(shipReservation: ShipReservation) : void {
-    let today = new Date();
-    today.setHours(0);
-    today.setMinutes(0);
-    today.setSeconds(0);
-    today.setMilliseconds(0);
+    let today = this.getToday();
     let from = new Date(shipReservation.availableFrom);
     let daysBefore = (from.getTime() - today.getTime()) / 86400000;
     if (daysBefore >= 3) {
@@ -156,11 +151,7 @@ export class ReservationsPageClientComponent implements OnInit {
   }
 
   cancelFavorReservation(favorReservation: FavorReservation) : void {
-    let today = new Date();
-    today.setHours(0);
-    today.setMinutes(0);
-    today.setSeconds(0);
-    today.setMilliseconds(0);
+    let today = this.getToday();
     let from = new Date(favorReservation.availableFrom);
     let daysBefore = (from.getTime() - today.getTime()) / 86400000;
     if (daysBefore >= 3) {
@@ -310,6 +301,15 @@ export class ReservationsPageClientComponent implements OnInit {
       this.pastFavorReservations.sort((a,b) => (a.cost > b.cost) ? 1 : ((b.cost > a.cost) ? -1 : 0))
       this.descendingFavorCost = true;
     }
+  }
+
+  private getToday() {
+    let today = new Date();
+    today.setHours(0);
+    today.setMinutes(0);
+    today.setSeconds(0);
+    today.setMilliseconds(0);
+    return today;
   }
 
 }

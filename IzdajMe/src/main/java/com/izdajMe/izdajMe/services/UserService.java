@@ -17,7 +17,8 @@ public interface UserService {
     public Boolean deleteUser(long id);
     public Boolean declineUser(String text);
     public List<User> searchUsersByName(String firstName, String lastName);
-    List<User> searchInstructorsByName(String firstName, String lastName);
+    public List<User> searchInstructorsByName(String firstName, String lastName);
+    public List<User> searchInstructorsByCountry(String country);
     public Boolean saveClient(User user);
     public void activate(Long id);
     public Boolean acceptUser(long id);

@@ -9,6 +9,21 @@
     <input type="text" id="search-ships" name="search-ships" [(ngModel)]="searchText">
     <button type="submit">Search</button>
 </form>
+
+<form (ngSubmit)="searchShipsByAddress()">
+    <label style="border-right-width: 10px;">Search by ship address: </label>
+    <input type="text" id="search-shipp-address" name="search-ships-address" [(ngModel)]="searchTextAddress">
+    <button type="submit">Search</button>
+</form>
+
+<form (ngSubmit)="searchShipsByCost()">
+    <label>Min cost: </label>
+    <input type="number" min=0 value=0 id="search-ships-min" name="search-ships-min" [(ngModel)]="searchMinCost">
+    <label>Max cost:</label>
+    <input type="number" min=0 value=100 id="search-ships-max" name="search-ships-max" [(ngModel)]="searchMaxCost">
+    <button type="submit">Search</button>
+</form>
+
 <br><br>
 <table style="width: 100%;">
     <thead>

@@ -131,15 +131,20 @@ export class CottageService {
   }
 
   public searchCottagesByName(name: string): Observable<Array<Cottage>> {
-    let cottage = name;
+    if (!name) {
+      name = '';
+    }
     let headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json');
-    let params = new HttpParams().set("name", cottage);
+    let params = new HttpParams().set("name", name);
   
     return this.http.get<Array<Cottage>>(this.searchCottagesByNameUrl, {headers: headers, params: params});
   }
 
   public searchCottagesByAddress(address: string): Observable<Array<Cottage>> {
+    if (!address) {
+      address = '';
+    }
     let headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json');
     let params = new HttpParams().set("address", address);
@@ -148,6 +153,12 @@ export class CottageService {
   }
 
   public searchCottagesByCost(minCost: number, maxCost: number): Observable<Array<Cottage>> {
+    if (!minCost) {
+      minCost = 0;
+    }
+    if (!maxCost) {
+      maxCost = 100000;
+    }
     let headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json');
     let params = new HttpParams().set("minCost", minCost).set("maxCost", maxCost);

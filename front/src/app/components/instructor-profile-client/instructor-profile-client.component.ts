@@ -203,7 +203,7 @@ export class InstructorProfileClientComponent implements OnInit {
       let costFromEl = document.getElementById('filterCostFrom') as HTMLInputElement;
       costFromEl.valueAsNumber = 0;
       let costToEl = document.getElementById('filterCostTo') as HTMLInputElement;
-      costToEl.valueAsNumber = 10000;
+      costToEl.valueAsNumber = 1000;
     }
   }
 

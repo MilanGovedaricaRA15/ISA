@@ -44,8 +44,8 @@
     </div>
     <div class="column" *ngIf='canFilter'>
         <label>Filter by cost:</label> <br>
-        <label style="min-width: 20%; text-align: center;">(Cost) From:</label><input type="number" id="filterCostFrom" min=0 max=10000 value=0 style="min-width: 15%;">
-        <label style="min-width: 5%; text-align: center;">To:</label><input type="number" id="filterCostTo" min=0 max=10000 value=10000 style="min-width: 15%;">
+        <label style="min-width: 20%; text-align: center;">(Cost) From:</label><input type="number" id="filterCostFrom" min=0 value=0 style="min-width: 15%;">
+        <label style="min-width: 5%; text-align: center;">To:</label><input type="number" id="filterCostTo" min=0 value=1000 style="min-width: 15%;">
         <button (click)='filterByCost()'>Filter</button>
     </div>
 </div>

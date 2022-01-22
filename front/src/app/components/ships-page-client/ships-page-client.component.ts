@@ -97,7 +97,7 @@ export class ShipsPageClientComponent implements OnInit {
       let costFromEl = document.getElementById('filterCostFrom') as HTMLInputElement;
       costFromEl.valueAsNumber = 0;
       let costToEl = document.getElementById('filterCostTo') as HTMLInputElement;
-      costToEl.valueAsNumber = 1000;
+      costToEl.valueAsNumber = 100;
       let gradeFromEl = document.getElementById('filterGradeFrom') as HTMLInputElement;
       gradeFromEl.valueAsNumber = 0;
       let gradeToEl = document.getElementById('filterGradeTo') as HTMLInputElement;
