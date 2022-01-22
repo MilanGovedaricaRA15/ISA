@@ -13,6 +13,9 @@ export class ShipsPageComponent implements OnInit {
   @Output() shipToShowUnauthenticated = new EventEmitter<Ship>();
   ships: Array<ShipDTO>;
   searchText: string;
+  searchTextAddress: string;
+  searchMinCost: number;
+  searchMaxCost: number;
 
   constructor(private shipService: ShipService) { }
 
@@ -37,6 +40,29 @@ export class ShipsPageComponent implements OnInit {
       this.ships = new Array<ShipDTO>();
       for (let s of ret) {
         this.ships.push(new ShipDTO(s, getAverageShipGrade(s), s.costPerNight));
+      }
+    });
+  }
+
+  searchShipsByAddress(): void {
+    let inputAddress = this.searchTextAddress;
+    this.shipService.searchShipsByAddress(inputAddress).subscribe(ret => {
+      this.ships = new Array<ShipDTO>();
+      for (let s of ret){
+        let shipDTO = new ShipDTO(s, getAverageShipGrade(s), s.costPerNight);
+        this.ships.push(shipDTO);
+      }
+    });
+  }
+
+  searchShipsByCost(): void {
+    let inputMin = this.searchMinCost;
+    let inputMax = this.searchMaxCost;
+    this.shipService.searchShipsByCost(inputMin, inputMax).subscribe(ret => {
+      this.ships = new Array<ShipDTO>();
+      for (let s of ret){
+        let shipDTO = new ShipDTO(s, getAverageShipGrade(s), s.costPerNight);
+        this.ships.push(shipDTO);
       }
     });
   }

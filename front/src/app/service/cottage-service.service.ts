@@ -23,6 +23,8 @@ export class CottageService {
   private addHotOfferToCottageUrl: string;
   private checkIsReservedUrl: string;
   private searchCottagesByNameUrl: string;
+  private searchCottagesByAddressUrl: string;
+  private searchCottagesByCostUrl: string;
   private removeCottageByAdministratorUrl: string;
   private addSubscribedUserToCottageUrl: string;
   private removeSubscribedUserFromCottageUrl: string;
@@ -44,6 +46,8 @@ export class CottageService {
     this.deleteHotOfferUrl = environment.baseUrl+'cottages/deleteHotOffer';
     this.checkIsReservedUrl = environment.baseUrl+'cottages/checkIsReserved';
     this.searchCottagesByNameUrl = environment.baseUrl+'cottages/searchCottagesByName';
+	this.searchCottagesByAddressUrl = environment.baseUrl+'cottages/searchCottagesByAddress';
+    this.searchCottagesByCostUrl = environment.baseUrl+'cottages/searchCottagesByCost';
     this.removeCottageByAdministratorUrl = environment.baseUrl+'cottages/removeCottageByAdministrator';
 	this.addSubscribedUserToCottageUrl = environment.baseUrl + 'cottages/addSubscribedUserToCottage';
     this.removeSubscribedUserFromCottageUrl = environment.baseUrl + 'cottages/removeSubscribedUserFromCottage';
@@ -129,12 +133,39 @@ export class CottageService {
   }
 
   public searchCottagesByName(name: string): Observable<Array<Cottage>> {
-    let cottage = name;
+    if (!name) {
+      name = '';
+    }
     let headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json');
-    let params = new HttpParams().set("name", cottage);
+    let params = new HttpParams().set("name", name);
   
     return this.http.get<Array<Cottage>>(this.searchCottagesByNameUrl, {headers: headers, params: params});
+  }
+
+  public searchCottagesByAddress(address: string): Observable<Array<Cottage>> {
+    if (!address) {
+      address = '';
+    }
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+    let params = new HttpParams().set("address", address);
+  
+    return this.http.get<Array<Cottage>>(this.searchCottagesByAddressUrl, {headers: headers, params: params});
+  }
+
+  public searchCottagesByCost(minCost: number, maxCost: number): Observable<Array<Cottage>> {
+    if (!minCost) {
+      minCost = 0;
+    }
+    if (!maxCost) {
+      maxCost = 100000;
+    }
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+    let params = new HttpParams().set("minCost", minCost).set("maxCost", maxCost);
+  
+    return this.http.get<Array<Cottage>>(this.searchCottagesByCostUrl, {headers: headers, params: params});
   }
 
   public addSubscribedUserToCottage(cottage: Cottage): Observable<boolean> {

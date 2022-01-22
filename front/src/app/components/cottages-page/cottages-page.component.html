@@ -1,7 +1,24 @@
+<div>
+    <h1 style="text-align: center;">Cottages page</h1>
+</div>
+
 <br><br>
+
 <form (ngSubmit)="searchCottages()">
     <label style="border-right-width: 10px;">Search by cottage name: </label>
     <input type="text" id="search-cottages" name="search-cottages" [(ngModel)]="searchText">
+    <button type="submit">Search</button>
+</form>
+<form (ngSubmit)="searchCottagesByAddress()">
+    <label style="border-right-width: 10px;">Search by cottage address: </label>
+    <input type="text" id="search-cottages-address" name="search-cottages-address" [(ngModel)]="searchTextAddress">
+    <button type="submit">Search</button>
+</form>
+<form (ngSubmit)="searchCottagesByCost()">
+    <label>Min cost: </label>
+    <input type="number" min=0 value=0 id="search-cottages-min" name="search-cottages-min" [(ngModel)]="searchMinCost">
+    <label>Max cost:</label>
+    <input type="number" min=0 value=100 id="search-cottages-max" name="search-cottages-max" [(ngModel)]="searchMaxCost">
     <button type="submit">Search</button>
 </form>
 <br><br>
@@ -9,7 +26,8 @@
     <thead>
         <th (click)="sortByName()" style="cursor: pointer;">Name</th>
         <th (click)="sortByAddress()" style="cursor: pointer;">Address</th>
-        <th (click)="sortByDescription()" style="cursor: pointer;">Description</th>
+        <th (click)="sortByNumOfRooms()" style="cursor: pointer;">Number of rooms</th>
+        <th (click)="sortByNumOfBeds()" style="cursor: pointer;">Number of beds</th>
         <th (click)="sortByCost()" style="cursor: pointer;">Cost per night</th>
         <th (click)="sortByGrade()" style="cursor: pointer;">Grade</th>
         <th></th>
@@ -18,9 +36,10 @@
         <tr *ngFor='let c of cottages'>
             <td>{{c.cottage.name}}</td>
             <td>{{c.cottage.address}}</td>
-            <td>{{c.cottage.description}}</td>
+            <td>{{c.cottage.numOfRooms}}</td>
+            <td>{{c.cottage.numOfBeds}}</td>
             <td>{{c.cottage.costPerNight}}</td>
-            <td>{{c.averageGrade}}</td>
+            <td>{{c.averageGrade | number: '1.1-2'}}</td>
             <td><a href="#" (click)="goToCottageProfile(c.cottage.id)">More details</a></td>
         </tr>
     </tbody>

@@ -1,13 +1,19 @@
+<div>
+  <h1>Reservations page</h1>
+</div>
+
+<br><br>
+
 <div class="row">
   <div class="column">
     <h3>Past cottage reservations</h3>
     <table style="width: 100%;">
       <thead>
-          <th>Starts </th>
-          <th>Ends </th>
+          <th (click)="sortByCottageAvailableFrom()" style="cursor: pointer;">Starts </th>
+          <th (click)="sortByCottageAvailableTill()" style="cursor: pointer;">Ends </th>
           <th>Services</th>
-          <th>Cost</th>
-          <th>Cottage name</th>
+          <th (click)="sortByCottageCost()" style="cursor: pointer;">Cost</th>
+          <th (click)="sortByCottageName()" style="cursor: pointer;">Cottage name</th>
           <th></th>
       </thead>
       <tbody>
@@ -25,11 +31,11 @@
     <h3>Past ship reservations</h3>
     <table style="width: 100%;">
       <thead>
-          <th>Starts </th>
-          <th>Ends </th>
-          <th>Services</th>
-          <th>Cost</th>
-          <th>Ship name</th>
+        <th (click)="sortByShipAvailableFrom()" style="cursor: pointer;">Starts </th>
+        <th (click)="sortByShipAvailableTill()" style="cursor: pointer;">Ends </th>
+        <th>Services</th>
+        <th (click)="sortByShipCost()" style="cursor: pointer;">Cost</th>
+        <th (click)="sortByShipName()" style="cursor: pointer;">Ship name</th>
           <th></th>
       </thead>
       <tbody>
@@ -47,11 +53,11 @@
     <h3>Past instructors favor reservations</h3>
     <table style="width: 100%;">
       <thead>
-          <th>Starts </th>
-          <th>Ends </th>
-          <th>Services</th>
-          <th>Cost</th>
-          <th>Favor name</th>
+        <th (click)="sortByFavorAvailableFrom()" style="cursor: pointer;">Starts </th>
+        <th (click)="sortByFavorAvailableTill()" style="cursor: pointer;">Ends </th>
+        <th>Services</th>
+        <th (click)="sortByFavorCost()" style="cursor: pointer;">Cost</th>
+        <th (click)="sortByFavorName()" style="cursor: pointer;">Favor name</th>
           <th></th>
       </thead>
       <tbody>

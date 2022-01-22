@@ -207,6 +207,11 @@ public class UserController {
         return new ResponseEntity<List<User>>(userService.searchInstructorsByName(firstName, lastName), HttpStatus.OK);
     }
 
+    @GetMapping("/users/searchInstructorsByCountry")
+    public ResponseEntity<List<User>> searchInstructorsByCountry(@RequestParam("country") String country) {
+        return new ResponseEntity<List<User>>(userService.searchInstructorsByCountry(country), HttpStatus.OK);
+    }
+
     @GetMapping("/users/activate")
     @CrossOrigin(origins = "*")
     public ResponseEntity<UserDTO> getUserByEmail(@RequestParam("id") Long id) {

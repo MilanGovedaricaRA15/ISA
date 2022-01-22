@@ -1,9 +1,29 @@
+<div>
+    <h1 style="text-align: center;">Ships page</h1>
+</div>
+  
 <br><br>
+  
 <form (ngSubmit)="searchShips()">
     <label>Search ships by name: </label>
     <input type="text" id="search-ships" name="search-ships" [(ngModel)]="searchText">
     <button type="submit">Search</button>
 </form>
+
+<form (ngSubmit)="searchShipsByAddress()">
+    <label style="border-right-width: 10px;">Search by ship address: </label>
+    <input type="text" id="search-shipp-address" name="search-ships-address" [(ngModel)]="searchTextAddress">
+    <button type="submit">Search</button>
+</form>
+
+<form (ngSubmit)="searchShipsByCost()">
+    <label>Min cost: </label>
+    <input type="number" min=0 value=0 id="search-ships-min" name="search-ships-min" [(ngModel)]="searchMinCost">
+    <label>Max cost:</label>
+    <input type="number" min=0 value=100 id="search-ships-max" name="search-ships-max" [(ngModel)]="searchMaxCost">
+    <button type="submit">Search</button>
+</form>
+
 <br><br>
 <table style="width: 100%;">
     <thead>
@@ -11,7 +31,6 @@
         <th>Address</th>
         <th>Type</th>
         <th>Capacity</th>
-        <th>Description</th>
         <th>Cost per night</th>
         <th>Grade</th>
         <th></th>
@@ -22,9 +41,8 @@
             <td>{{s.ship.address}}</td>
             <td>{{s.ship.type}}</td>
             <td>{{s.ship.capacity}}</td>
-            <td>{{s.ship.description}}</td>
             <td>{{s.ship.costPerNight}}</td>
-            <td>{{s.averageGrade}}</td>
+            <td>{{s.averageGrade | number: '1.1-2'}}</td>
             <td><a href="#" (click)="goToShipProfile(s.ship.id)">More details</a></td>
         </tr>
     </tbody>
