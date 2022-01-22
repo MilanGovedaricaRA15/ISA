@@ -224,22 +224,18 @@ export class AdministratorProfileComponent implements OnInit {
         this.shipService.getAllShips().subscribe(shipsFromBack => {
           this.allShips = shipsFromBack;
         });
+        this.complaintService.getAllComplaints().subscribe(complaintsFromBack => {
+          this.allComplaints = complaintsFromBack;
+        });
+        this.reportService.getAllReports().subscribe(reportsFromBack => {
+          this.allReports = reportsFromBack;
+        });
       }
     });
   }
 
   userDeclined(index:number) {
     this.decliningReason.emit(index.toString());
-  }
-
-  changePrepaid(index:number){
-    let changeUser = this.allUsers[index]
-    this.userService.changePrepaid(changeUser.id).subscribe(ret => {
-      if(ret)
-        this.userService.getAllUsers().subscribe(ret => {
-          this.allUsers = ret;
-        });
-    });
   }
 
   acceptUser(index: number) {

@@ -223,18 +223,20 @@ public class InstructorsFavorServiceImpl implements InstructorsFavorService{
     }
 
     private void sendNotificationForNewHotOffer(InstructorsFavor favor){
-        List<User> users = userRepository.findAll();
-        for(User user: users){
-            if(user.getPrepaid() && user.isVerified()) {
-                SimpleMailMessage mail = new SimpleMailMessage();
-                mail.setTo(user.getEmail());
-                mail.setFrom("rajkorajkeza@gmail.com");
-                mail.setSubject("New hot offer for favor");
-                mail.setText("There is a new hot offer for a favor: " + favor.getName() + "\n"
-                + "Instructor: " + favor.getInstructor().getFirstName() + " " + favor.getInstructor().getLastName() + "\n"
-                + "Cost: " + favor.getCost());
-                emailService.sendSimpleMessage(mail);
-            }
+        User instructor = favor.getInstructor();
+        FavorHotOffer hotOffer = favor.getHotOffers().get(favor.getHotOffers().size()-1);
+
+
+        for(User user: instructor.getSubscribedUsers()){
+            SimpleMailMessage mail = new SimpleMailMessage();
+            mail.setTo(user.getEmail());
+            mail.setFrom("rajkorajkeza@gmail.com");
+            mail.setSubject("New hot offer for favor");
+            mail.setText("There is a new hot offer for a favor: " + favor.getName() + "\n"
+            + "Instructor: " + favor.getInstructor().getFirstName() + " " + favor.getInstructor().getLastName() + "\n"
+            + "Cost: " + hotOffer.getCost() + "\n"
+            + "Num of persons: " + hotOffer.getNumOfPersons());
+            emailService.sendSimpleMessage(mail);
         }
     }
 

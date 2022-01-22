@@ -28,15 +28,15 @@ public class Ship {
     private String rules;
     private ArrayList<FishingEquipment> fishingEquipment;
     private String cancelRequirements;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL)
     private List<ShipServicePrice> priceList;
     private float costPerNight;
     private LocalDateTime availableFrom;
     private LocalDateTime availableTill;
     private ArrayList<Services> services;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL)
     private List<ShipHotOffer> hotOffers;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Grade> grades;
     @ManyToMany(cascade = CascadeType.ALL)
     private List<User> subscribedUsers;

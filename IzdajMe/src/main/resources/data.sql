@@ -299,6 +299,66 @@ insert into grades(id, user_id, value, comment, seen)
 values (69, 29, 9, 'Very good', true);
 insert into grades(id, user_id, value, comment, seen)
 values (70, 27, 8, 'Good', true);
+insert into grades(id, user_id, value, comment, seen)
+values (71, 27, 9, 'Very Good', true);
+insert into grades(id, user_id, value, comment, seen)
+values (72, 27, 10, 'Excellent', true);
+insert into grades(id, user_id, value, comment, seen)
+values (73, 27, 5, 'Bad', true);
+insert into grades(id, user_id, value, comment, seen)
+values (74, 27, 6, 'Not bad', true);
+insert into grades(id, user_id, value, comment, seen)
+values (75, 27, 7, 'Okay', true);
+insert into grades(id, user_id, value, comment, seen)
+values (76, 27, 8, 'Good', true);
+insert into grades(id, user_id, value, comment, seen)
+values (77, 27, 9, 'Very good', true);
+insert into grades(id, user_id, value, comment, seen)
+values (78, 27, 9, 'Very good', true);
+insert into grades(id, user_id, value, comment, seen)
+values (79, 27, 8, 'Good', true);
+insert into grades(id, user_id, value, comment, seen)
+values (80, 27, 8, 'Good', true);
+insert into grades(id, user_id, value, comment, seen)
+values (81, 30, 7 , 'Not too bad', true);
+insert into grades(id, user_id, value, comment, seen)
+values (82, 30, 7, 'Not too baaad', true);
+insert into grades(id, user_id, value, comment, seen)
+values (83, 30, 6, 'Bad', true);
+insert into grades(id, user_id, value, comment, seen)
+values (84, 27, 9, 'Very good', true);
+insert into grades(id, user_id, value, comment, seen)
+values (85, 27, 10, 'Great', true);
+insert into grades(id, user_id, value, comment, seen)
+values (86, 27, 10, 'Great', true);
+insert into grades(id, user_id, value, comment, seen)
+values (87, 28, 7, 'Not too baaad', true);
+insert into grades(id, user_id, value, comment, seen)
+values (88, 28, 10, 'Great', true);
+insert into grades(id, user_id, value, comment, seen)
+values (89, 29, 9, 'Very good', true);
+insert into grades(id, user_id, value, comment, seen)
+values (90, 27, 8, 'Good', true);
+insert into grades(id, user_id, value, comment, seen)
+values (91, 27, 9, 'Very Good', true);
+insert into grades(id, user_id, value, comment, seen)
+values (92, 27, 10, 'Excellent', true);
+insert into grades(id, user_id, value, comment, seen)
+values (93, 27, 5, 'Bad', true);
+insert into grades(id, user_id, value, comment, seen)
+values (94, 27, 6, 'Not bad', true);
+insert into grades(id, user_id, value, comment, seen)
+values (95, 27, 7, 'Okay', true);
+insert into grades(id, user_id, value, comment, seen)
+values (96, 27, 8, 'Good', true);
+insert into grades(id, user_id, value, comment, seen)
+values (97, 27, 9, 'Very good', true);
+insert into grades(id, user_id, value, comment, seen)
+values (98, 27, 9, 'Very good', true);
+insert into grades(id, user_id, value, comment, seen)
+values (99, 27, 8, 'Good', true);
+insert into grades(id, user_id, value, comment, seen)
+values (100, 27, 8, 'Good', true);
 
 insert into favors (id, instructor_id, name, address, description, images, num_of_persons, rules, services, cost, available_from, available_till, cancellation_condition)
 values (1, 4, 'Cas pecanja', 'Dunavska 13', 'Pecanje pecaljkom', null, 4, 'Samo punoletni mogu', null, 1200, DATE('2022-01-01'), DATE('2022-03-17'), 'Free');
@@ -378,58 +438,57 @@ insert into cottages_grades(cottage_id, grades_id) values (7, 48);
 insert into cottages_grades(cottage_id, grades_id) values (6, 49);
 insert into cottages_grades(cottage_id, grades_id) values (14, 50);
 
-insert into favors_grades(grades_id, instructors_favor_id) values (21, 1);
-insert into favors_grades(grades_id, instructors_favor_id) values (22, 2);
-insert into favors_grades(grades_id, instructors_favor_id) values (23, 3);
-insert into favors_grades(grades_id, instructors_favor_id) values (24, 4);
-insert into favors_grades(grades_id, instructors_favor_id) values (25, 3);
-insert into favors_grades(grades_id, instructors_favor_id) values (26, 1);
-insert into favors_grades(grades_id, instructors_favor_id) values (27, 2);
-insert into favors_grades(grades_id, instructors_favor_id) values (28, 5);
-insert into favors_grades(grades_id, instructors_favor_id) values (29, 6);
-insert into favors_grades(grades_id, instructors_favor_id) values (30, 7);
-insert into favors_grades(grades_id, instructors_favor_id) values (31, 8);
-insert into favors_grades(grades_id, instructors_favor_id) values (32, 7);
-insert into favors_grades(grades_id, instructors_favor_id) values (33, 8);
-insert into favors_grades(grades_id, instructors_favor_id) values (34, 4);
-insert into favors_grades(grades_id, instructors_favor_id) values (35, 3);
-insert into favors_grades(grades_id, instructors_favor_id) values (36, 1);
-insert into favors_grades(grades_id, instructors_favor_id) values (37, 2);
-insert into favors_grades(grades_id, instructors_favor_id) values (38, 1);
-insert into favors_grades(grades_id, instructors_favor_id) values (39, 4);
-insert into favors_grades(grades_id, instructors_favor_id) values (40, 4);
-insert into favors_grades(grades_id, instructors_favor_id) values (41, 3);
-insert into favors_grades(grades_id, instructors_favor_id) values (42, 2);
-insert into favors_grades(grades_id, instructors_favor_id) values (43, 2);
-insert into favors_grades(grades_id, instructors_favor_id) values (44, 1);
-insert into favors_grades(grades_id, instructors_favor_id) values (45, 1);
-insert into favors_grades(grades_id, instructors_favor_id) values (46, 4);
-insert into favors_grades(grades_id, instructors_favor_id) values (47, 7);
-insert into favors_grades(grades_id, instructors_favor_id) values (48, 7);
-insert into favors_grades(grades_id, instructors_favor_id) values (49, 6);
-insert into favors_grades(grades_id, instructors_favor_id) values (50, 2);
-insert into favors_grades(grades_id, instructors_favor_id) values (51, 8);
+insert into favors_grades(grades_id, instructors_favor_id) values (51, 1);
+insert into favors_grades(grades_id, instructors_favor_id) values (52, 2);
+insert into favors_grades(grades_id, instructors_favor_id) values (53, 3);
+insert into favors_grades(grades_id, instructors_favor_id) values (54, 4);
+insert into favors_grades(grades_id, instructors_favor_id) values (55, 3);
+insert into favors_grades(grades_id, instructors_favor_id) values (56, 1);
+insert into favors_grades(grades_id, instructors_favor_id) values (57, 2);
+insert into favors_grades(grades_id, instructors_favor_id) values (58, 5);
+insert into favors_grades(grades_id, instructors_favor_id) values (59, 6);
+insert into favors_grades(grades_id, instructors_favor_id) values (60, 7);
+insert into favors_grades(grades_id, instructors_favor_id) values (61, 8);
+insert into favors_grades(grades_id, instructors_favor_id) values (62, 7);
+insert into favors_grades(grades_id, instructors_favor_id) values (63, 8);
+insert into favors_grades(grades_id, instructors_favor_id) values (64, 4);
+insert into favors_grades(grades_id, instructors_favor_id) values (65, 3);
+insert into favors_grades(grades_id, instructors_favor_id) values (66, 1);
+insert into favors_grades(grades_id, instructors_favor_id) values (67, 2);
+insert into favors_grades(grades_id, instructors_favor_id) values (68, 1);
+insert into favors_grades(grades_id, instructors_favor_id) values (69, 4);
+insert into favors_grades(grades_id, instructors_favor_id) values (70, 4);
+insert into favors_grades(grades_id, instructors_favor_id) values (71, 3);
+insert into favors_grades(grades_id, instructors_favor_id) values (72, 2);
+insert into favors_grades(grades_id, instructors_favor_id) values (73, 2);
+insert into favors_grades(grades_id, instructors_favor_id) values (74, 1);
+insert into favors_grades(grades_id, instructors_favor_id) values (75, 1);
+insert into favors_grades(grades_id, instructors_favor_id) values (76, 4);
+insert into favors_grades(grades_id, instructors_favor_id) values (77, 7);
+insert into favors_grades(grades_id, instructors_favor_id) values (78, 7);
+insert into favors_grades(grades_id, instructors_favor_id) values (79, 6);
+insert into favors_grades(grades_id, instructors_favor_id) values (80, 2);
 
-insert into users_grades(user_id, grades_id) values (1, 51);
-insert into users_grades(user_id, grades_id) values (2, 52);
-insert into users_grades(user_id, grades_id) values (3, 53);
-insert into users_grades(user_id, grades_id) values (4, 54);
-insert into users_grades(user_id, grades_id) values (5, 55);
-insert into users_grades(user_id, grades_id) values (6, 56);
-insert into users_grades(user_id, grades_id) values (7, 57);
-insert into users_grades(user_id, grades_id) values (8, 58);
-insert into users_grades(user_id, grades_id) values (1, 59);
-insert into users_grades(user_id, grades_id) values (2, 60);
-insert into users_grades(user_id, grades_id) values (3, 61);
-insert into users_grades(user_id, grades_id) values (4, 62);
-insert into users_grades(user_id, grades_id) values (5, 63);
-insert into users_grades(user_id, grades_id) values (6, 64);
-insert into users_grades(user_id, grades_id) values (7, 65);
-insert into users_grades(user_id, grades_id) values (8, 66);
-insert into users_grades(user_id, grades_id) values (1, 67);
-insert into users_grades(user_id, grades_id) values (2, 68);
-insert into users_grades(user_id, grades_id) values (3, 69);
-insert into users_grades(user_id, grades_id) values (4, 70);
+insert into users_grades(user_id, grades_id) values (1, 81);
+insert into users_grades(user_id, grades_id) values (2, 82);
+insert into users_grades(user_id, grades_id) values (3, 83);
+insert into users_grades(user_id, grades_id) values (4, 84);
+insert into users_grades(user_id, grades_id) values (5, 85);
+insert into users_grades(user_id, grades_id) values (6, 86);
+insert into users_grades(user_id, grades_id) values (7, 87);
+insert into users_grades(user_id, grades_id) values (8, 88);
+insert into users_grades(user_id, grades_id) values (1, 89);
+insert into users_grades(user_id, grades_id) values (2, 90);
+insert into users_grades(user_id, grades_id) values (3, 91);
+insert into users_grades(user_id, grades_id) values (4, 92);
+insert into users_grades(user_id, grades_id) values (5, 93);
+insert into users_grades(user_id, grades_id) values (6, 94);
+insert into users_grades(user_id, grades_id) values (7, 95);
+insert into users_grades(user_id, grades_id) values (8, 96);
+insert into users_grades(user_id, grades_id) values (1, 97);
+insert into users_grades(user_id, grades_id) values (2, 98);
+insert into users_grades(user_id, grades_id) values (3, 99);
+insert into users_grades(user_id, grades_id) values (4, 100);
 
 insert into hot_offers (id, available_from, available_till, cost, free, num_of_people, services)
 values (1, DATE('2021-11-20'), DATE('2021-11-25'), 50, TRUE, 3, null);

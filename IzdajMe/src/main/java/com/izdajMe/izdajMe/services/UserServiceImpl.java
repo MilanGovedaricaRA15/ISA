@@ -172,7 +172,7 @@ public class UserServiceImpl implements UserService {
 
     public Boolean changeUser(User user) {
         User foundUser = userRepository.findByIdAndPassword(user.getId(),user.getPassword());
-       if (foundUser != null){
+        if (foundUser != null){
            userRepository.save(user);
            return true;
         }
@@ -234,25 +234,161 @@ public class UserServiceImpl implements UserService {
         cottageReservationService.deleteByClientId(id);
         shipReservationService.deleteByClientId(id);
         favorReservationService.deleteByClientId(id);
+        deleteSubscribedUsers(user);
+        deleteComplaints(id);
+        deleteGrades(id);
+        user.setGrades(new ArrayList<>());
         if(user.getRole().equals(User.Role.cottageAdvertiser))
             deleteCottageAdvertiser(id);
         else if(user.getRole().equals(User.Role.boatAdvertiser))
             deleteShipAdvertiser(id);
-        else if(user.getRole().equals(User.Role.instructor))
+        else if(user.getRole().equals(User.Role.instructor)) {
             deleteInstructor(id);
+            user.setSubscribedUsers(new ArrayList<>());
+        }
 
-        deleteComplaints(id);
-        deleteGrades(id);
         userRepository.deleteById(id);
         return true;
+    }
+
+    private void deleteSubscribedUsers(User user) {
+        List<User> users = userRepository.findAll();
+        List<Cottage> cottages = cottageRepository.findAll();
+        List<Ship> ships = shipRepository.findAll();
+
+        for(Cottage cottage: cottages) {
+            checkSubscribedUsersForCottage(cottage, user);
+        }
+
+        for(Ship ship: ships) {
+            checkSubscribedUsersForShips(ship, user);
+        }
+
+        for(User thisUser: users) {
+            if(thisUser.getRole() == User.Role.instructor)
+                checkSubscribedUsersForInstructor(thisUser, user);
+        }
+    }
+
+    private void checkSubscribedUsersForCottage(Cottage cottage, User user) {
+        List<User> users = new ArrayList<>();
+        for(User thisUser: cottage.getSubscribedUsers()) {
+            if(thisUser.getId() != user.getId())
+                users.add(thisUser);
+
+            cottage.setSubscribedUsers(users);
+            cottageRepository.save(cottage);
+        }
+    }
+
+    private void checkSubscribedUsersForShips(Ship ship, User user) {
+        List<User> users = new ArrayList<>();
+        for(User thisUser: ship.getSubscribedUsers()) {
+            if(thisUser.getId() != user.getId())
+                users.add(thisUser);
+
+            ship.setSubscribedUsers(users);
+            shipRepository.save(ship);
+        }
+    }
+
+    private void checkSubscribedUsersForInstructor(User instructor, User user) {
+        List<User> users = new ArrayList<>();
+        for(User thisUser: instructor.getSubscribedUsers()) {
+            if(thisUser.getId() != user.getId())
+                users.add(thisUser);
+
+            instructor.setSubscribedUsers(users);
+            userRepository.save(instructor);
+        }
     }
 
     private void deleteGrades(long id) {
         List<Grade> grades = gradeRepository.findGradesById(id);
         if(grades.size() != 0){
             for(Grade g: grades){
+                deleteGradesFromCottages(g.getId());
+                deleteGradesFromShips(g.getId());
+                deleteGradesFromFavors(g.getId());
+                deleteGradesFromOwner(g.getId());
                 gradeService.deleteGrade(g.getId());
             }
+        }
+    }
+
+    private void deleteGradesFromOwner(long id) {
+        List<User> users = userRepository.findAll();
+        for(User user: users) {
+            checkUserGrades(user, id);
+        }
+    }
+
+    private void checkUserGrades(User user, long gradeId){
+        if(user.getGrades() != null) {
+            List<Grade> grades = new ArrayList<>();
+            for(Grade grade: user.getGrades()) {
+                if(grade.getId() != gradeId)
+                    grades.add(grade);
+            }
+            user.setGrades(grades);
+            userRepository.save(user);
+        }
+    }
+
+    private void deleteGradesFromCottages(long id) {
+        List<Cottage> cottages = cottageRepository.findAll();
+        for(Cottage cottage : cottages) {
+            checkCottageGrades(cottage, id);
+        }
+    }
+
+    private void checkCottageGrades(Cottage cottage, long gradeId) {
+        if(cottage.getGrades() != null) {
+            List<Grade> grades = new ArrayList<>();
+            for(Grade grade: cottage.getGrades()) {
+                if(grade.getId() != gradeId)
+                    grades.add(grade);
+            }
+            cottage.setGrades(grades);
+            cottageRepository.save(cottage);
+        }
+    }
+
+    private void deleteGradesFromShips(long id) {
+        List<Ship> ships = shipRepository.findAll();
+        for(Ship ship : ships) {
+            checkShipGrades(ship, id);
+        }
+    }
+
+    private void checkShipGrades(Ship ship, long gradeId) {
+        if(ship.getGrades() != null) {
+            List<Grade> grades = new ArrayList<>();
+            for (Grade grade : ship.getGrades()) {
+                if(grade.getId() != gradeId)
+                    grades.add(grade);
+            }
+            ship.setGrades(grades);
+            shipRepository.save(ship);
+        }
+    }
+
+    private void deleteGradesFromFavors(long id) {
+        List<InstructorsFavor> instructorsFavors = instructorsFavorRepository.findAll();
+        for(InstructorsFavor instructorsFavor : instructorsFavors) {
+            checkfavorGrades(instructorsFavor, id);
+        }
+    }
+
+    private void checkfavorGrades(InstructorsFavor instructorsFavor, long gradeId) {
+        if(instructorsFavor.getGrades() != null) {
+            List<Grade> grades = new ArrayList<>();
+            for(Grade grade: instructorsFavor.getGrades()) {
+                if(grade.getId() != gradeId)
+                    grades.add(grade);
+            }
+            instructorsFavor.setGrades(grades);
+            instructorsFavorRepository.save(instructorsFavor);
         }
     }
 
@@ -276,8 +412,21 @@ public class UserServiceImpl implements UserService {
         if(cottages.size() != 0){
             for(Cottage c : cottages){
                 removeCottageReservations(c.getId());
+                c.setServices(new ArrayList<>());
+                c.setHotOffers(new ArrayList<>());
+                c.setPriceList(new ArrayList<>());
+                c.setSubscribedUsers(new ArrayList<>());
+                removeCottageFromComplaints(c);
+                c.setGrades(new ArrayList<>());
                 cottageRepository.deleteById(c.getId());
             }
+        }
+    }
+
+    private void removeCottageFromComplaints(Cottage cottage) {
+        for(Complaint complaint: complaintRepository.findAll()){
+            if(complaint.getComplaintCottage() != null && complaint.getComplaintCottage().getId() == cottage.getId())
+                complaintRepository.deleteById(complaint.getId());
         }
     }
 
@@ -286,8 +435,21 @@ public class UserServiceImpl implements UserService {
         if(ships.size() != 0){
             for(Ship s : ships){
                 removeShipReservations(s.getId());
+                s.setServices(new ArrayList<>());
+                s.setHotOffers(new ArrayList<>());
+                s.setPriceList(new ArrayList<>());
+                s.setSubscribedUsers(new ArrayList<>());
+                removeShipFromComplaints(s);
+                s.setGrades(new ArrayList<>());
                 shipRepository.deleteById(s.getId());
             }
+        }
+    }
+
+    private void removeShipFromComplaints(Ship ship) {
+        for(Complaint complaint: complaintRepository.findAll()){
+            if(complaint.getComplaintShip() != null && complaint.getComplaintShip().getId() == ship.getId())
+                complaintRepository.deleteById(complaint.getId());
         }
     }
 
@@ -296,6 +458,7 @@ public class UserServiceImpl implements UserService {
         if(instructorFavors.size() != 0){
             for(InstructorsFavor i : instructorFavors){
                 removeFavorReservations(i.getId());
+                i.setGrades(new ArrayList<>());
                 instructorsFavorRepository.deleteById(i.getId());
             }
         }
