@@ -40,6 +40,8 @@ public class UserServiceImpl implements UserService {
     private ShipReservationService shipReservationService;
     @Autowired
     private FavorReservationService favorReservationService;
+    @Autowired
+    private ConcurentWatcherRepository concurentWatcherRepository;
 
     @Override
     public List<User> getAllUsers() {
@@ -262,10 +264,21 @@ public class UserServiceImpl implements UserService {
     }
 
     public Boolean declineUser(String text) {
-        User user = userRepository.findById((long) Integer.parseInt(text.split(" ")[0])).get();
-        userRepository.deleteById((long) Integer.parseInt(text.split(" ")[0]));
-        sendNotificationFromAdminForFailedRegistration(user, text.split(" ")[1]);
-        return true;
+        if(!concurentWatcherRepository.findByTableName("AnswerToRegistrationRequest").getWriting()) {
+            ConcurentWatcher cw = concurentWatcherRepository.findByTableName("AnswerToDeclineRequest");
+            cw.setWriting(true);
+            concurentWatcherRepository.save(cw);
+
+            User user = userRepository.findById((long) Integer.parseInt(text.split(" ")[0])).get();
+            userRepository.deleteById((long) Integer.parseInt(text.split(" ")[0]));
+            sendNotificationFromAdminForFailedRegistration(user, text.split(" ")[1]);
+
+            cw.setWriting(false);
+            concurentWatcherRepository.save(cw);
+
+            return true;
+        } else
+            return false;
     }
 
     public Boolean deleteUser(long id) {
