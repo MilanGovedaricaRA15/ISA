@@ -267,7 +267,8 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = false)
     public Boolean declineUser(String text) {
         if(!concurentWatcherRepository.findByTableName("AnswerToRegistrationRequest").getWriting()) {
-            ConcurentWatcher cw = concurentWatcherRepository.findByTableName("AnswerToDeclineRequest");
+            ConcurentWatcher cw = concurentWatcherRepository.findByTableName("AnswerToRegistrationRequest");
+
             cw.setWriting(true);
             concurentWatcherRepository.save(cw);
 
@@ -620,7 +621,8 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = false)
     public Boolean acceptUser(long id){
         if(!concurentWatcherRepository.findByTableName("AnswerToRegistrationRequest").getWriting()) {
-            ConcurentWatcher cw = concurentWatcherRepository.findByTableName("AnswerToDeclineRequest");
+            ConcurentWatcher cw = concurentWatcherRepository.findByTableName("AnswerToRegistrationRequest");
+
             cw.setWriting(true);
             concurentWatcherRepository.save(cw);
 

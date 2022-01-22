@@ -63,7 +63,7 @@
           <td>{{f.instructorsFavor.availableFrom | date:'dd.MM.yyyy'}}</td>
           <td>{{f.instructorsFavor.availableTill | date:'dd.MM.yyyy'}}</td>
           <td>{{f.instructorsFavor.cost}}</td>
-          <td>{{f.averageGrade}}</td>
+          <td>{{f.averageGrade | number: '1.1-2'}}</td>
           <td><div *ngFor='let s of f.instructorsFavor.priceList'>{{s.service}}</div></td>
           <td>{{f.instructorsFavor.cancellationCondition}}</td>
       </tr>

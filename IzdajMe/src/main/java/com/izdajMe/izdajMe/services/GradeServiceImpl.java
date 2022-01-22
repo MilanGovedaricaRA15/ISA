@@ -55,8 +55,28 @@ public class GradeServiceImpl implements GradeService{
     public Boolean deleteGrade(long id) {
         deleteFromCottageGrades(id);
         deleteFromShipGrades(id);
+        deleteFromUsers(id);
         gradeRepository.deleteById(id);
         return true;
+    }
+
+    private void deleteFromUsers(Long id) {
+        for(User user: userRepository.findAll()) {
+            if(user.getGrades().size()!=0)
+                deleteFromUserGrades(user, id);
+        }
+    }
+
+    private void deleteFromUserGrades(User user, Long id) {
+        List<Grade> grades = new ArrayList<>();
+        for(Grade grade: user.getGrades()){
+            if(grade.getId() != id){
+                grades.add(grade);
+            }
+        }
+
+        user.setGrades(grades);
+        userRepository.save(user);
     }
 
     private void deleteFromCottageGrades(long id) {
