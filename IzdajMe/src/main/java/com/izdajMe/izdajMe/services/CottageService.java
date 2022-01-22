@@ -23,6 +23,8 @@ public interface CottageService {
     public Cottage addCottage(Cottage cottage);
     public boolean isReserved(Long id);
     public List<Cottage> searchCottagesByName(String name);
+    public List<Cottage> searchCottagesByAddress(String address);
+    public List<Cottage> searchCottagesByCost(Float minCost, Float maxCost);
     public Boolean removeCottageByAdministrator(Long id);
     public Boolean deleteHotOffer(Cottage cottage);
     public Boolean addSubscribedUserToCottage(Cottage cottage);

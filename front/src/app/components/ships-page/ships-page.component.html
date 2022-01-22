@@ -16,7 +16,6 @@
         <th>Address</th>
         <th>Type</th>
         <th>Capacity</th>
-        <th>Description</th>
         <th>Cost per night</th>
         <th>Grade</th>
         <th></th>
@@ -27,7 +26,6 @@
             <td>{{s.ship.address}}</td>
             <td>{{s.ship.type}}</td>
             <td>{{s.ship.capacity}}</td>
-            <td>{{s.ship.description}}</td>
             <td>{{s.ship.costPerNight}}</td>
             <td>{{s.averageGrade | number: '1.1-2'}}</td>
             <td><a href="#" (click)="goToShipProfile(s.ship.id)">More details</a></td>

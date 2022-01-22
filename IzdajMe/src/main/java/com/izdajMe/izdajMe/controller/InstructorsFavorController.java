@@ -203,4 +203,14 @@ public class InstructorsFavorController {
             return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
         }
     }
+
+    @GetMapping("/favors/searchInstructorsFavorsByName")
+    public ResponseEntity<List<InstructorsFavor>> searchInstructorsFavorsByName(@RequestParam("email") String email, @RequestParam("name") String name) {
+        return new ResponseEntity<List<InstructorsFavor>>(instructorsFavorService.searchInstructorsFavorsByName(email, name), HttpStatus.OK);
+    }
+
+    @GetMapping("/favors/searchInstructorsFavorsByAddress")
+    public ResponseEntity<List<InstructorsFavor>> searchInstructorsFavorsByAddress(@RequestParam("email") String email, @RequestParam("address") String address) {
+        return new ResponseEntity<List<InstructorsFavor>>(instructorsFavorService.searchInstructorsFavorsByAddress(email, address), HttpStatus.OK);
+    }
 }

@@ -10,7 +10,8 @@
         <thead>
             <th>Name</th>
             <th>Address</th>
-            <th>Description</th>
+            <th>Number of rooms</th>
+            <th>Number of beds</th>
             <th>Cost per night</th>
             <th>Grade</th>
             <th></th>
@@ -19,7 +20,8 @@
             <tr *ngFor='let c of subscribedCottages'>
                 <td>{{c.cottage.name}}</td>
                 <td>{{c.cottage.address}}</td>
-                <td>{{c.cottage.description}}</td>
+                <td>{{c.cottage.numOfRooms}}</td>
+                <td>{{c.cottage.numOfBeds}}</td>
                 <td>{{c.cottage.costPerNight}}</td>
                 <td>{{c.averageGrade | number: '1.1-2'}}</td>
                 <td><a href="#" (click)="cancelSubscriptionOfCottage(c.cottage)">Cancel subscription</a></td>

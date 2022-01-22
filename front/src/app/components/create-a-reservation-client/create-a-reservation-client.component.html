@@ -33,7 +33,8 @@
         <thead>
             <th>Name</th>
             <th>Address</th>
-            <th>Description</th>
+            <th (click)="sortByNumOfRooms()" style="cursor: pointer;">Number of rooms</th>
+            <th (click)="sortByNumOfBeds()" style="cursor: pointer;">Number of beds</th>
             <th (click)="sortCottageByCost()" style="cursor: pointer;">Cost per night</th>
             <th (click)="sortCottageByGrade()" style="cursor: pointer;">Grade</th>
             <th>Services</th>
@@ -44,7 +45,8 @@
             <tr *ngFor='let c of cottages'>
                 <td>{{c.cottage.name}}</td>
                 <td>{{c.cottage.address}}</td>
-                <td>{{c.cottage.description}}</td>
+                <td>{{c.cottage.numOfRooms}}</td>
+                <td>{{c.cottage.numOfBeds}}</td>
                 <td>{{c.cottage.costPerNight}}</td>
                 <td>{{c.averageGrade | number: '1.1-2'}}</td>
                 <td><div *ngFor='let s of c.cottage.priceList'><input type="checkbox" id={{s.id}} (change)="checkCottageService(c.cottage.id, s.id, s.cost)">{{s.service}} ({{s.cost}} per day)</div></td>
@@ -60,7 +62,7 @@
         <thead>
             <th>Name</th>
             <th>Address</th>
-            <th>Description</th>
+            <th>Capacity</th>
             <th (click)="sortShipByCost()" style="cursor: pointer;">Cost per night</th>
             <th (click)="sortShipByGrade()" style="cursor: pointer;">Grade</th>
             <th>Services</th>
@@ -71,7 +73,7 @@
             <tr *ngFor='let s of ships'>
                 <td>{{s.ship.name}}</td>
                 <td>{{s.ship.address}}</td>
-                <td>{{s.ship.description}}</td>
+                <td>{{s.ship.capacity}}</td>
                 <td>{{s.ship.costPerNight}}</td>
                 <td>{{s.averageGrade | number: '1.1-2'}}</td>
                 <td><div *ngFor='let sr of s.ship.priceList'><input type="checkbox" id={{sr.id}} (change)="checkShipService(s.ship.id, sr.id, sr.cost)">{{sr.service}} ({{sr.cost}} per day)</div></td>

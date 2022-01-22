@@ -14,30 +14,52 @@
     Country: {{instructorDTO.instructor.country}} <br>
     City: {{instructorDTO.instructor.city}} <br>
     Average grade: {{instructorDTO.averageGrade | number: '1.1-2'}} <br>
-    Address: {{instructorDTO.instructor.address}} <br>
-    <br>
-    <div style="width: 80%;">
-      <app-map [address]="instructorDTO.instructor.address"></app-map>
-    </div>
+    Address: {{instructorDTO.instructor.address}} <br>    
   </div>
-    <div class="column">
-      <h3>Adventure informations</h3>
-      <div *ngFor="let f of instructorsFavors; let i = index;">
-        <h6> - Adventure {{i+1}}</h6>
-        Name: {{f.instructorsFavor.name}} <br>
-        Address: {{f.instructorsFavor.address}} <br>
-        Descriptions: {{f.instructorsFavor.description}} <br>
-        Number of persons: {{f.instructorsFavor.numOfPersons}} <br>
-        Rules: {{f.instructorsFavor.rules}} <br>
-        Available from: {{f.instructorsFavor.availableFrom | date:'dd.MM.yyyy'}} <br>
-        Available till: {{f.instructorsFavor.availableTill | date:'dd.MM.yyyy'}} <br>
-        Cost: {{f.instructorsFavor.cost}} <br>
-        Average grade: {{f.averageGrade | number: '1.1-2'}} <br>
-        Cancellation condition: {{f.instructorsFavor.cancellationCondition}} <br>
-        Services:
-        <ul *ngFor='let s of f.instructorsFavor.priceList'>
-          <li>{{s.service}}</li>
-        </ul>
-      </div>
-    </div>
-  </div> 
+  <div class="column">
+    <app-map [address]="instructorDTO.instructor.address"></app-map>
+  </div>
+    
+  </div>
+
+<br><br><br>
+
+  <div>
+    <form (ngSubmit)="searchFavorsByName()">
+      <label style="border-right-width: 10px;">Search by favors name: </label>
+      <input type="text" id="search-favors-name" name="search-favors-name" [(ngModel)]="searchFavorsName">
+      <button type="submit">Search</button>
+  </form>
+
+    <h3>Adventure informations</h3>
+  <table style="width: 100%;">
+    <thead>
+      <th>Name</th>
+      <th>Address</th>
+      <th>Description</th>
+      <th>Number of persons</th>
+      <th>Rules</th>
+      <th>Available from</th>
+      <th>Available till</th>
+      <th>Cost</th>
+      <th>Grade</th>
+      <th>Services</th>
+      <th>Cancel conditions</th>
+  </thead>
+  <tbody>
+      <tr *ngFor='let f of instructorsFavors'>
+          <td>{{f.instructorsFavor.name}}</td>
+          <td>{{f.instructorsFavor.address}}</td>
+          <td>{{f.instructorsFavor.description}}</td>
+          <td>{{f.instructorsFavor.numOfPersons}}</td>
+          <td>{{f.instructorsFavor.rules}}</td>
+          <td>{{f.instructorsFavor.availableFrom | date:'dd.MM.yyyy'}}</td>
+          <td>{{f.instructorsFavor.availableTill | date:'dd.MM.yyyy'}}</td>
+          <td>{{f.instructorsFavor.cost}}</td>
+          <td>{{f.averageGrade}}</td>
+          <td><div *ngFor='let s of f.instructorsFavor.priceList'>{{s.service}}</div></td>
+          <td>{{f.instructorsFavor.cancellationCondition}}</td>
+      </tr>
+  </tbody>
+  </table>
+  </div>
