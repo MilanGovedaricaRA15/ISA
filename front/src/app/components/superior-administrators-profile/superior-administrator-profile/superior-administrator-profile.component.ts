@@ -49,9 +49,6 @@ export class SuperiorAdministratorProfileComponent implements OnInit {
   allComplaints: any;
   allFavors: any;
   allReports: any;
-  allCottageReservations: any;
-  allShipReservations: any;
-  allFavorReservations: any;
   deletingUser: User;
   acceptingUser: User;
   deletingCottage: Cottage;
@@ -229,6 +226,12 @@ export class SuperiorAdministratorProfileComponent implements OnInit {
         this.shipService.getAllShips().subscribe(shipsFromBack => {
           this.allShips = shipsFromBack;
         });
+        this.complaintService.getAllComplaints().subscribe(complaintsFromBack => {
+          this.allComplaints = complaintsFromBack;
+        });
+        this.reportService.getAllReports().subscribe(reportsFromBack => {
+          this.allReports = reportsFromBack;
+        });
       }
     });
     
@@ -309,16 +312,6 @@ export class SuperiorAdministratorProfileComponent implements OnInit {
 
   sendAnswer(index: number) {
     this.addAnswer.emit(index.toString());
-  }
-
-  changePrepaid(index:number){
-    let changeUser = this.allUsers[index]
-    this.userService.changePrepaid(changeUser.id).subscribe(ret => {
-      if(ret)
-        this.userService.getAllUsers().subscribe(ret => {
-          this.allUsers = ret;
-        });
-    });
   }
 
   changeRevenues() {
