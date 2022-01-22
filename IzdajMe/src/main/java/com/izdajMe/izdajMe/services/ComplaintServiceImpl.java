@@ -2,7 +2,9 @@ package com.izdajMe.izdajMe.services;
 
 import com.izdajMe.izdajMe.model.AccountDeleteRequest;
 import com.izdajMe.izdajMe.model.Complaint;
+import com.izdajMe.izdajMe.model.ConcurentWatcher;
 import com.izdajMe.izdajMe.repository.ComplaintRepository;
+import com.izdajMe.izdajMe.repository.ConcurentWatcherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,8 @@ public class ComplaintServiceImpl implements ComplaintService{
     private ComplaintRepository complaintRepository;
     @Autowired
     private EmailService emailService;
+    @Autowired
+    private ConcurentWatcherRepository concurentWatcherRepository;
 
     public List<Complaint> getAllComplaints() {
         Iterable<Complaint> allComplaints = complaintRepository.findAll();
@@ -26,10 +30,20 @@ public class ComplaintServiceImpl implements ComplaintService{
     }
 
     public Boolean sendAnswer(Complaint complaint) {
-        sendNotificationToAuthor(complaint);
-        sendNotificationToComplaintUser(complaint);
-        complaintRepository.deleteById(complaint.getId());
-        return true;
+        if(!concurentWatcherRepository.findByTableName("AnswerToComplaint").getWriting()) {
+            ConcurentWatcher cw = concurentWatcherRepository.findByTableName("AnswerToComplaint");
+            cw.setWriting(true);
+            concurentWatcherRepository.save(cw);
+
+            sendNotificationToAuthor(complaint);
+            sendNotificationToComplaintUser(complaint);
+            complaintRepository.deleteById(complaint.getId());
+            cw.setWriting(false);
+            concurentWatcherRepository.save(cw);
+
+            return true;
+        } else
+            return false;
     }
 
     @Override
