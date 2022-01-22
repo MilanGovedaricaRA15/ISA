@@ -18,9 +18,12 @@ E-mail : foca@gmail.com
 Sifra: aaaa
 
 Student 3 korisnici:
-Administrator:
+Administrator nadredjeni:
 E-mail : vrbica.vlado11@gmail.com
 Sifra: vrba
+Administrator podredjeni:
+E-mail : milos.zivic@gmail.com
+Sifra: zile
 Instruktor:
 E-mail : sar4@gmail.com
 Sifra: aaaa
