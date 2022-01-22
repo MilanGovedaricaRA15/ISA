@@ -356,4 +356,32 @@ public class InstructorsFavorServiceImpl implements InstructorsFavorService{
             return false;
         }
     }
+
+    @Override
+    public List<InstructorsFavor> searchInstructorsFavorsByName(String email, String name) {
+        List<InstructorsFavor> searchedFavors = new ArrayList<>();
+
+        List<InstructorsFavor> instructorFavors = instructorsFavorRepository.findAllByFavorEmail(email);
+        for (InstructorsFavor s : instructorFavors) {
+            if (s.getName().toLowerCase().contains(name.toLowerCase())){
+                searchedFavors.add(s);
+            }
+        }
+
+        return searchedFavors;
+    }
+
+    @Override
+    public List<InstructorsFavor> searchInstructorsFavorsByAddress(String email, String address) {
+        List<InstructorsFavor> searchedFavors = new ArrayList<>();
+
+        List<InstructorsFavor> instructorFavors = instructorsFavorRepository.findAllByFavorEmail(email);
+        for (InstructorsFavor s : instructorFavors) {
+            if (s.getAddress().toLowerCase().contains(address.toLowerCase())){
+                searchedFavors.add(s);
+            }
+        }
+
+        return searchedFavors;
+    }
 }

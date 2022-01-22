@@ -26,5 +26,6 @@ public interface InstructorsFavorService {
     public List<FavorHotOffer> checkFavorHotOffers(List<FavorHotOffer> favorHotOffers);
     public Boolean isFavorAvailable(Long id, LocalDateTime from, LocalDateTime to, int numOfGuests);
     public Boolean deleteFavorHotOffer(InstructorsFavor favor);
-
+    public List<InstructorsFavor> searchInstructorsFavorsByName(String email, String name);
+    public List<InstructorsFavor> searchInstructorsFavorsByAddress(String email, String address);
 }

@@ -332,6 +332,34 @@ public class CottageServiceImpl implements CottageService {
         return searchedCottages;
     }
 
+    @Override
+    public List<Cottage> searchCottagesByAddress(String address) {
+        List<Cottage> searchedCottages = new ArrayList<>();
+
+        List<Cottage> cottages = cottageRepository.findAll();
+        for (Cottage c : cottages) {
+            if (c.getAddress().toLowerCase().contains(address.toLowerCase())) {
+                searchedCottages.add(c);
+            }
+        }
+
+        return searchedCottages;
+    }
+
+    @Override
+    public List<Cottage> searchCottagesByCost(Float minCost, Float maxCost) {
+        List<Cottage> searchedCottages = new ArrayList<>();
+
+        List<Cottage> cottages = cottageRepository.findAll();
+        for (Cottage c : cottages) {
+            if (minCost <= c.getCostPerNight() && c.getCostPerNight() <= maxCost) {
+                searchedCottages.add(c);
+            }
+        }
+
+        return searchedCottages;
+    }
+
     public Boolean isCottageAvailable(Long id, LocalDateTime from, LocalDateTime to, int numOfGuests) {
         Cottage c = cottageRepository.findById(id).get();
         if (from.compareTo(c.getAvailableTill()) > 0 || to.compareTo(c.getAvailableTill()) > 0  ||

@@ -23,7 +23,8 @@ export class CottagesPageClientComponent implements OnInit {
   descendingName: boolean;
   descendingAddress: boolean;
   descendingGrade: boolean;
-  descendingDescription: boolean;
+  descendingNumOfRooms: boolean;
+  descendingNumOfBeds: boolean;
   descendingCost: boolean;
 
   constructor(private cottageService: CottageService) { }
@@ -40,7 +41,8 @@ export class CottagesPageClientComponent implements OnInit {
     });
     this.descendingName = false;
     this.descendingAddress = false;
-    this.descendingDescription = false;
+    this.descendingNumOfRooms = false;
+    this.descendingNumOfBeds = false;
     this.descendingGrade = false;
     this.descendingCost = false;
 
@@ -93,7 +95,7 @@ export class CottagesPageClientComponent implements OnInit {
         let costFromEl = document.getElementById('filterCostFrom') as HTMLInputElement;
         costFromEl.valueAsNumber = 0;
         let costToEl = document.getElementById('filterCostTo') as HTMLInputElement;
-        costToEl.valueAsNumber = 1000;
+        costToEl.valueAsNumber = 100;
         let gradeFromEl = document.getElementById('filterGradeFrom') as HTMLInputElement;
         gradeFromEl.valueAsNumber = 0;
         let gradeToEl = document.getElementById('filterGradeTo') as HTMLInputElement;
@@ -162,16 +164,26 @@ export class CottagesPageClientComponent implements OnInit {
 
   }
 
-  sortByDescription(){
-    if(this.descendingDescription){
-      this.cottages.sort((a,b) => (a.cottage.description < b.cottage.description) ? 1 : ((b.cottage.description < a.cottage.description) ? -1 : 0))
-      this.descendingDescription = false;
+  sortByNumOfRooms(){
+    if(this.descendingNumOfRooms){
+      this.cottages.sort((a,b) => (a.cottage.numOfRooms < b.cottage.numOfRooms) ? 1 : ((b.cottage.numOfRooms < a.cottage.numOfRooms) ? -1 : 0))
+      this.descendingNumOfRooms = false;
     }
     else {
-      this.cottages.sort((a,b) => (a.cottage.description > b.cottage.description) ? 1 : ((b.cottage.description > a.cottage.description) ? -1 : 0))
-      this.descendingDescription = true;
+      this.cottages.sort((a,b) => (a.cottage.numOfRooms > b.cottage.numOfRooms) ? 1 : ((b.cottage.numOfRooms > a.cottage.numOfRooms) ? -1 : 0))
+      this.descendingNumOfRooms = true;
     }
+  }
 
+  sortByNumOfBeds(){
+    if(this.descendingNumOfBeds){
+      this.cottages.sort((a,b) => (a.cottage.numOfBeds < b.cottage.numOfBeds) ? 1 : ((b.cottage.numOfBeds < a.cottage.numOfBeds) ? -1 : 0))
+      this.descendingNumOfBeds = false;
+    }
+    else {
+      this.cottages.sort((a,b) => (a.cottage.numOfBeds > b.cottage.numOfBeds) ? 1 : ((b.cottage.numOfBeds > a.cottage.numOfBeds) ? -1 : 0))
+      this.descendingNumOfBeds = true;
+    }
   }
 
   sortByCost(){

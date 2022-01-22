@@ -1,10 +1,15 @@
 .column {
     float: left;
-    width: 50%;
+    width: 30%;
 }
 
 .row:after {
     content: "";
     display: table;
     clear: both;
+}
+
+table, th, tr, td {
+    border: solid black 1px;
+    text-align: center;
 }

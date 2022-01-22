@@ -1,4 +1,9 @@
+<div>
+    <h1 style="text-align: center;">Instructors page</h1>
+</div>
+  
 <br><br>
+  
 <form (ngSubmit)="searchInstructors()">
     <label>First name: </label>
     <input type="text" id="search-instructors-first-name" name="search-instructors-first-name" [(ngModel)]="searchTextFirstName">
@@ -9,13 +14,13 @@
 <br><br>
 <table style="width: 100%;">
     <thead>
-        <th (click)="sortByFirstName()">First name</th>
-        <th (click)="sortByLastName()">Last name</th>
-        <th (click)="sortByAddress()">Address</th>
-        <th (click)="sortByEmail()">Email</th>
-        <th (click)="sortByMobile()">Mobile number</th>
-        <th (click)="sortByCountry()">Country</th>
-        <th (click)="sortByGrade()">Grade</th>
+        <th (click)="sortByFirstName()" style="cursor: pointer;">First name</th>
+        <th (click)="sortByLastName()" style="cursor: pointer;">Last name</th>
+        <th (click)="sortByAddress()" style="cursor: pointer;">Address</th>
+        <th (click)="sortByEmail()" style="cursor: pointer;">Email</th>
+        <th (click)="sortByMobile()" style="cursor: pointer;">Mobile number</th>
+        <th (click)="sortByCountry()" style="cursor: pointer;">Country</th>
+        <th (click)="sortByGrade()" style="cursor: pointer;">Grade</th>
         <th></th>
     </thead>
     <tbody>
@@ -26,7 +31,7 @@
             <td>{{i.instructor.email}}</td>
             <td>{{i.instructor.mobileNumber}}</td>
             <td>{{i.instructor.country}}</td>
-            <td>{{i.averageGrade}}</td>
+            <td>{{i.averageGrade | number: '1.1-2'}}</td>
             <td><a href="#" (click)="goToInstructorProfile(i.instructor.email)">More details</a></td>
         </tr>
     </tbody>

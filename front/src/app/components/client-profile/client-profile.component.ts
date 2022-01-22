@@ -22,16 +22,20 @@ export class ClientProfileComponent implements OnInit {
   registerForm: any;
   changePasswordForm: any;
 
+  loyalty: string;
+
   constructor(private userService : UserService) { }
 
   ngOnInit(): void {
     if(this.clientAuthenticated == undefined){
       this.userService.getUserByEmail(sessionStorage.getItem("clientToShowAuthenticated")).subscribe(ret =>{
         this.client = ret;
+        this.loyaltyAction();
       });
     } else {
       this.userService.getUserByEmail(this.clientAuthenticated.email).subscribe(ret =>{
         this.client = ret;
+        this.loyaltyAction();
       });
     }
     this.registerForm = new FormGroup({
@@ -50,6 +54,18 @@ export class ClientProfileComponent implements OnInit {
     });
   }
   
+  private loyaltyAction() {
+    if (this.client.type.toString() == 'Regular') {
+      this.loyalty = '0%';
+    } else if (this.client.type.toString() == 'Silver') {
+      this.loyalty = '10%';
+    } else if (this.client.type.toString() == 'Gold') {
+      this.loyalty = '20%';
+    } else {
+      this.loyalty = '0%';
+    }
+  }
+
   editInformations() : void {
     this.viewInformation = false;
     this.editInformation = true;
