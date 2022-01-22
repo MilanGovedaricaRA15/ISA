@@ -8,6 +8,7 @@ import com.izdajMe.izdajMe.repository.ConcurentWatcherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,7 @@ public class ComplaintServiceImpl implements ComplaintService{
         return allComplaintsList;
     }
 
+    @Transactional(readOnly = false)
     public Boolean sendAnswer(Complaint complaint) {
         if(!concurentWatcherRepository.findByTableName("AnswerToComplaint").getWriting()) {
             ConcurentWatcher cw = concurentWatcherRepository.findByTableName("AnswerToComplaint");
