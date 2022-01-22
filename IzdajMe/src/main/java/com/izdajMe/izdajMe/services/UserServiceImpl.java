@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +41,8 @@ public class UserServiceImpl implements UserService {
     private ShipReservationService shipReservationService;
     @Autowired
     private FavorReservationService favorReservationService;
+    @Autowired
+    private ConcurentWatcherRepository concurentWatcherRepository;
 
     @Override
     public List<User> getAllUsers() {
@@ -261,11 +264,23 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Transactional(readOnly = false)
     public Boolean declineUser(String text) {
-        User user = userRepository.findById((long) Integer.parseInt(text.split(" ")[0])).get();
-        userRepository.deleteById((long) Integer.parseInt(text.split(" ")[0]));
-        sendNotificationFromAdminForFailedRegistration(user, text.split(" ")[1]);
-        return true;
+        if(!concurentWatcherRepository.findByTableName("AnswerToRegistrationRequest").getWriting()) {
+            ConcurentWatcher cw = concurentWatcherRepository.findByTableName("AnswerToDeclineRequest");
+            cw.setWriting(true);
+            concurentWatcherRepository.save(cw);
+
+            User user = userRepository.findById((long) Integer.parseInt(text.split(" ")[0])).get();
+            userRepository.deleteById((long) Integer.parseInt(text.split(" ")[0]));
+            sendNotificationFromAdminForFailedRegistration(user, text.split(" ")[1]);
+
+            cw.setWriting(false);
+            concurentWatcherRepository.save(cw);
+
+            return true;
+        } else
+            return false;
     }
 
     public Boolean deleteUser(long id) {
@@ -602,12 +617,24 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
+    @Transactional(readOnly = false)
     public Boolean acceptUser(long id){
-        User user = userRepository.findById(id).get();
-        user.setVerified(true);
-        userRepository.save(user);
-        sendNotificationFromAdminForSuccessRegistration(user);
-        return true;
+        if(!concurentWatcherRepository.findByTableName("AnswerToRegistrationRequest").getWriting()) {
+            ConcurentWatcher cw = concurentWatcherRepository.findByTableName("AnswerToDeclineRequest");
+            cw.setWriting(true);
+            concurentWatcherRepository.save(cw);
+
+            User user = userRepository.findById(id).get();
+            user.setVerified(true);
+            userRepository.save(user);
+            sendNotificationFromAdminForSuccessRegistration(user);
+
+            cw.setWriting(false);
+            concurentWatcherRepository.save(cw);
+
+            return true;
+        } else
+            return false;
     }
 
     private void sendNotificationFromAdminForSuccessRegistration(User user) throws MailException{
