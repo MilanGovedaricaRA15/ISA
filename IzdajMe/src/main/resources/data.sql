@@ -34,29 +34,29 @@ delete from reports where id!=0;
 delete from penalties where id!=0;
 
 insert into users (id, address, city, country, email,first_name,last_name,mobile_number,password,reason,role,verified, prepaid, type, points)
-values (1, 'Ilije 1', 'Beograd', 'Srbija', 'rajkorajkoza@gmail.com', 'Milan', 'Govedarica', 123123123, 'aaaa', 'Izdaja vikendice', 0, TRUE, TRUE, 0, 20);
+values (1, 'Ilije Bircanina 1', 'Beograd', 'Srbija', 'rajkorajkoza@gmail.com', 'Milan', 'Govedarica', 123123123, 'aaaa', 'Izdaja vikendice', 0, TRUE, TRUE, 0, 20);
 insert into users (id, address, city, country, email,first_name,last_name,mobile_number,password,reason,role,verified, prepaid, type, points)
-values (2, 'Banjalucka 2', 'Banjaluka', 'Bosna', 'popaljubav@gmail.com', 'Miodrag', 'Prod', 111222333, 'aaaa', null, 0, TRUE, TRUE, 1, 50);
+values (2, 'Balzakova 2', 'Banjaluka', 'Bosna', 'popaljubav@gmail.com', 'Miodrag', 'Prod', 111222333, 'aaaa', null, 0, TRUE, TRUE, 1, 50);
 insert into users (id, address, city, country, email, first_name, last_name, mobile_number, password, reason, role, verified, prepaid, type, points)
-values (3, 'Focanska 2', 'Foca', 'Bosna', 'foca@gmail.com', 'Coa', 'Podunavac', 064456456, 'aaaa', 'reason', 1, TRUE, FALSE, 2, 200);
+values (3, 'Gogoljeva 2', 'Foca', 'Bosna', 'foca@gmail.com', 'Coa', 'Podunavac', 064456456, 'aaaa', 'reason', 1, TRUE, FALSE, 2, 200);
 insert into users (id, address, city, country, email, first_name, last_name, mobile_number, password, reason, role, verified, prepaid, type, points)
-values (4, 'Sarajevska 4', 'Sarajevo', 'FBiH', 'sar4@gmail.com', 'Dragan', 'Radic', 065189898, 'aaaa', null, 2, TRUE, TRUE, 0, 440);
+values (4, 'Jevrejska 4', 'Sarajevo', 'FBiH', 'sar4@gmail.com', 'Dragan', 'Radic', 065189898, 'aaaa', null, 2, TRUE, TRUE, 0, 440);
 insert into users (id, address, city, country, email, first_name, last_name, mobile_number, password, reason, role, verified, prepaid, type, points)
-values (5, 'Focanska 5', 'Foca', 'RS', 'foca5@gmail.com', 'Zoran', 'Puric', 060124785, 'aaaa', null, 2, TRUE, FALSE, 1, 120);
+values (5, 'Jevrejska 5', 'Foca', 'RS', 'foca5@gmail.com', 'Zoran', 'Puric', 060124785, 'aaaa', null, 2, TRUE, FALSE, 1, 120);
 insert into users (id, address, city, country, email, first_name, last_name, mobile_number, password, reason, role, verified, prepaid, type, points)
-values (6, 'Focanska 6', 'Foca', 'RS', 'foca6@gmail.com', 'Goran', 'Kitic', 065741963, 'aaaa', null, 2, TRUE, TRUE, 2, 25);
+values (6, 'Jevrejska 6', 'Foca', 'RS', 'foca6@gmail.com', 'Goran', 'Kitic', 065741963, 'aaaa', null, 2, TRUE, TRUE, 2, 25);
 insert into users (id, address, city, country, email, first_name, last_name, mobile_number, password, reason, role, verified, prepaid, type, points)
-values (7, 'Sarajevska 7', 'Sarajevo', 'FBiH', 'sar7@gmail.com', 'Marko', 'Vojinovic', 064456456, 'aaaa', null, 2, TRUE, TRUE, 1, 34);
+values (7, 'Jevrejska 7', 'Sarajevo', 'FBiH', 'sar7@gmail.com', 'Marko', 'Vojinovic', 064456456, 'aaaa', null, 2, TRUE, TRUE, 1, 34);
 insert into users (id, address, city, country, email, first_name, last_name, mobile_number, password, reason, role, verified, prepaid, type, points)
-values (8, 'Focanska 8', 'Foca', 'RS', 'foca8@gmail.com', 'Darko', 'Bodiroga', 066589001, 'aaaa', null, 2, TRUE, FALSE, 1, 1000);
+values (8, 'Jevrejska 8', 'Foca', 'RS', 'foca8@gmail.com', 'Darko', 'Bodiroga', 066589001, 'aaaa', null, 2, TRUE, FALSE, 1, 1000);
 insert into users (id, address, city, country, email, first_name, last_name, mobile_number, password, reason, role, verified, prepaid, type, points)
-values (9, 'Focanska 9', 'Foca', 'RS', 'foca9@gmail.com', 'Luka', 'Lukovic', 058212546, 'aaaa', null, 4, TRUE, FALSE, 1, 100);
+values (9, 'Bulevar Cara Lazara 9', 'Foca', 'RS', 'foca9@gmail.com', 'Luka', 'Lukovic', 058212546, 'aaaa', null, 4, TRUE, FALSE, 1, 100);
 insert into users (id, address, city, country, email,first_name,last_name,mobile_number,password,reason,role,verified, prepaid, type, points)
-values (10, 'Njegoseva 1', 'Subotica', 'Srbija', 'vrbica.vlado11@gmail.com', 'Vladimir', 'Vrbica', '123123123123', 'vrba', '', 3, TRUE, TRUE, 0, 1000);
+values (10, 'Bulevar Cara Lazara 1', 'Subotica', 'Srbija', 'vrbica.vlado11@gmail.com', 'Vladimir', 'Vrbica', '123123123123', 'vrba', '', 3, TRUE, TRUE, 0, 1000);
 insert into users (id, address, city, country, email,first_name,last_name,mobile_number,password,reason,role,verified, prepaid, type, points)
-values (11, 'Nemanjina 2', 'Srbobran', 'Srbija', 'nikola.aleksic@gmail.com', 'Nikola', 'Aleksic', '22222222222', 'leksa', '', 4, TRUE, TRUE, 0, 500);
+values (11, 'Bulevar Cara Lazara 2', 'Srbobran', 'Srbija', 'nikola.aleksic@gmail.com', 'Nikola', 'Aleksic', '22222222222', 'leksa', '', 4, TRUE, TRUE, 0, 500);
 insert into users (id, address, city, country, email,first_name,last_name,mobile_number,password,reason,role,verified, prepaid, type, points)
-values (12, 'Kralja Petra 12', 'Becej', 'Srbija', 'milos.zivic@gmail.com', 'Milos', 'Zivic', '222222222222', 'zile', '', 5, TRUE, TRUE, 0, 77);
+values (12, 'Bulevar Kralja Petra 12', 'Becej', 'Srbija', 'milos.zivic@gmail.com', 'Milos', 'Zivic', '222222222222', 'zile', '', 5, TRUE, TRUE, 0, 77);
 insert into users (id, address, city, country, email,first_name,last_name,mobile_number,password,reason,role,verified, prepaid, type, points)
 values (13, 'Vozdovacka 12', 'Beograd', 'Srbija', 'vesnakundacina852@gmail.com', 'Vesna', 'Kundacina', 123123123, 'aaaa', 'Izdaja vikendice', 0, FALSE, TRUE, 0, 1);
 insert into users (id, address, city, country, email,first_name,last_name,mobile_number,password,reason,role,verified, prepaid, type, points)
@@ -97,66 +97,66 @@ insert into users (id, address, city, country, email,first_name,last_name,mobile
 values (31, 'Bulevar Despota Stefana 5', 'Novi Sad', 'Srbija', 'miodragprodanovic99@gmail.com', 'Miodrag', 'Prodanovic', '0647532684', 'aaaa', '', 6, TRUE, 1, 330);
 
 insert into cottages (id, address, available_from, available_till, description, images, name, num_of_beds, num_of_rooms, rules, services, owner_id, cost_per_night)
-values (1, 'Dunavska 1', DATE('2021-09-01'), DATE('2022-02-01'), 'To dream so snug within a cottage-cocoon, to feel the sunlight that comes in welcome soon-ness to the budding day, births dreams of Iron Man made butterflies.', null, 'Micova', 3, 3, 'Nisu dozvoljene zivotinje', null, 1, 50);
+values (1, 'Dunavska 1', DATE('2021-09-01'), DATE('2022-02-01'), 'Beautiful cottage', null, 'Micova', 3, 3, 'Nisu dozvoljene zivotinje', null, 1, 50);
 insert into cottages (id, address, available_from, available_till, description, images, name, num_of_beds, num_of_rooms, rules, services, owner_id, cost_per_night)
-values (2, 'Dunavska 2', DATE('2021-08-22'), DATE('2021-10-01'), 'To dream so snug within a cottage-cocoon, to feel the sunlight that comes in welcome soon-ness to the budding day, births dreams of Iron Man made butterflies.', null, 'Popici', 3, 3, 'Nisu dozvoljene zivotinje', null, 1, 30);
+values (2, 'Dunavska 2', DATE('2021-08-22'), DATE('2021-10-01'), 'Beautiful cottage', null, 'Popici', 3, 3, 'Nisu dozvoljene zivotinje', null, 1, 30);
 insert into cottages (id, address, available_from, available_till, description, images, name, num_of_beds, num_of_rooms, rules, services, owner_id, cost_per_night)
-values (3, 'Fruskogorska 32', DATE('2021-10-01'), DATE('2022-04-01'), 'To dream so snug within a cottage-cocoon, to feel the sunlight that comes in welcome soon-ness to the budding day, births dreams of Iron Man made butterflies.', null, 'Vikendica 1', 20, 5, 'Nisu dozvoljene zivotinje', null, 2, 40);
+values (3, 'Bulevar Kralja Petra 32', DATE('2021-10-01'), DATE('2022-04-01'), 'Beautiful cottage', null, 'Vikendica 1', 20, 5, 'Nisu dozvoljene zivotinje', null, 2, 40);
 insert into cottages (id, address, available_from, available_till, description, images, name, num_of_beds, num_of_rooms, rules, services, owner_id, cost_per_night)
-values (4, 'Dunavska 4', DATE('2021-11-11'), DATE('2022-03-05'), 'To dream so snug within a cottage-cocoon, to feel the sunlight that comes in welcome soon-ness to the budding day, births dreams of Iron Man made butterflies.', null, 'Pofalicka', 12, 4, 'Nisu dozvoljene zivotinje', null, 16, 25);
+values (4, 'Dunavska 4', DATE('2021-11-11'), DATE('2022-03-05'), 'Beautiful cottage', null, 'Pofalicka', 12, 4, 'Nisu dozvoljene zivotinje', null, 16, 25);
 insert into cottages (id, address, available_from, available_till, description, images, name, num_of_beds, num_of_rooms, rules, services, owner_id, cost_per_night)
-values (5, 'Fruskogorska 1', DATE('2021-07-01'), DATE('2021-12-01'), 'To dream so snug within a cottage-cocoon, to feel the sunlight that comes in welcome soon-ness to the budding day, births dreams of Iron Man made butterflies.', null, 'Seoska', 3, 3, 'Nisu dozvoljene zivotinje', null, 15, 50);
+values (5, 'Fruskogorska 1', DATE('2021-07-01'), DATE('2021-12-01'), 'Beautiful cottage', null, 'Seoska', 3, 3, 'Nisu dozvoljene zivotinje', null, 15, 50);
 insert into cottages (id, address, available_from, available_till, description, images, name, num_of_beds, num_of_rooms, rules, services, owner_id, cost_per_night)
-values (6, 'Dunavska 9', DATE('2021-08-01'), DATE('2022-10-01'), 'To dream so snug within a cottage-cocoon, to feel the sunlight that comes in welcome soon-ness to the budding day, births dreams of Iron Man made butterflies.', null, 'Bungalov', 3, 3, 'Nisu dozvoljene zivotinje', null, 18, 30);
+values (6, 'Dunavska 9', DATE('2021-08-01'), DATE('2022-10-01'), 'Beautiful cottage', null, 'Bungalov', 3, 3, 'Nisu dozvoljene zivotinje', null, 18, 30);
 insert into cottages (id, address, available_from, available_till, description, images, name, num_of_beds, num_of_rooms, rules, services, owner_id, cost_per_night)
-values (7, 'Fruskogorska 16', DATE('2021-09-01'), DATE('2022-04-01'), 'To dream so snug within a cottage-cocoon, to feel the sunlight that comes in welcome soon-ness to the budding day, births dreams of Iron Man made butterflies.', null, 'Vikendica 2', 20, 5, 'Nisu dozvoljene zivotinje', null, 16, 40);
+values (7, 'Bulevar Cara Lazara 16', DATE('2021-09-01'), DATE('2022-04-01'), 'Beautiful cottage', null, 'Vikendica 2', 20, 5, 'Nisu dozvoljene zivotinje', null, 16, 40);
 insert into cottages (id, address, available_from, available_till, description, images, name, num_of_beds, num_of_rooms, rules, services, owner_id, cost_per_night)
-values (8, 'Futoska 15', DATE('2021-10-01'), DATE('2022-03-05'), 'To dream so snug within a cottage-cocoon, to feel the sunlight that comes in welcome soon-ness to the budding day, births dreams of Iron Man made butterflies.', null, 'Odmaraliste', 12, 4, 'Nisu dozvoljene zivotinje', null, 17, 25);
+values (8, 'Futoska 15', DATE('2021-10-01'), DATE('2022-03-05'), 'Beautiful cottage', null, 'Odmaraliste', 12, 4, 'Nisu dozvoljene zivotinje', null, 17, 25);
 insert into cottages (id, address, available_from, available_till, description, images, name, num_of_beds, num_of_rooms, rules, services, owner_id, cost_per_night)
-values (9, 'Fruskogorska 19', DATE('2021-11-01'), DATE('2022-01-01'), 'To dream so snug within a cottage-cocoon, to feel the sunlight that comes in welcome soon-ness to the budding day, births dreams of Iron Man made butterflies.', null, 'Jezerska', 3, 3, 'Nisu dozvoljene zivotinje', null, 15, 50);
+values (9, 'Fruskogorska 19', DATE('2021-11-01'), DATE('2022-01-01'), 'Beautiful cottage', null, 'Jezerska', 3, 3, 'Nisu dozvoljene zivotinje', null, 15, 50);
 insert into cottages (id, address, available_from, available_till, description, images, name, num_of_beds, num_of_rooms, rules, services, owner_id, cost_per_night)
-values (10, 'Dunavska 29', DATE('2021-12-01'), DATE('2022-02-28'), 'To dream so snug within a cottage-cocoon, to feel the sunlight that comes in welcome soon-ness to the budding day, births dreams of Iron Man made butterflies.', null, 'Smjestaj kod Loja', 3, 3, 'Nisu dozvoljene zivotinje', null, 16, 30);
+values (10, 'Dunavska 29', DATE('2021-12-01'), DATE('2022-02-28'), 'Beautiful cottage', null, 'Smjestaj kod Loja', 3, 3, 'Nisu dozvoljene zivotinje', null, 16, 30);
 insert into cottages (id, address, available_from, available_till, description, images, name, num_of_beds, num_of_rooms, rules, services, owner_id, cost_per_night)
-values (11, 'Fruskogorska 30', DATE('2021-10-15'), DATE('2022-04-01'), 'When rocks learned to flower into the light of every season, be it the brilliant song of summer or winter time, they grew to form sweet cottages, they grew with hearts of nectar and upon their roof tops were garlands of honeycomb.', null, 'Vikendica 3', 20, 5, 'Nisu dozvoljene zivotinje', null, 18, 40);
+values (11, 'Bulevar Cara Lazara 30', DATE('2021-10-15'), DATE('2022-04-01'), 'Cottage with a great view', null, 'Vikendica 3', 20, 5, 'Nisu dozvoljene zivotinje', null, 18, 40);
 insert into cottages (id, address, available_from, available_till, description, images, name, num_of_beds, num_of_rooms, rules, services, owner_id, cost_per_night)
-values (12, 'Fruskogorska 40', DATE('2021-11-15'), DATE('2022-03-01'), 'When rocks learned to flower into the light of every season, be it the brilliant song of summer or winter time, they grew to form sweet cottages, they grew with hearts of nectar and upon their roof tops were garlands of honeycomb.', null, 'Vikendica kod Gazde', 12, 4, 'Nisu dozvoljene zivotinje', null, 18, 25);
+values (12, 'Fruskogorska 40', DATE('2021-11-15'), DATE('2022-03-01'), 'Cottage with a great view', null, 'Vikendica kod Gazde', 12, 4, 'Nisu dozvoljene zivotinje', null, 18, 25);
 insert into cottages (id, address, available_from, available_till, description, images, name, num_of_beds, num_of_rooms, rules, services, owner_id, cost_per_night)
-values (13, 'Futoska 10', DATE('2021-12-15'), DATE('2022-03-10'), 'When rocks learned to flower into the light of every season, be it the brilliant song of summer or winter time, they grew to form sweet cottages, they grew with hearts of nectar and upon their roof tops were garlands of honeycomb.', null, 'Skupa', 10, 6, 'Nisu dozvoljene zivotinje', null, 16, 200);
+values (13, 'Futoska 10', DATE('2021-12-15'), DATE('2022-03-10'), 'Cottage with a great view', null, 'Skupa', 10, 6, 'Nisu dozvoljene zivotinje', null, 16, 200);
 insert into cottages (id, address, available_from, available_till, description, images, name, num_of_beds, num_of_rooms, rules, services, owner_id, cost_per_night)
-values (14, 'Futoska 20', DATE('2022-01-15'), DATE('2022-04-10'), 'When rocks learned to flower into the light of every season, be it the brilliant song of summer or winter time, they grew to form sweet cottages, they grew with hearts of nectar and upon their roof tops were garlands of honeycomb.', null, 'Jeftina', 50, 10, 'Nisu dozvoljene zivotinje', null, 17, 5);
+values (14, 'Bulevar Kralja Petra 20', DATE('2022-01-15'), DATE('2022-04-10'), 'Cottage with a great view', null, 'Jeftina', 50, 10, 'Nisu dozvoljene zivotinje', null, 17, 5);
 insert into cottages (id, address, available_from, available_till, description, images, name, num_of_beds, num_of_rooms, rules, services, owner_id, cost_per_night)
-values (15, 'Fruskogorska 24', DATE('2021-10-10'), DATE('2022-03-12'), 'When rocks learned to flower into the light of every season, be it the brilliant song of summer or winter time, they grew to form sweet cottages, they grew with hearts of nectar and upon their roof tops were garlands of honeycomb.', null, 'Vikendica 4', 20, 5, 'Nisu dozvoljene zivotinje', null, 18, 40);
+values (15, 'Bulevar Cara Lazara 24', DATE('2021-10-10'), DATE('2022-03-12'), 'Cottage with a great view', null, 'Vikendica 4', 20, 5, 'Nisu dozvoljene zivotinje', null, 18, 40);
 insert into cottages (id, address, available_from, available_till, description, images, name, num_of_beds, num_of_rooms, rules, services, owner_id, cost_per_night)
-values (16, 'Dunavska 17', DATE('2021-11-11'), DATE('2022-04-08'), 'When rocks learned to flower into the light of every season, be it the brilliant song of summer or winter time, they grew to form sweet cottages, they grew with hearts of nectar and upon their roof tops were garlands of honeycomb.', null, 'Radnicka', 12, 4, 'Nisu dozvoljene zivotinje', null, 15, 25);
+values (16, 'Dunavska 17', DATE('2021-11-11'), DATE('2022-04-08'), 'Cottage with a great view', null, 'Radnicka', 12, 4, 'Nisu dozvoljene zivotinje', null, 15, 25);
 insert into cottages (id, address, available_from, available_till, description, images, name, num_of_beds, num_of_rooms, rules, services, owner_id, cost_per_night)
-values (17, 'Dunavska 12', DATE('2021-12-12'), DATE('2022-06-01'), 'When rocks learned to flower into the light of every season, be it the brilliant song of summer or winter time, they grew to form sweet cottages, they grew with hearts of nectar and upon their roof tops were garlands of honeycomb.', null, 'Velika', 300, 80, 'Nisu dozvoljene zivotinje', null, 16, 50);
+values (17, 'Dunavska 12', DATE('2021-12-12'), DATE('2022-06-01'), 'Cottage with a great view', null, 'Velika', 300, 80, 'Nisu dozvoljene zivotinje', null, 16, 50);
 insert into cottages (id, address, available_from, available_till, description, images, name, num_of_beds, num_of_rooms, rules, services, owner_id, cost_per_night)
-values (18, 'Futoska 11', DATE('2022-01-01'), DATE('2022-02-17'), 'The cottage nests in a mirth of grass as if it were the conjuring of some happy dream.', null, 'Mala', 2, 1, 'Nisu dozvoljene zivotinje', null, 15, 30);
+values (18, 'Bulevar Kralja Petra 11', DATE('2022-01-01'), DATE('2022-02-17'), 'Great cottage', null, 'Mala', 2, 1, 'Nisu dozvoljene zivotinje', null, 15, 30);
 insert into cottages (id, address, available_from, available_till, description, images, name, num_of_beds, num_of_rooms, rules, services, owner_id, cost_per_night)
-values (19, 'Fruskogorska 8', DATE('2022-01-02'), DATE('2022-04-15'), 'The cottage nests in a mirth of grass as if it were the conjuring of some happy dream.', null, 'Vikendica 5', 20, 5, 'Nisu dozvoljene zivotinje', null, 17, 40);
+values (19, 'Fruskogorska 8', DATE('2022-01-02'), DATE('2022-04-15'), 'Great cottage', null, 'Vikendica 5', 20, 5, 'Nisu dozvoljene zivotinje', null, 17, 40);
 insert into cottages (id, address, available_from, available_till, description, images, name, num_of_beds, num_of_rooms, rules, services, owner_id, cost_per_night)
-values (20, 'Dunavska 7', DATE('2022-01-03'), DATE('2022-03-15'), 'The cottage nests in a mirth of grass as if it were the conjuring of some happy dream.', null, 'Pogled', 12, 4, 'Nisu dozvoljene zivotinje', null, 15, 25);
+values (20, 'Dunavska 7', DATE('2022-01-03'), DATE('2022-03-15'), 'Great cottage', null, 'Pogled', 12, 4, 'Nisu dozvoljene zivotinje', null, 15, 25);
 
 insert into ships(id, owner_id, available_from, available_till, name, type, length, engine_number, engine_power, top_speed, navigation_equipment, address, description, images, capacity, rules,fishing_equipment,cancel_requirements,cost_per_night)
-values (1, 3,DATE('2021-09-01'),DATE('2022-02-01'), 'Shipfirst', 'typeone', 72, '123a456', 157, 245, null, 'Nikole Tesle 1', 'The boat was an old timer, a veteran of the brine. The old planks retained the odour of the fish even after a storm. Yet she was sound, seaworthy enough to take to the waters at dawn with nets bundled onto the deck.', null, 20, 'pravila',null,'free',90);
+values (1, 3,DATE('2021-09-01'),DATE('2022-02-01'), 'Shipfirst', 'typeone', 72, '123a456', 157, 245, null, 'Gogoljeva 10', 'Beautiful ship', null, 20, 'pravila',null,'free',90);
 insert into ships(id, owner_id, available_from, available_till, name, type, length, engine_number, engine_power, top_speed, navigation_equipment, address, description, images, capacity, rules,fishing_equipment,cancel_requirements,cost_per_night)
-values (2, 3,DATE('2021-09-01'),DATE('2022-02-01'), 'Shipsecond', 'typetwo', 49, '123b456', 164, 275, null, 'Nikole Tesle 2', 'The boat was an old timer, a veteran of the brine. The old planks retained the odour of the fish even after a storm. Yet she was sound, seaworthy enough to take to the waters at dawn with nets bundled onto the deck.', null, 10, 'pravila',null,'free',80);
+values (2, 3,DATE('2021-09-01'),DATE('2022-02-01'), 'Shipsecond', 'typetwo', 49, '123b456', 164, 275, null, 'Bulevar Kralja Petra 4', 'Beautiful ship', null, 10, 'pravila',null,'free',80);
 insert into ships(id, owner_id, available_from, available_till, name, type, length, engine_number, engine_power, top_speed, navigation_equipment, address, description, images, capacity, rules,fishing_equipment,cancel_requirements,cost_per_night)
-values (3, 3,DATE('2021-09-01'),DATE('2022-05-01'), 'Shipfifth', 'typethree', 67, '123c456', 130, 223, null, 'Nikole Tesle 3', 'The boat was an old timer, a veteran of the brine. The old planks retained the odour of the fish even after a storm. Yet she was sound, seaworthy enough to take to the waters at dawn with nets bundled onto the deck.', null, 30, 'pravila',null,'free',70);
+values (3, 3,DATE('2021-09-01'),DATE('2022-05-01'), 'Shipfifth', 'typethree', 67, '123c456', 130, 223, null, 'Bulevar Kralja Petra 1', 'Beautiful ship', null, 30, 'pravila',null,'free',70);
 insert into ships(id, owner_id, available_from, available_till, name, type, length, engine_number, engine_power, top_speed, navigation_equipment, address, description, images, capacity, rules,fishing_equipment,cancel_requirements,cost_per_night)
-values (4, 3,DATE('2021-09-01'),DATE('2022-04-01'), 'Shipneki', 'typefourth', 113, '123d456', 172, 289, null, 'Nikole Tesle 4', 'The boat was an old timer, a veteran of the brine. The old planks retained the odour of the fish even after a storm. Yet she was sound, seaworthy enough to take to the waters at dawn with nets bundled onto the deck.', null, 25, 'pravila',null,'free',60);
+values (4, 3,DATE('2021-09-01'),DATE('2022-04-01'), 'Shipneki', 'typefourth', 113, '123d456', 172, 289, null, 'Dunavska 4', 'Beautiful ship', null, 25, 'pravila',null,'free',60);
 insert into ships(id, owner_id, available_from, available_till, name, type, length, engine_number, engine_power, top_speed, navigation_equipment, address, description, images, capacity, rules,fishing_equipment,cancel_requirements,cost_per_night)
-values (5, 3,DATE('2021-09-01'),DATE('2022-05-01'), 'Ship', 'typefifth', 84, '123e456', 117, 200, null, 'Nikole Tesle 5', 'The boat was an old timer, a veteran of the brine. The old planks retained the odour of the fish even after a storm. Yet she was sound, seaworthy enough to take to the waters at dawn with nets bundled onto the deck.', null, 15, 'pravila',null,'free',50);
+values (5, 3,DATE('2021-09-01'),DATE('2022-05-01'), 'Ship', 'typefifth', 84, '123e456', 117, 200, null, 'Dunavska 5', 'Beautiful ship', null, 15, 'pravila',null,'free',50);
 insert into ships(id, owner_id, available_from, available_till, name, type, length, engine_number, engine_power, top_speed, navigation_equipment, address, description, images, capacity, rules,fishing_equipment,cancel_requirements,cost_per_night)
-values (6, 19,DATE('2021-09-01'),DATE('2022-03-01'), 'Special', 'first', 72, '123a456', 157, 245, null, 'Andriceva 1', 'Then as if by divine command a boat appeared on the horizon, glistening in the sunrise. They watched it make a steady approach, the outline of the yacht becoming more clear every moment.', null, 20, 'pravila',null,'free',90);
+values (6, 19,DATE('2021-09-01'),DATE('2022-03-01'), 'Special', 'first', 72, '123a456', 157, 245, null, 'Andriceva 1', 'Great ship', null, 20, 'pravila',null,'free',90);
 insert into ships(id, owner_id, available_from, available_till, name, type, length, engine_number, engine_power, top_speed, navigation_equipment, address, description, images, capacity, rules,fishing_equipment,cancel_requirements,cost_per_night)
-values (7, 21,DATE('2021-09-01'),DATE('2022-04-01'), 'Blender', 'second', 49, '123b456', 164, 275, null, 'Marka Kraljevica 2', 'Then as if by divine command a boat appeared on the horizon, glistening in the sunrise. They watched it make a steady approach, the outline of the yacht becoming more clear every moment.', null, 10, 'pravila',null,'free',80);
+values (7, 21,DATE('2021-09-01'),DATE('2022-04-01'), 'Blender', 'second', 49, '123b456', 164, 275, null, 'Marka Kraljevica 2', 'Great ship', null, 10, 'pravila',null,'free',80);
 insert into ships(id, owner_id, available_from, available_till, name, type, length, engine_number, engine_power, top_speed, navigation_equipment, address, description, images, capacity, rules,fishing_equipment,cancel_requirements,cost_per_night)
-values (8, 20,DATE('2021-09-01'),DATE('2022-05-01'), 'Rafting', 'third', 67, '123c456', 130, 223, null, 'Andriceva 13', 'Then as if by divine command a boat appeared on the horizon, glistening in the sunrise. They watched it make a steady approach, the outline of the yacht becoming more clear every moment.', null, 30, 'pravila',null,'free',70);
+values (8, 20,DATE('2021-09-01'),DATE('2022-05-01'), 'Rafting', 'third', 67, '123c456', 130, 223, null, 'Andriceva 13', 'Great ship', null, 30, 'pravila',null,'free',70);
 insert into ships(id, owner_id, available_from, available_till, name, type, length, engine_number, engine_power, top_speed, navigation_equipment, address, description, images, capacity, rules,fishing_equipment,cancel_requirements,cost_per_night)
-values (9, 22,DATE('2021-09-01'),DATE('2022-06-01'), 'Long', 'fourth', 200, '123d456', 172, 289, null, 'Andriceva 40', 'Then as if by divine command a boat appeared on the horizon, glistening in the sunrise. They watched it make a steady approach, the outline of the yacht becoming more clear every moment.', null, 25, 'pravila',null,'free',60);
+values (9, 22,DATE('2021-09-01'),DATE('2022-06-01'), 'Long', 'fourth', 200, '123d456', 172, 289, null, 'Andriceva 40', 'Great ship', null, 25, 'pravila',null,'free',60);
 insert into ships(id, owner_id, available_from, available_till, name, type, length, engine_number, engine_power, top_speed, navigation_equipment, address, description, images, capacity, rules,fishing_equipment,cancel_requirements,cost_per_night)
-values (10, 20,DATE('2021-09-01'),DATE('2022-07-01'), 'Expensive', 'fifth', 84, '123e456', 117, 300, null, 'Nikole Tesle 6', 'Then as if by divine command a boat appeared on the horizon, glistening in the sunrise. They watched it make a steady approach, the outline of the yacht becoming more clear every moment.', null, 15, 'pravila',null,'free',50);
+values (10, 20,DATE('2021-09-01'),DATE('2022-07-01'), 'Expensive', 'fifth', 84, '123e456', 117, 300, null, 'Nikole Tesle 6', 'Great ship', null, 15, 'pravila',null,'free',50);
 
 insert into grades(id, user_id, value, comment, seen)
 values (1, 3, 7 , 'Not too bad', true);
